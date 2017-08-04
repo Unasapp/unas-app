@@ -1,0 +1,15 @@
+.bgi {
+    background-image: url('./dan-gold-272398.jpg');
+    background-size: cover;
+    background-position: center center; 
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    color: white;
+}
+.bgi h1{
+    font-size: 52px; 
+}
