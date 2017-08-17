@@ -1,32 +1,359 @@
+<md-sidenav-container class="big-container">
 
-<div class="container-fluid">
-  <div class="row">
-    <div class="col-sm-3 col-lg-2">
-      <nav class="navbar navbar-default navbar-fixed-side">
-        <!-- normal collapsible navbar markup -->
-        <h3>Side Nav</h3>
-        <ul class="nav nav-pills nav-stacked">
-          <li role="presentation" ><a >Home</a></li>
-          <li role="presentation" ><a >Profile</a></li>
-          <li role="presentation" ><a >Messages</a></li>
-          <li role="presentation" ><a >Home</a></li>
-          <li role="presentation" ><a >Profile</a></li>
-          <li role="presentation" ><a >Messages</a></li>
-        </ul>
-        <h3>Other side nav things</h3>
-         <ul class="nav nav-pills nav-stacked">
-          <li role="presentation" ><a >Home</a></li>
-          <li role="presentation" ><a >Profile</a></li>
-          <li role="presentation" ><a >Messages</a></li>
-          <li role="presentation" ><a >Home</a></li>
-          <li role="presentation" ><a >Profile</a></li>
-          <li role="presentation" ><a >Messages</a></li>
-        </ul>
-      </nav>
-    </div>
-    <div class="col-sm-9 col-lg-10">
-      <!-- where we put the app-outlet aka nested router  -->
+  <md-sidenav #sidenav class="sidenav-inner">
+    <md-list >
+      <md-list-item (click)="sidenav.close()" style='margin-left:80%;font-size:28px;' > 
+        <i class='ion-close-round'></i> 
+      </md-list-item>
+      <md-list-item routerLink='/home' class='sidenav-items' > Home </md-list-item>
+      <md-list-item routerLink='/cal' class='sidenav-items'> Calendar </md-list-item>
+      <md-list-item routerLink='/contacts' class='sidenav-items' > Contacts </md-list-item>
+      <md-list-item routerLink='/allbarbers' class='sidenav-items' > Barber Profiles </md-list-item>
+      <md-list-item routerLink='/notifications' class='sidenav-items' > Notifications </md-list-item>
+      <md-list-item routerLink='/settings' class='sidenav-items' > Settings </md-list-item>
+      <md-list-item class='sidenav-items' > Logout </md-list-item>
+    </md-list>
+  </md-sidenav>
 
+  <md-toolbar class='main-toolbar'>
+
+    <div class='ionic-button'>
+      <a md-icon-button (click)="sidenav.open()">
+        <i class='ion-navicon icon-size'></i>
+      </a>
     </div>
+
+    <div class='rest'> 
+      <h2>Shop Name</h2>
+    </div>
+
+  </md-toolbar>
+
+  <section class='all-scroll' >
+
+  <div class='top-stats'>
+
+    <md-tab-group>
+      <md-tab label="Today">
+        <md-grid-list class='grid-size' cols="3" rowHeight="3:1">
+              <md-grid-tile class='top-tiles' >
+                <i class='ion-calendar icon-size'></i>
+                Date: August 18, 2016
+              </md-grid-tile>
+              <md-grid-tile class='top-tiles' >
+              <i class='ion-social-usd icon-size'></i>
+                Wages
+              </md-grid-tile>
+              <md-grid-tile class='top-tiles' >
+                <i class='ion-cash icon-size'></i>
+                Tips
+              </md-grid-tile>
+              <md-grid-tile class='top-tiles' >
+                <i class='ion-clock icon-size'></i>
+                Time Spent on Cuts
+              </md-grid-tile>
+              <md-grid-tile class='top-tiles' >
+                <i class='ion-scissors icon-size'></i>
+                Completed Cuts
+              </md-grid-tile>
+              <md-grid-tile class='top-tiles' >
+                <i class='ion-calendar icon-size'></i>
+                Pending Appointments
+              </md-grid-tile>
+        </md-grid-list>
+      </md-tab>
+      
+      <md-tab label="This Week">
+        <md-grid-list class='grid-size' cols="3" rowHeight="3:1">
+                <md-grid-tile class='top-tiles' >
+                Week: August 18, 2016 - August 27, 2016
+              </md-grid-tile>
+              <md-grid-tile class='top-tiles' >
+                Weekly Wages:
+              </md-grid-tile>
+              <md-grid-tile class='top-tiles' >
+                Weekly Tips:
+              </md-grid-tile>
+              <md-grid-tile class='top-tiles' >
+                Weekly Time Spent on Cuts:
+              </md-grid-tile>
+              <md-grid-tile class='top-tiles' >
+                Weekly Completed Cuts:
+              </md-grid-tile>
+              <md-grid-tile class='top-tiles' >
+                Weekly Pending Appointments:
+              </md-grid-tile>
+        </md-grid-list>
+      </md-tab>
+      <md-tab label="This Month">
+        <md-grid-list class='grid-size' cols="3" rowHeight="3:1">
+                 <md-grid-tile class='top-tiles' >
+                Month: August
+              </md-grid-tile>
+              <md-grid-tile class='top-tiles' >
+                Monthly Wages:
+              </md-grid-tile>
+              <md-grid-tile class='top-tiles' >
+                Monthly Tips:
+              </md-grid-tile>
+              <md-grid-tile class='top-tiles' >
+                Monthly Time Spent on Cuts:
+              </md-grid-tile>
+              <md-grid-tile class='top-tiles' >
+                Monthly Completed Cuts:
+              </md-grid-tile>
+              <md-grid-tile class='top-tiles' >
+                Monthly Pending Appointments:
+              </md-grid-tile>
+        </md-grid-list>
+      </md-tab>
+    </md-tab-group>
+
   </div>
-</div>
+
+  <div class='barber-profiles'>
+
+    <md-card class="example-card">
+        <h3 style="text-align:center;">Barber Name</h3>
+      <img class='profile-pic' src="https://maxcdn.icons8.com/Share/icon/Users//user_male_circle_filled1600.png">
+      <md-card-content>
+        <div class='profile-stat'>
+          <p>Wages:</p>
+          <p>$300</p>
+        </div>                                    
+        <div class='profile-stat'>
+          <p>Tips:</p>
+          <p>$45</p>
+        </div>                                    
+        <div class='profile-stat'>
+          <p>Appointments:</p>
+          <p>7</p>
+        </div>                                    
+        <div class='profile-stat'>
+          <p>Completed Appointments:</p>
+          <p>5</p>
+        </div>                                    
+      </md-card-content>
+      <md-card-actions class='profile-actions'>
+        <button md-button>View Stats</button>
+        <button md-button>Make Appointment</button>
+      </md-card-actions>
+    </md-card>
+    
+    <md-card class="example-card">
+        <h3 style="text-align:center;">Barber Name</h3>
+      <img class='profile-pic' src="https://maxcdn.icons8.com/Share/icon/Users//user_male_circle_filled1600.png">
+      <md-card-content>
+        <div class='profile-stat'>
+          <p>Wages:</p>
+          <p>$300</p>
+        </div>                                    
+        <div class='profile-stat'>
+          <p>Tips:</p>
+          <p>$45</p>
+        </div>                                    
+        <div class='profile-stat'>
+          <p>Appointments:</p>
+          <p>7</p>
+        </div>                                    
+        <div class='profile-stat'>
+          <p>Completed Appointments:</p>
+          <p>5</p>
+        </div>                                    
+      </md-card-content>
+      <md-card-actions class='profile-actions'>
+        <button md-button>View Stats</button>
+        <button md-button>Make Appointment</button>
+      </md-card-actions>
+    </md-card>
+    <md-card class="example-card">
+        <h3 style="text-align:center;">Barber Name</h3>
+      <img class='profile-pic' src="https://maxcdn.icons8.com/Share/icon/Users//user_male_circle_filled1600.png">
+      <md-card-content>
+        <div class='profile-stat'>
+          <p>Wages:</p>
+          <p>$300</p>
+        </div>                                    
+        <div class='profile-stat'>
+          <p>Tips:</p>
+          <p>$45</p>
+        </div>                                    
+        <div class='profile-stat'>
+          <p>Appointments:</p>
+          <p>7</p>
+        </div>                                    
+        <div class='profile-stat'>
+          <p>Completed Appointments:</p>
+          <p>5</p>
+        </div>                                    
+      </md-card-content>
+      <md-card-actions class='profile-actions'>
+        <button md-button>View Stats</button>
+        <button md-button>Make Appointment</button>
+      </md-card-actions>
+    </md-card>
+    <md-card class="example-card">
+        <h3 style="text-align:center;">Barber Name</h3>
+      <img class='profile-pic' src="https://maxcdn.icons8.com/Share/icon/Users//user_male_circle_filled1600.png">
+      <md-card-content>
+        <div class='profile-stat'>
+          <p>Wages:</p>
+          <p>$300</p>
+        </div>                                    
+        <div class='profile-stat'>
+          <p>Tips:</p>
+          <p>$45</p>
+        </div>                                    
+        <div class='profile-stat'>
+          <p>Appointments:</p>
+          <p>7</p>
+        </div>                                    
+        <div class='profile-stat'>
+          <p>Completed Appointments:</p>
+          <p>5</p>
+        </div>                                    
+      </md-card-content>
+      <md-card-actions class='profile-actions'>
+        <button md-button>View Stats</button>
+        <button md-button>Make Appointment</button>
+      </md-card-actions>
+    </md-card>
+    <md-card class="example-card">
+        <h3 style="text-align:center;">Barber Name</h3>
+      <img class='profile-pic' src="https://maxcdn.icons8.com/Share/icon/Users//user_male_circle_filled1600.png">
+      <md-card-content>
+        <div class='profile-stat'>
+          <p>Wages:</p>
+          <p>$300</p>
+        </div>                                    
+        <div class='profile-stat'>
+          <p>Tips:</p>
+          <p>$45</p>
+        </div>                                    
+        <div class='profile-stat'>
+          <p>Appointments:</p>
+          <p>7</p>
+        </div>                                    
+        <div class='profile-stat'>
+          <p>Completed Appointments:</p>
+          <p>5</p>
+        </div>                                    
+      </md-card-content>
+      <md-card-actions class='profile-actions'>
+        <button md-button>View Stats</button>
+        <button md-button>Make Appointment</button>
+      </md-card-actions>
+    </md-card>
+    <md-card class="example-card">
+        <h3 style="text-align:center;">Barber Name</h3>
+      <img class='profile-pic' src="https://maxcdn.icons8.com/Share/icon/Users//user_male_circle_filled1600.png">
+      <md-card-content>
+        <div class='profile-stat'>
+          <p>Wages:</p>
+          <p>$300</p>
+        </div>                                    
+        <div class='profile-stat'>
+          <p>Tips:</p>
+          <p>$45</p>
+        </div>                                    
+        <div class='profile-stat'>
+          <p>Appointments:</p>
+          <p>7</p>
+        </div>                                    
+        <div class='profile-stat'>
+          <p>Completed Appointments:</p>
+          <p>5</p>
+        </div>                                    
+      </md-card-content>
+      <md-card-actions class='profile-actions'>
+        <button md-button>View Stats</button>
+        <button md-button>Make Appointment</button>
+      </md-card-actions>
+    </md-card>
+    <md-card class="example-card">
+        <h3 style="text-align:center;">Barber Name</h3>
+      <img class='profile-pic' src="https://maxcdn.icons8.com/Share/icon/Users//user_male_circle_filled1600.png">
+      <md-card-content>
+        <div class='profile-stat'>
+          <p>Wages:</p>
+          <p>$300</p>
+        </div>                                    
+        <div class='profile-stat'>
+          <p>Tips:</p>
+          <p>$45</p>
+        </div>                                    
+        <div class='profile-stat'>
+          <p>Appointments:</p>
+          <p>7</p>
+        </div>                                    
+        <div class='profile-stat'>
+          <p>Completed Appointments:</p>
+          <p>5</p>
+        </div>                                    
+      </md-card-content>
+      <md-card-actions class='profile-actions'>
+        <button md-button>View Stats</button>
+        <button md-button>Make Appointment</button>
+      </md-card-actions>
+    </md-card>
+    <md-card class="example-card">
+        <h3 style="text-align:center;">Barber Name</h3>
+      <img class='profile-pic' src="https://maxcdn.icons8.com/Share/icon/Users//user_male_circle_filled1600.png">
+      <md-card-content>
+        <div class='profile-stat'>
+          <p>Wages:</p>
+          <p>$300</p>
+        </div>                                    
+        <div class='profile-stat'>
+          <p>Tips:</p>
+          <p>$45</p>
+        </div>                                    
+        <div class='profile-stat'>
+          <p>Appointments:</p>
+          <p>7</p>
+        </div>                                    
+        <div class='profile-stat'>
+          <p>Completed Appointments:</p>
+          <p>5</p>
+        </div>                                    
+      </md-card-content>
+      <md-card-actions class='profile-actions'>
+        <button md-button>View Stats</button>
+        <button md-button>Make Appointment</button>
+      </md-card-actions>
+    </md-card>
+    <md-card class="example-card">
+        <h3 style="text-align:center;">Barber Name</h3>
+      <img class='profile-pic' src="https://maxcdn.icons8.com/Share/icon/Users//user_male_circle_filled1600.png">
+      <md-card-content>
+        <div class='profile-stat'>
+          <p>Wages:</p>
+          <p>$300</p>
+        </div>                                    
+        <div class='profile-stat'>
+          <p>Tips:</p>
+          <p>$45</p>
+        </div>                                    
+        <div class='profile-stat'>
+          <p>Appointments:</p>
+          <p>7</p>
+        </div>                                    
+        <div class='profile-stat'>
+          <p>Completed Appointments:</p>
+          <p>5</p>
+        </div>                                    
+      </md-card-content>
+      <md-card-actions class='profile-actions'>
+        <button md-button>View Stats</button>
+        <button md-button>Make Appointment</button>
+      </md-card-actions>
+    </md-card>
+   
+
+
+  </div>
+
+  </section>
+
+
+</md-sidenav-container>

@@ -1,0 +1,44 @@
+.top-tiles{
+    border: 1px solid lightgrey;
+}
+
+.top-stats{
+    width: 100wv;
+    height: auto;
+    overflow: none;
+    border-bottom: 1px solid lightgrey;
+}
+
+.grid-size{
+    overflow: hidden;
+}
+
+.barber-profiles{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    height: auto;
+    padding-top: 20px; 
+}
+.example-card {
+    height: 400px;
+    width: 250px;
+    margin: 20px 20px 0 20px;
+}
+.profile-pic{
+    margin-left: 75px;
+    width: 100px;
+    height: 100px;
+    margin-bottom: 20px;
+    margin-top: 10px;
+}
+.profile-stat{
+    display: flex;
+    justify-content: space-between;
+}
+.profile-actions{
+    display: flex;
+    justify-content: space-between;
+}
+
