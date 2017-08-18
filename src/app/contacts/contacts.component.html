@@ -1,3 +1,75 @@
-<p>
-  contacts works!
-</p>
+<md-sidenav-container class="big-container">
+
+  <md-sidenav #sidenav class="sidenav-inner">
+    <md-list >
+      <md-list-item (click)="sidenav.close()" style='margin-left:80%;font-size:28px;' > 
+        <i class='ion-close-round'></i> 
+      </md-list-item>
+      <md-list-item routerLink='/home' class='sidenav-items' > Home </md-list-item>
+      <md-list-item routerLink='/cal' class='sidenav-items'> Calendar </md-list-item>
+      <md-list-item routerLink='/contacts' class='sidenav-items' > Contacts </md-list-item>
+      <md-list-item routerLink='/allbarbers' class='sidenav-items' > Barber Profiles </md-list-item>
+      <md-list-item routerLink='/notifications' class='sidenav-items' > Notifications </md-list-item>
+      <md-list-item routerLink='/settings' class='sidenav-items' > Settings </md-list-item>
+      <md-list-item class='sidenav-items' > Logout </md-list-item>
+    </md-list>
+  </md-sidenav>
+
+  <md-toolbar class='main-toolbar'>
+
+    <div class='ionic-button'>
+      <a md-icon-button (click)="sidenav.open()">
+        <i class='ion-navicon icon-size'></i>
+      </a>
+    </div>
+
+    <div class='rest'> 
+      <h2>Contacts</h2>
+    </div>
+
+  </md-toolbar>
+
+  <div>
+    <div class='search-contacts' >
+      <div>
+      <i class='ion-android-search' ></i>
+      <md-input-container>
+        <input mdInput placeholder="Search contacts" >
+      </md-input-container>
+      </div>
+      <div>
+        <button md-icon-button  >
+          <i class='ion-android-person-add icon-size' ></i>
+        </button>
+      </div>
+
+
+    </div>
+    <md-list>
+      <div class='contacts-box' >
+      <md-list-item>
+       <div class='view-contacts-head' >
+          <p class='box-contacts' > Name </p>
+          <p class='box-contacts' > Email </p>
+          <p class='box-contacts' > Username </p>
+        </div>
+      </md-list-item>
+      <md-list-item  *ngFor="let user of users">
+        
+        <div class='view-contacts' >
+          <p class='box-contacts' > {{user.name}} </p>
+          <p class='box-contacts' > {{user.email}} </p>
+          <p class='box-contacts' > {{user.username}} </p>
+           <button style='position:absolute;right:1%;margin-bottom:2%' md-icon-button ><i class='ion-ios-close-empty icon-size' ></i></button> 
+        </div>
+      </md-list-item>
+      </div>
+    </md-list>
+
+
+  </div>
+
+
+
+
+  </md-sidenav-container>

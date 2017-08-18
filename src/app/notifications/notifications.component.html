@@ -1,3 +1,43 @@
-<p>
-  notifications works!
-</p>
+<md-sidenav-container class="big-container">
+
+  <md-sidenav #sidenav class="sidenav-inner">
+    <md-list >
+      <md-list-item (click)="sidenav.close()" style='margin-left:80%;font-size:28px;' > 
+        <i class='ion-close-round'></i> 
+      </md-list-item>
+      <md-list-item routerLink='/home' class='sidenav-items' > Home </md-list-item>
+      <md-list-item routerLink='/cal' class='sidenav-items'> Calendar </md-list-item>
+      <md-list-item routerLink='/contacts' class='sidenav-items' > Contacts </md-list-item>
+      <md-list-item routerLink='/allbarbers' class='sidenav-items' > Barber Profiles </md-list-item>
+      <md-list-item routerLink='/notifications' class='sidenav-items' > Notifications </md-list-item>
+      <md-list-item routerLink='/settings' class='sidenav-items' > Settings </md-list-item>
+      <md-list-item class='sidenav-items' > Logout </md-list-item>
+    </md-list>
+  </md-sidenav>
+
+  <md-toolbar class='main-toolbar'>
+
+    <div class='ionic-button'>
+      <a md-icon-button (click)="sidenav.open()">
+        <i class='ion-navicon icon-size'></i>
+      </a>
+    </div>
+
+    <div class='rest'> 
+      <h2>Notifications</h2>
+    </div>
+
+  </md-toolbar>
+
+
+   <md-list >
+      <md-list-item  class='sidenav-items' > Flagged Appointments </md-list-item>
+      <md-list-item  class='sidenav-items' > Barber Messages and Time Off Request </md-list-item>
+      <md-list-item  class='sidenav-items' > Daily Notifications </md-list-item>
+      <md-list-item  class='sidenav-items' >  </md-list-item>
+      <md-list-item  class='sidenav-items' >  </md-list-item>
+  </md-list>
+
+
+
+  </md-sidenav-container>

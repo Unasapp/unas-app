@@ -1,6 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule, NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
+import { HttpClientModule } from '@angular/common/http';
 import { 
     MdSidenavModule,
     MdToolbarModule,
@@ -8,7 +9,10 @@ import {
     MdListModule,
     MdGridListModule,
     MdTabsModule,
-    MdCardModule
+    MdCardModule,
+    MdTableModule,
+    MdInputModule,
+    MdDialogModule
  } from '@angular/material';
 
 import { routes } from './app.router'
@@ -38,6 +42,7 @@ import { NotificationsComponent } from './notifications/notifications.component'
     BrowserModule,
     NoopAnimationsModule,
     BrowserAnimationsModule,
+    HttpClientModule,
     routes,
     MdSidenavModule,
     MdToolbarModule,
@@ -45,7 +50,10 @@ import { NotificationsComponent } from './notifications/notifications.component'
     MdListModule,
     MdGridListModule,
     MdTabsModule,
-    MdCardModule
+    MdCardModule,
+    MdTableModule,
+    MdInputModule,
+    MdDialogModule
   ],
   providers: [],
   bootstrap: [AppComponent]

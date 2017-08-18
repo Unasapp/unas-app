@@ -1,0 +1,36 @@
+.view-contacts{
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    border-top: 1px solid grey;
+    align-items: center;
+}
+ 
+.box-contacts{
+    display: flex;
+    flex: 1;
+    justify-content: center;
+} 
+
+.view-contacts-head{
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+    align-items: center;
+    font-weight: bold;
+}
+
+.contacts-box{
+    border: 1px solid grey;
+    width: 70%;
+    margin-left: 15%;
+}
+
+.search-contacts{
+    margin-top: 1%;
+    margin-left: 15%;
+    width: 70%;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+}

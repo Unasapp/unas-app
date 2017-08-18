@@ -1,3 +1,66 @@
-<p>
-  allbarbers works!
-</p>
+<md-sidenav-container class="big-container">
+
+  <md-sidenav #sidenav class="sidenav-inner">
+    <md-list >
+      <md-list-item (click)="sidenav.close()" style='margin-left:80%;font-size:28px;' > 
+        <i class='ion-close-round'></i> 
+      </md-list-item>
+      <md-list-item routerLink='/home' class='sidenav-items' > Home </md-list-item>
+      <md-list-item routerLink='/cal' class='sidenav-items'> Calendar </md-list-item>
+      <md-list-item routerLink='/contacts' class='sidenav-items' > Contacts </md-list-item>
+      <md-list-item routerLink='/allbarbers' class='sidenav-items' > Barber Profiles </md-list-item>
+      <md-list-item routerLink='/notifications' class='sidenav-items' > Notifications </md-list-item>
+      <md-list-item routerLink='/settings' class='sidenav-items' > Settings </md-list-item>
+      <md-list-item class='sidenav-items' > Logout </md-list-item>
+    </md-list>
+  </md-sidenav>
+
+  <md-toolbar class='main-toolbar'>
+
+    <div class='ionic-button'>
+      <a md-icon-button (click)="sidenav.open()">
+        <i class='ion-navicon icon-size'></i>
+      </a>
+    </div>
+
+    <div class='rest'> 
+      <h2>Barbers</h2>
+    </div>
+
+  </md-toolbar>
+
+  <div class='allbarbers' >
+
+  <md-card *ngFor="let barber of barbers" class="example-card">
+        <h3 style="text-align:center;">{{ barber.name }}</h3>
+      <img class='profile-pic' src="https://maxcdn.icons8.com/Share/icon/Users//user_male_circle_filled1600.png">
+      <md-card-content>
+        <div class='profile-stat'>
+          <p>Wages:</p>
+          <p>{{barber.address.zipcode}}</p>
+        </div>                                    
+        <div class='profile-stat'>
+          <p>Tips:</p>
+          <p>{{barber.address.geo.lng}}</p>
+        </div>                                    
+        <div class='profile-stat'>
+          <p>Appointments:</p>
+          <p>7</p>
+        </div>                                    
+        <div class='profile-stat'>
+          <p>Completed Appointments:</p>
+          <p>5</p>
+        </div>                                    
+      </md-card-content>
+      <md-card-actions class='profile-actions'>
+        <button md-button>View Stats</button>
+        <button md-button>Make Appointment</button>
+      </md-card-actions>
+    </md-card>
+
+    </div>
+
+
+
+
+  </md-sidenav-container>
