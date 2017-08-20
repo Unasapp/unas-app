@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { MdSidenavModule } from '@angular/material';
 
 
 @Component({
@@ -8,9 +10,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HomeComponent implements OnInit {
 
-  constructor() { }  
+   barbers: any;
+   ifopen: true;
+
+  constructor(private http: HttpClient) { }  
+
 
     ngOnInit() {
- 
+      this.http.get('https://jsonplaceholder.typicode.com/users').subscribe((data) => {
+        this.barbers = data;
+        console.log('users',this.barbers);
+    });
     }
 }

@@ -2,6 +2,9 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule, NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
+import { FormsModule } from '@angular/forms';
+import { AuthService } from './auth/auth.service';
+// import { CallbackComponent } from './callback/callback.component';
 import { 
     MdSidenavModule,
     MdToolbarModule,
@@ -25,6 +28,8 @@ import { AllbarbersComponent } from './allbarbers/allbarbers.component';
 import { BarberComponent } from './barber/barber.component';
 import { SettingsComponent } from './settings/settings.component';
 import { NotificationsComponent } from './notifications/notifications.component';
+import { FilterPipe } from './filter.pipe';
+import { ContactsdialogComponent } from './contactsdialog/contactsdialog.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +41,9 @@ import { NotificationsComponent } from './notifications/notifications.component'
     AllbarbersComponent,
     BarberComponent,
     SettingsComponent,
-    NotificationsComponent
+    NotificationsComponent,
+    FilterPipe,
+    ContactsdialogComponent
   ],
   imports: [
     BrowserModule,
@@ -53,9 +60,13 @@ import { NotificationsComponent } from './notifications/notifications.component'
     MdCardModule,
     MdTableModule,
     MdInputModule,
-    MdDialogModule
+    MdDialogModule,
+    FormsModule
   ],
-  providers: [],
+  entryComponents: [
+    ContactsdialogComponent
+  ],
+  providers: [AuthService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

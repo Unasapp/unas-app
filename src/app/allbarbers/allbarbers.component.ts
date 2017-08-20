@@ -9,6 +9,7 @@ import { HttpClient } from '@angular/common/http';
 export class AllbarbersComponent implements OnInit {
 
   barbers: any;
+  ifopen: true;
 
   constructor(private http: HttpClient) { }
 

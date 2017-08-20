@@ -13,3 +13,7 @@
 .bgi h1{
     font-size: 52px; 
 }
+.login-button{
+    border: 1px solid white;
+    color: white;
+}

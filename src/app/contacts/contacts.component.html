@@ -1,10 +1,27 @@
+  <md-toolbar class='main-toolbar'>
+
+    <div class='ionic-button'>
+      <a md-icon-button (click)="sidenav.toggle()">
+        <i class='ion-navicon icon-size'></i>
+      </a>
+      <!-- <a (click)='ifopen=!ifopen' *ngIf='!ifopen' md-icon-button (click)="sidenav.close()">
+        <i style='font-size:32px;' class='ion-close-round icon-size'></i>
+      </a> -->
+    </div>
+
+    <div class='rest'> 
+      <h2>Contacts</h2>
+    </div>
+
+  </md-toolbar>
+
 <md-sidenav-container class="big-container">
 
-  <md-sidenav #sidenav class="sidenav-inner">
+  <md-sidenav #sidenav mode='push' class="sidenav-inner">
     <md-list >
-      <md-list-item (click)="sidenav.close()" style='margin-left:80%;font-size:28px;' > 
+      <!-- <md-list-item (click)="sidenav.close()" style='margin-left:70%;font-size:20px;' > 
         <i class='ion-close-round'></i> 
-      </md-list-item>
+      </md-list-item> -->
       <md-list-item routerLink='/home' class='sidenav-items' > Home </md-list-item>
       <md-list-item routerLink='/cal' class='sidenav-items'> Calendar </md-list-item>
       <md-list-item routerLink='/contacts' class='sidenav-items' > Contacts </md-list-item>
@@ -15,33 +32,23 @@
     </md-list>
   </md-sidenav>
 
-  <md-toolbar class='main-toolbar'>
-
-    <div class='ionic-button'>
-      <a md-icon-button (click)="sidenav.open()">
-        <i class='ion-navicon icon-size'></i>
-      </a>
-    </div>
-
-    <div class='rest'> 
-      <h2>Contacts</h2>
-    </div>
-
-  </md-toolbar>
 
   <div>
     <div class='search-contacts' >
       <div>
       <i class='ion-android-search' ></i>
       <md-input-container>
-        <input mdInput placeholder="Search contacts" >
+        <form id='filter' >
+          <input name='name' mdInput [(ngModel)]='term'  placeholder="Search contacts" >
+        </form>
       </md-input-container>
       </div>
       <div>
-        <button md-icon-button  >
+        <button md-icon-button (click)='openDialog()' >
           <i class='ion-android-person-add icon-size' ></i>
         </button>
       </div>
+      
 
 
     </div>
@@ -51,16 +58,17 @@
        <div class='view-contacts-head' >
           <p class='box-contacts' > Name </p>
           <p class='box-contacts' > Email </p>
-          <p class='box-contacts' > Username </p>
+          <p class='box-contacts' > Phone Number </p>
         </div>
       </md-list-item>
-      <md-list-item  *ngFor="let user of users">
+
+      <md-list-item  *ngFor="let user of users | filter:term ">
         
         <div class='view-contacts' >
-          <p class='box-contacts' > {{user.name}} </p>
+          <p class='box-contacts' > {{user.name }} </p>
           <p class='box-contacts' > {{user.email}} </p>
-          <p class='box-contacts' > {{user.username}} </p>
-           <button style='position:absolute;right:1%;margin-bottom:2%' md-icon-button ><i class='ion-ios-close-empty icon-size' ></i></button> 
+          <p class='box-contacts' > {{user.phone}} </p>
+           <button (click)='onDelete(user.name)' style='position:absolute;right:1%;margin-bottom:2%' md-icon-button ><i class='ion-ios-close-empty icon-size' ></i></button> 
         </div>
       </md-list-item>
       </div>
