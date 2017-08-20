@@ -2,11 +2,13 @@ ul {list-style-type: none;}
 
 /* Month header */
 .month {
-    padding: 30px 0;
     width: 100%;
-    background: #1abc9c;
+    background: rgba(179, 0, 0,.5);
     display:flex;
-    justify-content: space-between;
+    justify-content: space-around;
+    color: white;
+    font-size: 20px;
+    align-items: center;
 }
 
 /* Weekdays (Mon-Sun) */
