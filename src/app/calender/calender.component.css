@@ -1,0 +1,41 @@
+ul {list-style-type: none;}
+
+/* Month header */
+.month {
+    padding: 30px 0;
+    width: 100%;
+    background: #1abc9c;
+    display:flex;
+    justify-content: space-between;
+}
+
+/* Weekdays (Mon-Sun) */
+.weekdays {
+    background-color:#ddd;
+}
+
+/* Days (1-31) */
+.days {
+    border-top: solid 1px;
+    border-left: solid 1px;
+    background: #eee
+}
+
+.day {
+  border-right: solid 1px;
+  border-bottom: solid 1px;
+
+}
+
+.dayNum {
+  height: 100%;
+  width: 100%;
+  padding: 10px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+
+.weekView {
+  height: 100vh;
+}

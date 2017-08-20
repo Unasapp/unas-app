@@ -1,3 +1,59 @@
-<p>
-  calender works!
-</p>
+<md-tab-group>
+  <md-tab label="Month">
+
+    <div class="month">
+      <a (click)="days('-')">&#10094;</a>
+      <p>{{month}}</p>
+      <a (click)="days('+')">&#10095;</a>
+    </div>
+
+    <md-grid-list cols="7" class="weekdays" rowHeight="50px">
+      <md-grid-tile>Mon</md-grid-tile>
+      <md-grid-tile>Tue</md-grid-tile>
+      <md-grid-tile>Wed</md-grid-tile>
+      <md-grid-tile>Thu</md-grid-tile>
+      <md-grid-tile>Fri</md-grid-tile>
+      <md-grid-tile>Sat</md-grid-tile>
+      <md-grid-tile>Sun</md-grid-tile>
+    </md-grid-list>
+
+    <md-grid-list cols='7' class='days'>
+      <md-grid-tile class='day' *ngFor='let day of days'>
+        <div class='dayNum'>
+          <div>{{day}}</div>
+        </div>
+      </md-grid-tile>
+    </md-grid-list>
+
+  </md-tab>
+
+  <md-tab label="Week">
+    <!-- <div> -->
+      <md-grid-list cols='8'  class="weekView" rowHeight="fit">
+        <md-grid-tile>
+          <md-list>
+            <md-list-item>9am</md-list-item>
+            <md-list-item>10am</md-list-item>
+            <md-list-item>11am</md-list-item>
+            <md-list-item>12pm</md-list-item>
+            <md-list-item>1pm</md-list-item>
+            <md-list-item>2pm</md-list-item>
+            <md-list-item>3pm</md-list-item>
+            <md-list-item>4pm</md-list-item>
+            <md-list-item>5pm</md-list-item>
+            <md-list-item>6pm</md-list-item>
+            <md-list-item>7pm</md-list-item>
+            <md-list-item>8pm</md-list-item>
+            <md-list-item>9pm</md-list-item>
+          </md-list>
+        </md-grid-tile>
+        <md-grid-tile *ngFor='let weekday of weekdays'>
+          <div class='dayNum' style="border: solid 1px">
+            {{weekday}}
+          </div>
+        </md-grid-tile>
+
+      </md-grid-list>
+    <!-- </div> -->
+    </md-tab>
+</md-tab-group>
