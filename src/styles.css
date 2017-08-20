@@ -18,7 +18,7 @@ body{
 .sidenav-inner {
     width: 15%;
     background: white;
-}
+} 
 
 .sidenav-inner :focus{
  outline: none;
@@ -31,7 +31,7 @@ body{
 .main-toolbar{
     background: rgba(128, 0, 0,.9);
     width: 100%;
-    color: white; 
+    color: white;  
 }
 .ionic-button{
     flex:1;
