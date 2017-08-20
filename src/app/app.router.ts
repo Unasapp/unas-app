@@ -18,6 +18,7 @@ export const router: Routes = [
     { path: 'home', component: HomeComponent },
     { path: 'cal', component: CalenderComponent},
     { path: 'contacts', component: ContactsComponent },
+    { path: 'calender', component: CalenderComponent },
     { path: 'allbarbers', component: AllbarbersComponent },
     { path: 'barber', component: BarberComponent },
     { path: 'settings', component: SettingsComponent },
