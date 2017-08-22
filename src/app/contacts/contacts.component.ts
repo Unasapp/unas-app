@@ -27,6 +27,7 @@ w
 
     dialogRef.afterClosed().subscribe(result =>{
       this.dialogResult = result;
+      console.log(result);
 
       if(result !== undefined){
       let newuser = {
