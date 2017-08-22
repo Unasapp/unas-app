@@ -1,0 +1,37 @@
+ <md-toolbar class='main-toolbar'>
+
+    <div class='ionic-button'>
+      <a  md-icon-button  (click)="sidenav.toggle()">
+        <i class='ion-navicon icon-size'></i>
+      </a>
+      <!-- <a (click)='ifopen=!ifopen' *ngIf='!ifopen' md-icon-button (click)="sidenav.toggle()">
+        <i style='font-size:32px;' class='ion-close-round icon-size'></i>
+      </a> -->
+    </div>
+
+    <div class='rest'> 
+      <h2> Reports </h2>
+    </div>
+
+  </md-toolbar>
+
+<md-sidenav-container class="big-container">
+
+  <md-sidenav #sidenav  mode="push" class="sidenav-inner">
+    <md-list >
+      <!-- <md-list-item (click)="sidenav.close()" style='margin-left:70%;font-size:20px;' > 
+        <i class='ion-close-round'></i> 
+      </md-list-item> -->
+      <md-list-item routerLink='/home' class='sidenav-items' > Home </md-list-item>
+      <md-list-item routerLink='/cal' class='sidenav-items'> Calendar </md-list-item>
+      <md-list-item routerLink='/contacts' class='sidenav-items' > Contacts </md-list-item>
+      <md-list-item routerLink='/allbarbers' class='sidenav-items' > Barber Profiles </md-list-item>
+      <md-list-item routerLink='/reports' class='sidenav-items' > Reports </md-list-item>
+      <md-list-item routerLink='/notifications' class='sidenav-items' > Notifications </md-list-item>
+      <md-list-item routerLink='/settings' class='sidenav-items' > Settings </md-list-item>
+      <md-list-item (click)="auth.logout()" class='sidenav-items' > Logout </md-list-item>
+    </md-list>
+  </md-sidenav>
+
+
+  </md-sidenav-container>

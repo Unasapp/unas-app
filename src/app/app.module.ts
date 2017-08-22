@@ -30,6 +30,7 @@ import { SettingsComponent } from './settings/settings.component';
 import { NotificationsComponent } from './notifications/notifications.component';
 import { FilterPipe } from './filter.pipe';
 import { ContactsdialogComponent } from './contactsdialog/contactsdialog.component';
+import { ReportsComponent } from './reports/reports.component';
 
 @NgModule({
   declarations: [
@@ -43,7 +44,8 @@ import { ContactsdialogComponent } from './contactsdialog/contactsdialog.compone
     SettingsComponent,
     NotificationsComponent,
     FilterPipe,
-    ContactsdialogComponent
+    ContactsdialogComponent,
+    ReportsComponent
   ],
   imports: [
     BrowserModule,
