@@ -8,7 +8,7 @@ const express = require('express'),
       cors = require('cors');
 
 const app = express();
- 
+
 app.use(bodyParser.json());
 app.use(session({
   resave: true, //Without this you get a constant warning about default values
@@ -18,26 +18,29 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.use(express.static(__dirname + '/public'));
+app.use(express.static(__dirname + '/dist'));
 
 
 
 /////////////
 // DATABASE //
 /////////////
-const massiveInstance = massive.connectSync({connectionString: config.connectstring})
 
-// postgres://oebdqhdh:1A2Y_mAX5ZiIk4_tFUANeyZbthl2xEZ_@stampy.db.elephantsql.com:5432/oebdqhdh
+massive("postgres://uunjpeyj:yVNsIpBpaTMB_a2TXEss-Gmq1DGSIOte@pellefant.db.elephantsql.com:5432/uunjpeyj").then(massiveInstance => {
+    app.set('db', massiveInstance);
+    const db = app.get('db');
 
-app.set('db', massiveInstance);
-const db = app.get('db');
+    app.get('/api/test', (req,res) => {
+      app.get('db').test_end((err, users) => {
+      }).then(users => res.send(users))
+    })
 
-// db.create_user(function(err, user) {
-//   if (err) console.log(err);
-//   else console.log('CREATED USER');
-//   console.log(user);
-// })
+});
 
+
+
+///AUTH0///
+//----------------//
 
 passport.use(new Auth0Strategy({
    domain:       config.auth0.domain,
@@ -132,6 +135,6 @@ app.get('/auth/logout', function(req, res) {
 })
 
 
-app.listen(8081, function() {
+app.listen( 3000, function() {
   console.log('Connected on 3000')
 })
