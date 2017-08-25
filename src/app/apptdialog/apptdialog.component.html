@@ -1,0 +1,35 @@
+<div>
+  <h2 md-dialog-title >Appt Dialog</h2>
+  <hr>
+  <md-dialog-content>
+<form class="example-form">
+  <table class="example-full-width" cellspacing="0"><tr>
+    <td><md-input-container class="example-full-width">
+      <input mdInput placeholder="First name" name=firstname [(ngModel)]='firstname'>
+    </md-input-container></td>
+    <td><md-input-container class="example-full-width">
+      <input mdInput placeholder="Last Name" name=lastname [(ngModel)]='lastname'>
+    </md-input-container></td>
+  </tr></table>
+
+  <p>
+    <md-input-container class="example-full-width">
+      <textarea mdInput placeholder="Phone Number" name=phonenumber [(ngModel)]='phonenumber'></textarea>
+    </md-input-container>
+    <md-input-container class="example-full-width">
+      <textarea mdInput placeholder="Email" name=email [(ngModel)]='email'></textarea>
+    </md-input-container>
+  </p>
+
+</form>
+
+
+
+  </md-dialog-content>
+
+  <md-dialog-actions>
+    <button md-raised-button (click)='onCloseConfirm(firstname, lastname, phonenumber, email)' > Add </button>
+    <button md-raised-button (click)='onCloseCancel()' > Cancel </button>
+  </md-dialog-actions>
+
+</div>

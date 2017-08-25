@@ -5,7 +5,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { AuthService } from './auth/auth.service';
 // import { CallbackComponent } from './callback/callback.component';
-import { 
+import {
     MdSidenavModule,
     MdToolbarModule,
     MdButtonModule,
@@ -30,6 +30,8 @@ import { SettingsComponent } from './settings/settings.component';
 import { NotificationsComponent } from './notifications/notifications.component';
 import { FilterPipe } from './filter.pipe';
 import { ContactsdialogComponent } from './contactsdialog/contactsdialog.component';
+import { CashoutdialogComponent } from './cashoutdialog/cashoutdialog.component';
+import { ApptdialogComponent } from './apptdialog/apptdialog.component';
 
 @NgModule({
   declarations: [
@@ -43,7 +45,9 @@ import { ContactsdialogComponent } from './contactsdialog/contactsdialog.compone
     SettingsComponent,
     NotificationsComponent,
     FilterPipe,
-    ContactsdialogComponent
+    ContactsdialogComponent,
+    CashoutdialogComponent,
+    ApptdialogComponent
   ],
   imports: [
     BrowserModule,
@@ -64,7 +68,9 @@ import { ContactsdialogComponent } from './contactsdialog/contactsdialog.compone
     FormsModule
   ],
   entryComponents: [
-    ContactsdialogComponent
+    ContactsdialogComponent,
+    CashoutdialogComponent,
+    ApptdialogComponent
   ],
   providers: [AuthService],
   bootstrap: [AppComponent]

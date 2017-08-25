@@ -9,8 +9,18 @@
       </a> -->
     </div>
 
-    <div class='rest'> 
+    <div class='rest'>
       <h2>Shop Name</h2>
+    </div>
+    <div>
+      <button md-icon-button (click)='openCashDialog()' >
+        <i class='ion-pricetag icon-size' ></i>
+      </button>
+    </div>
+    <div>
+      <button md-icon-button (click)='openApptDialog()' >
+        <i class='ion-calendar icon-size' ></i>
+      </button>
     </div>
 
   </md-toolbar>
@@ -19,8 +29,8 @@
 
   <md-sidenav #sidenav  mode="push" class="sidenav-inner">
     <md-list >
-      <!-- <md-list-item (click)="sidenav.close()" style='margin-left:70%;font-size:20px;' > 
-        <i class='ion-close-round'></i> 
+      <!-- <md-list-item (click)="sidenav.close()" style='margin-left:70%;font-size:20px;' >
+        <i class='ion-close-round'></i>
       </md-list-item> -->
       <md-list-item routerLink='/home' class='sidenav-items' > Home </md-list-item>
       <md-list-item routerLink='/cal' class='sidenav-items'> Calendar </md-list-item>
@@ -56,7 +66,7 @@
                    Wages: $3400
                   </div>
                 </div>
-                
+
               </md-grid-tile>
               <md-grid-tile class='top-tiles' >
                 <div >
@@ -90,11 +100,11 @@
                    Pending Appointments: 13
                   </div>
                 </div>
-                
+
               </md-grid-tile>
         </md-grid-list>
       </md-tab>
-      
+
       <md-tab label="This Week">
         <md-grid-list class='grid-size' cols="3" rowHeight="3:1">
               <md-grid-tile class='top-tiles' >
@@ -113,7 +123,7 @@
                    Wages: $9000
                   </div>
                 </div>
-                
+
               </md-grid-tile>
               <md-grid-tile class='top-tiles' >
                 <div >
@@ -147,7 +157,7 @@
                    Pending Appointments: 13
                   </div>
                 </div>
-                
+
               </md-grid-tile>
         </md-grid-list>
       </md-tab>
@@ -169,7 +179,7 @@
                    Wages: $3400
                   </div>
                 </div>
-                
+
               </md-grid-tile>
               <md-grid-tile class='top-tiles' >
                 <div >
@@ -203,7 +213,7 @@
                    Pending Appointments: 13
                   </div>
                 </div>
-                
+
               </md-grid-tile>
         </md-grid-list>
       </md-tab>
@@ -220,26 +230,26 @@
         <div class='profile-stat'>
           <p>Wages:</p>
           <p>{{barber.address.zipcode}}</p>
-        </div>                                    
+        </div>
         <div class='profile-stat'>
           <p>Tips:</p>
           <p>{{barber.address.geo.lng}}</p>
-        </div>                                    
+        </div>
         <div class='profile-stat'>
           <p>Appointments:</p>
           <p>7</p>
-        </div>                                    
+        </div>
         <div class='profile-stat'>
           <p>Completed Appointments:</p>
           <p>5</p>
-        </div>                                    
+        </div>
       </md-card-content>
       <md-card-actions class='profile-actions'>
         <button md-button>View Stats</button>
         <button md-button>Make Appointment</button>
       </md-card-actions>
     </md-card>
-   
+
 
 
   </div>
