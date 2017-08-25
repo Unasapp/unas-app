@@ -1,0 +1,33 @@
+.reports-box{
+    border: 1px solid grey;
+    width: 90%;
+    margin-left: 5%;
+}
+
+.view-reports{
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    border-top: 1px solid grey;
+    align-items: center;
+}
+ 
+.box-reports{
+    display: flex;
+    flex: 1;
+    justify-content: center;
+} 
+
+.view-reports-head{
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+    align-items: center;
+    font-weight: bold;
+}
+.box-reports-head{
+    display: flex;
+    flex: 1;
+    justify-content: center;
+    border-right: 1px solid black; 
+}

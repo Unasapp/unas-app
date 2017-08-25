@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { MdSidenavModule } from '@angular/material';
 import { AuthService } from '../auth/auth.service';
 
 @Component({
