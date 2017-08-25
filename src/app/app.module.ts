@@ -30,6 +30,7 @@ import { SettingsComponent } from './settings/settings.component';
 import { NotificationsComponent } from './notifications/notifications.component';
 import { FilterPipe } from './filter.pipe';
 import { ContactsdialogComponent } from './contactsdialog/contactsdialog.component';
+import { ReportsComponent } from './reports/reports.component';
 import { CashoutdialogComponent } from './cashoutdialog/cashoutdialog.component';
 import { ApptdialogComponent } from './apptdialog/apptdialog.component';
 
@@ -46,6 +47,7 @@ import { ApptdialogComponent } from './apptdialog/apptdialog.component';
     NotificationsComponent,
     FilterPipe,
     ContactsdialogComponent,
+    ReportsComponent,
     CashoutdialogComponent,
     ApptdialogComponent
   ],

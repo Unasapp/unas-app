@@ -29,7 +29,7 @@ body{
 }
 
 .main-toolbar{
-    background: rgba(128, 0, 0,.9);
+    background: #ff4d4d;
     width: 100%;
     color: white;  
 }

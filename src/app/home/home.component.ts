@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { MdDialog, MdDialogRef } from '@angular/material';
 import { CashoutdialogComponent } from '../cashoutdialog/cashoutdialog.component';
 import { ApptdialogComponent } from '../apptdialog/apptdialog.component';
-
+import { AuthService } from '../auth/auth.service';
 
 @Component({
   selector: 'app-home',
@@ -11,11 +11,11 @@ import { ApptdialogComponent } from '../apptdialog/apptdialog.component';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
-
+   profile: any;
    barbers: any;
    ifopen: true;
 
-  constructor(private http: HttpClient, public dialog: MdDialog) { }
+  constructor(private http: HttpClient, public dialog: MdDialog, public auth: AuthService) { }
 
   openCashDialog() {
     let dialogRef = this.dialog.open(CashoutdialogComponent,{
@@ -31,9 +31,14 @@ export class HomeComponent implements OnInit {
   }
 
     ngOnInit() {
-      this.http.get('https://jsonplaceholder.typicode.com/users').subscribe((data) => {
-        this.barbers = data;
-        console.log('users',this.barbers);
+    //   this.http.get('https://penguinhousedesigns.auth0.com/userinfo').subscribe((res)=>{
+    //   console.log('this is user data',res);
+    // })
+    this.http.get('https://jsonplaceholder.typicode.com/users').subscribe((data) => {
+      this.barbers = data;
+      // console.log('users',this.barbers);
     });
+    this.auth.handleAuthentication()
+
     }
 }

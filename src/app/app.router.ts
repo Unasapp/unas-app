@@ -10,6 +10,8 @@ import { AllbarbersComponent } from './allbarbers/allbarbers.component';
 import { BarberComponent } from './barber/barber.component';
 import { SettingsComponent } from './settings/settings.component';
 import { NotificationsComponent } from './notifications/notifications.component';
+import { ReportsComponent } from './reports/reports.component';
+
 
 
 export const router: Routes = [
@@ -22,9 +24,9 @@ export const router: Routes = [
     { path: 'allbarbers', component: AllbarbersComponent },
     { path: 'barber', component: BarberComponent },
     { path: 'settings', component: SettingsComponent },
+    { path: 'reports', component: ReportsComponent },
     { path: 'notifications', component: NotificationsComponent }
-
-
+    
 ]
 
 export const routes: ModuleWithProviders = RouterModule.forRoot(router)
