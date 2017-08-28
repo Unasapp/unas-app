@@ -1,3 +1,5 @@
+ /* @import "./fullcalendar/fullcalendar.min.css";  */
+
 ul {list-style-type: none;}
 
 /* Month header */
@@ -40,4 +42,10 @@ ul {list-style-type: none;}
 
 .weekView {
   height: 100vh;
+}
+
+.calendar-view{
+  padding-top: 1%;
+  height: 120%;
+  overflow: hidden;  
 }

@@ -11,7 +11,7 @@ import { FilterPipe } from '../filter.pipe'
   styleUrls: ['./contacts.component.css']
 })
 export class ContactsComponent implements OnInit {
-w
+
   name: any;
   ifopen: true;
   users: any;

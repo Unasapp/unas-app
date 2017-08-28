@@ -18,7 +18,7 @@
 <md-sidenav-container class="big-container">
 
   <md-sidenav #sidenav mode='push' class="sidenav-inner">
-    <md-list >
+       <md-list >
       <!-- <md-list-item (click)="sidenav.close()" style='margin-left:70%;font-size:20px;' > 
         <i class='ion-close-round'></i> 
       </md-list-item> -->
@@ -26,71 +26,50 @@
       <md-list-item routerLink='/cal' class='sidenav-items'> Calendar </md-list-item>
       <md-list-item routerLink='/contacts' class='sidenav-items' > Contacts </md-list-item>
       <md-list-item routerLink='/allbarbers' class='sidenav-items' > Barber Profiles </md-list-item>
+      <md-list-item routerLink='/reports' class='sidenav-items' > Reports </md-list-item>
       <md-list-item routerLink='/notifications' class='sidenav-items' > Notifications </md-list-item>
       <md-list-item routerLink='/settings' class='sidenav-items' > Settings </md-list-item>
-      <md-list-item class='sidenav-items' > Logout </md-list-item>
+      <md-list-item (click)="auth.logout()" class='sidenav-items' > Logout </md-list-item>
     </md-list>
   </md-sidenav>
 
-<md-tab-group>
-  <md-tab  label="Month">
+  <div class='calendar-view' >
 
-    <div class="month">
-      <a (click)="days('-')">&#10094;</a>
-      <p>{{month}}</p>
-      <a (click)="days('+')">&#10095;</a>
-    </div>
+     <angular2-fullcalendar [options]="calendarOptions"></angular2-fullcalendar>
 
-    <md-grid-list cols="7" class="weekdays" rowHeight="50px">
-      <md-grid-tile>Mon</md-grid-tile>
-      <md-grid-tile>Tue</md-grid-tile>
-      <md-grid-tile>Wed</md-grid-tile>
-      <md-grid-tile>Thu</md-grid-tile>
-      <md-grid-tile>Fri</md-grid-tile>
-      <md-grid-tile>Sat</md-grid-tile>
-      <md-grid-tile>Sun</md-grid-tile>
-    </md-grid-list>
-
-    <md-grid-list cols='7' class='days'>
-      <md-grid-tile class='day' *ngFor='let day of days'>
-        <div class='dayNum'>
-          <div>{{day}}</div>
-        </div>
-      </md-grid-tile>
-    </md-grid-list>
-
-  </md-tab>
-
-  <md-tab label="Week">
-    <!-- <div> -->
-      <md-grid-list cols='8'  class="weekView" rowHeight="fit">
-        <md-grid-tile>
-          <md-list>
-            <md-list-item>9am</md-list-item>
-            <md-list-item>10am</md-list-item>
-            <md-list-item>11am</md-list-item>
-            <md-list-item>12pm</md-list-item>
-            <md-list-item>1pm</md-list-item>
-            <md-list-item>2pm</md-list-item>
-            <md-list-item>3pm</md-list-item>
-            <md-list-item>4pm</md-list-item>
-            <md-list-item>5pm</md-list-item>
-            <md-list-item>6pm</md-list-item>
-            <md-list-item>7pm</md-list-item>
-            <md-list-item>8pm</md-list-item>
-            <md-list-item>9pm</md-list-item>
-          </md-list>
-        </md-grid-tile>
-        <md-grid-tile *ngFor='let weekday of weekdays'>
-          <div class='dayNum' style="border: solid 1px">
-            {{weekday}}
-          </div>
-        </md-grid-tile>
-
-      </md-grid-list>
-    <!-- </div> -->
-    </md-tab>
-</md-tab-group>
-
+  </div>
 
 </md-sidenav-container>
+
+
+
+
+
+
+ <!-- <div  >
+
+      <div class="month">
+        <a (click)="days('-')">&#10094;</a>
+        <p>{{month}}</p>
+        <a (click)="days('+')">&#10095;</a>
+      </div>
+
+      <md-grid-list cols="7" class="weekdays" rowHeight="30px">
+        <md-grid-tile>Mon</md-grid-tile>
+        <md-grid-tile>Tue</md-grid-tile>
+        <md-grid-tile>Wed</md-grid-tile>
+        <md-grid-tile>Thu</md-grid-tile>
+        <md-grid-tile>Fri</md-grid-tile>
+        <md-grid-tile>Sat</md-grid-tile>
+        <md-grid-tile>Sun</md-grid-tile>
+      </md-grid-list>
+      
+      <md-grid-list cols='7' class='days'>
+        <md-grid-tile class='day' *ngFor='let day of days'>
+          <div class='dayNum'>
+            <div>{{day}}</div>
+          </div>
+        </md-grid-tile>
+      </md-grid-list>
+
+    </div> -->
