@@ -16,7 +16,11 @@ import {
     MdCardModule,
     MdTableModule,
     MdInputModule,
-    MdDialogModule
+    MdDialogModule,
+    MdDatepickerModule,
+    MdRadioModule,
+    MdSelectModule,
+    MdNativeDateModule
  } from '@angular/material';
 
 import { routes } from './app.router'
@@ -68,9 +72,13 @@ import { ApptdialogComponent } from './apptdialog/apptdialog.component';
     MdTableModule,
     MdInputModule,
     MdDialogModule,
+    MdDatepickerModule,
     FormsModule,
     CommonModule,
-    CalendarModule
+    CalendarModule,
+    MdRadioModule,
+    MdSelectModule,
+    MdNativeDateModule
   ],
   entryComponents: [
     ContactsdialogComponent,
