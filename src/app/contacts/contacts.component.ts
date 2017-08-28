@@ -3,6 +3,8 @@ import { HttpClient } from '@angular/common/http';
 import { MdDialog, MdDialogRef } from '@angular/material';
 import { ContactsdialogComponent } from '../contactsdialog/contactsdialog.component'
 import { FilterPipe } from '../filter.pipe'
+import { CashoutdialogComponent } from '../cashoutdialog/cashoutdialog.component';
+import { ApptdialogComponent } from '../apptdialog/apptdialog.component';
 
 
 @Component({
@@ -19,6 +21,19 @@ export class ContactsComponent implements OnInit {
   deleted: any;
   constructor(private http: HttpClient, public dialog: MdDialog) { }
 
+  openCashDialog() {
+    let dialogRef = this.dialog.open(CashoutdialogComponent,{
+      width: '600px',
+      data: 'this text is passed'
+    })
+  }
+  openApptDialog() {
+    let dialogRef = this.dialog.open(ApptdialogComponent,{
+      width: '600px',
+      data: 'this text is passed'
+    })
+  }
+  
   openDialog() {
     let dialogRef = this.dialog.open(ContactsdialogComponent,{
       width: '600px',
