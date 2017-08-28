@@ -16,6 +16,7 @@ export class ContactsdialogComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    
   }
 
   onCloseConfirm(firstname, lastname, phonenumber, email){
