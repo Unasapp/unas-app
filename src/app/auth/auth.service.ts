@@ -63,8 +63,6 @@ export class AuthService {
     localStorage.setItem('id_token', authResult.idToken);
     localStorage.setItem('expires_at', expiresAt);
 
-
-
   }
 
   public logout(): void {

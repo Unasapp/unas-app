@@ -17,9 +17,11 @@ import {
     MdTableModule,
     MdInputModule,
     MdDialogModule,
+    MdDatepickerModule,
     MdRadioModule,
-    MdSliderModule,
-    MdSelectModule
+    MdSelectModule,
+    MdNativeDateModule,
+    MdSliderModule
  } from '@angular/material';
 
 import { routes } from './app.router'
@@ -71,12 +73,14 @@ import { BarberDetailsComponent } from './barber-details/barber-details.componen
     MdTableModule,
     MdInputModule,
     MdDialogModule,
+    MdDatepickerModule,
     FormsModule,
     CommonModule,
     CalendarModule,
     MdRadioModule,
-    MdSliderModule,
-    MdSelectModule
+    MdSelectModule,
+    MdNativeDateModule,
+    MdSliderModule
   ],
   entryComponents: [
     ContactsdialogComponent,

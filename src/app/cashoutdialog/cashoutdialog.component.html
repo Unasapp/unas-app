@@ -1,35 +1,100 @@
 <div>
-  <h2 md-dialog-title >Cashout Dialog</h2>
+  <h2 md-dialog-title>Checkout</h2>
   <hr>
+
   <md-dialog-content>
-<form class="example-form">
-  <table class="example-full-width" cellspacing="0"><tr>
-    <td><md-input-container class="example-full-width">
-      <input mdInput placeholder="First name" name=firstname [(ngModel)]='firstname'>
-    </md-input-container></td>
-    <td><md-input-container class="example-full-width">
-      <input mdInput placeholder="Last Name" name=lastname [(ngModel)]='lastname'>
-    </md-input-container></td>
-  </tr></table>
+    <form class="example-form">
+      <table class="example-full-width" cellspacing="0">
+        <tr>
+          <td>
+            <md-input-container class="example-full-width">
+              <input mdInput placeholder="First name" name=firstname [(ngModel)]='firstname'>
+            </md-input-container>
+          </td>
+          <td>
+            <md-input-container class="example-full-width">
+              <input mdInput placeholder="Last Name" name=lastname [(ngModel)]='lastname'>
+            </md-input-container>
+          </td>
+        </tr>
+      </table>
 
-  <p>
-    <md-input-container class="example-full-width">
-      <textarea mdInput placeholder="Phone Number" name=phonenumber [(ngModel)]='phonenumber'></textarea>
-    </md-input-container>
-    <md-input-container class="example-full-width">
-      <textarea mdInput placeholder="Email" name=email [(ngModel)]='email'></textarea>
-    </md-input-container>
-  </p>
+      <p>
+        <md-input-container class="example-full-width">
+          <textarea style='resize: none;' mdInput placeholder="Phone Number" name=phonenumber [(ngModel)]='phonenumber'></textarea>
+        </md-input-container>
+        <md-input-container class="example-full-width">
+          <textarea style='resize: none;' mdInput placeholder="Email" name=email [(ngModel)]='email'></textarea>
+        </md-input-container>
+      </p>
 
-</form>
+      <h2 md-dialog-title>Service Information</h2>
+      <hr>
+      <br>
+      <table class="example-full-width" cellspacing="0">
+        <tr>
+          <td>
+            <md-select placeholder="Type of Service">
+              <md-option *ngFor="let service of services" [value]="service.value">
+                {{ service.viewValue }}
+              </md-option>
+            </md-select>
+          </td>
+          <td>
+            <md-select placeholder="Barber">
+              <md-option *ngFor="let barber of barbers" [value]="barber.value">
+                {{ barber.viewValue }}
+              </md-option>
+            </md-select>
+          </td>
+        </tr>
+      </table>
+      
+      <br>
 
+      <h2 md-dialog-title>Payment</h2>
+      <hr>
 
+      <table class="example-full-width" cellspacing="0">
+        <tr>
+          <td>
+            <md-input-container class="example-full-width">
+              <input mdInput placeholder="Price" name=price [(ngModel)]='price'>
+            </md-input-container>
+          </td>
+          <td>
+            <md-input-container class="example-full-width">
+              <input mdInput placeholder="Tip" name=tip [(ngModel)]='tip'>
+            </md-input-container>
+          </td>
+          <td>
+            <md-input-container class="example-full-width">
+              <input mdInput placeholder="Amount Paid" name=amtpaid [(ngModel)]='amtpaid'>
+            </md-input-container>
+          </td>
+        </tr>
+      </table>
+
+      <table class="example-full-width" cellspacing="0">
+        <tr>
+          <td>
+            <md-radio-group>
+              <md-radio-button value="1">Cash</md-radio-button><br><br>
+              <md-radio-button value="2">Credit/Debit</md-radio-button>
+            </md-radio-group>
+          </td>
+        </tr>
+      </table>
+
+    </form>
+
+    <br>
 
   </md-dialog-content>
 
   <md-dialog-actions>
-    <button md-raised-button (click)='onCloseConfirm(firstname, lastname, phonenumber, email)' > Add </button>
-    <button md-raised-button (click)='onCloseCancel()' > Cancel </button>
+    <button md-raised-button (click)='onCloseConfirm(firstname, lastname, phonenumber, email)'> Submit </button>
+    <button md-raised-button (click)='onCloseCancel()'> Cancel </button>
   </md-dialog-actions>
 
 </div>
