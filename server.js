@@ -47,7 +47,6 @@ massive("postgres://uunjpeyj:yVNsIpBpaTMB_a2TXEss-Gmq1DGSIOte@pellefant.db.eleph
       }).then(cards => res.send(cards))
     })
 
-
 });
 
 

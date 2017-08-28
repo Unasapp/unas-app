@@ -20,7 +20,8 @@ import {
     MdDatepickerModule,
     MdRadioModule,
     MdSelectModule,
-    MdNativeDateModule
+    MdNativeDateModule,
+    MdSliderModule
  } from '@angular/material';
 
 import { routes } from './app.router'
@@ -30,7 +31,6 @@ import { LoginComponent } from './login/login.component';
 import { CalenderComponent } from './calender/calender.component';
 import { ContactsComponent } from './contacts/contacts.component';
 import { AllbarbersComponent } from './allbarbers/allbarbers.component';
-import { BarberComponent } from './barber/barber.component';
 import { SettingsComponent } from './settings/settings.component';
 import { NotificationsComponent } from './notifications/notifications.component';
 import { FilterPipe } from './filter.pipe';
@@ -38,6 +38,7 @@ import { ContactsdialogComponent } from './contactsdialog/contactsdialog.compone
 import { ReportsComponent } from './reports/reports.component';
 import { CashoutdialogComponent } from './cashoutdialog/cashoutdialog.component';
 import { ApptdialogComponent } from './apptdialog/apptdialog.component';
+import { BarberDetailsComponent } from './barber-details/barber-details.component';
 
 @NgModule({
   declarations: [
@@ -47,14 +48,14 @@ import { ApptdialogComponent } from './apptdialog/apptdialog.component';
     CalenderComponent,
     ContactsComponent,
     AllbarbersComponent,
-    BarberComponent,
     SettingsComponent,
     NotificationsComponent,
     FilterPipe,
     ContactsdialogComponent,
     ReportsComponent,
     CashoutdialogComponent,
-    ApptdialogComponent
+    ApptdialogComponent,
+    BarberDetailsComponent
   ],
   imports: [
     BrowserModule,
@@ -78,7 +79,8 @@ import { ApptdialogComponent } from './apptdialog/apptdialog.component';
     CalendarModule,
     MdRadioModule,
     MdSelectModule,
-    MdNativeDateModule
+    MdNativeDateModule,
+    MdSliderModule
   ],
   entryComponents: [
     ContactsdialogComponent,
