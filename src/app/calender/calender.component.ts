@@ -1,6 +1,9 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import * as moment from 'moment';
 import { CalendarComponent } from "ap-angular2-fullcalendar";
+import { MdDialog, MdDialogRef } from '@angular/material';
+import { CashoutdialogComponent } from '../cashoutdialog/cashoutdialog.component';
+import { ApptdialogComponent } from '../apptdialog/apptdialog.component';
 
 @Component({
   selector: 'app-calender',
@@ -46,7 +49,20 @@ export class CalenderComponent implements OnInit {
     return daysArr
   }()
 
-  constructor() { }
+  constructor(public dialog: MdDialog) { }
+
+  openCashDialog() {
+    let dialogRef = this.dialog.open(CashoutdialogComponent,{
+      width: '600px',
+      data: 'this text is passed'
+    })
+  }
+  openApptDialog() {
+    let dialogRef = this.dialog.open(ApptdialogComponent,{
+      width: '600px',
+      data: 'this text is passed'
+    })
+  }
 
   @ViewChild(CalendarComponent) myCalendar: CalendarComponent;
 
@@ -129,7 +145,7 @@ export class CalenderComponent implements OnInit {
               color  : 'grey'
           }
         ]
-      
+
 
       };
 

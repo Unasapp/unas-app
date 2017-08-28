@@ -10,6 +10,22 @@ import { MD_DIALOG_DATA } from '@angular/material';
 })
 export class CashoutdialogComponent implements OnInit {
 
+  barbers = [
+    {value: 'harry-0', viewValue: 'Harry'},
+    {value: 'dominic-1', viewValue: 'Dominic'},
+    {value: 'andrew-2', viewValue: 'Andrew'}
+  ];
+
+  services = [
+    {value: 'haircut-0', viewValue: 'Haircut'},
+    {value: 'beardtrim-1', viewValue: 'Beard Trim'},
+    {value: 'lineup-2', viewValue: 'Line-up'},
+    {value: 'fade-3', viewValue: 'Fade'},
+    {value: 'shave-4', viewValue: 'Traditional Shave'}
+  ];
+
+
+
 constructor(
   public dialogRef: MdDialogRef<CashoutdialogComponent>,
   @Inject(MD_DIALOG_DATA) public data: any
