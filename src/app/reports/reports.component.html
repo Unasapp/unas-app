@@ -47,35 +47,32 @@
 
   <md-tab-group>
 
-    <md-tab label="Daily Wages">
+    <md-tab label="Transcations">
         <md-list>
           <div class='reports-box' >
           <md-list-item>
             <div class='view-reports-head'>
               <div class='box-reports-head'> Appt Date </div>
-              <div class='box-reports-head'> Checkout </div>
+              <div class='box-reports-head'> Barber </div>
               <div class='box-reports-head'> Client </div>
               <div class='box-reports-head'> Service </div>
-              <div class='box-reports-head'> Srvc Provider </div>
               <div class='box-reports-head'> Price </div>
               <div class='box-reports-head'> Tip </div>
-              <div class='box-reports-head'> Amount Paid </div>
-              <div style='border: none;' class='box-reports-head' > Pymt Method </div>
+              <div class='box-reports-head' > Pymt Method </div>
+              <div style='border: none;' class='box-reports-head'> Amount Paid </div>
             </div>
           </md-list-item>
 
-          <md-list-item >
-
+          <md-list-item *ngFor='let x of report' >
             <div class='view-reports' >
-              <p class='box-reports' > Day </p>
-              <p class='box-reports' > Cash </p>
-              <p class='box-reports' > Check </p>
+              <p class='box-reports' > {{x.date }} </p>
+              <p class='box-reports' > {{ x.b_first }}  {{ x.b_last }} </p>
+              <p class='box-reports' > {{ x.c_first }}  {{ x.c_last }} </p>
+              <p class='box-reports' > {{ x.service }} </p>
+              <p class='box-reports' > {{ x.price }} </p>
+              <p class='box-reports' > {{ x.tip }} </p>
               <p class='box-reports' > Credit </p>
-              <p class='box-reports' > Debit </p>
-              <p class='box-reports' > Deposit </p>
-              <p class='box-reports' > Gift </p>
-              <p class='box-reports' > Total </p>
-              <p class='box-reports' > Total </p>
+              <p class='box-reports' > {{ x.total }} </p>
             </div>
           </md-list-item>
           </div>
@@ -84,13 +81,68 @@
     </md-tab>
 
 
-    <md-tab label="Weekly">
-      <h1>Some more tab content</h1>
-      <p>...</p>
+    <md-tab label="Time Cards">
+      <md-list>
+          <div class='reports-box' >
+          <md-list-item>
+            <div class='view-reports-head'>
+              <div class='box-reports-head'> Barber </div>
+              <div class='box-reports-head'> Clock-in </div>
+              <div style='border: none;' class='box-reports-head'> Clock-out </div>
+            </div>
+          </md-list-item>
+
+          <md-list-item *ngFor='let y of timecards' >
+            <div class='view-reports' >
+              <p class='box-reports' > {{ y.b_first }}  {{ y.b_last }} </p>
+              <p class='box-reports' > {{ y.in }} </p>
+              <p class='box-reports' > {{ y.out }} </p>
+            </div>
+          </md-list-item>
+          </div>
+      </md-list>
     </md-tab>
-    <md-tab label="Monthly">
-      <h1>Some more tab content</h1>
-      <p>...</p>
+
+    <md-tab label="Barber Earnings">
+      <div class='report-head-earn' > Angust 2017 </div>
+      <md-list>
+          <div class='reports-box' >
+          <md-list-item>
+            <div class='view-reports-head'>
+              <div class='box-reports-head'> Day </div>
+              <div class='box-reports-head'> Harry Vu </div>
+              <div class='box-reports-head'> Dom DeCicco </div>
+              <div style='border: none;' class='box-reports-head'> Andrew Chen </div>
+            </div>
+          </md-list-item>
+
+          <md-list-item style="height: 100px;" *ngFor='let e of Earnings' >
+            <div class='view-reports-earn' >
+
+              <div class='box-reports-earn' > {{ e.day }} </div>
+              <div class='box-reports-earn' > 
+                <div>Total Earnings: {{ e.harry.total | currency:'USD':true }} </div> 
+                 <div>Shop Comission: {{ e.harry.s_com | currency:'USD':true  }}  </div>
+                <div>Barber Comission: {{ e.harry.b_com | currency:'USD':true  }} </div>
+                <div>Tips: {{ e.harry.tips | currency:'USD':true  }} </div> 
+              </div>
+              <div class='box-reports-earn' > 
+                <div>Total Earnings: {{ e.dom.total | currency:'USD':true  }} </div>
+                 <div>Shop Comission: {{ e.dom.s_com | currency:'USD':true  }} </div>
+                <div>Barber Comission: {{ e.dom.b_com | currency:'USD':true  }} </div>
+                <div>Tips: {{ e.dom.tips | currency:'USD':true  }} </div> 
+              </div>
+              <div class='box-reports-earn' > 
+                <div>Total Earnings: {{ e.drew.total | currency:'USD':true  }} </div>
+                 <div>Shop Comission: {{ e.drew.s_com | currency:'USD':true  }}</div>
+                <div>Barber Comission: {{ e.drew.b_com | currency:'USD':true  }} </div>
+                <div>Tips: {{ e.drew.tips | currency:'USD':true  }} </div> 
+              </div>
+            </div>
+          </md-list-item>
+          </div>
+      </md-list>
+      
     </md-tab>
     <md-tab label="Product">
       <h1>Some more tab content</h1>
