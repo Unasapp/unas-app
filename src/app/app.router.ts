@@ -18,7 +18,7 @@ export const router: Routes = [
     { path: '', redirectTo: 'login', pathMatch: 'full'},
     { path: 'login', component: LoginComponent},
     { path: 'home', component: HomeComponent },
-    { path: 'cal', component: CalenderComponent},
+    { path: 'cal', component: CalenderComponent },
     { path: 'contacts', component: ContactsComponent },
     { path: 'calender', component: CalenderComponent },
     { path: 'allbarbers', component: AllbarbersComponent },
