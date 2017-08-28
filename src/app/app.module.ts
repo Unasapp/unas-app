@@ -6,7 +6,7 @@ import { FormsModule } from '@angular/forms';
 import { AuthService } from './auth/auth.service';
 import { CommonModule } from '@angular/common';
 import { CalendarModule } from "ap-angular2-fullcalendar";
-import { 
+import {
     MdSidenavModule,
     MdToolbarModule,
     MdButtonModule,
@@ -32,6 +32,8 @@ import { NotificationsComponent } from './notifications/notifications.component'
 import { FilterPipe } from './filter.pipe';
 import { ContactsdialogComponent } from './contactsdialog/contactsdialog.component';
 import { ReportsComponent } from './reports/reports.component';
+import { CashoutdialogComponent } from './cashoutdialog/cashoutdialog.component';
+import { ApptdialogComponent } from './apptdialog/apptdialog.component';
 
 @NgModule({
   declarations: [
@@ -46,7 +48,9 @@ import { ReportsComponent } from './reports/reports.component';
     NotificationsComponent,
     FilterPipe,
     ContactsdialogComponent,
-    ReportsComponent
+    ReportsComponent,
+    CashoutdialogComponent,
+    ApptdialogComponent
   ],
   imports: [
     BrowserModule,
@@ -69,7 +73,9 @@ import { ReportsComponent } from './reports/reports.component';
     CalendarModule
   ],
   entryComponents: [
-    ContactsdialogComponent
+    ContactsdialogComponent,
+    CashoutdialogComponent,
+    ApptdialogComponent
   ],
   providers: [AuthService],
   bootstrap: [AppComponent]
