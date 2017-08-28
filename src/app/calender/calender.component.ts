@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import * as moment from 'moment';
+import { CalendarComponent } from "ap-angular2-fullcalendar";
 
 @Component({
   selector: 'app-calender',
@@ -7,6 +8,7 @@ import * as moment from 'moment';
   styleUrls: ['./calender.component.css']
 })
 export class CalenderComponent implements OnInit {
+
   weekdays = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
   month = moment().format('MMMM')
   year = moment().format("YYYY")
@@ -46,7 +48,96 @@ export class CalenderComponent implements OnInit {
 
   constructor() { }
 
+  @ViewChild(CalendarComponent) myCalendar: CalendarComponent;
+
+    changeCalendarView(view) {
+      this.myCalendar.fullCalendar('changeView', view);
+    }
+
+   calendarOptions:Object = {
+        height: 'parent',
+        header: {
+            left:  'today prev,next',
+            center:   'title',
+            right: 'month,agendaWeek,agendaDay,list'
+        },
+        events: [
+          {
+              title  : 'Hair Cut',
+              start  : new Date(),
+              end    : new Date(),
+              color  : 'blue'
+          },
+          {
+              title  : 'Beared Shave',
+              start  : new Date(),
+              end    : new Date(),
+              color  : 'red'
+          },
+          {
+              title  : 'Hair Cut',
+              start  : new Date(),
+              end    : new Date(),
+              color  : 'green'
+          },
+          {
+              title  : 'Hair Cut',
+              start  : 'Sun Aug 24 2017 21:59:49 GMT-0600 (MDT)',
+              end    : 'Sun Aug 24 2017 21:59:49 GMT-0600 (MDT)',
+              color  : 'green'
+          },
+          {
+              title  : 'Hair Cut',
+              start  : 'Sun Aug 16 2017 21:59:49 GMT-0600 (MDT)',
+              end    : 'Sun Aug 16 2017 21:59:49 GMT-0600 (MDT)',
+              color  : 'red'
+          },
+          {
+              title  : 'Hair Cut',
+              start  : 'Sun Aug 16 2017 21:59:49 GMT-0600 (MDT)',
+              end    : 'Sun Aug 16 2017 21:59:49 GMT-0600 (MDT)',
+              color  : 'blue'
+          },
+          {
+              title  : 'Hair Cut',
+              start  : 'Sun Aug 16 2017 21:59:49 GMT-0600 (MDT)',
+              end    : 'Sun Aug 16 2017 21:59:49 GMT-0600 (MDT)',
+              color  : 'grey'
+          },
+          {
+              title  : 'Hair Cut',
+              start  : 'Sun Aug 8 2017 21:59:49 GMT-0600 (MDT)',
+              end    : 'Sun Aug 8 2017 21:59:49 GMT-0600 (MDT)',
+              color  : 'green'
+          },
+          {
+              title  : 'Hair Cut',
+              start  : 'Sun Aug 3 2017 21:59:49 GMT-0600 (MDT)',
+              end    : 'Sun Aug 3 2017 21:59:49 GMT-0600 (MDT)',
+              color  : 'red'
+          },
+          {
+              title  : 'Hair Cut',
+              start  : 'Sun Aug 18 2017 21:59:49 GMT-0600 (MDT)',
+              end    : 'Sun Aug 18 2017 21:59:49 GMT-0600 (MDT)',
+              color  : 'blue'
+          },
+          {
+              title  : 'Hair Cut',
+              start  : 'Sun Aug 22 2017 21:59:49 GMT-0600 (MDT)',
+              end    : 'Sun Aug 22 2017 21:59:49 GMT-0600 (MDT)',
+              color  : 'grey'
+          }
+        ]
+      
+
+      };
+
+
   ngOnInit() {
+
+    console.log('Cal obj',this.calendarOptions);
+
   }
 
 }

@@ -4,7 +4,8 @@ import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { AuthService } from './auth/auth.service';
-// import { CallbackComponent } from './callback/callback.component';
+import { CommonModule } from '@angular/common';
+import { CalendarModule } from "ap-angular2-fullcalendar";
 import { 
     MdSidenavModule,
     MdToolbarModule,
@@ -63,7 +64,9 @@ import { ReportsComponent } from './reports/reports.component';
     MdTableModule,
     MdInputModule,
     MdDialogModule,
-    FormsModule
+    FormsModule,
+    CommonModule,
+    CalendarModule
   ],
   entryComponents: [
     ContactsdialogComponent
