@@ -31,9 +31,22 @@ massive("postgres://uunjpeyj:yVNsIpBpaTMB_a2TXEss-Gmq1DGSIOte@pellefant.db.eleph
     const db = app.get('db');
 
     app.get('/api/test', (req,res) => {
-      app.get('db').test_end((err, users) => {
+      db.test_end((err, users) => {
       }).then(users => res.send(users))
     })
+
+    app.get('/api/alltrans', (req, res) => {
+      db.transaction_template((err, trans) => {
+        console.log(err);
+      }).then(trans => res.send(trans))
+    })
+
+    app.get('/api/timecards', (req, res) => {
+      db.timecards_template((err, cards) => {
+        console.log(err);
+      }).then(cards => res.send(cards))
+    })
+
 
 });
 
@@ -135,6 +148,6 @@ app.get('/auth/logout', function(req, res) {
 })
 
 
-app.listen( 3000, function() {
-  console.log('Connected on 3000')
+app.listen( 4200, function() {
+  console.log('Connected on 4200')
 })
