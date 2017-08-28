@@ -1,5 +1,5 @@
 <div>
-  <h2 md-dialog-title >Appt Dialog</h2>
+  <h2 md-dialog-title >New Appointment</h2>
   <hr>
   <md-dialog-content>
 <form class="example-form">
@@ -10,16 +10,26 @@
     <td><md-input-container class="example-full-width">
       <input mdInput placeholder="Last Name" name=lastname [(ngModel)]='lastname'>
     </md-input-container></td>
+
   </tr></table>
 
   <p>
     <md-input-container class="example-full-width">
-      <textarea mdInput placeholder="Phone Number" name=phonenumber [(ngModel)]='phonenumber'></textarea>
+      <textarea style='resize: none;' mdInput placeholder="Phone Number" name=phonenumber [(ngModel)]='phonenumber'></textarea>
     </md-input-container>
     <md-input-container class="example-full-width">
-      <textarea mdInput placeholder="Email" name=email [(ngModel)]='email'></textarea>
+      <textarea style='resize: none;' mdInput placeholder="Email" name=email [(ngModel)]='email'></textarea>
     </md-input-container>
   </p>
+
+  <md-input-container>
+  <input mdInput [mdDatepicker]="picker" placeholder="Choose a date">
+  <button mdSuffix [mdDatepickerToggle]="picker"></button>
+</md-input-container>
+<md-datepicker #picker></md-datepicker>
+
+
+
 
 </form>
 
