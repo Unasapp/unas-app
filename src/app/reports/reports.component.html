@@ -9,7 +9,7 @@
       </a> -->
     </div>
 
-    <div class='rest'> 
+    <div class='rest'>
       <h2> Reports </h2>
     </div>
 
@@ -19,8 +19,8 @@
 
   <md-sidenav #sidenav  mode="push" class="sidenav-inner">
     <md-list >
-      <!-- <md-list-item (click)="sidenav.close()" style='margin-left:70%;font-size:20px;' > 
-        <i class='ion-close-round'></i> 
+      <!-- <md-list-item (click)="sidenav.close()" style='margin-left:70%;font-size:20px;' >
+        <i class='ion-close-round'></i>
       </md-list-item> -->
       <md-list-item routerLink='/home' class='sidenav-items' > Home </md-list-item>
       <md-list-item routerLink='/cal' class='sidenav-items'> Calendar </md-list-item>
@@ -40,20 +40,21 @@
         <md-list>
           <div class='reports-box' >
           <md-list-item>
-          <div class='view-reports-head' >
-              <p class='box-reports-head' > Day </p>
-              <p class='box-reports-head' > Cash </p>
-              <p class='box-reports-head' > Check </p>
-              <p class='box-reports-head' > Credit </p>
-              <p class='box-reports-head' > Debit </p>
-              <p class='box-reports-head' > Deposit </p>
-              <p class='box-reports-head' > Gift </p>
-              <p style='border: none;' class='box-reports-head' > Total </p>
+            <div class='view-reports-head'>
+              <div class='box-reports-head'> Appt Date </div>
+              <div class='box-reports-head'> Checkout </div>
+              <div class='box-reports-head'> Client </div>
+              <div class='box-reports-head'> Service </div>
+              <div class='box-reports-head'> Srvc Provider </div>
+              <div class='box-reports-head'> Price </div>
+              <div class='box-reports-head'> Tip </div>
+              <div class='box-reports-head'> Amount Paid </div>
+              <div style='border: none;' class='box-reports-head' > Pymt Method </div>
             </div>
           </md-list-item>
 
           <md-list-item >
-            
+
             <div class='view-reports' >
               <p class='box-reports' > Day </p>
               <p class='box-reports' > Cash </p>
@@ -62,6 +63,7 @@
               <p class='box-reports' > Debit </p>
               <p class='box-reports' > Deposit </p>
               <p class='box-reports' > Gift </p>
+              <p class='box-reports' > Total </p>
               <p class='box-reports' > Total </p>
             </div>
           </md-list-item>

@@ -11,23 +11,26 @@
     border-top: 1px solid grey;
     align-items: center;
 }
- 
+
 .box-reports{
     display: flex;
     flex: 1;
     justify-content: center;
-} 
+}
 
 .view-reports-head{
     display: flex;
     justify-content: space-around;
     width: 100%;
+    height: 100%;
     align-items: center;
     font-weight: bold;
 }
 .box-reports-head{
     display: flex;
+    height: 100%;
     flex: 1;
     justify-content: center;
-    border-right: 1px solid black; 
+    align-items: center;
+    border-right: 1px solid black;
 }
