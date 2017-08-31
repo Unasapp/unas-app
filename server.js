@@ -5,9 +5,10 @@ const express = require('express'),
       passport = require('passport'),
       Auth0Strategy = require('passport-auth0'),
       config = require('./config.js'),
-      cors = require('cors');
+      cors = require('cors'),
+      http = require('http')
 
-const app = express();
+const app = module.exports = express();
 
 app.use(bodyParser.json());
 app.use(session({
@@ -20,6 +21,8 @@ app.use(passport.session());
 
 app.use(express.static(__dirname + '/dist'));
 
+// console.log(__dirname);
+// console.log(__dirname + '/dist/index.html');
 
 
 /////////////
@@ -146,7 +149,5 @@ app.get('/auth/logout', function(req, res) {
   res.redirect('/');
 })
 
-
-app.listen( 4200, function() {
-  console.log('Connected on 4200')
-})
+const server = http.createServer(app);
+server.listen( 4200, ()=> {console.log('Connected on 4200')})
