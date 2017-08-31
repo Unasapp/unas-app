@@ -2,6 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule, NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
+import { HttpModule } from '@angular/http';
 import { FormsModule } from '@angular/forms';
 import { AuthService } from './auth/auth.service';
 import { CommonModule } from '@angular/common';
@@ -39,6 +40,7 @@ import { ReportsComponent } from './reports/reports.component';
 import { CashoutdialogComponent } from './cashoutdialog/cashoutdialog.component';
 import { ApptdialogComponent } from './apptdialog/apptdialog.component';
 import { BarberDetailsComponent } from './barber-details/barber-details.component';
+import { ReportServiceService } from './report-service.service';
 
 @NgModule({
   declarations: [
@@ -62,6 +64,7 @@ import { BarberDetailsComponent } from './barber-details/barber-details.componen
     NoopAnimationsModule,
     BrowserAnimationsModule,
     HttpClientModule,
+    HttpModule,
     routes,
     MdSidenavModule,
     MdToolbarModule,
@@ -87,7 +90,7 @@ import { BarberDetailsComponent } from './barber-details/barber-details.componen
     CashoutdialogComponent,
     ApptdialogComponent
   ],
-  providers: [AuthService],
+  providers: [AuthService, ReportServiceService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
