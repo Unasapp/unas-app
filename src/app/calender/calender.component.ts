@@ -151,9 +151,7 @@ export class CalenderComponent implements OnInit {
 
 
   ngOnInit() {
-
-    console.log('Cal obj',this.calendarOptions);
-
+  
   }
 
 }

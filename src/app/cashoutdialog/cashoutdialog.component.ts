@@ -11,17 +11,25 @@ import { MD_DIALOG_DATA } from '@angular/material';
 export class CashoutdialogComponent implements OnInit {
 
   barbers = [
-    {value: 'harry-0', viewValue: 'Harry'},
-    {value: 'dominic-1', viewValue: 'Dominic'},
-    {value: 'andrew-2', viewValue: 'Andrew'}
+    {value: 'Harry Vu', viewValue: 'Harry'},
+    {value: 'Dominic DeCicco', viewValue: 'Dominic'},
+    {value: 'Andrew Chen', viewValue: 'Andrew'}
   ];
 
   services = [
-    {value: 'haircut-0', viewValue: 'Haircut'},
-    {value: 'beardtrim-1', viewValue: 'Beard Trim'},
-    {value: 'lineup-2', viewValue: 'Line-up'},
-    {value: 'fade-3', viewValue: 'Fade'},
-    {value: 'shave-4', viewValue: 'Traditional Shave'}
+    {value: 'haircut', viewValue: 'Haircut'},
+    {value: 'beardtrim', viewValue: 'Beard Trim'},
+    {value: 'lineup', viewValue: 'Line-up'},
+    {value: 'fade', viewValue: 'Fade'},
+    {value: 'shave', viewValue: 'Traditional Shave'}
+  ];
+
+  clients = [
+    {value: 'Lesley Rico', viewValue: 'Lesley Rico'},
+    {value: 'Bittany Jensen', viewValue: 'Bittany Jensen'},
+    {value: 'Carlo Jimenez', viewValue: 'Carlo Jimenez'},
+    {value: 'Mike Hunt', viewValue: 'Mike Hunt'},
+    {value: 'Kwatasha Smith', viewValue: 'Kwatasha Smith'}
   ];
 
 
@@ -34,13 +42,25 @@ constructor(
 ngOnInit() {
 }
 
-onCloseConfirm(firstname, lastname, phonenumber, email){
+onCloseConfirm(customer, firstname, lastname, phonenumber, email, service, barber, price, tip, amtpaid, typeP){
 
-  let newcontact = {
-    firstname, lastname, phonenumber, email
-  };
-
-  this.dialogRef.close(newcontact)
+  if(!customer){
+    let customer = firstname + ' ' + lastname;
+    let trans = {
+      'date': new Date(),
+    customer, service, barber, price, tip, amtpaid, typeP
+    }
+    // console.log(trans);
+    this.dialogRef.close(trans)
+  }
+  else{
+    let trans = {
+      'date': new Date(),
+      customer, service, barber, price, tip, amtpaid, typeP
+    };
+    // console.log(trans);
+    this.dialogRef.close(trans)
+  }
 }
 
 onCloseCancel(){

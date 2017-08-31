@@ -3,32 +3,105 @@
   <hr>
   <md-dialog-content>
 <form class="example-form">
-  <table class="example-full-width" cellspacing="0"><tr>
-    <td><md-input-container class="example-full-width">
-      <input mdInput placeholder="First name" name=firstname [(ngModel)]='firstname'>
-    </md-input-container></td>
-    <td><md-input-container class="example-full-width">
-      <input mdInput placeholder="Last Name" name=lastname [(ngModel)]='lastname'>
-    </md-input-container></td>
 
-  </tr></table>
+       <table class="example-full-width" cellspacing="0">
+        <tr>
+          <td>
+              <h4>Existing Customer</h4>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <md-select name=customer [(ngModel)]='customer' placeholder="Client">
+              <md-option *ngFor="let client of clients" [value]="client.value">
+                {{ client.viewValue }}
+              </md-option>
+            </md-select>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <br>
+            <md-radio-group>
+              <md-radio-button (click)='newCustomer = !newCustomer' value="1">New Customer ?</md-radio-button><br>
+            </md-radio-group>
+            <br>
+          </td>
+        </tr>
+      </table>
 
-  <p>
-    <md-input-container class="example-full-width">
-      <textarea style='resize: none;' mdInput placeholder="Phone Number" name=phonenumber [(ngModel)]='phonenumber'></textarea>
+  <div *ngIf='newCustomer' >
+    <table class="example-full-width" cellspacing="0"><tr>
+      <td><md-input-container class="example-full-width">
+        <input mdInput placeholder="First name" name=firstname [(ngModel)]='firstname'>
+      </md-input-container></td>
+      <td><md-input-container class="example-full-width">
+        <input mdInput placeholder="Last Name" name=lastname [(ngModel)]='lastname'>
+      </md-input-container></td>
+
+    </tr></table>
+
+    <p>
+      <md-input-container class="example-full-width">
+        <textarea style='resize: none;' mdInput placeholder="Phone Number" name=phonenumber [(ngModel)]='phonenumber'></textarea>
+      </md-input-container>
+      <md-input-container class="example-full-width">
+        <textarea style='resize: none;' mdInput placeholder="Email" name=email [(ngModel)]='email'></textarea>
+      </md-input-container>
+    </p>
+  </div>
+
+   <h2 md-dialog-title>Service Information</h2>
+      <hr>
+      <br>
+      <table class="example-full-width" cellspacing="0">
+        <tr>
+          <td>
+            <md-select name=service [(ngModel)]='service' placeholder="Service">
+              <md-option *ngFor="let service of services" [value]="service.value">
+                {{ service.viewValue }}
+              </md-option>
+            </md-select>
+          </td>
+          <td>
+            <md-select name=barber [(ngModel)]='barber' placeholder="Barber">
+              <md-option *ngFor="let barber of barbers" [value]="barber.value">
+                {{ barber.viewValue }}
+              </md-option>
+            </md-select>
+          </td>
+        </tr>
+      </table>
+      <br>
+
+      <h2 md-dialog-title>Date and Time</h2>
+      <hr>
+    <md-input-container>
+      <input name=date [(ngModel)]='date' mdInput [mdDatepicker]="picker" placeholder="Choose a date">
+      <button mdSuffix [mdDatepickerToggle]="picker"></button>
     </md-input-container>
-    <md-input-container class="example-full-width">
-      <textarea style='resize: none;' mdInput placeholder="Email" name=email [(ngModel)]='email'></textarea>
-    </md-input-container>
-  </p>
 
-  <md-input-container>
-  <input mdInput [mdDatepicker]="picker" placeholder="Choose a date">
-  <button mdSuffix [mdDatepickerToggle]="picker"></button>
-</md-input-container>
-<md-datepicker #picker></md-datepicker>
+    <md-datepicker #picker></md-datepicker>
 
-
+  <table class="example-full-width" cellspacing="0">
+    <tr> <td>
+      <md-select name=time [(ngModel)]='timep' placeholder="Time">
+          <md-option *ngFor="let t of time" [value]="t">
+            {{ t }}
+          </md-option>
+      </md-select>
+        </td> <td>
+        <md-select name=am [(ngModel)]='timeam' placeholder="am/pm">
+            <md-option value="am" >
+              am
+            </md-option>
+            <md-option value="pm" >
+              pm
+            </md-option>
+        </md-select>
+       </td>
+    </tr>
+  </table>
 
 
 </form>
@@ -38,7 +111,7 @@
   </md-dialog-content>
 
   <md-dialog-actions>
-    <button md-raised-button (click)='onCloseConfirm(firstname, lastname, phonenumber, email)' > Add </button>
+    <button md-raised-button (click)='onCloseConfirm(customer, date, timep, timeam, firstname, lastname, phonenumber, email)' > Add </button>
     <button md-raised-button (click)='onCloseCancel()' > Cancel </button>
   </md-dialog-actions>
 

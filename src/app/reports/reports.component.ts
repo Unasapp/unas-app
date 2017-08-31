@@ -11,12 +11,36 @@ import { ApptdialogComponent } from '../apptdialog/apptdialog.component';
 })
 export class ReportsComponent implements OnInit {
 
+  cashResult: any;
+
   constructor(public dialog: MdDialog) { }
 
   openCashDialog() {
     let dialogRef = this.dialog.open(CashoutdialogComponent,{
       width: '600px',
       data: 'this text is passed'
+    }) 
+      dialogRef.afterClosed().subscribe(result =>{
+      this.cashResult = result;
+      // console.log(result);
+
+      if(result !== undefined){
+      let newreport =  {
+            "b_first": result.barber.split(' ').shift(),
+            "b_last": result.barber.split(' ').pop(),
+            "c_first": result.customer.split(' ').shift(),
+            "c_last": result.customer.split(' ').pop(),
+            "service": result.service,
+            "date": moment(result.date).format('YYYY-M-D'),
+            "price": result.price,
+            "tip": result.tip,
+            "total": result.amtpaid
+        }
+      // console.log(newreport);
+      
+      this.report.push(newreport)
+      }
+
     })
   }
   openApptDialog() {
