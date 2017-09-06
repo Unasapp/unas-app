@@ -22,7 +22,8 @@ import {
     MdRadioModule,
     MdSelectModule,
     MdNativeDateModule,
-    MdSliderModule
+    MdSliderModule,
+    MdSlideToggleModule
  } from '@angular/material';
 
 import { routes } from './app.router'
@@ -83,7 +84,8 @@ import { ReportServiceService } from './report-service.service';
     MdRadioModule,
     MdSelectModule,
     MdNativeDateModule,
-    MdSliderModule
+    MdSliderModule,
+    MdSlideToggleModule
   ],
   entryComponents: [
     ContactsdialogComponent,
