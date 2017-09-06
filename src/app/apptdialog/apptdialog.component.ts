@@ -1,6 +1,7 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MdDialog, MdDialogRef, MdDatepickerModule } from '@angular/material';
 import { MD_DIALOG_DATA } from '@angular/material';
+import * as moment from 'moment';
 
 
 @Component({
@@ -56,17 +57,21 @@ export class ApptdialogComponent implements OnInit {
     this.makeTime()
   }
 
-  onCloseConfirm(customer, date, timep, timeam, firstname, lastname, phonenumber, email){ 
+  onCloseConfirm(barber, service, customer, date, timep, timeam, firstname, lastname, phonenumber, email){
+    var timeH = timep.split(':')[0]
+    var timeM = timep.split(':')[1]
+    timeam === 'pm' ? timeH = Number(timeH) + 12 : timeH = timeH;
+  
     if(!customer){
       let customer = firstname + ' ' + lastname;
       let newappt = {
-        customer, date, timep, timeam
+        barber, service, customer, 'date': moment(date).hour(timeH).minute(timeM).format('LLLL')
       };
       console.log(newappt);
       this.dialogRef.close(newappt)
     } else{
       let newappt = {
-        customer, date, timep, timeam
+        barber, service, customer, 'date': moment(date).hour(timeH).minute(timeM).format('LLLL')
       };
       console.log(newappt);
       this.dialogRef.close(newappt)

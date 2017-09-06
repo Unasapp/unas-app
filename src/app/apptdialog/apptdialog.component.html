@@ -3,11 +3,11 @@
   <hr>
   <md-dialog-content>
 <form class="example-form">
-
+      <div *ngIf='!newCustomer' >
        <table class="example-full-width" cellspacing="0">
         <tr>
           <td>
-              <h4>Existing Customer</h4>
+              <h5>Existing Customer</h5>
           </td>
         </tr>
         <tr>
@@ -22,24 +22,33 @@
         <tr>
           <td>
             <br>
-            <md-radio-group>
-              <md-radio-button (click)='newCustomer = !newCustomer' value="1">New Customer ?</md-radio-button><br>
-            </md-radio-group>
+              <md-slide-toggle (change)="newCustomer = !newCustomer"  [checked]="newCustomer" value="1">New Customer</md-slide-toggle><br>
             <br>
           </td>
         </tr>
       </table>
+    </div>
 
   <div *ngIf='newCustomer' >
-    <table class="example-full-width" cellspacing="0"><tr>
-      <td><md-input-container class="example-full-width">
-        <input mdInput placeholder="First name" name=firstname [(ngModel)]='firstname'>
-      </md-input-container></td>
-      <td><md-input-container class="example-full-width">
-        <input mdInput placeholder="Last Name" name=lastname [(ngModel)]='lastname'>
-      </md-input-container></td>
-
-    </tr></table>
+    <table class="example-full-width" cellspacing="0">
+      <tr>
+          <td>
+              <h5>New Customer</h5>
+          </td>
+      </tr>
+      <tr>
+        <td>
+          <md-input-container class="example-full-width">
+              <input mdInput placeholder="First name" name=firstname [(ngModel)]='firstname'>
+          </md-input-container>
+         </td>
+        <td>
+          <md-input-container class="example-full-width">
+          <input mdInput placeholder="Last Name" name=lastname [(ngModel)]='lastname'>
+        </md-input-container>
+       </td>
+      </tr>
+  </table>
 
     <p>
       <md-input-container class="example-full-width">
@@ -49,6 +58,13 @@
         <textarea style='resize: none;' mdInput placeholder="Email" name=email [(ngModel)]='email'></textarea>
       </md-input-container>
     </p>
+    <tr>
+          <td>
+            <br>
+              <md-slide-toggle (change)="newCustomer = !newCustomer"  [checked]="newCustomer" value="1">New Customer</md-slide-toggle><br>
+            <br>
+          </td>
+        </tr>
   </div>
 
    <h2 md-dialog-title>Service Information</h2>
@@ -111,7 +127,7 @@
   </md-dialog-content>
 
   <md-dialog-actions>
-    <button md-raised-button (click)='onCloseConfirm(customer, date, timep, timeam, firstname, lastname, phonenumber, email)' > Add </button>
+    <button md-raised-button (click)='onCloseConfirm(barber, service, customer, date, timep, timeam, firstname, lastname, phonenumber, email)' > Add </button>
     <button md-raised-button (click)='onCloseCancel()' > Cancel </button>
   </md-dialog-actions>
 
