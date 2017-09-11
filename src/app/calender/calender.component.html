@@ -1,4 +1,4 @@
- <md-toolbar class='main-toolbar'>
+<md-toolbar class='main-toolbar'>
 
     <div class='ionic-button'>
       <a md-icon-button (click)="sidenav.toggle()">
@@ -46,13 +46,141 @@
 
   <div class='calendar-view' >
 
-     <angular2-fullcalendar id='myCalendar' #myCalendar [options]="calendarOptions"></angular2-fullcalendar>
+     <angular2-fullcalendar id='myCalendar' #myCalendar [options]="calendarOptions" ></angular2-fullcalendar>
+
+    
+     <div id="eventContent" class="eventContent">
+          <h2 md-dialog-title>Appointment Information</h2>
+          <hr>
+
+          <!-- Client Changes  -->
+
+        <md-list>
+          <md-list-item>
+            <h4>Customer: </h4> 
+            <p>&nbsp;<span id="eClient" class="eClient"></span></p>
+            <button (click)='changeClient = !changeClient'  style="float:right;" md-icon-button> 
+              <i style='color:#ff4d4d' class='ion-edit'></i>  
+            </button>
+          </md-list-item>
+
+  <div class='modal-options' *ngIf='changeClient' >
+    <button (click)='changeClient = !changeClient' style="float:right;" md-icon-button> 
+        <i style='color:#ff4d4d' class='ion-ios-arrow-back icon-size'></i>  
+    </button>  
+      <md-input-container class="example-full-width">
+          <input mdInput placeholder="Client" name=newClient [(ngModel)]='newClient'>
+      </md-input-container>
+        <div *ngIf='newClient'  >
+            <p>ggggg</p>
+            <p>ggggg</p>
+            <p>ggggg</p>
+        </div>
+  </div>
+
+            <!-- Service Changes  -->
+
+          <md-list-item>
+            <h4>Service: </h4>
+            <p>&nbsp;<span id="eService" class="eService"></span></p>
+            <button (click)='changeService = !changeService' style="float:right;" md-icon-button> 
+              <i style='color:#ff4d4d' class='ion-edit'></i>  
+            </button>
+          </md-list-item>
+
+  <div class='modal-options' *ngIf='changeService' >
+    <button (click)='changeService = !changeService' style="float:right;" md-icon-button> 
+        <i style='color:#ff4d4d' class='ion-ios-arrow-back icon-size'></i>  
+    </button>  
+      <md-select name=service [(ngModel)]='service' placeholder="Service">
+          <md-option *ngFor="let service of services" [value]="service.value">
+             {{ service.viewValue }}
+          </md-option>
+      </md-select>
+  </div>
+
+               <!-- Barber Changes  -->
+
+          <md-list-item>
+            <h4>Barber: </h4>  
+            <p>&nbsp;<span id="eTitle" class="eTitle"></span></p>
+            <button (click)='changeBarber = !changeBarber' style="float:right;" md-icon-button> 
+              <i style='color:#ff4d4d' class='ion-edit'></i>  
+            </button>
+          </md-list-item>
+
+  <div class='modal-options' *ngIf='changeBarber' >
+    <button (click)='changeBarber = !changeBarber' style="float:right;" md-icon-button> 
+        <i style='color:#ff4d4d' class='ion-ios-arrow-back icon-size'></i>  
+    </button>  
+      <md-select name=barber [(ngModel)]='barber' placeholder="Barber">
+        <md-option *ngFor="let barber of barbers" [value]="barber.value">              
+          {{ barber.viewValue }}
+        </md-option>
+      </md-select>
+  </div>
+
+        <!-- Date and Time Changes  -->
+      
+          <md-list-item>
+            <h4>Date and Time: </h4> 
+            <p>&nbsp;<span id="eStart" class="eStart"></span></p>
+            <button (click)='changeDate = !changeDate' style="float:right;" md-icon-button> 
+              <i style='color:#ff4d4d' class='ion-edit'></i>  
+            </button>
+          </md-list-item>
+        </md-list>
+
+
+  <div class='modal-options' *ngIf='changeDate' >
+    <button (click)='changeDate = !changeDate' style="float:right;" md-icon-button> 
+        <i style='color:#ff4d4d' class='ion-ios-arrow-back icon-size'></i>  
+    </button>  
+     <md-input-container>
+      <input name=date [(ngModel)]='date' mdInput [mdDatepicker]="picker" placeholder="Choose a date">
+      <button mdSuffix [mdDatepickerToggle]="picker"></button>
+    </md-input-container>
+
+    <md-datepicker #picker></md-datepicker>
+
+      <table class="example-full-width" cellspacing="0">
+        <tr> <td>
+          <md-select name=time [(ngModel)]='timep' placeholder="Time">
+              <md-option *ngFor="let t of time" [value]="t">
+                {{ t }}
+              </md-option>
+          </md-select>
+            </td> <td>
+            <md-select name=am [(ngModel)]='timeam' placeholder="am/pm">
+                <md-option value="am" >
+                  am
+                </md-option>
+                <md-option value="pm" >
+                  pm
+                </md-option>
+            </md-select>
+          </td>
+        </tr>
+      </table>
+            
+      </div>
+
+
+      <br />
+      <md-dialog-actions>
+        <button style='background:#00e673;color:white;' md-raised-button (click)='onCloseConfirm()' > Save </button>
+        <button style='background:#ff4d4d;color:white;' md-raised-button (click)='onCloseConfirm()' > Delete </button>
+        <button md-raised-button (click)='closeD()' > Cancel </button>
+      </md-dialog-actions>
+          
+      </div>
+    <div class='md-modal myModal' (click)='closeD()' ></div>
 
   </div>
 
-
-
 </md-sidenav-container>
+
+
 
 
 
