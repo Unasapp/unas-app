@@ -4,6 +4,7 @@ import { CalendarComponent } from "ap-angular2-fullcalendar";
 import { MdDialog, MdDialogRef } from '@angular/material';
 import { CashoutdialogComponent } from '../cashoutdialog/cashoutdialog.component';
 import { ApptdialogComponent } from '../apptdialog/apptdialog.component';
+import { EventModalComponent } from '../event-modal/event-modal.component';
 import { Options } from 'fullcalendar'
 import * as $ from 'jquery';
 
@@ -14,6 +15,9 @@ import * as $ from 'jquery';
 })
 export class CalenderComponent implements OnInit {
 
+  constructor(public dialog: MdDialog) { }
+
+
   @ViewChild('myCalendar') myCalendar: CalendarComponent;
 
     changeCalendarView(view) {
@@ -21,6 +25,35 @@ export class CalenderComponent implements OnInit {
     }
 
   apptResult: any;
+  time = [];
+
+  services = [
+    {value: 'Haircut', viewValue: 'Haircut'},
+    {value: 'Beard Trim', viewValue: 'Beard Trim'},
+    {value: 'Line-up', viewValue: 'Line-up'},
+    {value: 'Fade', viewValue: 'Fade'},
+    {value: 'Traditional Shave', viewValue: 'Traditional Shave'}
+    ];
+
+  barbers = [
+    {value: 'Harry Vu', viewValue: 'Harry'},
+    {value: 'Dominic DeCicco', viewValue: 'Dominic'},
+    {value: 'Andrew Chen', viewValue: 'Andrew'}
+  ];
+
+
+    makeTime() {
+        for (var i = 1; i < 13; i++) {
+            for (var j = 0; j < 47; j=j+15) {
+              if(j===0){
+                this.time.push(i+':0'+j)
+              }
+              else{
+                this.time.push(i+':'+j)
+              }
+            }
+          }
+      }
 
   calendarOptions = {
         height: 'parent',
@@ -30,6 +63,7 @@ export class CalenderComponent implements OnInit {
             right: 'month,agendaWeek,agendaDay,list'
         },
         selectable: true,
+        selectHelper: true,
         editable: true,
         events: [
           {
@@ -57,19 +91,44 @@ export class CalenderComponent implements OnInit {
               client : 'Dave Larry'
           }
         ],
-        eventClick: function(calEvent) {
-        alert('Event: ' + calEvent.title);
-        console.log(calEvent);
-        $(this).css('border-color', 'red');
-    }
+        eventClick: function(calEvent, jsEvent, view) {
+          console.log(calEvent);
 
+                var eTitle = calEvent.title;
+                var eStart = moment(calEvent.start).format('LLLL');
+                var eEnd = calEvent.end;
+                var eClient = calEvent.client;
+                var eService = calEvent.service;
+                $(".eTitle").html(eTitle);
+                $(".eStart").html(eStart);
+                $(".eEnd").html(eEnd);
+                $(".eClient").html(eClient);
+                $(".eService").html(eService);
+                $(".eventContent").css('display', 'block');
+                // $(".eventContent").css('left', '35%');
+                // $(".eventContent").css('top', '5%');
+                $(".myModal").css('display', 'block');
+                $('.myModal').css('background','rgba(0, 0, 0,0.2)')
+        $(this).css('border-color', 'red');
+        }
 
       };
 
 
-  constructor(public dialog: MdDialog) { }
 
+  closeD(){
+      $(".eventContent").css('display', 'none');
+      $(".myModal").css('display', 'none');
+      $('.myModal').css('background','none')
+  }
 
+  openEventModal() {
+    let dialogRef = this.dialog.open(EventModalComponent,{
+      width: '600px',
+      data: 'this text is passed'
+    })
+
+  }
   openCashDialog() {
     let dialogRef = this.dialog.open(CashoutdialogComponent,{
       width: '600px',
@@ -106,44 +165,7 @@ export class CalenderComponent implements OnInit {
 
 
   ngOnInit() {
-
+    this.makeTime()
   }
 
 }
-
-//weekdays = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
-  // month = moment().format('MMMM')
-  // year = moment().format("YYYY")
-  // days = function(op) {
-  //   var prevMonthLength = moment().subtract(1, 'months').daysInMonth();
-  //   var daysArr = [];
-  //   for (let i = 1; i < moment().daysInMonth()+1; i++) {
-  //       daysArr.push(i.toString())
-  //   }
-  //   switch (moment().date(1).format('d')) {
-  //     case '2':
-  //       daysArr.unshift((prevMonthLength).toString());
-  //       break;
-  //     case '3':
-  //       daysArr.unshift((prevMonthLength-1).toString(),prevMonthLength.toString());
-  //       break;
-  //     case '4':
-  //       daysArr.unshift((prevMonthLength-2).toString(),(prevMonthLength-1).toString(),prevMonthLength);
-  //       break;
-  //     case '5':
-  //       daysArr.unshift((prevMonthLength-3).toString(),(prevMonthLength-2).toString(),(prevMonthLength-1).toString(),(prevMonthLength).toString());
-  //       break;
-  //     case '6':
-  //       daysArr.unshift((prevMonthLength-4).toString(),(prevMonthLength-3).toString(),(prevMonthLength-2).toString(),(prevMonthLength-1).toString(),(prevMonthLength).toString());
-  //       break;
-  //     case '0':
-  //       daysArr.unshift((prevMonthLength-5).toString(),(prevMonthLength-4).toString(),(prevMonthLength-3).toString(),(prevMonthLength-2).toString(),(prevMonthLength-1).toString(),(prevMonthLength).toString());
-  //       break;
-  //   }
-  //   var i  = 1;
-  //   while(daysArr.length < 35) {
-  //     daysArr.push(i);
-  //     i++
-  //   }
-  //   return daysArr
-  // }()
