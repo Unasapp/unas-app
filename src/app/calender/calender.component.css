@@ -46,6 +46,49 @@ ul {list-style-type: none;}
 
 .calendar-view{
   padding-top: 1%;
-  height: 120%;
+  height: 100%;
   overflow: hidden;  
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.eventContent{
+  border-radius: 3px;
+  padding: 20px !important;
+  display: none; 
+  position: fixed; 
+  width: 600px;
+  background: white; 
+  opacity: 1.0; 
+  padding: 4px; 
+  z-index: 2000;
+  box-shadow: 0px 14px 86px -14px rgba(0,0,0,0.75); 
+  transition: all 0.4s ease-in-out;
+  margin: 10px; 
+}
+ .eventContent p{
+   font-size: 16px;
+ }
+
+.myModal{
+  display: none;
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+  z-index: 1000;
+  justify-content: center;
+  align-items: center;
+  top: 0;
+}
+
+.modal-options{
+  padding: 20px 20px 28px 20px; 
+  box-shadow: inset 0px 0px 4px 0px rgba(0,0,0,0.75);
+}
+
+.new-changes{
+  color:#ff4d4d;
+  font-size: 10px;
+  margin-bottom: 5px;
 }

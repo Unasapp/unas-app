@@ -27,11 +27,11 @@ export class ApptdialogComponent implements OnInit {
   ];
 
   services = [
-    {value: 'haircut', viewValue: 'Haircut'},
-    {value: 'beardtrim', viewValue: 'Beard Trim'},
-    {value: 'lineup', viewValue: 'Line-up'},
-    {value: 'fade', viewValue: 'Fade'},
-    {value: 'shave', viewValue: 'Traditional Shave'}
+    {value: 'Haircut', viewValue: 'Haircut'},
+    {value: 'Beard Trim', viewValue: 'Beard Trim'},
+    {value: 'Line-up', viewValue: 'Line-up'},
+    {value: 'Fade', viewValue: 'Fade'},
+    {value: 'Traditional Shave', viewValue: 'Traditional Shave'}
   ];
 
   constructor(

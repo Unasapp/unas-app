@@ -5,6 +5,7 @@ import { MdDialog, MdDialogRef } from '@angular/material';
 import { CashoutdialogComponent } from '../cashoutdialog/cashoutdialog.component';
 import { ReportServiceService } from '../report-service.service';
 import { ApptdialogComponent } from '../apptdialog/apptdialog.component';
+import { EventModalComponent } from '../event-modal/event-modal.component';
 import { Options } from 'fullcalendar'
 import * as $ from 'jquery';
 
@@ -15,6 +16,9 @@ import * as $ from 'jquery';
 })
 export class CalenderComponent implements OnInit {
 
+  constructor(public dialog: MdDialog, public reportServiceService: ReportServiceService) { }
+    
+
   @ViewChild('myCalendar') myCalendar: CalendarComponent;
 
     changeCalendarView(view) {
@@ -22,6 +26,35 @@ export class CalenderComponent implements OnInit {
     }
 
   apptResult: any;
+  time = [];
+
+  services = [
+    {value: 'Haircut', viewValue: 'Haircut'},
+    {value: 'Beard Trim', viewValue: 'Beard Trim'},
+    {value: 'Line-up', viewValue: 'Line-up'},
+    {value: 'Fade', viewValue: 'Fade'},
+    {value: 'Traditional Shave', viewValue: 'Traditional Shave'}
+    ];
+
+  barbers = [
+    {value: 'Harry Vu', viewValue: 'Harry'},
+    {value: 'Dominic DeCicco', viewValue: 'Dominic'},
+    {value: 'Andrew Chen', viewValue: 'Andrew'}
+  ];
+
+
+    makeTime() {
+        for (var i = 1; i < 13; i++) {
+            for (var j = 0; j < 47; j=j+15) {
+              if(j===0){
+                this.time.push(i+':0'+j)
+              }
+              else{
+                this.time.push(i+':'+j)
+              }
+            }
+          }
+      }
 
   calendarOptions = {
         height: 'parent',
@@ -31,91 +64,73 @@ export class CalenderComponent implements OnInit {
             right: 'month,agendaWeek,agendaDay,list'
         },
         selectable: true,
+        selectHelper: true,
         editable: true,
         events: [
           {
-              title  : 'Hair Cut',
+              title  : 'Jime',
               start  : new Date(),
               end    : new Date(),
-              color  : 'blue'
+              color  : 'blue',
+              service : 'Hair Cut',
+              client : 'Dave Larry'
           },
           {
-              title  : 'Beared Shave',
+              title  : 'Jime',
               start  : new Date(),
               end    : new Date(),
-              color  : 'red'
+              color  : 'blue',
+              service : 'Hair Cut',
+              client : 'Dave Larry'
           },
           {
-              title  : 'Hair Cut',
+              title  : 'Jime',
               start  : new Date(),
               end    : new Date(),
-              color  : 'green'
-          },
-          {
-              title  : 'Hair Cut',
-              start  : 'Sun Aug 24 2017 21:59:49 GMT-0600 (MDT)',
-              end    : 'Sun Aug 24 2017 21:59:49 GMT-0600 (MDT)',
-              color  : 'green'
-          },
-          {
-              title  : 'Hair Cut',
-              start  : 'Sun Aug 16 2017 21:59:49 GMT-0600 (MDT)',
-              end    : 'Sun Aug 16 2017 21:59:49 GMT-0600 (MDT)',
-              color  : 'red'
-          },
-          {
-              title  : 'Hair Cut',
-              start  : 'Sun Aug 16 2017 21:59:49 GMT-0600 (MDT)',
-              end    : 'Sun Aug 16 2017 21:59:49 GMT-0600 (MDT)',
-              color  : 'blue'
-          },
-          {
-              title  : 'Hair Cut',
-              start  : 'Sun Aug 16 2017 21:59:49 GMT-0600 (MDT)',
-              end    : 'Sun Aug 16 2017 21:59:49 GMT-0600 (MDT)',
-              color  : 'grey'
-          },
-          {
-              title  : 'Hair Cut',
-              start  : 'Sun Aug 8 2017 21:59:49 GMT-0600 (MDT)',
-              end    : 'Sun Aug 8 2017 21:59:49 GMT-0600 (MDT)',
-              color  : 'green'
-          },
-          {
-              title  : 'Hair Cut',
-              start  : 'Sun Aug 3 2017 21:59:49 GMT-0600 (MDT)',
-              end    : 'Sun Aug 3 2017 21:59:49 GMT-0600 (MDT)',
-              color  : 'red'
-          },
-          {
-              title  : 'Hair Cut',
-              start  : 'Sun Aug 18 2017 21:59:49 GMT-0600 (MDT)',
-              end    : 'Sun Aug 18 2017 21:59:49 GMT-0600 (MDT)',
-              color  : 'blue'
-          },
-          {
-              title  : 'Hair Cut',
-              start  : 'Sun Aug 22 2017 21:59:49 GMT-0600 (MDT)',
-              end    : 'Sun Aug 22 2017 21:59:49 GMT-0600 (MDT)',
-              color  : 'grey'
+              color  : 'blue',
+              service : 'Hair Cut',
+              client : 'Dave Larry'
           }
         ],
         eventClick: function(calEvent, jsEvent, view) {
-        alert('Event: ' + calEvent.title);
-        alert('Coordinates: ' + jsEvent.pageX + ',' + jsEvent.pageY);
-        alert('View: ' + view.name);
-        // change the border color just for fun
+          console.log(calEvent);
+
+                var eTitle = calEvent.title;
+                var eStart = moment(calEvent.start).format('LLLL');
+                var eEnd = calEvent.end;
+                var eClient = calEvent.client;
+                var eService = calEvent.service;
+                $(".eTitle").html(eTitle);
+                $(".eStart").html(eStart);
+                $(".eEnd").html(eEnd);
+                $(".eClient").html(eClient);
+                $(".eService").html(eService);
+                $(".eventContent").css('display', 'block');
+                // $(".eventContent").css('left', '35%');
+                // $(".eventContent").css('top', '5%');
+                $(".myModal").css('display', 'block');
+                $('.myModal').css('background','rgba(0, 0, 0,0.2)')
         $(this).css('border-color', 'red');
-
-    }
-
+        }
 
       };
 
 
-  constructor(public dialog: MdDialog, public reportServiceService: ReportServiceService) { }
+
+  closeD(){
+      $(".eventContent").css('display', 'none');
+      $(".myModal").css('display', 'none');
+      $('.myModal').css('background','none')
+  }
 
 
+  openEventModal() {
+    let dialogRef = this.dialog.open(EventModalComponent,{
+      width: '600px',
+      data: 'this text is passed'
+    })
+
+  }
   openCashDialog() {
     let dialogRef = this.dialog.open(CashoutdialogComponent,{
       width: '600px',
@@ -135,7 +150,9 @@ export class CalenderComponent implements OnInit {
               title  : result.barber,
               start  : result.date,
               end    : result.date,
-              color  : 'purple'
+              color  : 'purple',
+              service : result.service,
+              client : result.customer
           }
         this.calendarOptions.events.push(newappt)
         this.myCalendar.fullCalendar('renderEvent', newappt, true)
@@ -150,7 +167,7 @@ export class CalenderComponent implements OnInit {
 
 
   ngOnInit() {
-
+    this.makeTime()
   }
 
 }

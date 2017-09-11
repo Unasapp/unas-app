@@ -145,8 +145,35 @@
 
     </md-tab>
     <md-tab label="Product">
-      <h1>Some more tab content</h1>
-      <p>...</p>
+              <md-list>
+          <div class='reports-box' >
+          <md-list-item>
+            <div class='view-reports-head'>
+              <div class='box-reports-head'> Code </div>
+              <div class='box-reports-head'> Name </div>
+              <div class='box-reports-head'> Type </div>
+              <div class='box-reports-head'> In Stock </div>
+              <div class='box-reports-head'> # Sold </div>
+              <div class='box-reports-head'> Cost Per </div>
+              <div class='box-reports-head' > Net Sales </div>
+              <div style='border: none;' class='box-reports-head'> Last Sold </div>
+            </div>
+          </md-list-item>
+
+          <md-list-item *ngFor='let x of report' >
+            <div class='view-reports' >
+              <p class='box-reports' > {{x.date }} </p>
+              <p class='box-reports' > {{ x.b_first }}  {{ x.b_last }} </p>
+              <p class='box-reports' > {{ x.c_first }}  {{ x.c_last }} </p>
+              <p class='box-reports' > {{ x.service }} </p>
+              <p class='box-reports' > {{ x.price }} </p>
+              <p class='box-reports' > {{ x.tip }} </p>
+              <p class='box-reports' > Credit </p>
+              <p class='box-reports' > {{ x.total }} </p>
+            </div>
+          </md-list-item>
+          </div>
+      </md-list>
     </md-tab>
   </md-tab-group>
 
