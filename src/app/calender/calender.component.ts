@@ -33,79 +33,34 @@ export class CalenderComponent implements OnInit {
         editable: true,
         events: [
           {
-              title  : 'Hair Cut',
+              title  : 'Jime',
               start  : new Date(),
               end    : new Date(),
-              color  : 'blue'
+              color  : 'blue',
+              service : 'Hair Cut',
+              client : 'Dave Larry'
           },
           {
-              title  : 'Beared Shave',
+              title  : 'Jime',
               start  : new Date(),
               end    : new Date(),
-              color  : 'red'
+              color  : 'blue',
+              service : 'Hair Cut',
+              client : 'Dave Larry'
           },
           {
-              title  : 'Hair Cut',
+              title  : 'Jime',
               start  : new Date(),
               end    : new Date(),
-              color  : 'green'
-          },
-          {
-              title  : 'Hair Cut',
-              start  : 'Sun Aug 24 2017 21:59:49 GMT-0600 (MDT)',
-              end    : 'Sun Aug 24 2017 21:59:49 GMT-0600 (MDT)',
-              color  : 'green'
-          },
-          {
-              title  : 'Hair Cut',
-              start  : 'Sun Aug 16 2017 21:59:49 GMT-0600 (MDT)',
-              end    : 'Sun Aug 16 2017 21:59:49 GMT-0600 (MDT)',
-              color  : 'red'
-          },
-          {
-              title  : 'Hair Cut',
-              start  : 'Sun Aug 16 2017 21:59:49 GMT-0600 (MDT)',
-              end    : 'Sun Aug 16 2017 21:59:49 GMT-0600 (MDT)',
-              color  : 'blue'
-          },
-          {
-              title  : 'Hair Cut',
-              start  : 'Sun Aug 16 2017 21:59:49 GMT-0600 (MDT)',
-              end    : 'Sun Aug 16 2017 21:59:49 GMT-0600 (MDT)',
-              color  : 'grey'
-          },
-          {
-              title  : 'Hair Cut',
-              start  : 'Sun Aug 8 2017 21:59:49 GMT-0600 (MDT)',
-              end    : 'Sun Aug 8 2017 21:59:49 GMT-0600 (MDT)',
-              color  : 'green'
-          },
-          {
-              title  : 'Hair Cut',
-              start  : 'Sun Aug 3 2017 21:59:49 GMT-0600 (MDT)',
-              end    : 'Sun Aug 3 2017 21:59:49 GMT-0600 (MDT)',
-              color  : 'red'
-          },
-          {
-              title  : 'Hair Cut',
-              start  : 'Sun Aug 18 2017 21:59:49 GMT-0600 (MDT)',
-              end    : 'Sun Aug 18 2017 21:59:49 GMT-0600 (MDT)',
-              color  : 'blue'
-          },
-          {
-              title  : 'Hair Cut',
-              start  : 'Sun Aug 22 2017 21:59:49 GMT-0600 (MDT)',
-              end    : 'Sun Aug 22 2017 21:59:49 GMT-0600 (MDT)',
-              color  : 'grey'
+              color  : 'blue',
+              service : 'Hair Cut',
+              client : 'Dave Larry'
           }
         ],
-        eventClick: function(calEvent, jsEvent, view) {
+        eventClick: function(calEvent) {
         alert('Event: ' + calEvent.title);
-        alert('Coordinates: ' + jsEvent.pageX + ',' + jsEvent.pageY);
-        alert('View: ' + view.name);
-        // change the border color just for fun
+        console.log(calEvent);
         $(this).css('border-color', 'red');
-
     }
 
 
@@ -134,7 +89,9 @@ export class CalenderComponent implements OnInit {
               title  : result.barber,
               start  : result.date,
               end    : result.date,
-              color  : 'purple'
+              color  : 'purple',
+              service : result.service,
+              client : result.customer
           }
         this.calendarOptions.events.push(newappt)
         this.myCalendar.fullCalendar('renderEvent', newappt, true)
