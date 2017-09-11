@@ -139,17 +139,17 @@ export class CalenderComponent implements OnInit {
         this.calendarOptions.events.push(newappt)
         this.myCalendar.fullCalendar('renderEvent', newappt, true)
       }
-      console.log(this.myCalendar);    
-      this.myCalendar.fullCalendar('refetchEvents'); 
+      console.log(this.myCalendar);
+      this.myCalendar.fullCalendar('refetchEvents');
     })
-         
+
   }
 
-   
+
 
 
   ngOnInit() {
-  
+
   }
 
 }
