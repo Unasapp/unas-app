@@ -24,6 +24,7 @@ export class CalenderComponent implements OnInit {
       this.myCalendar.fullCalendar('changeView', view);
     }
 
+  eID: any;
   apptResult: any;
   time = [];
 
@@ -99,22 +100,34 @@ export class CalenderComponent implements OnInit {
                 var eEnd = calEvent.end;
                 var eClient = calEvent.client;
                 var eService = calEvent.service;
+                var eID = calEvent._id
                 $(".eTitle").html(eTitle);
                 $(".eStart").html(eStart);
                 $(".eEnd").html(eEnd);
                 $(".eClient").html(eClient);
                 $(".eService").html(eService);
+                $("#eID").val(eID);
                 $(".eventContent").css('display', 'block');
                 // $(".eventContent").css('left', '35%');
                 // $(".eventContent").css('top', '5%');
                 $(".myModal").css('display', 'block');                
                 $('.myModal').css('background','rgba(0, 0, 0,0.2)')
         $(this).css('border-color', 'red');
+        },
+        eventDestroy: function(calEvent, jsEvent, view) {
+
         }
 
       };
 
-  
+  onDeleteEvent(id){
+    //API CALL TO DELETE EVENTS
+    /////
+    
+    console.log($('#eID').val());
+    this.myCalendar.fullCalendar('removeEvents', $('#eID').val());
+    this.closeD()
+  }
 
   closeD(){
       $(".eventContent").css('display', 'none');
@@ -154,6 +167,8 @@ export class CalenderComponent implements OnInit {
           }
         this.calendarOptions.events.push(newappt)
         this.myCalendar.fullCalendar('renderEvent', newappt, true)
+        // API CALL TO ADD EVENTS
+        ////
       }
       console.log(this.myCalendar);    
       this.myCalendar.fullCalendar('refetchEvents'); 

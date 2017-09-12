@@ -63,6 +63,7 @@ export class ApptdialogComponent implements OnInit {
     timeam === 'pm' ? timeH = Number(timeH) + 12 : timeH = timeH;
   
     if(!customer){
+      /// New Customer Call 
       let customer = firstname + ' ' + lastname;
       let newappt = {
         barber, service, customer, 'date': moment(date).hour(timeH).minute(timeM).format('LLLL')
