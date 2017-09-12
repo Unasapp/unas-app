@@ -74,12 +74,12 @@
         </div>
       </md-list-item>
 
-      <md-list-item  *ngFor="let user of users | filter:term ">
+      <md-list-item  *ngFor="let user of users | filter:term">
 
         <div class='view-contacts' >
-          <p class='box-contacts' > {{user.name }} </p>
-          <p class='box-contacts' > {{user.email}} </p>
-          <p class='box-contacts' > {{user.phone}} </p>
+          <p class='box-contacts' > {{user.c_first}} {{ c_last }} </p>
+          <p class='box-contacts' > {{user.c_email}} </p>
+          <p class='box-contacts' > {{user.c_phone}} </p>
            <button (click)='onDelete(user.name)' style='position:absolute;right:1%;margin-bottom:2%' md-icon-button ><i class='ion-ios-close-empty icon-size' ></i></button>
         </div>
       </md-list-item>

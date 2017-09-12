@@ -10,4 +10,4 @@ where
 and
 	s_id = shop_id
 and
-	s_id = $1
+	shops.s_id = $1

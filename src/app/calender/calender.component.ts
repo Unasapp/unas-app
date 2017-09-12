@@ -3,6 +3,7 @@ import * as moment from 'moment';
 import { CalendarComponent } from "ap-angular2-fullcalendar";
 import { MdDialog, MdDialogRef } from '@angular/material';
 import { CashoutdialogComponent } from '../cashoutdialog/cashoutdialog.component';
+import { ReportServiceService } from '../report-service.service';
 import { ApptdialogComponent } from '../apptdialog/apptdialog.component';
 import { EventModalComponent } from '../event-modal/event-modal.component';
 import { Options } from 'fullcalendar'
@@ -15,8 +16,8 @@ import * as $ from 'jquery';
 })
 export class CalenderComponent implements OnInit {
 
-  constructor(public dialog: MdDialog) { }
-    
+  constructor(public dialog: MdDialog, public service: ReportServiceService) { }
+
 
   @ViewChild('myCalendar') myCalendar: CalendarComponent;
 
@@ -44,7 +45,7 @@ export class CalenderComponent implements OnInit {
 
     makeTime() {
         for (var i = 1; i < 13; i++) {
-            for (var j = 0; j < 47; j=j+15) {
+            for (var j = 0; j < 46; j=j+15) {
               if(j===0){
                 this.time.push(i+':0'+j)
               }
@@ -93,7 +94,7 @@ export class CalenderComponent implements OnInit {
         ],
         eventClick: function(calEvent, jsEvent, view) {
           console.log(calEvent);
-          
+
                 var eTitle = calEvent.title;
                 var eStart = moment(calEvent.start).format('LLLL');
                 var eEnd = calEvent.end;
@@ -107,20 +108,21 @@ export class CalenderComponent implements OnInit {
                 $(".eventContent").css('display', 'block');
                 // $(".eventContent").css('left', '35%');
                 // $(".eventContent").css('top', '5%');
-                $(".myModal").css('display', 'block');                
+                $(".myModal").css('display', 'block');
                 $('.myModal').css('background','rgba(0, 0, 0,0.2)')
         $(this).css('border-color', 'red');
         }
 
       };
 
-  
+
 
   closeD(){
       $(".eventContent").css('display', 'none');
       $(".myModal").css('display', 'none');
       $('.myModal').css('background','none')
-  }    
+  }
+
 
   openEventModal() {
     let dialogRef = this.dialog.open(EventModalComponent,{
@@ -155,19 +157,22 @@ export class CalenderComponent implements OnInit {
         this.calendarOptions.events.push(newappt)
         this.myCalendar.fullCalendar('renderEvent', newappt, true)
       }
-      console.log(this.myCalendar);    
-      this.myCalendar.fullCalendar('refetchEvents'); 
+      console.log(this.myCalendar);
+      this.myCalendar.fullCalendar('refetchEvents');
     })
-         
+
   }
 
-   
 
 
+appts: any
   ngOnInit() {
-    this.makeTime()
+    this.makeTime();
+    this.service.getAppts({id:1}).subscribe((data)=> {
+      this.appts = data
+      console.log(this.appts)
+    })
+
   }
 
 }
-
-
