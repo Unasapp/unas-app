@@ -43,4 +43,22 @@ export class ReportServiceService {
     return this.http.post('/api/delete-contact', contact)
       .map(res => res.json())
   }
+
+  getBarbers(id) {
+    console.log('service')
+    return this.http.post('/api/barbers', id)
+    .map(res => res.json())
+  }
+
+  getServices(id) {
+    console.log('service')
+    return this.http.post('/api/services', id)
+    .map(res => res.json())
+  }
+
+  getAppts(id) {
+    console.log('service')
+    return this.http.post('/api/cal', id)
+    .map(res => res.json())
+  }
 }

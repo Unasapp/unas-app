@@ -16,8 +16,8 @@ import * as $ from 'jquery';
 })
 export class CalenderComponent implements OnInit {
 
-  constructor(public dialog: MdDialog, public reportServiceService: ReportServiceService) { }
-    
+  constructor(public dialog: MdDialog, public service: ReportServiceService) { }
+
 
   @ViewChild('myCalendar') myCalendar: CalendarComponent;
 
@@ -45,7 +45,7 @@ export class CalenderComponent implements OnInit {
 
     makeTime() {
         for (var i = 1; i < 13; i++) {
-            for (var j = 0; j < 47; j=j+15) {
+            for (var j = 0; j < 46; j=j+15) {
               if(j===0){
                 this.time.push(i+':0'+j)
               }
@@ -165,9 +165,14 @@ export class CalenderComponent implements OnInit {
 
 
 
-
+appts: any
   ngOnInit() {
-    this.makeTime()
+    this.makeTime();
+    this.service.getAppts({id:1}).subscribe((data)=> {
+      this.appts = data
+      console.log(this.appts)
+    })
+
   }
 
 }

@@ -2,6 +2,7 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { MdDialog, MdDialogRef, MdDatepickerModule } from '@angular/material';
 import { MD_DIALOG_DATA } from '@angular/material';
 import * as moment from 'moment';
+import { ReportServiceService } from '../report-service.service';
 
 
 @Component({
@@ -36,7 +37,8 @@ export class ApptdialogComponent implements OnInit {
 
   constructor(
     public dialogRef: MdDialogRef<ApptdialogComponent>,
-    @Inject(MD_DIALOG_DATA) public data: any
+    @Inject(MD_DIALOG_DATA) public data: any,
+    private service: ReportServiceService
   ) { }
 
   makeTime(){
@@ -55,13 +57,16 @@ export class ApptdialogComponent implements OnInit {
 
   ngOnInit() {
     this.makeTime()
+    // this.service.getDialogBarbers({id:1}).subscribe((data)=> {
+
+    // })
   }
 
   onCloseConfirm(barber, service, customer, date, timep, timeam, firstname, lastname, phonenumber, email){
     var timeH = timep.split(':')[0]
     var timeM = timep.split(':')[1]
     timeam === 'pm' ? timeH = Number(timeH) + 12 : timeH = timeH;
-  
+
     if(!customer){
       let customer = firstname + ' ' + lastname;
       let newappt = {
@@ -76,8 +81,8 @@ export class ApptdialogComponent implements OnInit {
       console.log(newappt);
       this.dialogRef.close(newappt)
     }
-    
-    
+
+
   }
 
   onCloseCancel(){
