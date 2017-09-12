@@ -44,10 +44,56 @@ massive("postgres://uunjpeyj:yVNsIpBpaTMB_a2TXEss-Gmq1DGSIOte@pellefant.db.eleph
       }).then(trans => res.send(trans))
     })
 
-    app.get('/api/timecards', (req, res) => {
-      db.timecards_template((err, cards) => {
-        console.log(err);
+    app.post('/api/timecards', (req, res) => {
+      db.timecards(req.body.id, (err, cards) => {
       }).then(cards => res.send(cards))
+    })
+
+    app.post('/api/shop-trans', (req, res) => {
+      db.shop_trans(req.body.id, (err, trans) => {
+      }).then(trans => res.send(trans))
+    })
+
+    app.post('/api/contacts', (req, res) => {
+      db.getAllContacts(req.body.id, (err, contacts)=> {
+      }).then(contacts => res.send(contacts))
+    })
+
+    app.post('/api/barbers', (req, res) => {
+      db.get_barbers(req.body.id, (err, contacts)=> {
+      }).then(contacts => res.send(contacts))
+    })
+
+    app.post('/api/services', (req, res) => {
+      db.get_services(req.body.id, (err, contacts)=> {
+      }).then(contacts => res.send(contacts))
+    })
+
+    app.post('/api/add-contact', (req, res)=> {
+      let contact = [req.body.firstname, req.body.lastname, req.body.phonenumber, req.body.email, 1]
+      db.add_contact(contact, (err, contacts) => {
+        console.log(err, contacts);
+      }).then(contacts => res.send(contacts))
+    })
+
+    app.post('/api/delete-contact', (req, res)=> {
+      console.log('server', req.body);
+      db.delete_contact(req.body, (err, contacts) => {
+        console.log("db", err, contacts);
+      }).then(contacts => res.send(contacts))
+    })
+
+    app.post('/api/apptdialog', (req, res)=> {
+      db.get_appt_dialog(req.body, (err, info)=> {
+        console.log('db', err, info)
+      }).then(info => res.send(info))
+    })
+
+    app.post('/api/cal', (req, res)=> {
+      console.log('server');
+      db.get_cal_events(req.body.id, (err, events)=> {
+        console.log('db', err, events);
+      }).then(info => res.send(info))
     })
 
 });
@@ -55,7 +101,7 @@ massive("postgres://uunjpeyj:yVNsIpBpaTMB_a2TXEss-Gmq1DGSIOte@pellefant.db.eleph
 
 
 ///AUTH0///
-//----------------//
+//-------//
 
 passport.use(new Auth0Strategy({
    domain:       config.auth0.domain,
