@@ -3,6 +3,7 @@ import * as moment from 'moment';
 import { MdDialog, MdDialogRef } from '@angular/material';
 import { CashoutdialogComponent } from '../cashoutdialog/cashoutdialog.component';
 import { ApptdialogComponent } from '../apptdialog/apptdialog.component';
+import { ProductDialogComponent } from '../product-dialog/product-dialog.component';
 import { ReportServiceService } from '../report-service.service';
 
 
@@ -16,6 +17,26 @@ export class ReportsComponent implements OnInit {
   cashResult: any;
 
   constructor(public dialog: MdDialog,  public reportServiceService: ReportServiceService) { }
+
+  openNewProduct(){
+     let dialogRef = this.dialog.open(ProductDialogComponent,{
+      width: '600px',
+      data: 'this text is passed'
+    }) 
+    dialogRef.afterClosed().subscribe(result =>{
+      if(result !== undefined){
+      let newproduct =   {
+          name : result.name,
+          type : result.type,
+          cost : result.cost,
+          code : result.code 
+      }
+      
+      this.products.push(newproduct)
+      }
+
+    })
+  }
 
   openCashDialog() {
     let dialogRef = this.dialog.open(CashoutdialogComponent,{
@@ -215,6 +236,16 @@ export class ReportsComponent implements OnInit {
           }
         }
     ]
+
+    products = [
+      {
+        name : 'Monster',
+        type : 'Drinks',
+        cost : '1.50',
+        code : '0012' 
+      }
+    ]
+
     trans: any
   ngOnInit() {
     console.log('reports loaded')
