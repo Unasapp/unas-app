@@ -61,4 +61,13 @@ export class ReportServiceService {
     return this.http.post('/api/cal', id)
     .map(res => res.json())
   }
+
+  deleteAPPT(id){
+    console.log(id);
+    
+  }
+  editEvent(editedEvent){
+    console.log(editedEvent);
+    
+  }
 }

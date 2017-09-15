@@ -13,8 +13,8 @@
         <tr>
           <td>
             <md-select name=customer [(ngModel)]='customer' placeholder="Client">
-              <md-option *ngFor="let client of clients" [value]="client.value">
-                {{ client.viewValue }}
+              <md-option *ngFor="let client of clients" value='client.c_first' [value]="client">
+                {{ client.c_first }}     {{ client.c_last }}
               </md-option>
             </md-select>
           </td>
@@ -74,15 +74,15 @@
         <tr>
           <td>
             <md-select name=service [(ngModel)]='service' placeholder="Service">
-              <md-option *ngFor="let service of services" [value]="service.value">
-                {{ service.viewValue }}
+              <md-option *ngFor="let service of services" value='service.service' [value]="service">
+                {{ service.service }}
               </md-option>
             </md-select>
           </td>
           <td>
             <md-select name=barber [(ngModel)]='barber' placeholder="Barber">
-              <md-option *ngFor="let barber of barbers" [value]="barber.value">
-                {{ barber.viewValue }}
+              <md-option *ngFor="let barber of barbers" value='barber.b_first' [value]="barber">
+                {{ barber.b_first }} {{ barber.b_last }}
               </md-option>
             </md-select>
           </td>

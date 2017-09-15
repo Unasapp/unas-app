@@ -12,28 +12,9 @@ import { ReportServiceService } from '../report-service.service';
 })
 export class ApptdialogComponent implements OnInit {
   time = [];
-
-  clients = [
-    {value: 'Lesley Rico', viewValue: 'Lesley Rico'},
-    {value: 'Bittany Jensen', viewValue: 'Bittany Jensen'},
-    {value: 'Carlo Jimenez', viewValue: 'Carlo Jimenez'},
-    {value: 'Mike Hunt', viewValue: 'Mike Hunt'},
-    {value: 'Kwatasha Smith', viewValue: 'Kwatasha Smith'}
-  ];
-
-  barbers = [
-    {value: 'Harry Vu', viewValue: 'Harry'},
-    {value: 'Dominic DeCicco', viewValue: 'Dominic'},
-    {value: 'Andrew Chen', viewValue: 'Andrew'}
-  ];
-
-  services = [
-    {value: 'Haircut', viewValue: 'Haircut'},
-    {value: 'Beard Trim', viewValue: 'Beard Trim'},
-    {value: 'Line-up', viewValue: 'Line-up'},
-    {value: 'Fade', viewValue: 'Fade'},
-    {value: 'Traditional Shave', viewValue: 'Traditional Shave'}
-  ];
+  clients: any;
+  barbers: any;
+  services: any;
 
   constructor(
     public dialogRef: MdDialogRef<ApptdialogComponent>,
@@ -56,6 +37,15 @@ export class ApptdialogComponent implements OnInit {
 
 
   ngOnInit() {
+
+    this.barbers = JSON.parse(localStorage.getItem('barbers'))
+    this.clients = JSON.parse(localStorage.getItem('clients'))
+    this.services = JSON.parse(localStorage.getItem('services'))
+    console.log(this.barbers);
+    console.log(this.clients);
+    console.log(this.services);
+    
+    
     this.makeTime()
     // this.service.getDialogBarbers({id:1}).subscribe((data)=> {
 
@@ -67,23 +57,42 @@ export class ApptdialogComponent implements OnInit {
     var timeM = timep.split(':')[1]
     timeam === 'pm' ? timeH = Number(timeH) + 12 : timeH = timeH;
 
+    console.log('this shit',barber, service, customer, date, timep, timeam, firstname, lastname, phonenumber, email);
+    
+
     if(!customer){
       /// New Customer Call 
       let customer = firstname + ' ' + lastname;
       let newappt = {
-        barber, service, customer, 'date': moment(date).hour(timeH).minute(timeM).format('LLLL')
+        'barber': barber.b_first + ' ' + barber.b_last,
+        'service': service.service, 
+        'customer': customer, 
+        'date': moment(date).hour(timeH).minute(timeM).format('LLLL')
       };
+
+     
       console.log(newappt);
       this.dialogRef.close(newappt)
     } else{
       let newappt = {
-        barber, service, customer, 'date': moment(date).hour(timeH).minute(timeM).format('LLLL')
+        'barber': barber.b_first + ' ' + barber.b_last,
+        'service': service.service, 
+        'customer': customer.c_first + ' ' + customer.c_last , 
+        'date': moment(date).hour(timeH).minute(timeM).format('LLLL')
       };
-      console.log(newappt);
+      console.log('appt',newappt);
       this.dialogRef.close(newappt)
     }
 
-
+    let newappt =  {
+              'barber_id'  : barber.b_id,
+              'client_id'  : customer.c_id,
+              'service_id'  : service.v_id,
+              'shop_id'  : service.shop_id,
+              'date' : moment(date).hour(timeH).minute(timeM).format('YYYY-MM-DD HH:mm:ss')
+          }
+    console.log('going to DB',newappt);
+    this.service.addAppt(newappt)        
   }
 
   onCloseCancel(){
