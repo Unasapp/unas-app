@@ -4,7 +4,6 @@ import { MD_DIALOG_DATA } from '@angular/material';
 import * as moment from 'moment';
 import { ReportServiceService } from '../report-service.service';
 
-
 @Component({
   selector: 'app-apptdialog',
   templateUrl: './apptdialog.component.html',
@@ -15,6 +14,7 @@ export class ApptdialogComponent implements OnInit {
   clients: any;
   barbers: any;
   services: any;
+  
 
   constructor(
     public dialogRef: MdDialogRef<ApptdialogComponent>,
