@@ -6,7 +6,7 @@ import { CashoutdialogComponent } from '../cashoutdialog/cashoutdialog.component
 import { ReportServiceService } from '../report-service.service';
 import { ApptdialogComponent } from '../apptdialog/apptdialog.component';
 import { EventModalComponent } from '../event-modal/event-modal.component';
-import { Options } from 'fullcalendar'
+import { Options } from 'fullcalendar';
 import * as $ from 'jquery';
 
 @Component({
@@ -113,7 +113,7 @@ export class CalenderComponent implements OnInit {
     //API CALL to Edit EVENTS
     this.myCalendar.fullCalendar('removeEvents', $('#eID').val());
     let editedEvent = {
-        ''
+        'dataID' : '',
         'title': $("#eTitle").val(),
         'start': $("#eStart").val(),
         'end': $("#eStart").val(),
