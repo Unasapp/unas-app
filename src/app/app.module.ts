@@ -7,6 +7,7 @@ import { FormsModule } from '@angular/forms';
 import { AuthService } from './auth/auth.service';
 import { CommonModule } from '@angular/common';
 import { CalendarModule } from "ap-angular2-fullcalendar";
+import { ChartModule } from 'angular2-chartjs';
 import {
     MdSidenavModule,
     MdToolbarModule,
@@ -43,6 +44,7 @@ import { ApptdialogComponent } from './apptdialog/apptdialog.component';
 import { BarberDetailsComponent } from './barber-details/barber-details.component';
 import { ReportServiceService } from './report-service.service';
 import { EventModalComponent } from './event-modal/event-modal.component';
+import { BarberModalComponent } from './barber-modal/barber-modal.component';
 
 @NgModule({
   declarations: [
@@ -60,7 +62,8 @@ import { EventModalComponent } from './event-modal/event-modal.component';
     CashoutdialogComponent,
     ApptdialogComponent,
     BarberDetailsComponent,
-    EventModalComponent
+    EventModalComponent,
+    BarberModalComponent
   ],
   imports: [
     BrowserModule,
@@ -87,13 +90,15 @@ import { EventModalComponent } from './event-modal/event-modal.component';
     MdSelectModule,
     MdNativeDateModule,
     MdSliderModule,
-    MdSlideToggleModule
+    MdSlideToggleModule,
+    ChartModule
   ],
   entryComponents: [
     ContactsdialogComponent,
     CashoutdialogComponent,
     ApptdialogComponent,
-    EventModalComponent
+    EventModalComponent,
+    BarberModalComponent
   ],
   providers: [AuthService, ReportServiceService],
   bootstrap: [AppComponent]

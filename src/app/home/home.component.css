@@ -7,20 +7,24 @@
     width: 100%;
     height: inherit;
     text-align: center;
+    font-family: 'Quicksand';
+
 }
 
 .tile-icons{
     font-size: 60px;
-    color: green;
-    opacity: .4;
+    color: #FE0002;
+    /*opacity: .4;*/
 }
 
 .tile-text{
     font-size: 22px;
+    font-weight: 600;
+
 }
 
 .top-stats{
-    width: 100wv;
+    width: 100vw;
     height: auto;
     overflow: none;
     border-bottom: 1px solid lightgrey;
@@ -36,7 +40,7 @@
     justify-content: center;
     flex-wrap: wrap;
     height: auto;
-    padding-top: 20px; 
+    padding-top: 20px;
 }
 .example-card {
     height: 400px;
@@ -68,7 +72,7 @@ time.icon
   height: 7em;
   background-color: #fff;
   border-radius: 0.6em;
-  box-shadow: 0 1px 0 #bdbdbd, 0 2px 0 #fff, 0 3px 0 #bdbdbd, 0 4px 0 #fff, 0 5px 0 #bdbdbd, 0 0 0 1px #bdbdbd;
+  box-shadow: 0 1px 0 #FE0002, 0 2px 0 #fff, 0 3px 0 #FE0002, 0 4px 0 #fff, 0 5px 0 #FE0002, 0 0 0 1px #FE0002;
   overflow: hidden;
 }
 time.icon *
@@ -86,17 +90,17 @@ time.icon strong
   top: 0;
   padding: 0.4em 0;
   color: #fff;
-  background-color: blue;
+  background-color: #FE0002;
   border-bottom: 1px solid grey;
-  box-shadow: 0 2px 0 blue;
-  opacity: .4;
+  box-shadow: 0 2px 0 #FE0002;
+  /*opacity: .4;*/
 }
 time.icon em
 {
   position: absolute;
   bottom: 0.3em;
-  color: blue;
-  opacity: .4;
+  color: #FE0002;
+  /*opacity: .4;*/
 }
 time.icon span
 {
@@ -106,3 +110,22 @@ time.icon span
   color: #2f2f2f;
 }
 
+.stats-cards{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  margin-top: 1%;
+  margin-bottom: 2%;
+}
+
+.card-layout{
+  width: 25%;
+  height: 250px;
+  text-align: center;
+
+}
+
+.chart-style{
+  width: 100%;
+  height: 250px;
+}

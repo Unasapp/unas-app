@@ -1,56 +1,82 @@
- <md-toolbar class='main-toolbar'>
+<md-toolbar class='main-toolbar'>
 
-    <div class='ionic-button'>
-      <a  md-icon-button  (click)="sidenav.toggle()">
+  <div class='ionic-button'>
+    <a md-icon-button (click)="sidenav.toggle()">
         <i class='ion-navicon icon-size'></i>
       </a>
-      <!-- <a (click)='ifopen=!ifopen' *ngIf='!ifopen' md-icon-button (click)="sidenav.toggle()">
+    <!-- <a (click)='ifopen=!ifopen' *ngIf='!ifopen' md-icon-button (click)="sidenav.toggle()">
         <i style='font-size:32px;' class='ion-close-round icon-size'></i>
       </a> -->
-    </div>
+  </div>
 
-    <div class='rest'>
-      <h2>Shop Name</h2>
-    </div>
-    <div>
-      <button md-icon-button (click)='openCashDialog()' >
+  <div class='rest'>
+    <h2>Shop Name</h2>
+  </div>
+  <div>
+    <button md-icon-button (click)='openCashDialog()'>
         <i class='ion-pricetag icon-size' ></i>
       </button>
-    </div>
-    <div>
-      <button md-icon-button (click)='openApptDialog()' >
+  </div>
+  <div>
+    <button md-icon-button (click)='openApptDialog()'>
         <i class='ion-calendar icon-size' ></i>
       </button>
-    </div>
+  </div>
 
-  </md-toolbar>
+</md-toolbar>
 
 <md-sidenav-container class="big-container">
 
-  <md-sidenav #sidenav  mode="push" class="sidenav-inner">
-    <md-list >
+  <md-sidenav #sidenav mode="push" class="sidenav-inner">
+    <md-list>
       <!-- <md-list-item (click)="sidenav.close()" style='margin-left:70%;font-size:20px;' >
         <i class='ion-close-round'></i>
       </md-list-item> -->
-      <md-list-item routerLink='/home' class='sidenav-items' > Home </md-list-item>
+      <md-list-item routerLink='/home' class='sidenav-items'> Home </md-list-item>
       <md-list-item routerLink='/cal' class='sidenav-items'> Calendar </md-list-item>
-      <md-list-item routerLink='/contacts' class='sidenav-items' > Contacts </md-list-item>
-      <md-list-item routerLink='/allbarbers' class='sidenav-items' > Barber Profiles </md-list-item>
-      <md-list-item routerLink='/reports' class='sidenav-items' > Reports </md-list-item>
-      <md-list-item routerLink='/notifications' class='sidenav-items' > Notifications </md-list-item>
-      <md-list-item routerLink='/settings' class='sidenav-items' > Settings </md-list-item>
-      <md-list-item (click)="auth.logout()" class='sidenav-items' > Logout </md-list-item>
+      <md-list-item routerLink='/contacts' class='sidenav-items'> Contacts </md-list-item>
+      <md-list-item routerLink='/allbarbers' class='sidenav-items'> Barber Profiles </md-list-item>
+      <md-list-item routerLink='/reports' class='sidenav-items'> Reports </md-list-item>
+      <md-list-item routerLink='/notifications' class='sidenav-items'> Notifications </md-list-item>
+      <md-list-item routerLink='/settings' class='sidenav-items'> Settings </md-list-item>
+      <md-list-item (click)="auth.logout()" class='sidenav-items'> Logout </md-list-item>
     </md-list>
   </md-sidenav>
 
 
-  <section class='all-scroll' >
+  <section class='all-scroll'>
+    <div class='top-stats'>
+      <md-tab-group>
+        <md-tab label="Today">
+          <!-- <chart [type]="type" [data]="data" [options]="options"></chart> -->
+          <div class="stats-cards">
+            <md-card class="card-layout">
+              <!-- <md-card-header>
+                <md-card-title>Date:</md-card-title>
+              </md-card-header> -->
+              <md-card-content>
+                <chart class='chart-style' [type]="type" [data]="data" [options]="options"></chart>
+              </md-card-content>
+            </md-card>
 
-  <div class='top-stats'>
-
-    <md-tab-group>
-      <md-tab label="Today">
-        <md-grid-list class='grid-size' cols="3" rowHeight="3:1">
+            <md-card class="card-layout">
+              <!-- <md-card-header>
+                <md-card-title>Wages:</md-card-title>
+              </md-card-header> -->
+              <md-card-content>
+                <chart class='chart-style' [type]="type" [data]="data" [options]="options"></chart>
+              </md-card-content>
+            </md-card>
+            <md-card class="card-layout">
+              <!-- <md-card-header>
+                <md-card-title>Tips:</md-card-title>
+              </md-card-header> -->
+              <md-card-content>
+                <chart class='chart-style' [type]="type" [data]="data" [options]="options"></chart>
+              </md-card-content>
+            </md-card>
+          </div>
+          <!-- <md-grid-list class='grid-size' cols="3" rowHeight="3:1">
               <md-grid-tile class='top-tiles' >
 
                <time datetime="2014-09-20" class="icon">
@@ -79,7 +105,7 @@
               </md-grid-tile>
               <md-grid-tile class='top-tiles' >
                 <div >
-                  <div><i style='color:blueviolet;' class='ion-clock tile-icons'></i> </div>
+                  <div><i class='ion-clock tile-icons'></i> </div>
                   <div class='tile-text' >
                    Time Spent on Cuts: 4.5 hours
                   </div>
@@ -87,7 +113,7 @@
               </md-grid-tile>
               <md-grid-tile class='top-tiles' >
                 <div >
-                  <div><i style='color:#006699;' class='ion-scissors tile-icons'></i> </div>
+                  <div><i class='ion-scissors tile-icons'></i> </div>
                   <div class='tile-text' >
                    Completed Cuts: 288
                   </div>
@@ -96,164 +122,164 @@
               <md-grid-tile class='top-tiles' >
 
                 <div >
-                  <div><i style='color:rgba(128, 0, 0,.9);' class='ion-calendar tile-icons'></i> </div>
+                  <div><i class='ion-calendar tile-icons'></i> </div>
                   <div class='tile-text' >
                    Pending Appointments: 13
                   </div>
                 </div>
 
               </md-grid-tile>
-        </md-grid-list>
-      </md-tab>
+        </md-grid-list> -->
+        </md-tab>
 
-      <md-tab label="This Week">
-        <md-grid-list class='grid-size' cols="3" rowHeight="3:1">
-              <md-grid-tile class='top-tiles' >
+        <md-tab label="This Week">
+          <md-grid-list class='grid-size' cols="3" rowHeight="3:1">
+            <md-grid-tile class='top-tiles'>
 
-               <time datetime="2014-09-20" class="icon">
+              <time datetime="2014-09-20" class="icon">
                   <em>Week </em>
                   <strong>September</strong>
                   <span>20-27</span>
                 </time>
 
-              </md-grid-tile>
-              <md-grid-tile class='top-tiles' >
-                <div >
-                  <div><i class='ion-social-usd tile-icons'></i> </div>
-                  <div class='tile-text' >
-                   Wages: $9000
-                  </div>
+            </md-grid-tile>
+            <md-grid-tile class='top-tiles'>
+              <div>
+                <div><i class='ion-social-usd tile-icons'></i> </div>
+                <div class='tile-text'>
+                  Wages: $9000
                 </div>
+              </div>
 
-              </md-grid-tile>
-              <md-grid-tile class='top-tiles' >
-                <div >
-                  <div><i class='ion-cash tile-icons'></i> </div>
-                  <div class='tile-text' >
-                   Tips: $2090
-                  </div>
+            </md-grid-tile>
+            <md-grid-tile class='top-tiles'>
+              <div>
+                <div><i class='ion-cash tile-icons'></i> </div>
+                <div class='tile-text'>
+                  Tips: $2090
                 </div>
-              </md-grid-tile>
-              <md-grid-tile class='top-tiles' >
-                <div >
-                  <div><i style='color:blueviolet;' class='ion-clock tile-icons'></i> </div>
-                  <div class='tile-text' >
-                   Time Spent on Cuts: 39.5 hours
-                  </div>
+              </div>
+            </md-grid-tile>
+            <md-grid-tile class='top-tiles'>
+              <div>
+                <div><i style='color:blueviolet;' class='ion-clock tile-icons'></i> </div>
+                <div class='tile-text'>
+                  Time Spent on Cuts: 39.5 hours
                 </div>
-              </md-grid-tile>
-              <md-grid-tile class='top-tiles' >
-                <div >
-                  <div><i style='color:#006699;' class='ion-scissors tile-icons'></i> </div>
-                  <div class='tile-text' >
-                   Completed Cuts: 788
-                  </div>
+              </div>
+            </md-grid-tile>
+            <md-grid-tile class='top-tiles'>
+              <div>
+                <div><i style='color:#006699;' class='ion-scissors tile-icons'></i> </div>
+                <div class='tile-text'>
+                  Completed Cuts: 788
                 </div>
-              </md-grid-tile>
-              <md-grid-tile class='top-tiles' >
+              </div>
+            </md-grid-tile>
+            <md-grid-tile class='top-tiles'>
 
-                <div >
-                  <div><i style='color:rgba(128, 0, 0,.9);' class='ion-calendar tile-icons'></i> </div>
-                  <div class='tile-text' >
-                   Pending Appointments: 13
-                  </div>
+              <div>
+                <div><i style='color:rgb(128, 0, 0);' class='ion-calendar tile-icons'></i> </div>
+                <div class='tile-text'>
+                  Pending Appointments: 13
                 </div>
+              </div>
 
-              </md-grid-tile>
-        </md-grid-list>
-      </md-tab>
-      <md-tab label="This Month">
-       <md-grid-list class='grid-size' cols="3" rowHeight="3:1">
-              <md-grid-tile class='top-tiles' >
+            </md-grid-tile>
+          </md-grid-list>
+        </md-tab>
+        <md-tab label="This Month">
+          <md-grid-list class='grid-size' cols="3" rowHeight="3:1">
+            <md-grid-tile class='top-tiles'>
 
-               <time datetime="2014-09-20" class="icon">
+              <time datetime="2014-09-20" class="icon">
                   <em>Saturday</em>
                   <strong>September</strong>
                   <span>20</span>
                 </time>
 
-              </md-grid-tile>
-              <md-grid-tile class='top-tiles' >
-                <div >
-                  <div><i class='ion-social-usd tile-icons'></i> </div>
-                  <div class='tile-text' >
-                   Wages: $3400
-                  </div>
+            </md-grid-tile>
+            <md-grid-tile class='top-tiles'>
+              <div>
+                <div><i class='ion-social-usd tile-icons'></i> </div>
+                <div class='tile-text'>
+                  Wages: $3400
                 </div>
+              </div>
 
-              </md-grid-tile>
-              <md-grid-tile class='top-tiles' >
-                <div >
-                  <div><i class='ion-cash tile-icons'></i> </div>
-                  <div class='tile-text' >
-                   Tips: $490
-                  </div>
+            </md-grid-tile>
+            <md-grid-tile class='top-tiles'>
+              <div>
+                <div><i class='ion-cash tile-icons'></i> </div>
+                <div class='tile-text'>
+                  Tips: $490
                 </div>
-              </md-grid-tile>
-              <md-grid-tile class='top-tiles' >
-                <div >
-                  <div><i style='color:blueviolet;' class='ion-clock tile-icons'></i> </div>
-                  <div class='tile-text' >
-                   Time Spent on Cuts: 4.5 hours
-                  </div>
+              </div>
+            </md-grid-tile>
+            <md-grid-tile class='top-tiles'>
+              <div>
+                <div><i style='color:blueviolet;' class='ion-clock tile-icons'></i> </div>
+                <div class='tile-text'>
+                  Time Spent on Cuts: 4.5 hours
                 </div>
-              </md-grid-tile>
-              <md-grid-tile class='top-tiles' >
-                <div >
-                  <div><i style='color:#006699;' class='ion-scissors tile-icons'></i> </div>
-                  <div class='tile-text' >
-                   Completed Cuts: 288
-                  </div>
+              </div>
+            </md-grid-tile>
+            <md-grid-tile class='top-tiles'>
+              <div>
+                <div><i style='color:#006699;' class='ion-scissors tile-icons'></i> </div>
+                <div class='tile-text'>
+                  Completed Cuts: 288
                 </div>
-              </md-grid-tile>
-              <md-grid-tile class='top-tiles' >
+              </div>
+            </md-grid-tile>
+            <md-grid-tile class='top-tiles'>
 
-                <div >
-                  <div><i style='color:rgba(128, 0, 0,.9);' class='ion-calendar tile-icons'></i> </div>
-                  <div class='tile-text' >
-                   Pending Appointments: 13
-                  </div>
+              <div>
+                <div><i style='color:rgba(128, 0, 0,.9);' class='ion-calendar tile-icons'></i> </div>
+                <div class='tile-text'>
+                  Pending Appointments: 13
                 </div>
+              </div>
 
-              </md-grid-tile>
-        </md-grid-list>
-      </md-tab>
-    </md-tab-group>
+            </md-grid-tile>
+          </md-grid-list>
+        </md-tab>
+      </md-tab-group>
 
-  </div>
+    </div>
 
-  <div class='barber-profiles'>
+    <div class='barber-profiles'>
 
       <md-card *ngFor="let barber of barbers" class="example-card">
         <h3 style="text-align:center;">{{ barber.name }}</h3>
-      <img class='profile-pic' src="https://maxcdn.icons8.com/Share/icon/Users//user_male_circle_filled1600.png">
-      <md-card-content>
-        <div class='profile-stat'>
-          <p>Wages:</p>
-          <p>{{barber.address.zipcode}}</p>
-        </div>
-        <div class='profile-stat'>
-          <p>Tips:</p>
-          <p>{{barber.address.geo.lng}}</p>
-        </div>
-        <div class='profile-stat'>
-          <p>Appointments:</p>
-          <p>7</p>
-        </div>
-        <div class='profile-stat'>
-          <p>Completed Appointments:</p>
-          <p>5</p>
-        </div>
-      </md-card-content>
-      <md-card-actions class='profile-actions'>
-        <button md-button routerLink="/barber-details">View Profile</button>
-        <button md-button (click)='openApptDialog()'>Make Appointment</button>
-      </md-card-actions>
-    </md-card>
+        <img class='profile-pic' src="https://maxcdn.icons8.com/Share/icon/Users//user_male_circle_filled1600.png">
+        <md-card-content>
+          <div class='profile-stat'>
+            <p>Wages:</p>
+            <p>{{barber.address.zipcode}}</p>
+          </div>
+          <div class='profile-stat'>
+            <p>Tips:</p>
+            <p>{{barber.address.geo.lng}}</p>
+          </div>
+          <div class='profile-stat'>
+            <p>Appointments:</p>
+            <p>7</p>
+          </div>
+          <div class='profile-stat'>
+            <p>Completed Appointments:</p>
+            <p>5</p>
+          </div>
+        </md-card-content>
+        <md-card-actions class='profile-actions'>
+          <button md-button (click)='openBarberModal(barber)'>View Profile</button>
+          <button md-button (click)='openApptDialog()'>Make Appointment</button>
+        </md-card-actions>
+      </md-card>
 
 
 
-  </div>
+    </div>
 
   </section>
 
