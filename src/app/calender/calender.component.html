@@ -92,7 +92,7 @@
     <button (click)='changeService = !changeService' style="float:right;" md-icon-button> 
         <i style='color:#ff4d4d' class='ion-ios-arrow-back icon-size'></i>  
     </button>  
-      <md-select name=service [(ngModel)]='service' placeholder="Service">
+      <md-select name=service [(ngModel)]='newservice' placeholder="Service">
           <md-option *ngFor="let service of services" [value]="service.value">
              {{ service.viewValue }}
           </md-option>
@@ -113,7 +113,7 @@
     <button (click)='changeBarber = !changeBarber' style="float:right;" md-icon-button> 
         <i style='color:#ff4d4d' class='ion-ios-arrow-back icon-size'></i>  
     </button>  
-      <md-select name=barber [(ngModel)]='barber' placeholder="Barber">
+      <md-select name=barber [(ngModel)]='newbarber' placeholder="Barber">
         <md-option *ngFor="let barber of barbers" [value]="barber.value">              
           {{ barber.viewValue }}
         </md-option>
@@ -137,7 +137,7 @@
         <i style='color:#ff4d4d' class='ion-ios-arrow-back icon-size'></i>  
     </button>  
      <md-input-container>
-      <input name=date [(ngModel)]='date' mdInput [mdDatepicker]="picker" placeholder="Choose a date">
+      <input name=date [(ngModel)]='newdate' mdInput [mdDatepicker]="picker" placeholder="Choose a date">
       <button mdSuffix [mdDatepickerToggle]="picker"></button>
     </md-input-container>
 
@@ -168,8 +168,8 @@
 
       <br />
       <md-dialog-actions>
-        <button style='background:#00e673;color:white;' md-raised-button (click)='onCloseConfirm()' > Save </button>
-        <button style='background:#ff4d4d;color:white;' md-raised-button (click)='onCloseConfirm()' > Delete </button>
+        <button name=eDBid id=eDBid style='background:#00e673;color:white;' md-raised-button (click)='onEditEvent(newClient,newservice,newbarber,newdate,timep,timeam)' > Save </button>
+        <button name=eID id=eID style='background:#ff4d4d;color:white;' md-raised-button (click)='onDeleteEvent()' > Delete </button>
         <button md-raised-button (click)='closeD()' > Cancel </button>
       </md-dialog-actions>
           

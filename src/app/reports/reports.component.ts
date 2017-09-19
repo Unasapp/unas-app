@@ -3,6 +3,9 @@ import * as moment from 'moment';
 import { MdDialog, MdDialogRef } from '@angular/material';
 import { CashoutdialogComponent } from '../cashoutdialog/cashoutdialog.component';
 import { ApptdialogComponent } from '../apptdialog/apptdialog.component';
+import { ProductDialogComponent } from '../product-dialog/product-dialog.component';
+import { ReportServiceService } from '../report-service.service';
+
 
 @Component({
   selector: 'app-reports',
@@ -13,13 +16,33 @@ export class ReportsComponent implements OnInit {
 
   cashResult: any;
 
-  constructor(public dialog: MdDialog) { }
+  constructor(public dialog: MdDialog,  public reportServiceService: ReportServiceService) { }
+
+  openNewProduct(){
+     let dialogRef = this.dialog.open(ProductDialogComponent,{
+      width: '600px',
+      data: 'this text is passed'
+    }) 
+    dialogRef.afterClosed().subscribe(result =>{
+      if(result !== undefined){
+      let newproduct =   {
+          name : result.name,
+          type : result.type,
+          cost : result.cost,
+          code : result.code 
+      }
+      
+      this.products.push(newproduct)
+      }
+
+    })
+  }
 
   openCashDialog() {
     let dialogRef = this.dialog.open(CashoutdialogComponent,{
       width: '600px',
       data: 'this text is passed'
-    }) 
+    })
       dialogRef.afterClosed().subscribe(result =>{
       this.cashResult = result;
       // console.log(result);
@@ -37,7 +60,7 @@ export class ReportsComponent implements OnInit {
             "total": result.amtpaid
         }
       // console.log(newreport);
-      
+
       this.report.push(newreport)
       }
 
@@ -50,160 +73,82 @@ export class ReportsComponent implements OnInit {
     })
   }
 
-      report = [
-        {
-            "b_first": "Andrew",
-            "b_last": "Chen",
-            "c_first": "David",
-            "c_last": "Lee",
-            "service": "Beard Trim",
-            "date": "2017-08-13",
-            "price": "$5.00",
-            "tip": "$3.00",
-            "total": "$8.00"
-        },
-        {
-            "b_first": "Harry",
-            "b_last": "Vu",
-            "c_first": "John ",
-            "c_last": "Smith",
-            "service": "Haircut",
-            "date": "2017-08-13",
-            "price": "$20.00",
-            "tip": "$5.00",
-            "total": "$25.00"
-        },
-        {
-            "b_first": "Harry",
-            "b_last": "Vu",
-            "c_first": "Lesley",
-            "c_last": "Rico",
-            "service": "Shave",
-            "date": "2017-08-13",
-            "price": "$15.00",
-            "tip": "$5.00",
-            "total": "$20.00"
-        },
-        {
-            "b_first": "Dom",
-            "b_last": "Decicco",
-            "c_first": "Brittany",
-            "c_last": "Jensen",
-            "service": "Haircut",
-            "date": "2017-08-13",
-            "price": "$20.00",
-            "tip": "$10.00",
-            "total": "$30.00"
-        },
-        {
-            "b_first": "Andrew",
-            "b_last": "Chen",
-            "c_first": "Carlos",
-            "c_last": "Jimenez",
-            "service": "Line Up",
-            "date": "2017-08-13",
-            "price": "$10.00",
-            "tip": "$5.00",
-            "total": "$15.00"
-        },
-        {
-            "b_first": "Dom",
-            "b_last": "Decicco",
-            "c_first": "John ",
-            "c_last": "Smith",
-            "service": "Shave",
-            "date": "2017-08-13",
-            "price": "$15.00",
-            "tip": "$5.00",
-            "total": "$20.00"
-        },
-        {
-            "b_first": "Harry",
-            "b_last": "Vu",
-            "c_first": "Lesley",
-            "c_last": "Rico",
-            "service": "Beard Trim",
-            "date": "2017-08-13",
-            "price": "$5.00",
-            "tip": "$2.00",
-            "total": "$7.00"
-        }
-    ]
+    report:any = []
 
-    timecards = [
-        {
-            "b_first": "Harry",
-            "b_last": "Vu",
-            "in": moment("2017-08-13T15:00:00.000Z").format('LLLL'),
-            "out": moment("2017-08-13T18:30:00.000Z").format('LLLL')
-        },
-        {
-            "b_first": "Harry",
-            "b_last": "Vu",
-            "in": moment("2017-08-13T19:30:00.000Z").format('LLLL'),
-            "out": moment("2017-08-14T02:00:00.000Z").format('LLLL')
-        },
-        {
-            "b_first": "Andrew",
-            "b_last": "Chen",
-            "in": moment("2017-08-13T15:00:00.000Z").format('LLLL'),
-            "out": moment("2017-08-13T18:00:00.000Z").format('LLLL')
-        },
-        {
-            "b_first": "Andrew",
-            "b_last": "Chen",
-            "in": moment("2017-08-13T18:30:00.000Z").format('LLLL'),
-            "out": moment("2017-08-14T02:00:00.000Z").format('LLLL')
-        },
-        {
-            "b_first": "Dom",
-            "b_last": "Decicco",
-            "in": moment("2017-08-13T15:00:00.000Z").format('LLLL'),
-            "out": moment("2017-08-13T19:00:00.000Z").format('LLLL')
-        },
-        {
-            "b_first": "Dom",
-            "b_last": "Decicco",
-            "in": moment("2017-08-13T20:00:00.000Z").format('LLLL'),
-            "out": moment("2017-08-14T02:00:00.000Z").format('LLLL')
-        },
-        {
-            "b_first": "Harry",
-            "b_last": "Vu",
-            "in": moment("2017-08-14T15:00:00.000Z").format('LLLL'),
-            "out": moment("2017-08-14T19:00:00.000Z").format('LLLL')
-        },
-        {
-            "b_first": "Harry",
-            "b_last": "Vu",
-            "in": moment("2017-08-14T20:00:00.000Z").format('LLLL'),
-            "out": moment("2017-08-15T02:00:00.000Z").format('LLLL')
-        },
-        {
-            "b_first": "Andrew",
-            "b_last": "Chen",
-            "in": moment("2017-08-14T15:00:00.000Z").format('LLLL'),
-            "out": moment("2017-08-14T18:30:00.000Z").format('LLLL')
-        },
-        {
-            "b_first": "Andrew",
-            "b_last": "Chen",
-            "in": moment("2017-08-14T19:00:00.000Z").format('LLLL'),
-            "out": moment("2017-08-15T02:00:00.000Z").format('LLLL')
-        },
-        {
-            "b_first": "Dom",
-            "b_last": "Decicco",
-            "in": moment("2017-08-14T15:00:00.000Z").format('LLLL'),
-            "out": moment("2017-08-14T19:30:00.000Z").format('LLLL')
-        },
-        {
-            "b_first": "Dom",
-            "b_last": "Decicco",
-            "in": moment("2017-08-14T20:00:00.000Z").format('LLLL'),
-            "out": moment("2017-08-15T02:00:00.000Z").format('LLLL')
-        }
-    ]
+    timecards:any = []
+    //     {
+    //         "b_first": "Harry",
+    //         "b_last": "Vu",
+    //         "in": moment("2017-08-13T15:00:00.000Z").format('LLLL'),
+    //         "out": moment("2017-08-13T18:30:00.000Z").format('LLLL')
+    //     },
+    //     {
+    //         "b_first": "Harry",
+    //         "b_last": "Vu",
+    //         "in": moment("2017-08-13T19:30:00.000Z").format('LLLL'),
+    //         "out": moment("2017-08-14T02:00:00.000Z").format('LLLL')
+    //     },
+    //     {
+    //         "b_first": "Andrew",
+    //         "b_last": "Chen",
+    //         "in": moment("2017-08-13T15:00:00.000Z").format('LLLL'),
+    //         "out": moment("2017-08-13T18:00:00.000Z").format('LLLL')
+    //     },
+    //     {
+    //         "b_first": "Andrew",
+    //         "b_last": "Chen",
+    //         "in": moment("2017-08-13T18:30:00.000Z").format('LLLL'),
+    //         "out": moment("2017-08-14T02:00:00.000Z").format('LLLL')
+    //     },
+    //     {
+    //         "b_first": "Dom",
+    //         "b_last": "Decicco",
+    //         "in": moment("2017-08-13T15:00:00.000Z").format('LLLL'),
+    //         "out": moment("2017-08-13T19:00:00.000Z").format('LLLL')
+    //     },
+    //     {
+    //         "b_first": "Dom",
+    //         "b_last": "Decicco",
+    //         "in": moment("2017-08-13T20:00:00.000Z").format('LLLL'),
+    //         "out": moment("2017-08-14T02:00:00.000Z").format('LLLL')
+    //     },
+    //     {
+    //         "b_first": "Harry",
+    //         "b_last": "Vu",
+    //         "in": moment("2017-08-14T15:00:00.000Z").format('LLLL'),
+    //         "out": moment("2017-08-14T19:00:00.000Z").format('LLLL')
+    //     },
+    //     {
+    //         "b_first": "Harry",
+    //         "b_last": "Vu",
+    //         "in": moment("2017-08-14T20:00:00.000Z").format('LLLL'),
+    //         "out": moment("2017-08-15T02:00:00.000Z").format('LLLL')
+    //     },
+    //     {
+    //         "b_first": "Andrew",
+    //         "b_last": "Chen",
+    //         "in": moment("2017-08-14T15:00:00.000Z").format('LLLL'),
+    //         "out": moment("2017-08-14T18:30:00.000Z").format('LLLL')
+    //     },
+    //     {
+    //         "b_first": "Andrew",
+    //         "b_last": "Chen",
+    //         "in": moment("2017-08-14T19:00:00.000Z").format('LLLL'),
+    //         "out": moment("2017-08-15T02:00:00.000Z").format('LLLL')
+    //     },
+    //     {
+    //         "b_first": "Dom",
+    //         "b_last": "Decicco",
+    //         "in": moment("2017-08-14T15:00:00.000Z").format('LLLL'),
+    //         "out": moment("2017-08-14T19:30:00.000Z").format('LLLL')
+    //     },
+    //     {
+    //         "b_first": "Dom",
+    //         "b_last": "Decicco",
+    //         "in": moment("2017-08-14T20:00:00.000Z").format('LLLL'),
+    //         "out": moment("2017-08-15T02:00:00.000Z").format('LLLL')
+    //     }
+    // ]
 
     Earnings = [
         {
@@ -292,7 +237,34 @@ export class ReportsComponent implements OnInit {
         }
     ]
 
+    products = [
+      {
+        name : 'Monster',
+        type : 'Drinks',
+        cost : '1.50',
+        code : '0012' 
+      }
+    ]
+
+    trans: any
   ngOnInit() {
+    console.log('reports loaded')
+    this.reportServiceService.getShopTrans({id:1}).subscribe(trans => {
+      for (let i = 0; i < trans.length; i++) {
+          trans[i].date = moment(trans[i].date).format('M-D-YY')
+      }
+      console.log(trans)
+      this.report = trans
+    })
+    this.reportServiceService.getTimecards({id:1}).subscribe(cards => {
+      for (let i = 0; i < cards.length; i++) {
+        cards[i].in = moment(cards[i].in).format('LLLL')
+        cards[i].out = moment(cards[i].out).format('LLLL')
+
+      }
+      console.log(cards)
+      this.timecards = cards
+    })
   }
 
 }

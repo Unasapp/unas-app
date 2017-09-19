@@ -1,6 +1,7 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MdDialog, MdDialogRef } from '@angular/material';
 import { MD_DIALOG_DATA } from '@angular/material';
+import { ReportServiceService } from  '../report-service.service'
 
 
 @Component({
@@ -11,21 +12,21 @@ import { MD_DIALOG_DATA } from '@angular/material';
 export class ContactsdialogComponent implements OnInit {
 
   constructor(
-    public dialogRef: MdDialogRef<ContactsdialogComponent>, 
-    @Inject(MD_DIALOG_DATA) public data: any
+    public dialogRef: MdDialogRef<ContactsdialogComponent>,
+    @Inject(MD_DIALOG_DATA) public data: any, private service: ReportServiceService
   ) { }
 
   ngOnInit() {
-    
+
   }
 
   onCloseConfirm(firstname, lastname, phonenumber, email){
 
-    let newcontact = {
+    let newContact = {
       firstname, lastname, phonenumber, email
     };
-
-    this.dialogRef.close(newcontact)
+    this.service.addContact(newContact).subscribe()
+    this.dialogRef.close(newContact)
   }
 
   onCloseCancel(){

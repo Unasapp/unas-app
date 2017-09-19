@@ -5,6 +5,7 @@ import { ContactsdialogComponent } from '../contactsdialog/contactsdialog.compon
 import { FilterPipe } from '../filter.pipe'
 import { CashoutdialogComponent } from '../cashoutdialog/cashoutdialog.component';
 import { ApptdialogComponent } from '../apptdialog/apptdialog.component';
+import { ReportServiceService } from  '../report-service.service'
 
 
 @Component({
@@ -19,7 +20,7 @@ export class ContactsComponent implements OnInit {
   users: any;
   dialogResult: any;
   deleted: any;
-  constructor(private http: HttpClient, public dialog: MdDialog) { }
+  constructor(private http: HttpClient, public dialog: MdDialog, private service: ReportServiceService) { }
 
   openCashDialog() {
     let dialogRef = this.dialog.open(CashoutdialogComponent,{
@@ -33,7 +34,7 @@ export class ContactsComponent implements OnInit {
       data: 'this text is passed'
     })
   }
-  
+
   openDialog() {
     let dialogRef = this.dialog.open(ContactsdialogComponent,{
       width: '600px',
@@ -58,6 +59,8 @@ export class ContactsComponent implements OnInit {
   }
 
   onDelete(para){
+    console.log('component')
+    this.service.deleteContact(para)
     for(var i=0; i<this.users.length; i++){
       if(this.users[i].name === para){
           this.users.splice(i,1)
@@ -67,7 +70,7 @@ export class ContactsComponent implements OnInit {
   }
 
   ngOnInit() {
-     this.http.get('https://jsonplaceholder.typicode.com/users').subscribe((data) => {
+     this.service.getContacts({id:1}).subscribe((data) => {
         this.users = data;
     });
   }

@@ -71,7 +71,7 @@
               <p class='box-reports' > {{ x.service }} </p>
               <p class='box-reports' > {{ x.price }} </p>
               <p class='box-reports' > {{ x.tip }} </p>
-              <p class='box-reports' > Credit </p>
+              <p class='box-reports' > {{ x.pay_mth}} </p>
               <p class='box-reports' > {{ x.total }} </p>
             </div>
           </md-list-item>
@@ -120,32 +120,37 @@
             <div class='view-reports-earn' >
 
               <div class='box-reports-earn' > {{ e.day }} </div>
-              <div class='box-reports-earn' > 
-                <div>Total Earnings: {{ e.harry.total | currency:'USD':true }} </div> 
+              <div class='box-reports-earn' >
+                <div>Total Earnings: {{ e.harry.total | currency:'USD':true }} </div>
                  <div>Shop Comission: {{ e.harry.s_com | currency:'USD':true  }}  </div>
                 <div>Barber Comission: {{ e.harry.b_com | currency:'USD':true  }} </div>
-                <div>Tips: {{ e.harry.tips | currency:'USD':true  }} </div> 
+                <div>Tips: {{ e.harry.tips | currency:'USD':true  }} </div>
               </div>
-              <div class='box-reports-earn' > 
+              <div class='box-reports-earn' >
                 <div>Total Earnings: {{ e.dom.total | currency:'USD':true  }} </div>
                  <div>Shop Comission: {{ e.dom.s_com | currency:'USD':true  }} </div>
                 <div>Barber Comission: {{ e.dom.b_com | currency:'USD':true  }} </div>
-                <div>Tips: {{ e.dom.tips | currency:'USD':true  }} </div> 
+                <div>Tips: {{ e.dom.tips | currency:'USD':true  }} </div>
               </div>
-              <div class='box-reports-earn' > 
+              <div class='box-reports-earn' >
                 <div>Total Earnings: {{ e.drew.total | currency:'USD':true  }} </div>
                  <div>Shop Comission: {{ e.drew.s_com | currency:'USD':true  }}</div>
                 <div>Barber Comission: {{ e.drew.b_com | currency:'USD':true  }} </div>
-                <div>Tips: {{ e.drew.tips | currency:'USD':true  }} </div> 
+                <div>Tips: {{ e.drew.tips | currency:'USD':true  }} </div>
               </div>
             </div>
           </md-list-item>
           </div>
       </md-list>
-      
+
     </md-tab>
     <md-tab label="Product">
-              <md-list>
+      <div class='product-header' >
+          <button class='newbtn' md-button (click)='openNewProduct()' >
+              <i class='ion-plus-round' ></i> New Product
+          </button>
+      </div>
+        <md-list>
           <div class='reports-box' >
           <md-list-item>
             <div class='view-reports-head'>
@@ -160,16 +165,16 @@
             </div>
           </md-list-item>
 
-          <md-list-item *ngFor='let x of report' >
+          <md-list-item *ngFor='let x of products' >
             <div class='view-reports' >
-              <p class='box-reports' > {{x.date }} </p>
-              <p class='box-reports' > {{ x.b_first }}  {{ x.b_last }} </p>
-              <p class='box-reports' > {{ x.c_first }}  {{ x.c_last }} </p>
-              <p class='box-reports' > {{ x.service }} </p>
-              <p class='box-reports' > {{ x.price }} </p>
-              <p class='box-reports' > {{ x.tip }} </p>
-              <p class='box-reports' > Credit </p>
-              <p class='box-reports' > {{ x.total }} </p>
+              <p class='box-reports' > {{ x.code }} </p>
+              <p class='box-reports' > {{ x.name }} </p>
+              <p class='box-reports' > {{ x.type }} </p>
+              <p class='box-reports' > 12 </p>
+              <p class='box-reports' > 32 </p>
+              <p class='box-reports' > {{ x.cost | currency:'USD':true }} </p>
+              <p class='box-reports' > $40 </p>
+              <p class='box-reports' > 8-16-2017 </p>
             </div>
           </md-list-item>
           </div>

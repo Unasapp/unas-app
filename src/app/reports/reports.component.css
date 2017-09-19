@@ -63,7 +63,24 @@
     /* height: 100px;  */
 }
 .report-head-earn{
-    margin-left: 10%;
-    font-size: 25px;
-    font-weight: bold;
+    margin-left: 5%;
+    font-size: 20px;
+    width: 90%;
+    padding-top: 10px;
+    display: flex;
+    justify-content: flex-start;
+}
+
+.product-header{
+    margin-left: 5%;
+    width: 90%; 
+    display: flex;
+    justify-content: flex-end;
+    padding-top: 10px; 
+}
+
+.newbtn{
+    font-size: 14px;
+    display: inline-flex;
+    align-items: center; 
 }

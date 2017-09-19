@@ -7,7 +7,7 @@ import { AuthService } from '../auth/auth.service';
 import { ChartComponent } from 'angular2-chartjs';
 import { Chart } from 'chart.js';
 import { BarberModalComponent } from '../barber-modal/barber-modal.component'
-
+import { ReportServiceService } from '../report-service.service';
 
 @Component({
   selector: 'app-home',
@@ -36,7 +36,7 @@ export class HomeComponent implements OnInit {
   };
 
 
-  constructor(private http: HttpClient, public dialog: MdDialog, public auth: AuthService) { }
+  constructor(private http: HttpClient, public dialog: MdDialog, public auth: AuthService, private service: ReportServiceService) { }
 
   openCashDialog() {
     let dialogRef = this.dialog.open(CashoutdialogComponent, {
@@ -62,6 +62,16 @@ export class HomeComponent implements OnInit {
     //   this.http.get('https://penguinhousedesigns.auth0.com/userinfo').subscribe((res)=>{
     //   console.log('this is user data',res);
     // })
+    this.service.getBarbers({id:1}).subscribe((data) => {
+      localStorage.setItem('barbers', JSON.stringify(data))
+    })
+    this.service.getContacts({id:1}).subscribe((data) => {
+      localStorage.setItem('clients', JSON.stringify(data))
+    })
+    this.service.getServices({id:1}).subscribe((data) => {
+      localStorage.setItem('services', JSON.stringify(data))
+    })
+
     this.http.get('https://jsonplaceholder.typicode.com/users').subscribe((data) => {
       this.barbers = data;
       // console.log('users',this.barbers);
