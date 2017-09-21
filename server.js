@@ -23,20 +23,23 @@ app.use(passport.session());
 
 app.use(express.static(__dirname + '/dist'));
 
-app.use('/sendmail', sendmail);
+// app.post('/sendmail', sendmail());
 
-function sendmail(req, res) {
-  console.log('inside sendmail');
+app.post('/sendmail', (req, res)=> {
 
   var server = email.server.connect({user: "ac12491@gmail.com", password: "W0rkhard!", host: "smtp.gmail.com", port: 465, ssl: true});
   console.log('email server connected');
-
+  console.log(req.body);
   // send the message and get a callback with an error or details of the message that was sent
   server.send({
-    text: "fuck yeah its working",
-    from: "ac12491@gmail.com",
-    to: "penguinhousedesigns@gmail.com",
-    subject: "Daily Report from HairBy!"
+    text: "",
+    from: "hairBy.com",
+    to: 'ac12491@gmail.com',
+    subject: "Daily Report from hairBy!",
+    attachment:
+   [
+      {data:"<h1>i <i>hope</i> this works!</h1><br><h4>i <i>hope</i> this works!</h4>", alternative:true}
+   ]
   }, function(err, message) {
     if (err)
       console.log(err);
@@ -46,7 +49,7 @@ function sendmail(req, res) {
   );
   console.log('made it');
 
-}
+})
 
 // console.log(__dirname);
 // console.log(__dirname + '/dist/index.html');

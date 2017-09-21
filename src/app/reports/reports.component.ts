@@ -24,20 +24,19 @@ export class ReportsComponent implements OnInit {
   constructor(private http: Http, public dialog: MdDialog, public reportServiceService: ReportServiceService) { }
 
   addNew(usercreds) {
-  console.log('inside addnew')
-  var headers = new Headers();
-        var creds = 'name=' + usercreds.username + '&password=' + usercreds.password;
-        var emailid = 'name=' + usercreds.username;
-        console.log(creds, emailid)
-
-        headers.append('Content-Type', 'application/X-www-form-urlencoded');
-console.log('before sendmail')
-                this.http.post('http://localhost:4200/sendmail', emailid, {headers: headers}).subscribe((data) => {
-            if(data.json().success) {
-              console.log('Sent successfully');
-            }
-         })
-       }
+    console.log('inside addnew')
+    var headers = new Headers();
+    var creds = 'name=' + usercreds.username + '&password=' + usercreds.password;
+    var eObject = { email: usercreds.username,
+                    headers: headers };
+    headers.append('Content-Type', 'application/X-www-form-urlencoded');
+    console.log('before sendmail')
+    return this.http.post('/sendmail', eObject).subscribe((data) => {
+      if (data.json().success) {
+        console.log('Sent successfully');
+      }
+    })
+  }
 
   addUser() {
     console.log('add user function')

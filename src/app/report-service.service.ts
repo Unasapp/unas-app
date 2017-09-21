@@ -24,7 +24,7 @@ export class ReportServiceService {
   }
 
   getTimecards(id:any) {
-    return this.http.post('api/timecards', id)
+    return this.http.post('/api/timecards', id)
       .map(res => res.json())
   }
 
@@ -64,10 +64,10 @@ export class ReportServiceService {
 
   deleteAPPT(id){
     console.log(id);
-    
+
   }
   editEvent(editedEvent){
     console.log(editedEvent);
-    
+
   }
 }
