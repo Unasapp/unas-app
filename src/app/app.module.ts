@@ -7,6 +7,7 @@ import { FormsModule } from '@angular/forms';
 import { AuthService } from './auth/auth.service';
 import { CommonModule } from '@angular/common';
 import { CalendarModule } from "ap-angular2-fullcalendar";
+// import { AUTH_PROVIDERS } from 'angular2-jwt'
 import {
     MdSidenavModule,
     MdToolbarModule,
@@ -43,6 +44,7 @@ import { ApptdialogComponent } from './apptdialog/apptdialog.component';
 import { BarberDetailsComponent } from './barber-details/barber-details.component';
 import { ReportServiceService } from './report-service.service';
 import { EventModalComponent } from './event-modal/event-modal.component';
+import { ProductDialogComponent } from './product-dialog/product-dialog.component';
 
 
 @NgModule({
@@ -61,7 +63,8 @@ import { EventModalComponent } from './event-modal/event-modal.component';
     CashoutdialogComponent,
     ApptdialogComponent,
     BarberDetailsComponent,
-    EventModalComponent
+    EventModalComponent,
+    ProductDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -94,9 +97,10 @@ import { EventModalComponent } from './event-modal/event-modal.component';
     ContactsdialogComponent,
     CashoutdialogComponent,
     ApptdialogComponent,
-    EventModalComponent
+    EventModalComponent,
+    ProductDialogComponent
   ],
-  providers: [AuthService, ReportServiceService],
+  providers: [AuthService, ReportServiceService ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

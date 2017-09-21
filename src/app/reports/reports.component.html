@@ -145,7 +145,12 @@
 
     </md-tab>
     <md-tab label="Product">
-              <md-list>
+      <div class='product-header' >
+          <button class='newbtn' md-button (click)='openNewProduct()' >
+              <i class='ion-plus-round' ></i> New Product
+          </button>
+      </div>
+        <md-list>
           <div class='reports-box' >
           <md-list-item>
             <div class='view-reports-head'>
@@ -160,16 +165,16 @@
             </div>
           </md-list-item>
 
-          <md-list-item *ngFor='let x of report' >
+          <md-list-item *ngFor='let x of products' >
             <div class='view-reports' >
-              <p class='box-reports' > {{x.date }} </p>
-              <p class='box-reports' > {{ x.b_first }}  {{ x.b_last }} </p>
-              <p class='box-reports' > {{ x.c_first }}  {{ x.c_last }} </p>
-              <p class='box-reports' > {{ x.service }} </p>
-              <p class='box-reports' > {{ x.price }} </p>
-              <p class='box-reports' > {{ x.tip }} </p>
-              <p class='box-reports' > Credit </p>
-              <p class='box-reports' > {{ x.total }} </p>
+              <p class='box-reports' > {{ x.code }} </p>
+              <p class='box-reports' > {{ x.name }} </p>
+              <p class='box-reports' > {{ x.type }} </p>
+              <p class='box-reports' > 12 </p>
+              <p class='box-reports' > 32 </p>
+              <p class='box-reports' > {{ x.cost | currency:'USD':true }} </p>
+              <p class='box-reports' > $40 </p>
+              <p class='box-reports' > 8-16-2017 </p>
             </div>
           </md-list-item>
           </div>

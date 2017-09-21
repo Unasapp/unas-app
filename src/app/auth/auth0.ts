@@ -5,7 +5,7 @@ interface AuthConfig {
 }
 
 export const AUTH_CONFIG: AuthConfig = {
-  clientID: 'dQBbTjHyKT_VcOLxZ2tNCYTy7Gd5Pkyx',
+  clientID: 'P5M7o1Hv2Os2xWbByNeVrFX8cuoWhHVw',
   domain: 'penguinhousedesigns.auth0.com',
   callbackURL: 'http://localhost:4200/callback'
 };

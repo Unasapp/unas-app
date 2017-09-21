@@ -2,8 +2,7 @@ select
 	a_id,
 	b_first, b_last,
 	c_first, c_last,
-	service, date,
-  color
+	service, date, color
 from
 	appointments,
 	barbers,
