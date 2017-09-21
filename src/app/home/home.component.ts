@@ -36,7 +36,11 @@ export class HomeComponent implements OnInit {
   };
 
 
-  constructor(private http: HttpClient, public dialog: MdDialog, public auth: AuthService, private service: ReportServiceService) { }
+  constructor(private http: HttpClient, public dialog: MdDialog, public auth: AuthService, private service: ReportServiceService) {
+    this.profile = localStorage.getItem('profile')
+    console.log(this.profile);
+    
+   }
 
   openCashDialog() {
     let dialogRef = this.dialog.open(CashoutdialogComponent, {
@@ -77,6 +81,7 @@ export class HomeComponent implements OnInit {
       // console.log('users',this.barbers);
     });
     // this.auth.authenticated()
+    this.auth.getUserData()
+    }
 
   }
-}

@@ -1,4 +1,5 @@
 const express = require('express'),
+      path = require('path')
   session = require('express-session'),
   bodyParser = require('body-parser'),
   massive = require('massive'),
@@ -22,6 +23,9 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.use(express.static(__dirname + '/dist'));
+app.get('*', function(req, res){
+  res.sendFile(path.join(__dirname, '/dist', 'index.html'))
+ });
 
 // app.post('/sendmail', sendmail());
 
