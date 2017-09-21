@@ -99,7 +99,7 @@ import { ProductDialogComponent } from './product-dialog/product-dialog.componen
     EventModalComponent,
     ProductDialogComponent
   ],
-  providers: [AuthService, ReportServiceService ],
+  providers: [AuthService, ReportServiceService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

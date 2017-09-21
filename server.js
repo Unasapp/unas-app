@@ -6,7 +6,8 @@ const express = require('express'),
       Auth0Strategy = require('passport-auth0'),
       config = require('./config.js'),
       cors = require('cors'),
-      http = require('http')
+      http = require('http'),
+      path = require('path')
 
 const app = module.exports = express();
 
@@ -20,6 +21,9 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.use(express.static(__dirname + '/dist'));
+app.get('*', function(req, res){
+  res.sendFile(path.join(__dirname, '/dist', 'index.html'))
+ });
 
 // console.log(__dirname);
 // console.log(__dirname + '/dist/index.html');

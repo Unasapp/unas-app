@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../auth/auth.service';
+import { HomeComponent } from '../home/home.component'
+import {  } from ''
 
 
 
@@ -11,10 +13,17 @@ import { AuthService } from '../auth/auth.service';
 export class LoginComponent implements OnInit {
   test: any;
 
-  constructor(public auth: AuthService) { }
+  constructor(public auth: AuthService) {
+    if(auth.userProfile){
+      console.log(auth.userProfile);
+    }
+   }
+
+
 
   ngOnInit() {
-
+    console.log('came back');
+    
   }
 
 }
