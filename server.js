@@ -6,9 +6,11 @@ const express = require('express'),
       Auth0Strategy = require('passport-auth0'),
       config = require('./config.js'),
       cors = require('cors'),
-      http = require('http')
-
-const app = module.exports = express();
+      http = require('http'),
+      app = module.exports = express(),
+      server = http.createServer(app);
+      io = require('socket.io')(server),
+      server.listen( 4200, ()=> {console.log('Connected on 4200')})
 
 app.use(bodyParser.json());
 app.use(session({
@@ -19,11 +21,23 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
+
 app.use(express.static(__dirname + '/dist'));
+// function redirectRouterLessonUnmatched(req,res) {
+//     res.sendFile("index.html", { root: './dist' });
+// }
 
-// console.log(__dirname);
-// console.log(__dirname + '/dist/index.html');
+// app.use(redirectRouterLessonUnmatched);
 
+
+
+
+io.on('connection', function (socket) {
+  socket.emit('news', { hello: 'world' });
+  socket.on('my other event', function (data) {
+    console.log(data);
+  });
+});
 
 /////////////
 // DATABASE //
@@ -73,7 +87,10 @@ massive("postgres://uunjpeyj:yVNsIpBpaTMB_a2TXEss-Gmq1DGSIOte@pellefant.db.eleph
       let contact = [req.body.firstname, req.body.lastname, req.body.phonenumber, req.body.email, 1]
       db.add_contact(contact, (err, contacts) => {
         console.log(err, contacts);
-      }).then(contacts => res.send(contacts))
+      }).then(contacts => res.send(contacts));
+      pusher.trigger('my-channel', 'my-event', {
+        "message": "hello world"
+      });
     })
 
     app.post('/api/delete-contact', (req, res)=> {
@@ -96,6 +113,19 @@ massive("postgres://uunjpeyj:yVNsIpBpaTMB_a2TXEss-Gmq1DGSIOte@pellefant.db.eleph
       }).then(info => res.send(info))
     })
 
+});
+
+
+// PUSH NOTIFICATIONS------------------
+
+var Pusher = require('pusher');
+
+var pusher = new Pusher({
+  appId: '401295',
+  key: '59f5a34b2267136310c4',
+  secret: 'acc890778b959be2025e',
+  cluster: 'us2',
+  encrypted: true
 });
 
 
@@ -194,6 +224,3 @@ app.get('/auth/logout', function(req, res) {
   req.logout();
   res.redirect('/');
 })
-
-const server = http.createServer(app);
-server.listen( 4200, ()=> {console.log('Connected on 4200')})

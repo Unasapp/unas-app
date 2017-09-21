@@ -44,6 +44,7 @@ import { BarberDetailsComponent } from './barber-details/barber-details.componen
 import { ReportServiceService } from './report-service.service';
 import { EventModalComponent } from './event-modal/event-modal.component';
 
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -87,7 +88,7 @@ import { EventModalComponent } from './event-modal/event-modal.component';
     MdSelectModule,
     MdNativeDateModule,
     MdSliderModule,
-    MdSlideToggleModule
+    MdSlideToggleModule,
   ],
   entryComponents: [
     ContactsdialogComponent,
