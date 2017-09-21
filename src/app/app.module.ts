@@ -7,6 +7,7 @@ import { FormsModule } from '@angular/forms';
 import { AuthService } from './auth/auth.service';
 import { CommonModule } from '@angular/common';
 import { CalendarModule } from "ap-angular2-fullcalendar";
+// import { AUTH_PROVIDERS } from 'angular2-jwt'
 import {
     MdSidenavModule,
     MdToolbarModule,
@@ -98,7 +99,7 @@ import { ProductDialogComponent } from './product-dialog/product-dialog.componen
     EventModalComponent,
     ProductDialogComponent
   ],
-  providers: [AuthService, ReportServiceService],
+  providers: [AuthService, ReportServiceService ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

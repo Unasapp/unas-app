@@ -49,7 +49,7 @@ export class HomeComponent implements OnInit {
       this.barbers = data;
       // console.log('users',this.barbers);
     });
-    this.auth.handleAuthentication()
+    // this.auth.authenticated()
 
     }
 }
