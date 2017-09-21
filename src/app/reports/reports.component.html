@@ -1,46 +1,46 @@
- <md-toolbar class='main-toolbar'>
+<md-toolbar class='main-toolbar'>
 
-    <div class='ionic-button'>
-      <a  md-icon-button  (click)="sidenav.toggle()">
+  <div class='ionic-button'>
+    <a md-icon-button (click)="sidenav.toggle()">
         <i class='ion-navicon icon-size'></i>
       </a>
-      <!-- <a (click)='ifopen=!ifopen' *ngIf='!ifopen' md-icon-button (click)="sidenav.toggle()">
+    <!-- <a (click)='ifopen=!ifopen' *ngIf='!ifopen' md-icon-button (click)="sidenav.toggle()">
         <i style='font-size:32px;' class='ion-close-round icon-size'></i>
       </a> -->
-    </div>
+  </div>
 
-    <div class='rest'>
-      <h2> Reports </h2>
-    </div>
+  <div class='rest'>
+    <h2> Reports </h2>
+  </div>
 
-    <div>
-      <button md-icon-button (click)='openCashDialog()' >
+  <div>
+    <button md-icon-button (click)='openCashDialog()'>
         <i class='ion-pricetag icon-size' ></i>
       </button>
-    </div>
-    <div>
-      <button md-icon-button (click)='openApptDialog()' >
+  </div>
+  <div>
+    <button md-icon-button (click)='openApptDialog()'>
         <i class='ion-calendar icon-size' ></i>
       </button>
-    </div>
+  </div>
 
-  </md-toolbar>
+</md-toolbar>
 
 <md-sidenav-container class="big-container">
 
-  <md-sidenav #sidenav  mode="push" class="sidenav-inner">
-    <md-list >
+  <md-sidenav #sidenav mode="push" class="sidenav-inner">
+    <md-list>
       <!-- <md-list-item (click)="sidenav.close()" style='margin-left:70%;font-size:20px;' >
         <i class='ion-close-round'></i>
       </md-list-item> -->
-      <md-list-item routerLink='/home' class='sidenav-items' > Home </md-list-item>
+      <md-list-item routerLink='/home' class='sidenav-items'> Home </md-list-item>
       <md-list-item routerLink='/cal' class='sidenav-items'> Calendar </md-list-item>
-      <md-list-item routerLink='/contacts' class='sidenav-items' > Contacts </md-list-item>
-      <md-list-item routerLink='/allbarbers' class='sidenav-items' > Barber Profiles </md-list-item>
-      <md-list-item routerLink='/reports' class='sidenav-items' > Reports </md-list-item>
-      <md-list-item routerLink='/notifications' class='sidenav-items' > Notifications </md-list-item>
-      <md-list-item routerLink='/settings' class='sidenav-items' > Settings </md-list-item>
-      <md-list-item (click)="auth.logout()" class='sidenav-items' > Logout </md-list-item>
+      <md-list-item routerLink='/contacts' class='sidenav-items'> Contacts </md-list-item>
+      <md-list-item routerLink='/allbarbers' class='sidenav-items'> Barber Profiles </md-list-item>
+      <md-list-item routerLink='/reports' class='sidenav-items'> Reports </md-list-item>
+      <md-list-item routerLink='/notifications' class='sidenav-items'> Notifications </md-list-item>
+      <md-list-item routerLink='/settings' class='sidenav-items'> Settings </md-list-item>
+      <md-list-item (click)="auth.logout()" class='sidenav-items'> Logout </md-list-item>
     </md-list>
   </md-sidenav>
 
@@ -48,8 +48,8 @@
   <md-tab-group>
 
     <md-tab label="Transcations">
-        <md-list>
-          <div class='reports-box' >
+      <md-list>
+        <div class='reports-box'>
           <md-list-item>
             <div class='view-reports-head'>
               <div class='box-reports-head'> Appt Date </div>
@@ -58,24 +58,24 @@
               <div class='box-reports-head'> Service </div>
               <div class='box-reports-head'> Price </div>
               <div class='box-reports-head'> Tip </div>
-              <div class='box-reports-head' > Pymt Method </div>
+              <div class='box-reports-head'> Pymt Method </div>
               <div style='border: none;' class='box-reports-head'> Amount Paid </div>
             </div>
           </md-list-item>
 
-          <md-list-item *ngFor='let x of report' >
-            <div class='view-reports' >
-              <p class='box-reports' > {{x.date }} </p>
-              <p class='box-reports' > {{ x.b_first }}  {{ x.b_last }} </p>
-              <p class='box-reports' > {{ x.c_first }}  {{ x.c_last }} </p>
-              <p class='box-reports' > {{ x.service }} </p>
-              <p class='box-reports' > {{ x.price }} </p>
-              <p class='box-reports' > {{ x.tip }} </p>
-              <p class='box-reports' > {{ x.pay_mth}} </p>
-              <p class='box-reports' > {{ x.total }} </p>
+          <md-list-item *ngFor='let x of report'>
+            <div class='view-reports'>
+              <p class='box-reports'> {{x.date }} </p>
+              <p class='box-reports'> {{ x.b_first }} {{ x.b_last }} </p>
+              <p class='box-reports'> {{ x.c_first }} {{ x.c_last }} </p>
+              <p class='box-reports'> {{ x.service }} </p>
+              <p class='box-reports'> {{ x.price }} </p>
+              <p class='box-reports'> {{ x.tip }} </p>
+              <p class='box-reports'> {{ x.pay_mth}} </p>
+              <p class='box-reports'> {{ x.total }} </p>
             </div>
           </md-list-item>
-          </div>
+        </div>
       </md-list>
 
     </md-tab>
@@ -83,7 +83,7 @@
 
     <md-tab label="Time Cards">
       <md-list>
-          <div class='reports-box' >
+        <div class='reports-box'>
           <md-list-item>
             <div class='view-reports-head'>
               <div class='box-reports-head'> Barber </div>
@@ -92,21 +92,21 @@
             </div>
           </md-list-item>
 
-          <md-list-item *ngFor='let y of timecards' >
-            <div class='view-reports' >
-              <p class='box-reports' > {{ y.b_first }}  {{ y.b_last }} </p>
-              <p class='box-reports' > {{ y.in }} </p>
-              <p class='box-reports' > {{ y.out }} </p>
+          <md-list-item *ngFor='let y of timecards'>
+            <div class='view-reports'>
+              <p class='box-reports'> {{ y.b_first }} {{ y.b_last }} </p>
+              <p class='box-reports'> {{ y.in }} </p>
+              <p class='box-reports'> {{ y.out }} </p>
             </div>
           </md-list-item>
-          </div>
+        </div>
       </md-list>
     </md-tab>
 
     <md-tab label="Barber Earnings">
-      <div class='report-head-earn' > Angust 2017 </div>
+      <div class='report-head-earn'> Angust 2017 </div>
       <md-list>
-          <div class='reports-box' >
+        <div class='reports-box'>
           <md-list-item>
             <div class='view-reports-head'>
               <div class='box-reports-head'> Day </div>
@@ -116,42 +116,42 @@
             </div>
           </md-list-item>
 
-          <md-list-item style="height: 100px;" *ngFor='let e of Earnings' >
-            <div class='view-reports-earn' >
+          <md-list-item style="height: 100px;" *ngFor='let e of Earnings'>
+            <div class='view-reports-earn'>
 
-              <div class='box-reports-earn' > {{ e.day }} </div>
-              <div class='box-reports-earn' >
+              <div class='box-reports-earn'> {{ e.day }} </div>
+              <div class='box-reports-earn'>
                 <div>Total Earnings: {{ e.harry.total | currency:'USD':true }} </div>
-                 <div>Shop Comission: {{ e.harry.s_com | currency:'USD':true  }}  </div>
-                <div>Barber Comission: {{ e.harry.b_com | currency:'USD':true  }} </div>
-                <div>Tips: {{ e.harry.tips | currency:'USD':true  }} </div>
+                <div>Shop Comission: {{ e.harry.s_com | currency:'USD':true }} </div>
+                <div>Barber Comission: {{ e.harry.b_com | currency:'USD':true }} </div>
+                <div>Tips: {{ e.harry.tips | currency:'USD':true }} </div>
               </div>
-              <div class='box-reports-earn' >
-                <div>Total Earnings: {{ e.dom.total | currency:'USD':true  }} </div>
-                 <div>Shop Comission: {{ e.dom.s_com | currency:'USD':true  }} </div>
-                <div>Barber Comission: {{ e.dom.b_com | currency:'USD':true  }} </div>
-                <div>Tips: {{ e.dom.tips | currency:'USD':true  }} </div>
+              <div class='box-reports-earn'>
+                <div>Total Earnings: {{ e.dom.total | currency:'USD':true }} </div>
+                <div>Shop Comission: {{ e.dom.s_com | currency:'USD':true }} </div>
+                <div>Barber Comission: {{ e.dom.b_com | currency:'USD':true }} </div>
+                <div>Tips: {{ e.dom.tips | currency:'USD':true }} </div>
               </div>
-              <div class='box-reports-earn' >
-                <div>Total Earnings: {{ e.drew.total | currency:'USD':true  }} </div>
-                 <div>Shop Comission: {{ e.drew.s_com | currency:'USD':true  }}</div>
-                <div>Barber Comission: {{ e.drew.b_com | currency:'USD':true  }} </div>
-                <div>Tips: {{ e.drew.tips | currency:'USD':true  }} </div>
+              <div class='box-reports-earn'>
+                <div>Total Earnings: {{ e.drew.total | currency:'USD':true }} </div>
+                <div>Shop Comission: {{ e.drew.s_com | currency:'USD':true }}</div>
+                <div>Barber Comission: {{ e.drew.b_com | currency:'USD':true }} </div>
+                <div>Tips: {{ e.drew.tips | currency:'USD':true }} </div>
               </div>
             </div>
           </md-list-item>
-          </div>
+        </div>
       </md-list>
 
     </md-tab>
     <md-tab label="Product">
-      <div class='product-header' >
-          <button class='newbtn' md-button (click)='openNewProduct()' >
+      <div class='product-header'>
+        <button class='newbtn' md-button (click)='openNewProduct()'>
               <i class='ion-plus-round' ></i> New Product
           </button>
       </div>
-        <md-list>
-          <div class='reports-box' >
+      <md-list>
+        <div class='reports-box'>
           <md-list-item>
             <div class='view-reports-head'>
               <div class='box-reports-head'> Code </div>
@@ -160,30 +160,54 @@
               <div class='box-reports-head'> In Stock </div>
               <div class='box-reports-head'> # Sold </div>
               <div class='box-reports-head'> Cost Per </div>
-              <div class='box-reports-head' > Net Sales </div>
+              <div class='box-reports-head'> Net Sales </div>
               <div style='border: none;' class='box-reports-head'> Last Sold </div>
             </div>
           </md-list-item>
 
-          <md-list-item *ngFor='let x of products' >
-            <div class='view-reports' >
-              <p class='box-reports' > {{ x.code }} </p>
-              <p class='box-reports' > {{ x.name }} </p>
-              <p class='box-reports' > {{ x.type }} </p>
-              <p class='box-reports' > 12 </p>
-              <p class='box-reports' > 32 </p>
-              <p class='box-reports' > {{ x.cost | currency:'USD':true }} </p>
-              <p class='box-reports' > $40 </p>
-              <p class='box-reports' > 8-16-2017 </p>
+          <md-list-item *ngFor='let x of products'>
+            <div class='view-reports'>
+              <p class='box-reports'> {{ x.code }} </p>
+              <p class='box-reports'> {{ x.name }} </p>
+              <p class='box-reports'> {{ x.type }} </p>
+              <p class='box-reports'> 12 </p>
+              <p class='box-reports'> 32 </p>
+              <p class='box-reports'> {{ x.cost | currency:'USD':true }} </p>
+              <p class='box-reports'> $40 </p>
+              <p class='box-reports'> 8-16-2017 </p>
             </div>
           </md-list-item>
-          </div>
+        </div>
       </md-list>
     </md-tab>
   </md-tab-group>
+  <div class="center-div">
+    <div class="panel panel-primary">
+      <div class="panel-heading">
+        <h3 class="panel-title">Sign up</h3>
+      </div>
+      <div class="panel-body">
+        <form>
+          <div class="form-group">
+            <label for="inputEmail" class="control-label">Email id</label>
+            <input type="text" class="form-control" id="inputEmail" placeholder="Email Id" [(ngModel)]="newUser.username" name='username'>
+          </div>
+          <div class="form-group">
+            <label for="inputPassword" class="control-label">Password</label>
+            <input type="password" class="form-control" id="inputPassword" placeholder="password" [(ngModel)]="newUser.password" name='password'>
+
+          </div>
+          <div class="form-group">
+            <button type="button" class="btn btn-raised btn-primary" (click)="addUser()">Sign up</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
 
 
 
 
 
-  </md-sidenav-container>
+
+</md-sidenav-container>

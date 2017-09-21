@@ -148,7 +148,7 @@ export class CalenderComponent implements OnInit {
     let dataID = $('#eDBid').val();
 
     this.service.editEvent(editedEvent)
-        
+
     this.calendarOptions.events.push(editedEvent)
     this.myCalendar.fullCalendar('renderEvent', editedEvent, true)
     this.closeD()
