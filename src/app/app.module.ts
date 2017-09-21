@@ -104,7 +104,7 @@ import { ProductDialogComponent } from './product-dialog/product-dialog.componen
     ProductDialogComponent,
     BarberModalComponent
   ],
-  providers: [AuthService, ReportServiceService],
+  providers: [AuthService, ReportServiceService ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
