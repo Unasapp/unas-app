@@ -15,15 +15,15 @@ export class AuthService {
     'penguinhousedesigns.auth0.com',
     {
       auth: {
-        redirectUrl: 'http://localhost:4200/home',
+        // redirectUrl: 'http://localhost:4200/home',
         // responseType: 'code',
         params: {
-          scope: 'openid profile email' // Learn about scopes: https://auth0.com/docs/scopes
+          scope: 'token id_token profile email' // Learn about scopes: https://auth0.com/docs/scopes
         }
       }
     });
 
-  userProfile: any;
+  public userProfile: any;
 
   // auth0 = new auth0.WebAuth({
   //   clientID: AUTH_CONFIG.clientID,
@@ -35,30 +35,28 @@ export class AuthService {
   // });
 
   constructor( public router: Router, private http: HttpClient ) {
-    this.lock.on('authenticated',(authResult:any)=>{
-      console.log('authResul',authResult);
+    console.log('constructor is on');
+    this.lock.on("authenticated",(authResult:any)=>{
+      console.log('authResult',authResult);
       this.lock.getUserInfo(authResult.accessToken, (err, profile) => {
             if (profile) {
               console.log('profile info', profile);
               localStorage.setItem('profile', JSON.stringify(profile))
+              this.userProfile = profile;
+              this.router.navigate(['/home']);
             }
             else{
               console.log('Error!',err);
             }
           });
-
-      // this.lock.getUserInfo(authResult.accessToken, (error: any, profile: any)=>{
-      //   console.log('profile',profile);
-
-      //   if(error){
-      //     throw new Error(error)
-      //   }
-      //   // Setting Profile and Token
-      //   localStorage.setItem('profile', JSON.stringify(profile))
-      //   // localStorage.setItem('id_token', authResult.idToken)
-      //   // this.router.navigate(['/home'])
-      // })
     })
+
+  }
+
+  public getUserData(){
+    console.log('get user data called');
+
+
   }
 
   public authenticated(){
@@ -68,7 +66,8 @@ export class AuthService {
 
   public login() {
     this.lock.show()
-    console.log('showing login')
+    console.log('showing');
+
     // this.authenticated()
   }
 

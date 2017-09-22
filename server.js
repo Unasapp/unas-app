@@ -9,7 +9,9 @@ const express = require('express'),
       path = require('path'),
       http = require('http'),
       app = module.exports = express(),
-      server = http.createServer(app);
+      server = http.createServer(app),
+      nodemailer = require('nodemailer'),
+      email = require('emailjs/email'),
       io = require('socket.io')(server),
       server.listen( 4200, ()=> {console.log('Connected on 4200')})
 
@@ -24,6 +26,37 @@ app.use(passport.session());
 
 
 app.use(express.static(__dirname + '/dist'));
+app.get('*', function(req, res){
+  res.sendFile(path.join(__dirname, '/dist', 'index.html'))
+ });
+
+// app.post('/sendmail', sendmail());
+
+app.post('/sendmail', (req, res)=> {
+
+  var server = email.server.connect({user: "ac12491@gmail.com", password: "W0rkhard!", host: "smtp.gmail.com", port: 465, ssl: true});
+  console.log('email server connected');
+  console.log(req.body);
+  // send the message and get a callback with an error or details of the message that was sent
+  server.send({
+    text: "",
+    from: "hairBy.com",
+    to: 'ac12491@gmail.com',
+    subject: "Daily Report from hairBy!",
+    attachment:
+   [
+      {data:"<h1>i <i>hope</i> this works!</h1><br><h4>i <i>hope</i> this works!</h4>", alternative:true}
+   ]
+  }, function(err, message) {
+    if (err)
+      console.log(err);
+    else
+      res.json({success: true, msg: 'sent'});
+    }
+  );
+  console.log('made it');
+
+})
 
 app.get('*', function(req, res){
   res.sendFile(path.join(__dirname, '/dist', 'index.html'))

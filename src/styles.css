@@ -1,9 +1,12 @@
 /* You can add global styles to this file, and also import other style files */
-@import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
+/*@import '~@angular/material/prebuilt-themes/deeppurple-amber.css';*/
+/*@import "theme.scss";*/
+@import url('https://fonts.googleapis.com/css?family=Quicksand');
 
 
-body{
+body {
     margin: 0;
+    font-family: 'Quicksand';
 }
 
 .big-container {
@@ -17,7 +20,7 @@ body{
 .sidenav-inner {
     width: 15%;
     background: white;
-} 
+}
 
 .sidenav-inner :focus{
  outline: none;
@@ -30,7 +33,7 @@ body{
 .main-toolbar{
     background: #ff4d4d;
     width: 100%;
-    color: white;  
+    color: white;
 }
 .ionic-button{
     flex:1;
