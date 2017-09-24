@@ -18,7 +18,7 @@ export class AuthService {
         // redirectUrl: 'http://localhost:4200/home',
         // responseType: 'code',
         params: {
-          scope: 'token id_token profile email' // Learn about scopes: https://auth0.com/docs/scopes
+          scope: 'openid profile email' // Learn about scopes: https://auth0.com/docs/scopes
         }
       }
     });

@@ -58,7 +58,6 @@ export class HomeComponent implements OnInit {
     let dialogRef = this.dialog.open(BarberModalComponent, {
       width: '600px',
       data: selectedBarber
-
     })
   }
 
