@@ -17,7 +17,14 @@ export class ContactsComponent implements OnInit {
 
   name: any;
   ifopen: true;
-  users: any;
+  public users = [
+  {
+    'c_first': 'dom',
+    'c_last': 'dom',
+    'c_email': 'dom',
+    'c_phone': 151276290
+  }
+]
   dialogResult: any;
   deleted: any;
   constructor(private http: HttpClient, public dialog: MdDialog, private service: ReportServiceService) { }
@@ -47,23 +54,26 @@ export class ContactsComponent implements OnInit {
 
       if(result !== undefined){
       let newuser = {
-        'name': result.firstname + ' ' + result.lastname,
-        'email': result.email,
-        'phone': result.phonenumber
+        'c_first': result.firstname,
+        'c_last': result.lastname,
+        'c_email': result.email,
+        'c_phone': result.phonenumber
       }
       this.users.push(newuser)
+      console.log('users after adding',this.users);
+      
       }
-
     })
 
   }
 
   onDelete(para){
-    console.log('component')
-    this.service.deleteContact(para)
+    console.log('deleting',para)
+    // this.service.deleteContact(para)
     for(var i=0; i<this.users.length; i++){
-      if(this.users[i].name === para){
+      if(this.users[i].c_first === para){
           this.users.splice(i,1)
+          console.log('users after delete',this.users);
           return this.users
         }
     }

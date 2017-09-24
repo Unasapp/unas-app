@@ -1,17 +1,19 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({
-  name: 'filter'
+  name: 'filter',
+  pure: false
 })
 export class FilterPipe implements PipeTransform {
 
   transform(users: any, term: any): any {
+    console.log(users);
+    
     // check if search term is undefinedg
     if(term === undefined) return users;
     // return updated users array
     return users.filter(function(user){
-      return user.name.toLowerCase().includes(term.toLowerCase())
+      return user.c_first.toLowerCase().includes(term.toLowerCase())
     })
   }
-
 }
