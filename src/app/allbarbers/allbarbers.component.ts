@@ -3,6 +3,8 @@ import { HttpClient } from '@angular/common/http';
 import { MdDialog, MdDialogRef } from '@angular/material';
 import { CashoutdialogComponent } from '../cashoutdialog/cashoutdialog.component';
 import { ApptdialogComponent } from '../apptdialog/apptdialog.component';
+import { BarberModalComponent } from '../barber-modal/barber-modal.component'
+import { ReportServiceService } from '../report-service.service';
 
 
 @Component({
@@ -29,6 +31,17 @@ export class AllbarbersComponent implements OnInit {
       data: 'this text is passed'
     })
   }
+  openBarberModal(selectedBarber) {
+    let dialogRef = this.dialog.open(BarberModalComponent, {
+      width: '600px',
+      data: selectedBarber
+    })
+  }
+
+
+
+
+
   ngOnInit() {
 
      this.http.get('https://jsonplaceholder.typicode.com/users').subscribe((data) => {

@@ -60,9 +60,6 @@
           <i class='ion-android-person-add icon-size' ></i>
         </button>
       </div>
-
-
-
     </div>
     <md-list>
       <div class='contacts-box' >
@@ -80,10 +77,11 @@
           <p class='box-contacts' > {{user.c_first}} {{ c_last }} </p>
           <p class='box-contacts' > {{user.c_email}} </p>
           <p class='box-contacts' > {{user.c_phone}} </p>
-           <button (click)='onDelete(user.name)' style='position:absolute;right:1%;margin-bottom:2%' md-icon-button ><i class='ion-ios-close-empty icon-size' ></i></button>
+           <button (click)='onDelete(user.c_first)' style='position:absolute;right:1%;margin-bottom:2%' md-icon-button ><i class='ion-ios-close-empty icon-size' ></i></button>
         </div>
       </md-list-item>
-      </div>
+      
+    </div>
     </md-list>
 
 
