@@ -1,0 +1,25 @@
+.user-img{
+    background-image: url('user.png');
+    background-size: cover;
+    background-position: center center; 
+    width: 100px;
+    height: 100px;
+    position: absolute;
+    top: -40px;
+    left: 40%;
+}
+
+.user-img-wrapper{
+    width: 100%;
+    height: 40px;
+    position: relative;
+}
+
+.user-card{
+    padding: 20px;
+    margin: 5px;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    flex-direction: column;
+}
