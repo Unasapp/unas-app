@@ -3,6 +3,7 @@ import { MdDialog, MdDialogRef, MdDatepickerModule } from '@angular/material';
 import { MD_DIALOG_DATA } from '@angular/material';
 import * as moment from 'moment';
 import { ReportServiceService } from '../report-service.service';
+import 'rxjs/add/operator/map'
 
 @Component({
   selector: 'app-apptdialog',
@@ -14,15 +15,15 @@ export class ApptdialogComponent implements OnInit {
   clients: any;
   barbers: any;
   services: any;
-  
 
   constructor(
+    private service: ReportServiceService,
     public dialogRef: MdDialogRef<ApptdialogComponent>,
-    @Inject(MD_DIALOG_DATA) public data: any,
-    private service: ReportServiceService
+    @Inject(MD_DIALOG_DATA) public data: any
   ) { }
 
   makeTime(){
+    this.service.addEvent('ll')
      for (var i = 1; i < 13; i++) {
         for (var j = 0; j < 47; j=j+15) {
           if(j===0){
@@ -37,19 +38,13 @@ export class ApptdialogComponent implements OnInit {
 
 
   ngOnInit() {
-
     this.barbers = JSON.parse(localStorage.getItem('barbers'))
     this.clients = JSON.parse(localStorage.getItem('clients'))
     this.services = JSON.parse(localStorage.getItem('services'))
     console.log(this.barbers);
     console.log(this.clients);
     console.log(this.services);
-    
-    
     this.makeTime()
-    // this.service.getDialogBarbers({id:1}).subscribe((data)=> {
-
-    // })
   }
 
   onCloseConfirm(barber, service, customer, date, timep, timeam, firstname, lastname, phonenumber, email){
@@ -57,8 +52,18 @@ export class ApptdialogComponent implements OnInit {
     var timeM = timep.split(':')[1]
     timeam === 'pm' ? timeH = Number(timeH) + 12 : timeH = timeH;
 
-    console.log('this shit',barber, service, customer, date, timep, timeam, firstname, lastname, phonenumber, email);
+    console.log('data coming from closing Appt dialog',barber, service, customer, date, timep, timeam, firstname, lastname, phonenumber, email);
     
+    let newappt =  {
+        'barber_id'  : barber.b_id,
+        'client_id'  : customer.c_id,
+        'service_id'  : service.v_id,
+        'shop_id'  : service.shop_id,
+        'date' : moment(date).hour(timeH).minute(timeM).format('YYYY-MM-DD HH:mm:ss')
+    }
+    console.log('Appt going to DB',newappt);
+    // this.service.testPoint()
+    this.service.addEvent('kk')
 
     if(!customer){
       /// New Customer Call 
@@ -69,9 +74,7 @@ export class ApptdialogComponent implements OnInit {
         'customer': customer, 
         'date': moment(date).hour(timeH).minute(timeM).format('LLLL')
       };
-
-     
-      console.log(newappt);
+      console.log('appt to DOM',newappt);
       this.dialogRef.close(newappt)
     } else{
       let newappt = {
@@ -80,22 +83,13 @@ export class ApptdialogComponent implements OnInit {
         'customer': customer.c_first + ' ' + customer.c_last , 
         'date': moment(date).hour(timeH).minute(timeM).format('LLLL')
       };
-      console.log('appt',newappt);
+      console.log('appt to DOM',newappt);
       this.dialogRef.close(newappt)
-    }
-
-    let newappt =  {
-              'barber_id'  : barber.b_id,
-              'client_id'  : customer.c_id,
-              'service_id'  : service.v_id,
-              'shop_id'  : service.shop_id,
-              'date' : moment(date).hour(timeH).minute(timeM).format('YYYY-MM-DD HH:mm:ss')
-          }
-    console.log('going to DB',newappt);
-    this.service.addAppt(newappt)        
+    }       
   }
 
   onCloseCancel(){
+    this.service.addEvent('jj') 
     this.dialogRef.close()
   }
 

@@ -6,17 +6,20 @@ import 'rxjs/add/operator/map';
 export class ReportServiceService {
 
 
-  constructor(private http:Http) { }
+  constructor(public http:Http) { }
 
-  testPoint() {
+  public testPoint() {
+    console.log('testPoint called');
+    
     return this.http.get('/api/test')
       .map(res => res.json());
   }
 
-  addAppt(appt:any) {
+  public addEvent(appt){
+    console.log('-- addAppts called in service --');
     return this.http.post('/api/add-appt', appt)
       .map(res => res.json());
-  }
+  } 
 
   getShopTrans(id:any) {
     return this.http.post('/api/shop-trans', id)
@@ -57,7 +60,7 @@ export class ReportServiceService {
   }
 
   getAppts(id) {
-    console.log('service')
+    console.log('--- getting appt from service ---')
     return this.http.post('/api/cal', id)
     .map(res => res.json())
   }
