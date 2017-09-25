@@ -15,12 +15,26 @@
 
   <p>
     <md-input-container class="example-full-width">
-      <textarea mdInput placeholder="Phone Number" name=phonenumber [(ngModel)]='phonenumber'></textarea>
+      <input mdInput placeholder="Phone Number" name=phonenumber [(ngModel)]='phonenumber'>
     </md-input-container>
     <md-input-container class="example-full-width">
-      <textarea mdInput placeholder="Email" name=email [(ngModel)]='email'></textarea>
+      <input mdInput placeholder="Email" name=email [(ngModel)]='email'>
     </md-input-container>
   </p>
+  <table>
+      <tr>
+          <td>
+              <md-input-container>
+                  <input mdInput placeholder="Birthday" name=bday [(ngModel)]='bday'>
+              </md-input-container>
+          </td>
+      </tr>    
+      <tr>
+          <td>
+            ** Format Example: 2-14-92 
+          </td>
+      </tr>    
+  </table>
 
 </form>
 
@@ -29,7 +43,7 @@
   </md-dialog-content>
 
   <md-dialog-actions>
-    <button md-raised-button (click)='onCloseConfirm(firstname, lastname, phonenumber, email)' > Add </button>
+    <button md-raised-button (click)='onCloseConfirm(firstname, lastname, phonenumber, email, bday)' > Add </button>
     <button md-raised-button (click)='onCloseCancel()' > Cancel </button>
   </md-dialog-actions>
 

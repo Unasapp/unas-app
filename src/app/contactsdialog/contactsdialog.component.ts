@@ -13,18 +13,26 @@ export class ContactsdialogComponent implements OnInit {
 
   constructor(
     public dialogRef: MdDialogRef<ContactsdialogComponent>,
-    @Inject(MD_DIALOG_DATA) public data: any, private service: ReportServiceService
+    @Inject(MD_DIALOG_DATA) public data: any, 
+    private service: ReportServiceService
   ) { }
 
   ngOnInit() {
 
   }
 
-  onCloseConfirm(firstname, lastname, phonenumber, email){
+  onCloseConfirm(firstname, lastname, phonenumber, email, bday){
 
     let newContact = {
-      firstname, lastname, phonenumber, email
-    };
+      'c_first': firstname,
+      'c_last': lastname,
+      'c_phone': phonenumber,
+      'c_email': email,
+      'b_day': bday,
+      'c_id':'',
+      'c_shop': 1
+    }
+
     this.service.addContact(newContact).subscribe()
     this.dialogRef.close(newContact)
   }

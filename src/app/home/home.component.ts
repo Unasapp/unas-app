@@ -60,12 +60,11 @@ export class HomeComponent implements OnInit {
       data: selectedBarber
     })
   }
-
+ 
   ngOnInit() {
-    //   this.http.get('https://penguinhousedesigns.auth0.com/userinfo').subscribe((res)=>{
-    //   console.log('this is user data',res);
-    // })
     this.service.getBarbers({id:1}).subscribe((data) => {
+      console.log('getting barber data',data);
+      this.barbers = data;
       localStorage.setItem('barbers', JSON.stringify(data))
     })
     this.service.getContacts({id:1}).subscribe((data) => {
@@ -74,13 +73,7 @@ export class HomeComponent implements OnInit {
     this.service.getServices({id:1}).subscribe((data) => {
       localStorage.setItem('services', JSON.stringify(data))
     })
-
-    this.http.get('https://jsonplaceholder.typicode.com/users').subscribe((data) => {
-      this.barbers = data;
-      // console.log('users',this.barbers);
-    });
-    // this.auth.authenticated()
-    this.auth.getUserData()
+ 
     }
 
   }

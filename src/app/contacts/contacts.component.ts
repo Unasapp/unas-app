@@ -22,7 +22,7 @@ export class ContactsComponent implements OnInit {
     'c_first': 'dom',
     'c_last': 'dom',
     'c_email': 'dom',
-    'c_phone': 151276290
+    'c_phone': 151-276-290
   }
 ]
   dialogResult: any;
@@ -53,12 +53,7 @@ export class ContactsComponent implements OnInit {
       console.log(result);
 
       if(result !== undefined){
-      let newuser = {
-        'c_first': result.firstname,
-        'c_last': result.lastname,
-        'c_email': result.email,
-        'c_phone': result.phonenumber
-      }
+      let newuser = result
       this.users.push(newuser)
       console.log('users after adding',this.users);
       

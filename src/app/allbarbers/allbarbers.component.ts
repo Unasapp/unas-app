@@ -17,7 +17,11 @@ export class AllbarbersComponent implements OnInit {
   barbers: any;
   ifopen: true;
 
-  constructor(private http: HttpClient, public dialog: MdDialog) { }
+  constructor(
+    private http: HttpClient, 
+    public dialog: MdDialog,
+    public service: ReportServiceService
+  ) { }
 
   openCashDialog() {
     let dialogRef = this.dialog.open(CashoutdialogComponent,{
@@ -43,11 +47,11 @@ export class AllbarbersComponent implements OnInit {
 
 
   ngOnInit() {
-
-     this.http.get('https://jsonplaceholder.typicode.com/users').subscribe((data) => {
-        this.barbers = data;
-        console.log('users',this.barbers);
-    });
+    this.service.getBarbers({id:1}).subscribe((data) => {
+      console.log('getting barber data',data);
+      this.barbers = data;
+      localStorage.setItem('barbers', JSON.stringify(data))
+    })
   }
 
 }
