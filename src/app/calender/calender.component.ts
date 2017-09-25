@@ -5,9 +5,9 @@ import { MdDialog, MdDialogRef } from '@angular/material';
 import { CashoutdialogComponent } from '../cashoutdialog/cashoutdialog.component';
 import { ReportServiceService } from '../report-service.service';
 import { ApptdialogComponent } from '../apptdialog/apptdialog.component';
-import { EventModalComponent } from '../event-modal/event-modal.component';
 import { Options } from 'fullcalendar';
 import * as $ from 'jquery';
+import { FilterPipe } from '../filter.pipe'
 
 @Component({
   selector: 'app-calender',
@@ -17,9 +17,12 @@ import * as $ from 'jquery';
 export class CalenderComponent implements OnInit {
 
   constructor(
+    public myService: ReportServiceService,
     public dialog: MdDialog, 
     public service: ReportServiceService
-  ) { }
+  ) {
+
+   }
 
 
   @ViewChild('myCalendar') myCalendar: CalendarComponent;
@@ -32,19 +35,9 @@ export class CalenderComponent implements OnInit {
   apptResult: any;
   time = [];
 
-  services = [
-    {value: 'Haircut', viewValue: 'Haircut'},
-    {value: 'Beard Trim', viewValue: 'Beard Trim'},
-    {value: 'Line-up', viewValue: 'Line-up'},
-    {value: 'Fade', viewValue: 'Fade'},
-    {value: 'Traditional Shave', viewValue: 'Traditional Shave'}
-    ];
-
-  barbers = [
-    {value: 'Harry Vu', viewValue: 'Harry'},
-    {value: 'Dominic DeCicco', viewValue: 'Dominic'},
-    {value: 'Andrew Chen', viewValue: 'Andrew'}
-  ];
+  barbers = JSON.parse(localStorage.getItem('barbers'))
+  public users = JSON.parse(localStorage.getItem('clients'))
+  services = JSON.parse(localStorage.getItem('services'))
 
 
     makeTime() {
@@ -72,13 +65,14 @@ export class CalenderComponent implements OnInit {
         events: [ ],
         eventClick: function(calEvent, jsEvent, view) {
           console.log(calEvent);
-                var eDBid = calEvent.dataID
+                var apptDB_id = calEvent.dataID
                 var eTitle = calEvent.title;
                 var eStart = moment(calEvent.start).format('LLLL');
                 var eEnd = calEvent.end; // Not sure if using yet
                 var eClient = calEvent.client;
                 var eService = calEvent.service;
-                var eID = calEvent._id
+                var eCal_ID = calEvent._id
+                var shop_id = calEvent.shop_id
                 $(".eTitle").html(eTitle);
                 $(".eStart").html(eStart);
                 $(".eClient").html(eClient);
@@ -87,8 +81,9 @@ export class CalenderComponent implements OnInit {
                 $("#eStart").val(eStart);
                 $("#eClient").val(eClient);
                 $("#eService").val(eService);
-                $("#eID").val(eID);
-                $("#eDBid").val(eDBid);
+                $("#eCal_ID").val(eCal_ID);
+                $("#apptDB_id").val(apptDB_id);
+                $('#shop_id').val(shop_id)
                 $(".eventContent").css('display', 'block');
                 $(".myModal").css('display', 'block');
                 $('.myModal').css('background','rgba(0, 0, 0,0.2)')
@@ -101,27 +96,34 @@ export class CalenderComponent implements OnInit {
       };
 
   onDeleteEvent(id){
-    //API CALL TO DELETE EVENTS
+    console.log('cal ID', $('#eCal_ID').val());
+    console.log('DB ID', $('#apptDB_id').val());
+    console.log('Shop ID', $('#shop_id').val());
+    let deleteIDs = {
+      'a_id': Number($('#apptDB_id').val()),
+      'shop_id': Number($('#shop_id').val())
+    }
+    console.log('-- deleteIDs in cal comp --', deleteIDs);
+    ///// API CALL TO DELETE EVENTS
     /////
-    console.log('cal ID', $('#eID').val());
-    console.log('DB ID', $('#eDBid').val());
-    let dataID = $('#eDBid').val();
-    this.service.deleteAPPT(dataID)
-    this.myCalendar.fullCalendar('removeEvents', $('#eID').val());
+    this.service.deleteAPPT(deleteIDs).subscribe()
+    //////////
+    this.myCalendar.fullCalendar('removeEvents', $('#eCal_ID').val());
     this.closeD()
   }
 
   onEditEvent(newClient,newservice,newbarber,newdate,timep,timeam){
     //API CALL to Edit EVENTS
-    this.myCalendar.fullCalendar('removeEvents', $('#eID').val());
+    this.myCalendar.fullCalendar('removeEvents', $('#eCal_ID').val());
     let editedEvent = {
-        'dataID' : '',
+        'dataID' : Number($('#apptDB_id').val()),
         'title': $("#eTitle").val(),
         'start': $("#eStart").val(),
         'end': $("#eStart").val(),
         'color': 'red',
         'client': $("#eClient").val(),
         'service': $("#eService").val(),
+        'shop_id': Number($('#shop_id').val())
     }
     console.log('edited event stuff',newClient,newservice,newbarber,newdate,timep,timeam);
     if(newClient !== undefined){
@@ -140,16 +142,13 @@ export class CalenderComponent implements OnInit {
       let updatedate =  moment(newdate).hour(timeH).minute(timeM).format("LLLL")
       editedEvent.start = updatedate;
       editedEvent.end = updatedate;
-      console.log(new Date());
       console.log(updatedate);
     }
 
-
-    console.log('cal ID', $('#eID').val());
-    console.log('DB ID', $('#eDBid').val());
-    let dataID = $('#eDBid').val();
-
-    this.service.editEvent(editedEvent)
+    console.log('-- new Appt data --',editedEvent);
+    
+    
+    this.service.editAppt(editedEvent).subscribe()
 
     this.calendarOptions.events.push(editedEvent)
     this.myCalendar.fullCalendar('renderEvent', editedEvent, true)
@@ -163,13 +162,6 @@ export class CalenderComponent implements OnInit {
   }
 
 
-  openEventModal() {
-    let dialogRef = this.dialog.open(EventModalComponent,{
-      width: '600px',
-      data: 'this text is passed'
-    })
-
-  }
   openCashDialog() {
     let dialogRef = this.dialog.open(CashoutdialogComponent,{
       width: '600px',
@@ -192,11 +184,10 @@ export class CalenderComponent implements OnInit {
               end    : result.date,
               color  : 'purple',
               service : result.service,
-              client : result.customer
+              client : result.customer,
+              'shop_id': 1
           }
         this.myCalendar.fullCalendar('renderEvent', newappt, true)
-        // API CALL TO ADD EVENTS
-        ////
       }
       console.log(this.myCalendar);
       this.myCalendar.fullCalendar('refetchEvents');
@@ -208,22 +199,27 @@ export class CalenderComponent implements OnInit {
 
 appts: any
   ngOnInit() {
+    console.log('-- users from storage ---',this.users);
+    console.log('-- barbers from storage ---',this.barbers);
+    console.log('-- services from storage ---',this.services);
+    
     this.makeTime();
     this.service.getAppts({id:1}).subscribe((data)=> {
       data.map(x =>{
         let newappt = {
           'dataID' : x.a_id,
           'title'  : x.b_first + ' ' + x.b_last,
-          'start'  : x.date,
-          'end'    : x.date,
+          'start'  : x.start_time,
+          'end'    : x.end_time,
           'color'  : x.color,
           'service' : x.service,
-          'client' : x.c_first + ' ' + x.c_last
+          'client' : x.c_first + ' ' + x.c_last,
+          'shop_id': x.shop
       }
       this.calendarOptions.events.push(newappt)
       this.myCalendar.fullCalendar('renderEvent', newappt, true)
       })
-      console.log(data)
+      console.log('data from get appts',data)
     })
 
   }

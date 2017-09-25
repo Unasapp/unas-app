@@ -4,6 +4,8 @@ import { MD_DIALOG_DATA } from '@angular/material';
 import * as moment from 'moment';
 import { ReportServiceService } from '../report-service.service';
 import 'rxjs/add/operator/map'
+import { Http } from '@angular/http';
+
 
 @Component({
   selector: 'app-apptdialog',
@@ -17,13 +19,13 @@ export class ApptdialogComponent implements OnInit {
   services: any;
 
   constructor(
-    private service: ReportServiceService,
+    private myService: ReportServiceService,
     public dialogRef: MdDialogRef<ApptdialogComponent>,
-    @Inject(MD_DIALOG_DATA) public data: any
+    @Inject(MD_DIALOG_DATA) public data: any,
+    public http: Http
   ) { }
 
   makeTime(){
-    this.service.addEvent('ll')
      for (var i = 1; i < 13; i++) {
         for (var j = 0; j < 47; j=j+15) {
           if(j===0){
@@ -59,11 +61,15 @@ export class ApptdialogComponent implements OnInit {
         'client_id'  : customer.c_id,
         'service_id'  : service.v_id,
         'shop_id'  : service.shop_id,
-        'date' : moment(date).hour(timeH).minute(timeM).format('YYYY-MM-DD HH:mm:ss')
+        'start_time' : moment(date).hour(timeH).minute(timeM).format('YYYY-MM-DD HH:mm:ss'),
+        'end_time' : moment(date).hour(timeH).minute(timeM).format('YYYY-MM-DD HH:mm:ss')
     }
+    
     console.log('Appt going to DB',newappt);
-    // this.service.testPoint()
-    this.service.addEvent('kk')
+    // API call to add appt to DB
+    // API call to add appt to DB
+    // API call to add appt to DB
+    this.myService.addAppts(newappt).subscribe()
 
     if(!customer){
       /// New Customer Call 
@@ -89,7 +95,6 @@ export class ApptdialogComponent implements OnInit {
   }
 
   onCloseCancel(){
-    this.service.addEvent('jj') 
     this.dialogRef.close()
   }
 

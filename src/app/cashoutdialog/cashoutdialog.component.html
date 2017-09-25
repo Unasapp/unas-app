@@ -4,10 +4,10 @@
 
   <md-dialog-content>
     <div *ngIf='!newCustomer'>
-        <table class="example-full-width" cellspacing="0">
+        <table cellspacing="0">
           <tr>
             <td>
-                <h4>Existing Customer</h4>
+                <h5>Existing Customer</h5>
             </td>
           </tr>
           <tr>
@@ -30,7 +30,7 @@
      </div> 
 
      <div *ngIf='newCustomer' >
-          <table class="example-full-width" cellspacing="0">
+          <table cellspacing="0">
             <tr>
                 <td>
                     <h5>New Customer</h5>
@@ -38,26 +38,40 @@
             </tr>
             <tr>
               <td>
-                <md-input-container class="example-full-width">
+                <md-input-container >
                     <input mdInput placeholder="First name" name=firstname [(ngModel)]='firstname'>
                 </md-input-container>
               </td>
               <td>
-                <md-input-container class="example-full-width">
+                <md-input-container >
                 <input mdInput placeholder="Last Name" name=lastname [(ngModel)]='lastname'>
               </md-input-container>
             </td>
             </tr>
         </table>
-
         <p>
-          <md-input-container class="example-full-width">
-            <textarea style='resize: none;' mdInput placeholder="Phone Number" name=phonenumber [(ngModel)]='phonenumber'></textarea>
+          <md-input-container >
+            <input mdInput placeholder="Phone Number" name=phonenumber [(ngModel)]='phonenumber'>
           </md-input-container>
-          <md-input-container class="example-full-width">
-            <textarea style='resize: none;' mdInput placeholder="Email" name=email [(ngModel)]='email'></textarea>
+          <md-input-container >
+            <input mdInput placeholder="Email" name=email [(ngModel)]='email'>
           </md-input-container>
         </p>
+
+        <table>
+            <tr>
+                <td>
+                    <md-input-container>
+                        <input mdInput placeholder="Birthday" name=bday [(ngModel)]='bday'>
+                    </md-input-container>
+                </td>
+            </tr>    
+            <tr>
+                <td>
+                  ** Format Example: 2-14-92 
+                </td>
+            </tr>    
+        </table>
         <tr>
           <td>
               <br>
@@ -70,7 +84,7 @@
       <h2 md-dialog-title>Service Information</h2>
       <hr>
       <br>
-      <table class="example-full-width" cellspacing="0">
+      <table  cellspacing="0">
         <tr>
           <td>
             <md-select name=service [(ngModel)]='service' placeholder="Service">
@@ -94,20 +108,20 @@
       <h2 md-dialog-title>Payment</h2>
       <hr>
 
-      <table class="example-full-width" cellspacing="0">
+      <table  cellspacing="0">
         <tr>
           <td>
-            <md-input-container class="example-full-width">
+            <md-input-container >
               <input mdInput placeholder="Price" name=price [(ngModel)]='price'>
             </md-input-container>
           </td>
           <td>
-            <md-input-container class="example-full-width">
+            <md-input-container >
               <input mdInput placeholder="Tip" name=tip [(ngModel)]='tip'>
             </md-input-container>
           </td>
           <td>
-            <md-input-container class="example-full-width">
+            <md-input-container >
               <input mdInput placeholder="Amount Paid" name=amtpaid [(ngModel)]='amtpaid'>
             </md-input-container>
           </td>
@@ -122,7 +136,7 @@
       </table>
 
       <div *ngIf='addProduct' >
-        <table class="example-full-width" cellspacing="0">
+        <table  cellspacing="0">
           <tr>
             <td>
                <md-select name=product [(ngModel)]='product' placeholder="Product">
@@ -139,7 +153,7 @@
         <br>
       </div>
 
-      <table class="example-full-width" cellspacing="0">
+      <table  cellspacing="0">
         <tr>
           <td>
             <md-radio-group name=typeP [(ngModel)]='typeP' >
@@ -155,7 +169,7 @@
   </md-dialog-content>
 
   <md-dialog-actions>
-    <button md-raised-button (click)='onCloseConfirm(customer, firstname, lastname, phonenumber, email, service, barber, price, tip, amtpaid, typeP)'> Submit </button>
+    <button md-raised-button (click)='onCloseConfirm(customer, firstname, lastname, phonenumber, email, service, barber, price, tip, amtpaid, typeP, product, bday)'> Submit </button>
     <button md-raised-button (click)='onCloseCancel()'> Cancel </button>
   </md-dialog-actions>
 
