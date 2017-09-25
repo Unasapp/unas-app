@@ -93,7 +93,7 @@
           </md-list-item>
 
           <md-list-item *ngFor='let y of timecards'>
-            <div class='view-reports'>
+            <div class='view-reports' id ="myId" #myId>
               <p class='box-reports'> {{ y.b_first }} {{ y.b_last }} </p>
               <p class='box-reports'> {{ y.in }} </p>
               <p class='box-reports'> {{ y.out }} </p>

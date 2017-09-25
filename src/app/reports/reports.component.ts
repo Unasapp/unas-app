@@ -1,4 +1,4 @@
-import { Component, OnInit, Injectable } from '@angular/core';
+import { Component, OnInit, Injectable, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
 import * as moment from 'moment';
 import { MdDialog, MdDialogRef } from '@angular/material';
 import { CashoutdialogComponent } from '../cashoutdialog/cashoutdialog.component';
@@ -21,13 +21,17 @@ export class ReportsComponent implements OnInit {
     password: ''
   };
 
+  newReport = {
+
+  };
+
   constructor(private http: Http, public dialog: MdDialog, public reportServiceService: ReportServiceService) { }
 
-  addNew(usercreds) {
+  addNew(usercreds, report) {
     console.log('inside addnew')
     var headers = new Headers();
-    var creds = 'name=' + usercreds.username + '&password=' + usercreds.password;
     var eObject = { email: usercreds.username,
+                    password: usercreds.password,
                     headers: headers };
     headers.append('Content-Type', 'application/X-www-form-urlencoded');
     console.log('before sendmail')
@@ -40,7 +44,7 @@ export class ReportsComponent implements OnInit {
 
   addUser() {
     console.log('add user function')
-    this.addNew(this.newUser);
+    this.addNew(this.newUser, this.newReport);
   }
 
   openNewProduct() {

@@ -38,11 +38,11 @@ app.post('/sendmail', (req, res)=> {
   server.send({
     text: "",
     from: "hairBy.com",
-    to: 'ac12491@gmail.com',
+    to: "ac12491@gmail.com",
     subject: "Daily Report from hairBy!",
     attachment:
    [
-      {data:"<h1>i <i>hope</i> this works!</h1><br><h4>i <i>hope</i> this works!</h4>", alternative:true}
+      {data: "<h1>req.body.email</h1>", alternative:true}
    ]
   }, function(err, message) {
     if (err)
@@ -54,6 +54,8 @@ app.post('/sendmail', (req, res)=> {
   console.log('made it');
 
 })
+
+{/* <div style='display: flex;'><h1 style='text-align: center; color: blue;'>hello</h1><br><h4>world</h4></div> */}
 
 // console.log(__dirname);
 // console.log(__dirname + '/dist/index.html');
