@@ -7,8 +7,6 @@ import { Pipe, PipeTransform } from '@angular/core';
 export class FilterPipe implements PipeTransform {
 
   transform(users: any, term: any): any {
-    console.log(users);
-    
     // check if search term is undefinedg
     if(term === undefined) return users;
     // return updated users array
