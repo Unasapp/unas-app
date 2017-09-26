@@ -1,0 +1,57 @@
+<div>
+  <div class='user-img-wrapper'>
+      <div class='user-img' ></div>
+  </div>
+  <h2 md-dialog-title style='text-align: center;' >User Login</h2>
+  <hr>
+  <md-dialog-content>
+
+<md-card class='user-card' >
+    <table  cellspacing="0">
+      <tr>
+        <td>
+          <md-input-container >
+            <input mdInput placeholder="Email" name=Email [(ngModel)]='userData.email'>
+          </md-input-container>
+        </td>
+        <td>
+          <md-input-container >
+            <input mdInput placeholder="Password" name=Password type='password' [(ngModel)]='userData.password'>
+          </md-input-container>
+        </td>
+      </tr>
+    </table>
+    <div *ngIf='newUser'> 
+      <table  cellspacing="0">
+        <tr>
+          <td>
+            <md-input-container >
+              <input mdInput placeholder="FirstName" name=FirstName [(ngModel)]='userData.firstName'>
+            </md-input-container>
+          </td>
+          <td>
+            <md-input-container >
+              <input mdInput placeholder="LastName" name=LastName [(ngModel)]='userData.lastName'>
+            </md-input-container>
+          </td>
+        </tr>
+      </table>
+      <md-slide-toggle
+       [checked]="userData.shopOwner" 
+       name=shopOwer 
+       [(ngModel)]="userData.shopOwner"
+       >Shop Owner</md-slide-toggle>
+    </div>   
+  <button md-button *ngIf='!newUser' (click)='newUser = !newUser'>Create an Account?</button>
+  <button md-button *ngIf='newUser' (click)='newUser = !newUser'>Have an Account?</button>
+</md-card>
+
+
+  </md-dialog-content>
+
+  <md-dialog-actions>
+    <button style='width:200px' md-raised-button (click)='login()' > Login </button>
+    <button style='width:200px' md-raised-button (click)='onCloseCancel()' > Cancel </button>
+  </md-dialog-actions>
+
+</div>

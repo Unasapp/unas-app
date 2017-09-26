@@ -16,7 +16,10 @@ import * as $ from 'jquery';
 })
 export class CalenderComponent implements OnInit {
 
-  constructor(public dialog: MdDialog, public service: ReportServiceService) { }
+  constructor(
+    public dialog: MdDialog, 
+    public service: ReportServiceService
+  ) { }
 
 
   @ViewChild('myCalendar') myCalendar: CalendarComponent;
@@ -66,7 +69,6 @@ export class CalenderComponent implements OnInit {
         },
         selectable: true,
         selectHelper: true,
-        editable: true,
         events: [ ],
         eventClick: function(calEvent, jsEvent, view) {
           console.log(calEvent);
@@ -209,15 +211,17 @@ appts: any
     this.makeTime();
     this.service.getAppts({id:1}).subscribe((data)=> {
       data.map(x =>{
-      this.calendarOptions.events.push({
-              'dataID' : x.a_id,
-              'title'  : x.b_first + ' ' + x.b_last,
-              'start'  : x.date,
-              'end'    : x.date,
-              'color'  : x.color,
-              'service' : x.service,
-              'client' : x.c_first + ' ' + x.c_last
-      })
+        let newappt = {
+          'dataID' : x.a_id,
+          'title'  : x.b_first + ' ' + x.b_last,
+          'start'  : x.date,
+          'end'    : x.date,
+          'color'  : x.color,
+          'service' : x.service,
+          'client' : x.c_first + ' ' + x.c_last
+      }
+      this.calendarOptions.events.push(newappt)
+      this.myCalendar.fullCalendar('renderEvent', newappt, true)
       })
       console.log(data)
     })
