@@ -90,14 +90,28 @@ massive("postgres://uunjpeyj:yVNsIpBpaTMB_a2TXEss-Gmq1DGSIOte@pellefant.db.eleph
   })
 
   app.post('/api/add-appt', (req, res) => {
-    console.log('--adding appts--', req.body)
-    db.get_appt_dialog(req.body, (err, info) => {
+    console.log('--adding appts--',req.body)
+    let array = [
+      req.body.barber_id,
+      req.body.client_id,
+      req.body.service_id,
+      req.body.shop_id,
+      req.body.start_time,
+      req.body.end_time
+    ]
+    db.add_appt(array, (err, info) => {
       console.log('db', err, info)
     }).then(info => res.send(info))
   })
 
-  app.post('/api/cal', (req, res) => {
-    console.log('-- getting appts ---');
+  app.post('/api/cal/delete',(req, res)=>{
+    let array = [
+      req.body.a_id,
+      req.body.shop_id
+    ]
+    console.log('---deleteing appt from DB---',array)
+    db.delete_appt(array, (err,info)=>{
+g appts ---');
     db.get_cal_events(req.body.id, (err, events) => {
       console.log('db', err, events);
     }).then(info => res.send(info))
