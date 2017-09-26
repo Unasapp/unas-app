@@ -1,46 +1,64 @@
 <md-card>
-  <img class='profile-pic' src="https://maxcdn.icons8.com/Share/icon/Users//user_male_circle_filled1600.png">
-  <md-card-content>
-    <h1>{{ selectedBarber.name }}</h1>
-    <h3>Phone: {{ selectedBarber.phone }}</h3>
-    <h3>Email: {{ selectedBarber.email }}</h3>
-  </md-card-content>
+  <section class='barber-profile-header' >
+    <div class='barber-profile-header-left' >
+      <div><img class='profile-pic' src="https://maxcdn.icons8.com/Share/icon/Users//user_male_circle_filled1600.png"></div>
+    </div>
+    <div class="barber-profile-header-right" >
+      <md-card-content>
+        <h1>{{ selectedBarber.b_first }} {{ selectedBarber.b_last }}</h1>
+        <h3>Phone: {{ selectedBarber.b_phone }}</h3>
+        <h3>Email: {{ selectedBarber.b_email }}</h3>
+      </md-card-content>
+    </div>
+  </section>
 </md-card>
+
 <br>
+
 <md-card>
-  <md-card-content>
-    <h4>Income type:</h4>
-    <md-radio-group [(ngModel)]="pay">
-      <md-radio-button value="Commission"><h4>Commission</h4></md-radio-button>
-      <md-radio-button value ='Booth Rent'><h4>Booth Rent</h4></md-radio-button>
-      <md-radio-button value= 'Hourly'><h4>Hourly</h4></md-radio-button>
-    </md-radio-group>
-  </md-card-content>
-  <!-- Currently selected: {{pay}} -->
-  <md-card-content *ngIf="pay === 'Commission'">
-    <md-slider min='0' max='100' step="5" thumbLabel tickInterval="5"></md-slider>
+  
+  <md-card-content >
+    <md-select placeholder="Pay Type" [(ngModel)]='payType' >
+        <md-option value="Commission" > Commission </md-option>
+        <md-option value="Booth_Rent" > Booth Rent </md-option>
+        <md-option value="Hourly" > Hourly </md-option>
+    </md-select>
   </md-card-content>
 
-  <md-card-content *ngIf="pay === 'Booth Rent'">
+  <md-card-content >
+    <div *ngIf='payType == "Commission"' >
+      <md-input-container>
+          <input mdInput placeholder="Commission %" type="number" [(ngModel)]="commission">
+      </md-input-container>
+      {{commission}} %
+    </div>
+  </md-card-content>
 
+  <md-card-content >
+  <div *ngIf='payType == "Booth_Rent"' >
       <md-input-container>
         <input mdInput placeholder="Rent" type="number" [(ngModel)]="rent">
       </md-input-container>
     <md-select placeholder="per..." [(ngModel)]='per'>
-      <md-option value="per week">per week</md-option>
-      <md-option value="per 2 weeks">per 2 weeks</md-option>
-      <md-option value="per month">per month</md-option>
+      <md-option  value='/wk' >per week</md-option>
+      <md-option  value='/2wk' >per 2 weeks</md-option>
+      <md-option  value='/m' >per month</md-option>
     </md-select>
     Rate: ${{rent}} {{per}}
+  </div>
   </md-card-content>
 
-  <md-card-content *ngIf="pay === 'Hourly'">
+  <md-card-content>
+  <div *ngIf='payType == "Hourly"' >
     <md-input-container>
       <input mdInput placeholder="Rate" type="number" [(ngModel)]="hourly">
     </md-input-container>
+    ${{ hourly }} /hr
+  </div>
   </md-card-content>
 
   <md-card-actions>
-    <button md-button>Save</button>
+    <button (click)='save()' md-button>Save</button>
+    <button (click)='exit()' md-button>Exit</button>
   </md-card-actions>
 </md-card>

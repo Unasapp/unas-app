@@ -40,6 +40,7 @@ massive("postgres://uunjpeyj:yVNsIpBpaTMB_a2TXEss-Gmq1DGSIOte@pellefant.db.eleph
   var info
 
   app.get('/api/test', (req, res) => {
+    console.log('in test api', req)
     db.test_end((err, users) => {}).then(users => res.send(users))
   })
 
@@ -90,7 +91,7 @@ massive("postgres://uunjpeyj:yVNsIpBpaTMB_a2TXEss-Gmq1DGSIOte@pellefant.db.eleph
   })
 
   app.post('/api/add-appt', (req, res) => {
-    console.log('--adding appts--',req.body)
+    console.log('--adding appts--', req.body)
     let array = [
       req.body.barber_id,
       req.body.client_id,
@@ -104,18 +105,35 @@ massive("postgres://uunjpeyj:yVNsIpBpaTMB_a2TXEss-Gmq1DGSIOte@pellefant.db.eleph
     }).then(info => res.send(info))
   })
 
-  app.post('/api/cal/delete',(req, res)=>{
+  app.post('/api/cal/delete', (req, res) => {
+    let array = [req.body.a_id, req.body.shop_id]
+    console.log('---deleteing appt from DB---', array)
+    db.delete_appt(array, (err, info) => {
+      console.log('db', err, info)
+    }).then(info => res.send(info))
+  })
+
+  app.post('/api/cal/edit', (req, res) => {
+    console.log('--editing appts--', req.body)
     let array = [
-      req.body.a_id,
-      req.body.shop_id
+      req.body.dataID,
+      req.body.barber_id,
+      req.body.client_id,
+      req.body.service_id,
+      req.body.shop_id,
+      req.body.start_time,
+      req.body.end_time
     ]
-    console.log('---deleteing appt from DB---',array)
-    db.delete_appt(array, (err,info)=>{
-g appts ---');
+    db.edit_appt(array, (err, info) => {
+      console.log('db', err, info)
+    }).then(info => res.send(info))
+  })
+
+  app.post('/api/cal', (req, res) => {
     db.get_cal_events(req.body.id, (err, events) => {
       console.log('db', err, events);
     }).then(info => res.send(info))
-  })
+  });
 
   app.post('/sendmail', (req, res) => {
 

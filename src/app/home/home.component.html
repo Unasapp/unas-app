@@ -251,16 +251,18 @@
     <div class='barber-profiles'>
 
       <md-card *ngFor="let barber of barbers" class="example-card">
-        <h3 style="text-align:center;">{{ barber.name }}</h3>
+        <h3 style="text-align:center;">{{ barber.b_first }} {{ barber.b_last }}</h3>
         <img class='profile-pic' src="https://maxcdn.icons8.com/Share/icon/Users//user_male_circle_filled1600.png">
         <md-card-content>
           <div class='profile-stat'>
             <p>Wages:</p>
-            <p>{{barber.address.zipcode}}</p>
+            <!-- This is dummy data -->
+            <p>$468.90</p> 
           </div>
           <div class='profile-stat'>
             <p>Tips:</p>
-            <p>{{barber.address.geo.lng}}</p>
+            <!-- This is dummy data -->
+            <p>$46.50</p> 
           </div>
           <div class='profile-stat'>
             <p>Appointments:</p>

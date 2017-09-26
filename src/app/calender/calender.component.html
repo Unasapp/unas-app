@@ -69,13 +69,19 @@
         <i style='color:#ff4d4d' class='ion-ios-arrow-back icon-size'></i>  
     </button>  
       <md-input-container class="example-full-width">
-          <input mdInput placeholder="Client" name=newClient [(ngModel)]='newClient'>
+          <form id='filter' >
+              <input mdInput placeholder="Search Clients" name=newClient [(ngModel)]='term'>
+          </form>
       </md-input-container>
-        <div *ngIf='newClient'  >
-            <p>ggggg</p>
-            <p>ggggg</p>
-            <p>ggggg</p>
-        </div>
+      <div *ngIf='term' >
+            <md-list>
+                <div *ngFor="let user of users | filter:term"  >
+                  <md-list-item (click)='term = user.c_first+" "+user.c_last' >
+                      {{ user.c_first }} {{ user.c_last }} 
+                  </md-list-item>
+              </div>
+            </md-list>
+      </div>
   </div>
 
             <!-- Service Changes  -->
@@ -93,8 +99,8 @@
         <i style='color:#ff4d4d' class='ion-ios-arrow-back icon-size'></i>  
     </button>  
       <md-select name=service [(ngModel)]='newservice' placeholder="Service">
-          <md-option *ngFor="let service of services" [value]="service.value">
-             {{ service.viewValue }}
+          <md-option *ngFor="let service of services" [value]="service.service">
+             {{ service.service }}
           </md-option>
       </md-select>
   </div>
@@ -114,8 +120,8 @@
         <i style='color:#ff4d4d' class='ion-ios-arrow-back icon-size'></i>  
     </button>  
       <md-select name=barber [(ngModel)]='newbarber' placeholder="Barber">
-        <md-option *ngFor="let barber of barbers" [value]="barber.value">              
-          {{ barber.viewValue }}
+        <md-option *ngFor="let barber of barbers" [value]="barber.b_first">              
+          {{ barber.b_first }} {{ barber.b_last }}
         </md-option>
       </md-select>
   </div>
@@ -167,9 +173,9 @@
 
 
       <br />
-      <md-dialog-actions>
-        <button name=eDBid id=eDBid style='background:#00e673;color:white;' md-raised-button (click)='onEditEvent(newClient,newservice,newbarber,newdate,timep,timeam)' > Save </button>
-        <button name=eID id=eID style='background:#ff4d4d;color:white;' md-raised-button (click)='onDeleteEvent()' > Delete </button>
+      <md-dialog-actions name=shop_id id=shop_id >
+        <button name=apptDB_id id=apptDB_id style='background:#00e673;color:white;' md-raised-button (click)='onEditEvent(term,newservice,newbarber,newdate,timep,timeam)' > Save </button>
+        <button name=eCal_ID id=eCal_ID style='background:#ff4d4d;color:white;' md-raised-button (click)='onDeleteEvent()' > Delete </button>
         <button md-raised-button (click)='closeD()' > Cancel </button>
       </md-dialog-actions>
           
