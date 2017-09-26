@@ -12,8 +12,10 @@ const express = require('express'),
       server = http.createServer(app),
       nodemailer = require('nodemailer'),
       email = require('emailjs/email'),
-      io = require('socket.io')(server),
-      server.listen( 4200, ()=> {console.log('Connected on 4200')})
+      io = require('socket.io')(server);
+
+
+server.listen( 4200, ()=> {console.log('Connected on 4200')})
 
 app.use(bodyParser.json());
 app.use(session({

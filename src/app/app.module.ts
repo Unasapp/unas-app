@@ -94,6 +94,7 @@ import { ProductDialogComponent } from './product-dialog/product-dialog.componen
     MdNativeDateModule,
     MdSliderModule,
     MdSlideToggleModule,
+    ChartModule
   ],
   entryComponents: [
     ContactsdialogComponent,
