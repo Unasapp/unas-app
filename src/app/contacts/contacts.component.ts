@@ -17,14 +17,7 @@ export class ContactsComponent implements OnInit {
 
   name: any;
   ifopen: true;
-  public users = [
-  {
-    'c_first': 'dom',
-    'c_last': 'dom',
-    'c_email': 'dom',
-    'c_phone': 151-276-290
-  }
-]
+  public users = []
   dialogResult: any;
   deleted: any;
   constructor(private http: HttpClient, public dialog: MdDialog, private service: ReportServiceService) { }
@@ -42,37 +35,27 @@ export class ContactsComponent implements OnInit {
     })
   }
 
-  openDialog() {
+  openDialog(selectedContact) {
     let dialogRef = this.dialog.open(ContactsdialogComponent,{
       width: '600px',
-      data: 'this text is passed'
+      data: selectedContact ? selectedContact : { new: true },
     })
 
     dialogRef.afterClosed().subscribe(result =>{
-      this.dialogResult = result;
-      console.log(result);
-
-      if(result !== undefined){
-      let newuser = result
-      this.users.push(newuser)
-      console.log('users after adding',this.users);
-      
+      if(result.status === "added"){
+        this.users.push(result);
+      } else if (result.status === "edited") {
+        this.users[this.users.findIndex((x)=> x.c_id === result.c_id)] = result
+      } else if (result.status === "deleted") {
+        this.users.splice(this.users.findIndex(x => x.c_id === result.c_id),1)
+      } else if (result.status === "canceled") {
+      } else {
+        alert('An error occurred')
       }
     })
 
   }
 
-  onDelete(para){
-    console.log('deleting',para)
-    // this.service.deleteContact(para)
-    for(var i=0; i<this.users.length; i++){
-      if(this.users[i].c_first === para){
-          this.users.splice(i,1)
-          console.log('users after delete',this.users);
-          return this.users
-        }
-    }
-  }
 
   ngOnInit() {
      this.service.getContacts({id:1}).subscribe((data) => {

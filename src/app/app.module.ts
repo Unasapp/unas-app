@@ -48,6 +48,7 @@ import { ProductDialogComponent } from './product-dialog/product-dialog.componen
 import { LoginModelComponent } from './login-model/login-model.component';
 import { ReportsDialogComponent } from './reports-dialog/reports-dialog.component';
 
+
 @NgModule({
   declarations: [
     AppComponent,

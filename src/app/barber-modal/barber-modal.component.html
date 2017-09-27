@@ -16,7 +16,7 @@
 <br>
 
 <md-card>
-  
+
   <md-card-content >
     <md-select placeholder="Pay Type" [(ngModel)]='payType' >
         <md-option value="Commission" > Commission </md-option>
@@ -58,7 +58,8 @@
   </md-card-content>
 
   <md-card-actions>
-    <button (click)='save()' md-button>Save</button>
-    <button (click)='exit()' md-button>Exit</button>
+    <button (click)='save()' md-raised-button color="lightgreen">Save</button>
+    <button (click)='exit()' md-raised-button>Exit</button>
+    <button (click)='deleteBarber()' md-raised-button style="float: right" color="warn">Delete Barber</button>
   </md-card-actions>
 </md-card>

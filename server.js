@@ -1,17 +1,21 @@
 const express = require('express'),
-  path = require('path')
-session = require('express-session'),
-bodyParser = require('body-parser'),
-massive = require('massive'),
-passport = require('passport'),
-Auth0Strategy = require('passport-auth0'),
-config = require('./config.js'),
-cors = require('cors'),
-http = require('http'),
-nodemailer = require('nodemailer'),
-email = require('emailjs/email');
+      session = require('express-session'),
+      bodyParser = require('body-parser'),
+      massive = require('massive'),
+      passport = require('passport'),
+      Auth0Strategy = require('passport-auth0'),
+      config = require('./config.js'),
+      cors = require('cors'),
+      path = require('path'),
+      http = require('http'),
+      app = module.exports = express(),
+      server = http.createServer(app),
+      nodemailer = require('nodemailer'),
+      email = require('emailjs/email'),
+      io = require('socket.io')(server);
 
-const app = module.exports = express();
+
+server.listen( 4200, ()=> {console.log('Connected on 4200')})
 
 app.use(bodyParser.json());
 app.use(session({
@@ -22,13 +26,23 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
+
 app.use(express.static(__dirname + '/dist'));
 app.get('*', function(req, res) {
   res.sendFile(path.join(__dirname, '/dist', 'index.html'))
 });
 
-// console.log(__dirname);
-// console.log(__dirname + '/dist/index.html');
+app.get('*', function(req, res){
+  res.sendFile(path.join(__dirname, '/dist', 'index.html'))
+});
+
+
+io.on('connection', function (socket) {
+  socket.emit('news', { hello: 'world' });
+  socket.on('my other event', function (data) {
+    console.log(data);
+  });
+});
 
 /////////////
 // DATABASE //
@@ -37,7 +51,28 @@ app.get('*', function(req, res) {
 massive("postgres://uunjpeyj:yVNsIpBpaTMB_a2TXEss-Gmq1DGSIOte@pellefant.db.elephantsql.com:5432/uunjpeyj").then(massiveInstance => {
   app.set('db', massiveInstance);
   const db = app.get('db');
-  var info
+
+  app.post('/api/add-user', (req, res) => {
+    newUser = [
+      req.body.firstName,
+      req.body.lastName,
+      req.body.email,
+      req.body.password,
+      req.body.shopOwner ? "admin" : "user"
+    ]
+    db.add_user(newUser, (err, user) => {
+      console.log(err)})
+      .then((user) => {res.send(user)},
+            (error) => {res.send({fail:'That email address is already in use!'})
+    })
+  })
+
+  app.post('/api/login', (req, res)=> {
+    credentials = [req.body.email, req.body.password]
+    db.login(credentials, (err, user)=> {
+      console.log(err);
+    }).then((user) => {res.send(user)})
+  })
 
   app.get('/api/test', (req, res) => {
     console.log('in test api', req)
@@ -72,22 +107,62 @@ massive("postgres://uunjpeyj:yVNsIpBpaTMB_a2TXEss-Gmq1DGSIOte@pellefant.db.eleph
     db.get_barbers(req.body.id, (err, contacts) => {}).then(contacts => res.send(contacts))
   })
 
+  app.post('/api/edit-barber-pay', (req, res)=> {
+    let changes = [
+      req.body.type,
+      req.body.rate,
+      req.body.b_id
+    ]
+    console.log(changes);
+    db.edit_barber_pay(changes, (err, changed)=> {console.log(err);}).then(changed => res.send(changed))
+  })
+
+  app.post('/api/delete/barber', (req, res)=> {
+    console.log(req.body);
+    db.delete_barber(req.body.id, (err, barber)=> {console.log(err);}).then(
+      (pass) => {res.send({msg:"Success!"})},
+      (fail) => {res.send({fail: "An error occurred."})})
+  })
+
   app.post('/api/services', (req, res) => {
     db.get_services(req.body.id, (err, contacts) => {}).then(contacts => res.send(contacts))
   })
 
   app.post('/api/add-contact', (req, res) => {
-    let contact = [req.body.firstname, req.body.lastname, req.body.phonenumber, req.body.email, 1]
+    let contact = [
+      req.body.c_first,
+      req.body.c_last,
+      req.body.c_phone,
+      req.body.c_email,
+      req.body.b_day,
+      req.body.c_shop
+    ]
     db.add_contact(contact, (err, contacts) => {
       console.log(err, contacts);
-    }).then(contacts => res.send(contacts))
+    }).then((contact) => {res.send(contact)},
+            (fail) => {res.send({fail:"An error occurred"})})
+  })
+
+  app.post('/api/edit-contact', (req, res)=> {
+    let contact = [
+      req.body.c_first,
+      req.body.c_last,
+      req.body.c_phone,
+      req.body.c_email,
+      req.body.b_day,
+      req.body.c_id
+    ]
+    db.edit_contact(contact, (err, newContact)=> {console.log(err);})
+    .then((newContact)=> {res.send(newContact)},
+          (fail)=> {res.send({fail:"An error occurred"})})
   })
 
   app.post('/api/delete-contact', (req, res) => {
     console.log('server', req.body);
-    db.delete_contact(req.body, (err, contacts) => {
+    db.delete_contact(req.body.c_id, (err, contacts) => {
       console.log("db", err, contacts);
-    }).then(contacts => res.send(contacts))
+    }).then(contacts => res.send({msg:"Success"}),
+            fail => res.send({msg:"An error occurred"}))
   })
 
   app.post('/api/add-appt', (req, res) => {
@@ -135,9 +210,13 @@ massive("postgres://uunjpeyj:yVNsIpBpaTMB_a2TXEss-Gmq1DGSIOte@pellefant.db.eleph
     }).then(info => res.send(info))
   });
 
-  app.post('/sendmail', (req, res) => {
 
-    var startEmail = `
+  // NODE MAILER-----------------///
+  // ---------------------------------
+
+  var info
+  app.post('/sendmail', (req, res)=> {
+      var startEmail = `
       <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
       <html xmlns="http://www.w3.org/1999/xhtml">
           <head>
@@ -207,10 +286,7 @@ massive("postgres://uunjpeyj:yVNsIpBpaTMB_a2TXEss-Gmq1DGSIOte@pellefant.db.eleph
 
 });
 
-const server = http.createServer(app);
-server.listen(4200, () => {
-  console.log('Connected on 4200')
-})
+
 // var results = [ {
 //   asin: 'B01571L1Z4',
 //   url: 'domain.com',
