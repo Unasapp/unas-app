@@ -211,7 +211,6 @@ const server = http.createServer(app);
 server.listen(4200, () => {
   console.log('Connected on 4200')
 })
-
 // var results = [ {
 //   asin: 'B01571L1Z4',
 //   url: 'domain.com',
