@@ -3,6 +3,8 @@ import { HttpClient } from '@angular/common/http';
 import { MdDialog, MdDialogRef } from '@angular/material';
 import { CashoutdialogComponent } from '../cashoutdialog/cashoutdialog.component';
 import { ApptdialogComponent } from '../apptdialog/apptdialog.component';
+import { BarberModalComponent } from '../barber-modal/barber-modal.component'
+import { ReportServiceService } from '../report-service.service';
 
 
 @Component({
@@ -15,7 +17,11 @@ export class AllbarbersComponent implements OnInit {
   barbers: any;
   ifopen: true;
 
-  constructor(private http: HttpClient, public dialog: MdDialog) { }
+  constructor(
+    private http: HttpClient, 
+    public dialog: MdDialog,
+    public service: ReportServiceService
+  ) { }
 
   openCashDialog() {
     let dialogRef = this.dialog.open(CashoutdialogComponent,{
@@ -29,12 +35,23 @@ export class AllbarbersComponent implements OnInit {
       data: 'this text is passed'
     })
   }
-  ngOnInit() {
+  openBarberModal(selectedBarber) {
+    let dialogRef = this.dialog.open(BarberModalComponent, {
+      width: '600px',
+      data: selectedBarber
+    })
+  }
 
-     this.http.get('https://jsonplaceholder.typicode.com/users').subscribe((data) => {
-        this.barbers = data;
-        console.log('users',this.barbers);
-    });
+
+
+
+
+  ngOnInit() {
+    this.service.getBarbers({id:1}).subscribe((data) => {
+      console.log('getting barber data',data);
+      this.barbers = data;
+      localStorage.setItem('barbers', JSON.stringify(data))
+    })
   }
 
 }

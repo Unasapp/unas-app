@@ -274,17 +274,17 @@ export class ReportsComponent implements OnInit {
   trans: any
   ngOnInit() {
     console.log('reports loaded')
-    this.reportServiceService.getShopTrans({ id: 1 }).subscribe(trans => {
+    this.reportServiceService.getShopTrans({ id:JSON.parse(localStorage.getItem('profile'))[0].shop_id }).subscribe(trans => {
       for (let i = 0; i < trans.length; i++) {
-        trans[i].date = moment(trans[i].date).format('M-D-YY')
+        trans[i].start_time = moment(trans[i].start_time).format('l LT')
       }
       console.log(trans)
       this.report = trans
     })
-    this.reportServiceService.getTimecards({ id: 1 }).subscribe(cards => {
+    this.reportServiceService.getTimecards({ id: JSON.parse(localStorage.getItem('profile'))[0].shop_id }).subscribe(cards => {
       for (let i = 0; i < cards.length; i++) {
-        cards[i].in = moment(cards[i].in).format('LLLL')
-        cards[i].out = moment(cards[i].out).format('LLLL')
+        cards[i].time_in = moment(cards[i].time_in).format('LLLL')
+        cards[i].time_out = moment(cards[i].time_out).format('LLLL')
 
       }
       console.log(cards)

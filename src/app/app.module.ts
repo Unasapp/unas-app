@@ -43,9 +43,9 @@ import { CashoutdialogComponent } from './cashoutdialog/cashoutdialog.component'
 import { ApptdialogComponent } from './apptdialog/apptdialog.component';
 import { BarberDetailsComponent } from './barber-details/barber-details.component';
 import { ReportServiceService } from './report-service.service';
-import { EventModalComponent } from './event-modal/event-modal.component';
 import { BarberModalComponent } from './barber-modal/barber-modal.component';
 import { ProductDialogComponent } from './product-dialog/product-dialog.component';
+import { LoginModelComponent } from './login-model/login-model.component';
 
 
 @NgModule({
@@ -64,9 +64,9 @@ import { ProductDialogComponent } from './product-dialog/product-dialog.componen
     CashoutdialogComponent,
     ApptdialogComponent,
     BarberDetailsComponent,
-    EventModalComponent,
     ProductDialogComponent,
-    BarberModalComponent
+    BarberModalComponent,
+    LoginModelComponent
   ],
   imports: [
     BrowserModule,
@@ -100,10 +100,10 @@ import { ProductDialogComponent } from './product-dialog/product-dialog.componen
     ContactsdialogComponent,
     CashoutdialogComponent,
     ApptdialogComponent,
-    EventModalComponent,
     BarberModalComponent,
     ProductDialogComponent,
-    BarberModalComponent
+    BarberModalComponent,
+    LoginModelComponent
   ],
   providers: [AuthService, ReportServiceService],
   bootstrap: [AppComponent]

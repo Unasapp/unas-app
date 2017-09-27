@@ -36,10 +36,10 @@
       <md-list-item routerLink='/home' class='sidenav-items' > Home </md-list-item>
       <md-list-item routerLink='/cal' class='sidenav-items'> Calendar </md-list-item>
       <md-list-item routerLink='/contacts' class='sidenav-items' > Contacts </md-list-item>
-      <md-list-item routerLink='/allbarbers' class='sidenav-items' > Barber Profiles </md-list-item>
+      <!-- <md-list-item routerLink='/allbarbers' class='sidenav-items' > Barber Profiles </md-list-item> -->
       <md-list-item routerLink='/reports' class='sidenav-items' > Reports </md-list-item>
-      <md-list-item routerLink='/notifications' class='sidenav-items' > Notifications </md-list-item>
-      <md-list-item routerLink='/settings' class='sidenav-items' > Settings </md-list-item>
+      <!-- <md-list-item routerLink='/notifications' class='sidenav-items' > Notifications </md-list-item> -->
+      <!-- <md-list-item routerLink='/settings' class='sidenav-items' > Settings </md-list-item> -->
       <md-list-item (click)="auth.logout()" class='sidenav-items' > Logout </md-list-item>
     </md-list>
   </md-sidenav>
@@ -48,7 +48,7 @@
 
      <angular2-fullcalendar id='myCalendar' #myCalendar [options]="calendarOptions" ></angular2-fullcalendar>
 
-    
+
      <div id="eventContent" class="eventContent">
           <h2 md-dialog-title>Appointment Information</h2>
           <hr>
@@ -57,25 +57,31 @@
 
         <md-list>
           <md-list-item>
-            <h4>Customer: </h4> 
+            <h4>Customer: </h4>
             <p>&nbsp;<span id="eClient" class="eClient"></span></p>
-            <button (click)='changeClient = !changeClient'  style="float:right;" md-icon-button> 
-              <i style='color:#ff4d4d' class='ion-edit'></i>  
+            <button (click)='changeClient = !changeClient'  style="float:right;" md-icon-button>
+              <i style='color:#ff4d4d' class='ion-edit'></i>
             </button>
           </md-list-item>
 
   <div class='modal-options' *ngIf='changeClient' >
-    <button (click)='changeClient = !changeClient' style="float:right;" md-icon-button> 
-        <i style='color:#ff4d4d' class='ion-ios-arrow-back icon-size'></i>  
-    </button>  
+    <button (click)='changeClient = !changeClient' style="float:right;" md-icon-button>
+        <i style='color:#ff4d4d' class='ion-ios-arrow-back icon-size'></i>
+    </button>
       <md-input-container class="example-full-width">
-          <input mdInput placeholder="Client" name=newClient [(ngModel)]='newClient'>
+          <form id='filter' >
+              <input mdInput placeholder="Search Clients" name=newClient [(ngModel)]='term'>
+          </form>
       </md-input-container>
-        <div *ngIf='newClient'  >
-            <p>ggggg</p>
-            <p>ggggg</p>
-            <p>ggggg</p>
-        </div>
+      <div *ngIf='term' >
+            <md-list>
+                <div *ngFor="let user of users | filter:term"  >
+                  <md-list-item (click)='term = user.c_first+" "+user.c_last' >
+                      {{ user.c_first }} {{ user.c_last }}
+                  </md-list-item>
+              </div>
+            </md-list>
+      </div>
   </div>
 
             <!-- Service Changes  -->
@@ -83,18 +89,18 @@
           <md-list-item>
             <h4>Service: </h4>
             <p>&nbsp;<span id="eService" class="eService"></span></p>
-            <button (click)='changeService = !changeService' style="float:right;" md-icon-button> 
-              <i style='color:#ff4d4d' class='ion-edit'></i>  
+            <button (click)='changeService = !changeService' style="float:right;" md-icon-button>
+              <i style='color:#ff4d4d' class='ion-edit'></i>
             </button>
           </md-list-item>
 
   <div class='modal-options' *ngIf='changeService' >
-    <button (click)='changeService = !changeService' style="float:right;" md-icon-button> 
-        <i style='color:#ff4d4d' class='ion-ios-arrow-back icon-size'></i>  
-    </button>  
+    <button (click)='changeService = !changeService' style="float:right;" md-icon-button>
+        <i style='color:#ff4d4d' class='ion-ios-arrow-back icon-size'></i>
+    </button>
       <md-select name=service [(ngModel)]='newservice' placeholder="Service">
-          <md-option *ngFor="let service of services" [value]="service.value">
-             {{ service.viewValue }}
+          <md-option *ngFor="let service of services" [value]="service.service">
+             {{ service.service }}
           </md-option>
       </md-select>
   </div>
@@ -102,40 +108,40 @@
                <!-- Barber Changes  -->
 
           <md-list-item>
-            <h4>Barber: </h4>  
+            <h4>Barber: </h4>
             <p>&nbsp;<span id="eTitle" class="eTitle"></span></p>
-            <button (click)='changeBarber = !changeBarber' style="float:right;" md-icon-button> 
-              <i style='color:#ff4d4d' class='ion-edit'></i>  
+            <button (click)='changeBarber = !changeBarber' style="float:right;" md-icon-button>
+              <i style='color:#ff4d4d' class='ion-edit'></i>
             </button>
           </md-list-item>
 
   <div class='modal-options' *ngIf='changeBarber' >
-    <button (click)='changeBarber = !changeBarber' style="float:right;" md-icon-button> 
-        <i style='color:#ff4d4d' class='ion-ios-arrow-back icon-size'></i>  
-    </button>  
+    <button (click)='changeBarber = !changeBarber' style="float:right;" md-icon-button>
+        <i style='color:#ff4d4d' class='ion-ios-arrow-back icon-size'></i>
+    </button>
       <md-select name=barber [(ngModel)]='newbarber' placeholder="Barber">
-        <md-option *ngFor="let barber of barbers" [value]="barber.value">              
-          {{ barber.viewValue }}
+        <md-option *ngFor="let barber of barbers" [value]="barber.b_first">
+          {{ barber.b_first }} {{ barber.b_last }}
         </md-option>
       </md-select>
   </div>
 
         <!-- Date and Time Changes  -->
-      
+
           <md-list-item>
-            <h4>Date and Time: </h4> 
+            <h4>Date and Time: </h4>
             <p>&nbsp;<span id="eStart" class="eStart"></span></p>
-            <button (click)='changeDate = !changeDate' style="float:right;" md-icon-button> 
-              <i style='color:#ff4d4d' class='ion-edit'></i>  
+            <button (click)='changeDate = !changeDate' style="float:right;" md-icon-button>
+              <i style='color:#ff4d4d' class='ion-edit'></i>
             </button>
           </md-list-item>
         </md-list>
 
 
   <div class='modal-options' *ngIf='changeDate' >
-    <button (click)='changeDate = !changeDate' style="float:right;" md-icon-button> 
-        <i style='color:#ff4d4d' class='ion-ios-arrow-back icon-size'></i>  
-    </button>  
+    <button (click)='changeDate = !changeDate' style="float:right;" md-icon-button>
+        <i style='color:#ff4d4d' class='ion-ios-arrow-back icon-size'></i>
+    </button>
      <md-input-container>
       <input name=date [(ngModel)]='newdate' mdInput [mdDatepicker]="picker" placeholder="Choose a date">
       <button mdSuffix [mdDatepickerToggle]="picker"></button>
@@ -162,17 +168,17 @@
           </td>
         </tr>
       </table>
-            
+
       </div>
 
 
       <br />
-      <md-dialog-actions>
-        <button name=eDBid id=eDBid style='background:#00e673;color:white;' md-raised-button (click)='onEditEvent(newClient,newservice,newbarber,newdate,timep,timeam)' > Save </button>
-        <button name=eID id=eID style='background:#ff4d4d;color:white;' md-raised-button (click)='onDeleteEvent()' > Delete </button>
+      <md-dialog-actions name=shop_id id=shop_id >
+        <button name=apptDB_id id=apptDB_id style='background:#00e673;color:white;' md-raised-button (click)='onEditEvent(term,newservice,newbarber,newdate,timep,timeam)' > Save </button>
+        <button name=eCal_ID id=eCal_ID style='background:#ff4d4d;color:white;' md-raised-button (click)='onDeleteEvent()' > Delete </button>
         <button md-raised-button (click)='closeD()' > Cancel </button>
       </md-dialog-actions>
-          
+
       </div>
     <div class='md-modal myModal' (click)='closeD()' ></div>
 

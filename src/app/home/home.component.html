@@ -35,10 +35,10 @@
       <md-list-item routerLink='/home' class='sidenav-items'> Home </md-list-item>
       <md-list-item routerLink='/cal' class='sidenav-items'> Calendar </md-list-item>
       <md-list-item routerLink='/contacts' class='sidenav-items'> Contacts </md-list-item>
-      <md-list-item routerLink='/allbarbers' class='sidenav-items'> Barber Profiles </md-list-item>
+      <!-- <md-list-item routerLink='/allbarbers' class='sidenav-items'> Barber Profiles </md-list-item> -->
       <md-list-item routerLink='/reports' class='sidenav-items'> Reports </md-list-item>
-      <md-list-item routerLink='/notifications' class='sidenav-items'> Notifications </md-list-item>
-      <md-list-item routerLink='/settings' class='sidenav-items'> Settings </md-list-item>
+      <!-- <md-list-item routerLink='/notifications' class='sidenav-items'> Notifications </md-list-item> -->
+      <!-- <md-list-item routerLink='/settings' class='sidenav-items'> Settings </md-list-item> -->
       <md-list-item (click)="auth.logout()" class='sidenav-items'> Logout </md-list-item>
     </md-list>
   </md-sidenav>
@@ -251,16 +251,18 @@
     <div class='barber-profiles'>
 
       <md-card *ngFor="let barber of barbers" class="example-card">
-        <h3 style="text-align:center;">{{ barber.name }}</h3>
+        <h3 style="text-align:center;">{{ barber.b_first }} {{ barber.b_last }}</h3>
         <img class='profile-pic' src="https://maxcdn.icons8.com/Share/icon/Users//user_male_circle_filled1600.png">
         <md-card-content>
           <div class='profile-stat'>
             <p>Wages:</p>
-            <p>{{barber.address.zipcode}}</p>
+            <!-- This is dummy data -->
+            <p>$468.90</p>
           </div>
           <div class='profile-stat'>
             <p>Tips:</p>
-            <p>{{barber.address.geo.lng}}</p>
+            <!-- This is dummy data -->
+            <p>$46.50</p>
           </div>
           <div class='profile-stat'>
             <p>Appointments:</p>

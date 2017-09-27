@@ -5,7 +5,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build && node server.js",
+    "build": "ng build && nodemon server.js",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"
@@ -41,6 +41,7 @@
     "express-session": "^1.15.5",
     "font-awesome": "^4.7.0",
     "fullcalendar": "^3.4.0",
+    "html-pdf": "^2.1.0",
     "http": "0.0.0",
     "jquery": "^3.2.1",
     "jquery-ui": "^1.12.1",

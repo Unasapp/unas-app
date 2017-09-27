@@ -60,9 +60,14 @@ export class HomeComponent implements OnInit {
     let dialogRef = this.dialog.open(BarberModalComponent, {
       width: '600px',
       data: selectedBarber
-
+    }).afterClosed().subscribe(data => {
+      if (data) {
+        this.barbers.splice(this.barbers.findIndex(x => x.b_id === data),1);
+      }
     })
   }
+
+
 
   ngOnInit() {
     //   this.http.get('https://penguinhousedesigns.auth0.com/userinfo').subscribe((res)=>{
@@ -76,22 +81,19 @@ export class HomeComponent implements OnInit {
       console.log(this.socket);
 
     });
-    this.service.getBarbers({id:1}).subscribe((data) => {
+    console.log(JSON.parse(localStorage.getItem('profile'))[0].shop_id)
+    this.service.getBarbers({id:JSON.parse(localStorage.getItem('profile'))[0].shop_id}).subscribe((data) => {
+      console.log('getting barber data',data);
+      this.barbers = data;
       localStorage.setItem('barbers', JSON.stringify(data))
     })
-    this.service.getContacts({id:1}).subscribe((data) => {
+    this.service.getContacts({id:JSON.parse(localStorage.getItem('profile'))[0].shop_id}).subscribe((data) => {
       localStorage.setItem('clients', JSON.stringify(data))
     })
-    this.service.getServices({id:1}).subscribe((data) => {
+    this.service.getServices({id:JSON.parse(localStorage.getItem('profile'))[0].shop_id}).subscribe((data) => {
       localStorage.setItem('services', JSON.stringify(data))
     })
 
-    this.http.get('https://jsonplaceholder.typicode.com/users').subscribe((data) => {
-      this.barbers = data;
-      // console.log('users',this.barbers);
-    });
-    // this.auth.authenticated()
-    this.auth.getUserData()
     }
 
   }

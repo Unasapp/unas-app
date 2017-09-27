@@ -10,28 +10,11 @@ import { MD_DIALOG_DATA } from '@angular/material';
 })
 export class CashoutdialogComponent implements OnInit {
 
-  barbers = [
-    {value: 'Harry Vu', viewValue: 'Harry'},
-    {value: 'Dominic DeCicco', viewValue: 'Dominic'},
-    {value: 'Andrew Chen', viewValue: 'Andrew'}
-  ];
+  barbers = JSON.parse(localStorage.getItem('barbers'))
 
-  services = [
-    {value: 'haircut', viewValue: 'Haircut'},
-    {value: 'beardtrim', viewValue: 'Beard Trim'},
-    {value: 'lineup', viewValue: 'Line-up'},
-    {value: 'fade', viewValue: 'Fade'},
-    {value: 'shave', viewValue: 'Traditional Shave'}
-  ];
+  services = JSON.parse(localStorage.getItem('services'))
 
-  clients = [
-    {value: 'Lesley Rico', viewValue: 'Lesley Rico'},
-    {value: 'Bittany Jensen', viewValue: 'Bittany Jensen'},
-    {value: 'Carlo Jimenez', viewValue: 'Carlo Jimenez'},
-    {value: 'Mike Hunt', viewValue: 'Mike Hunt'},
-    {value: 'Kwatasha Smith', viewValue: 'Kwatasha Smith'}
-  ];
-
+  clients = JSON.parse(localStorage.getItem('clients'))
 
 
 constructor(
@@ -40,15 +23,28 @@ constructor(
 ) { }
 
 ngOnInit() {
+  console.log(this.clients);
+  
 }
 
-onCloseConfirm(customer, firstname, lastname, phonenumber, email, service, barber, price, tip, amtpaid, typeP){
+onCloseConfirm(customer, firstname, lastname, phonenumber, email, service, barber, price, tip, amtpaid, typeP, product, bday){
 
   if(!customer){
+    let newClient ={
+      'c_first': firstname,
+      'c_last': lastname,
+      'c_phone': phonenumber,
+      'c_email': email,
+      'b_day': bday,
+      'c_id':'',
+      'c_shop': 1
+    }
+    console.log('-- New Client created --',newClient);
+    
     let customer = firstname + ' ' + lastname;
     let trans = {
       'date': new Date(),
-    customer, service, barber, price, tip, amtpaid, typeP
+    customer, service, barber, price, tip, amtpaid, typeP, product
     }
     // console.log(trans);
     this.dialogRef.close(trans)
@@ -56,9 +52,16 @@ onCloseConfirm(customer, firstname, lastname, phonenumber, email, service, barbe
   else{
     let trans = {
       'date': new Date(),
-      customer, service, barber, price, tip, amtpaid, typeP
+      customer, service, barber, price, tip, amtpaid, typeP, product
     };
-    // console.log(trans);
+    console.log('--- Here is Transaction ---',trans);
+    // API CALLL FOR NEW TRANSATION
+    // API CALLL FOR NEW TRANSATION
+    // API CALLL FOR NEW TRANSATION
+    // API CALLL FOR NEW TRANSATION
+    // API CALLL FOR NEW TRANSATION
+    // API CALLL FOR NEW TRANSATION
+
     this.dialogRef.close(trans)
   }
 }
