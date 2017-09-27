@@ -46,6 +46,7 @@
     "jquery-ui": "^1.12.1",
     "massive": "^3.2.2",
     "moment": "^2.18.1",
+    "ng2-charts": "^1.6.0",
     "nodemailer": "^4.1.0",
     "passport": "^0.4.0",
     "passport-auth0": "^0.6.0",

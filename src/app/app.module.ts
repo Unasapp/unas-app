@@ -7,7 +7,7 @@ import { FormsModule } from '@angular/forms';
 import { AuthService } from './auth/auth.service';
 import { CommonModule } from '@angular/common';
 import { CalendarModule } from "ap-angular2-fullcalendar";
-import { ChartModule } from 'angular2-chartjs';
+import { ChartsModule } from 'ng2-charts';
 import {
     MdSidenavModule,
     MdToolbarModule,
@@ -95,7 +95,7 @@ import { ReportsDialogComponent } from './reports-dialog/reports-dialog.componen
     MdNativeDateModule,
     MdSliderModule,
     MdSlideToggleModule,
-    ChartModule
+    ChartsModule
   ],
   entryComponents: [
     ContactsdialogComponent,
