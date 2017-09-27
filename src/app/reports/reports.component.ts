@@ -6,6 +6,7 @@ import { ApptdialogComponent } from '../apptdialog/apptdialog.component';
 import { ProductDialogComponent } from '../product-dialog/product-dialog.component';
 import { ReportServiceService } from '../report-service.service';
 import { Http, Headers } from '@angular/http';
+import { ReportsDialogComponent } from '../reports-dialog/reports-dialog.component';
 
 @Injectable()
 @Component({
@@ -16,36 +17,8 @@ import { Http, Headers } from '@angular/http';
 export class ReportsComponent implements OnInit {
 
   cashResult: any;
-  newUser = {
-    email: '',
-    password: ''
-  };
-
-  newReport = {
-
-  };
 
   constructor(private http: Http, public dialog: MdDialog, public reportServiceService: ReportServiceService) { }
-
-  addNew(usercreds, report) {
-    console.log('inside addnew')
-    var headers = new Headers();
-    var eObject = { email: usercreds.username,
-                    password: usercreds.password,
-                    headers: headers };
-    headers.append('Content-Type', 'application/X-www-form-urlencoded');
-    console.log('before sendmail')
-    return this.http.post('/sendmail', eObject).subscribe((data) => {
-      if (data.json().success) {
-        console.log('Sent successfully');
-      }
-    })
-  }
-
-  addUser() {
-    console.log('add user function')
-    this.addNew(this.newUser, this.newReport);
-  }
 
   openNewProduct() {
     let dialogRef = this.dialog.open(ProductDialogComponent, {
@@ -98,6 +71,13 @@ export class ReportsComponent implements OnInit {
   openApptDialog() {
     let dialogRef = this.dialog.open(ApptdialogComponent, {
       width: '600px',
+      data: 'this text is passed'
+    })
+  }
+
+  openReportDialog() {
+    let dialogRef = this.dialog.open(ReportsDialogComponent, {
+      width: 'auto',
       data: 'this text is passed'
     })
   }
