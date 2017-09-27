@@ -251,7 +251,7 @@ massive("postgres://uunjpeyj:yVNsIpBpaTMB_a2TXEss-Gmq1DGSIOte@pellefant.db.eleph
 
     var getStuff = function() {
       emailTmp = info.reduce(function(a, b) {
-        return a + '<tr><td>' + b.b_first + ' ' + b.b_last + '</td><td>' + b. in + '</td><td>' + b.out + '</td></tr>';
+        return a + '<tr><td>' + b.b_first + ' ' + b.b_last + '</td><td>' + b.time_in + '</td><td>' + b.time_out + '</td></tr>';
       }, '');
       console.log('here is email Tmp', emailTmp)
 
