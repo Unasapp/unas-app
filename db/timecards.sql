@@ -1,8 +1,8 @@
 select
 	barbers.b_first,
 	barbers.b_last,
-	timecards.in,
-	timecards.out
+	timecards.time_in,
+	timecards.time_out
 from
 	barbers, timecards, shops
 where

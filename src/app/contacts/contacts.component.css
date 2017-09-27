@@ -5,12 +5,12 @@
     border-top: 1px solid grey;
     align-items: center;
 }
- 
+
 .box-contacts{
     display: flex;
     flex: 1;
-    justify-content: center;
-} 
+    justify-content: left;
+}
 
 .view-contacts-head{
     display: flex;

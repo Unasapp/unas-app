@@ -17,12 +17,24 @@ export class ReportServiceService {
     return this.http.get('/api/test')
       .map(res => res.json());
   }
-  
+
+  addUser(data) {
+    console.log('adding user', data)
+    return this.http.post('/api/add-user', data)
+      .map(res => res.json())
+  }
+
+  login(data) {
+    console.log('logging in', data)
+    return this.http.post('/api/login', data)
+      .map(res => res.json())
+  }
+
   addAppts(appt){
     console.log('-- addAppts called in service --',appt);
     return this.http.post('/api/add-appt', appt)
       .map(res => res.json());
-  }  
+  }
 
   getShopTrans(id:any) {
     return this.http.post('/api/shop-trans', id)
@@ -41,9 +53,14 @@ export class ReportServiceService {
 
   addContact(contact) {
     console.log('-- add Contact called in service ---',contact);
-    
     return this.http.post('/api/add-contact', contact)
       .map(res => res.json())
+  }
+
+  editContact(contact) {
+    console.log('editing contact', contact)
+    return this.http.post('/api/edit-contact', contact)
+    .map(res => res.json())
   }
 
   deleteContact(contact) {
@@ -55,6 +72,16 @@ export class ReportServiceService {
   getBarbers(id) {
     console.log('service')
     return this.http.post('/api/barbers', id)
+    .map(res => res.json())
+  }
+
+  editBarberPay(barber) {
+    return this.http.post('/api/edit-barber-pay', barber)
+    .map(res => res.json())
+  }
+
+  deleteBarber(barber) {
+    return this.http.post('/api/delete/barber', {id: barber.b_id})
     .map(res => res.json())
   }
 
@@ -85,7 +112,7 @@ export class ReportServiceService {
       'shop_id'  : editedEvent.shop_id,
       'start_time' : moment(editedEvent.start).format('YYYY-MM-DD HH:mm:ss'),
       'end_time' : moment(editedEvent.end).format('YYYY-MM-DD HH:mm:ss')
-    } 
+    }
     this.clients.filter((x)=>{
       if( x.c_first == editedEvent.client.split(' ')[0]){
         return edit.client_id = Number(x.c_id)

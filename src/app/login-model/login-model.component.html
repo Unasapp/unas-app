@@ -21,27 +21,27 @@
         </td>
       </tr>
     </table>
-    <div *ngIf='newUser'> 
+    <div *ngIf='newUser'>
       <table  cellspacing="0">
         <tr>
           <td>
             <md-input-container >
-              <input mdInput placeholder="FirstName" name=FirstName [(ngModel)]='userData.firstName'>
+              <input mdInput placeholder="First Name" name=FirstName [(ngModel)]='userData.firstName'>
             </md-input-container>
           </td>
           <td>
             <md-input-container >
-              <input mdInput placeholder="LastName" name=LastName [(ngModel)]='userData.lastName'>
+              <input mdInput placeholder="Last Name" name=LastName [(ngModel)]='userData.lastName'>
             </md-input-container>
           </td>
         </tr>
       </table>
       <md-slide-toggle
-       [checked]="userData.shopOwner" 
-       name=shopOwer 
+       [checked]="userData.shopOwner"
+       name=shopOwer
        [(ngModel)]="userData.shopOwner"
        >Shop Owner</md-slide-toggle>
-    </div>   
+    </div>
   <button md-button *ngIf='!newUser' (click)='newUser = !newUser'>Create an Account?</button>
   <button md-button *ngIf='newUser' (click)='newUser = !newUser'>Have an Account?</button>
 </md-card>

@@ -43,31 +43,31 @@ export class AuthService {
               console.log('profile info', profile);
               localStorage.setItem('profile', JSON.stringify(profile))
               this.userProfile = profile;
-              this.router.navigate(['/home']);  
+              this.router.navigate(['/home']);
             }
             else{
               console.log('Error!',err);
             }
           });
     })
-    
+
   }
-  
+
   public getUserData(){
     console.log('get user data called');
-    
-    
+
+
   }
 
   public authenticated(){
     // this.router.navigate(['/home'])
     return tokenNotExpired()
   }
-  
+
   public login() {
     this.lock.show()
     console.log('showing');
-    
+
     // this.authenticated()
   }
 
@@ -87,11 +87,11 @@ export class AuthService {
   //   console.log('Handleing auth');
   //   this.auth0.parseHash((err, authResult) => {
   //     if (authResult && authResult.accessToken && authResult.idToken) {
-  //       console.log('Autherntication called', authResult);    
+  //       console.log('Autherntication called', authResult);
   //       window.location.hash = '';
   //       this.setSession(authResult);
-  //       this.router.navigate(['/home']);   
-        
+  //       this.router.navigate(['/home']);
+
   //     this.auth0.client.userInfo(authResult.accessToken, (err, profile) => {
   //     if (profile) {
   //       console.log('profile info', profile);
@@ -100,7 +100,7 @@ export class AuthService {
   //       console.log('Error!',err);
   //     }
   //   });
-        
+
 
   //     } else if (err) {
   //       this.router.navigate(['/home']);
@@ -113,7 +113,7 @@ export class AuthService {
 
   // private setSession(authResult): void {
   //   console.log('setting session');
-    
+
   //   // Set the time that the access token will expire at
   //   const expiresAt = JSON.stringify((authResult.expiresIn * 1000) + new Date().getTime());
   //   localStorage.setItem('access_token', authResult.accessToken);
@@ -124,7 +124,7 @@ export class AuthService {
 
   // public logout(): void {
   //   console.log('Logging out!!');
-    
+
   //   // Remove tokens and expiry time from localStorage
   //   localStorage.removeItem('access_token');
   //   localStorage.removeItem('id_token');
@@ -135,7 +135,7 @@ export class AuthService {
 
   // public isAuthenticated(): boolean {
   //   console.log('is Authenticated called');
-    
+
   //   // Check whether the current time is past the
   //   // access token's expiry time
   //   const expiresAt = JSON.parse(localStorage.getItem('expires_at'));
@@ -149,7 +149,7 @@ export class AuthService {
   //     throw new Error('Access token must exist to fetch profile');
   //   }
   //   const self = this;
-   
+
   // }
 
 }

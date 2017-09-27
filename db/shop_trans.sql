@@ -4,7 +4,7 @@ select
   clients.c_first,
   clients.c_last,
   services.service,
-  appointments.date,
+  appointments.start_time,
   services.price,
   appointments.tip,
   appointments.total,

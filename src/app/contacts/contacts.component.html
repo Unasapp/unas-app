@@ -36,10 +36,10 @@
       <md-list-item routerLink='/home' class='sidenav-items' > Home </md-list-item>
       <md-list-item routerLink='/cal' class='sidenav-items'> Calendar </md-list-item>
       <md-list-item routerLink='/contacts' class='sidenav-items' > Contacts </md-list-item>
-      <md-list-item routerLink='/allbarbers' class='sidenav-items' > Barber Profiles </md-list-item>
+      <!-- <md-list-item routerLink='/allbarbers' class='sidenav-items' > Barber Profiles </md-list-item> -->
       <md-list-item routerLink='/reports' class='sidenav-items' > Reports </md-list-item>
-      <md-list-item routerLink='/notifications' class='sidenav-items' > Notifications </md-list-item>
-      <md-list-item routerLink='/settings' class='sidenav-items' > Settings </md-list-item>
+      <!-- <md-list-item routerLink='/notifications' class='sidenav-items' > Notifications </md-list-item> -->
+      <!-- <md-list-item routerLink='/settings' class='sidenav-items' > Settings </md-list-item> -->
       <md-list-item (click)="auth.logout()" class='sidenav-items' > Logout </md-list-item>
     </md-list>
   </md-sidenav>
@@ -73,14 +73,13 @@
 
       <md-list-item  *ngFor="let user of users | filter:term">
 
-        <div class='view-contacts' >
+        <div class='view-contacts' (click)="openDialog(user)">
           <p class='box-contacts' > {{user.c_first}} {{ user.c_last }} </p>
           <p class='box-contacts' > {{user.c_email}} </p>
           <p class='box-contacts' > {{user.c_phone}} </p>
-           <button (click)='onDelete(user.c_first)' style='position:absolute;right:1%;margin-bottom:2%' md-icon-button ><i class='ion-ios-close-empty icon-size' ></i></button>
         </div>
       </md-list-item>
-      
+
     </div>
     </md-list>
 

@@ -4,14 +4,17 @@ import { CashoutdialogComponent } from '../cashoutdialog/cashoutdialog.component
 import { ApptdialogComponent } from '../apptdialog/apptdialog.component';
 import { ReportServiceService } from '../report-service.service';
 
+
+
 @Component({
   selector: 'app-notifications',
   templateUrl: './notifications.component.html',
-  styleUrls: ['./notifications.component.css']
+  styleUrls: ['./notifications.component.css'],
 })
 export class NotificationsComponent implements OnInit {
   test: any = [];
   ifopen: true;
+  pusher: any
 
   constructor(public dialog: MdDialog, public reportServiceService: ReportServiceService) { }
 
@@ -34,5 +37,6 @@ export class NotificationsComponent implements OnInit {
       console.log(this.test)
     })
   }
+
 
 }

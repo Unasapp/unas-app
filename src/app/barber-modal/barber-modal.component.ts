@@ -1,5 +1,7 @@
 import { Component, OnInit, Input, Inject } from '@angular/core';
 import { MdDialog, MdDialogRef, MD_DIALOG_DATA } from '@angular/material';
+import { ReportServiceService } from '../report-service.service';
+import { HomeComponent } from '../home/home.component'
 
 @Component({
   selector: 'app-barber-modal',
@@ -15,11 +17,13 @@ export class BarberModalComponent implements OnInit {
   per: any;
   hourly: any;
   commission: any;
-  
+
 
   constructor(
     public dialogRef: MdDialogRef<BarberModalComponent>,
-    @Inject(MD_DIALOG_DATA) public data: any
+    @Inject(MD_DIALOG_DATA) public data: any,
+    private service: ReportServiceService,
+    // public home: HomeComponent
   ) {
 
    }
@@ -28,7 +32,7 @@ export class BarberModalComponent implements OnInit {
     if(this.payType == 'Hourly'){
       console.log('Hourly Changed',this.hourly);
       this.selectedBarber.type = 'hourly'
-      this.selectedBarber.rate = this.hourly + '/hr'
+      this.selectedBarber.rate = '$' + this.hourly + '/hr'
     }
     else if(this.payType == 'Commission'){
       console.log('Commsision Changes',this.commission);
@@ -38,22 +42,32 @@ export class BarberModalComponent implements OnInit {
     else if(this.payType == 'Booth_Rent'){
       console.log('Booth Rent Changed',this.rent,this.per);
       this.selectedBarber.type = 'booth rent'
-      this.selectedBarber.rate = '$' + this.rent + this.per 
+      this.selectedBarber.rate = '$' + this.rent + this.per
     }
 
     console.log('-- Changes done to selected Barber ---', this.selectedBarber);
-    // Make API CALL here to edit baber ---- ====
-    // Make API CALL here to edit baber ---- ====
-    // Make API CALL here to edit baber ---- ====
-    // Make API CALL here to edit baber ---- ====
-    // Make API CALL here to edit baber ---- ====
+    this.service.editBarberPay(this.selectedBarber).subscribe(data =>{
+      console.log('result data', data)
+      this.selectedBarber = data
+    })
     this.dialogRef.close()
    }
 
     exit(){
       this.dialogRef.close()
     }
-    
+
+    deleteBarber() {
+      this.service.deleteBarber(this.selectedBarber).subscribe(data => {
+        if (!data.fail) {
+          alert(data.msg);
+          this.dialogRef.close(this.selectedBarber.b_id)
+        } else {
+          alert(data.fail)
+          this.dialogRef.close()
+        }
+      })
+    }
 
   ngOnInit() {
     this.selectedBarber = this.data;
@@ -71,10 +85,10 @@ export class BarberModalComponent implements OnInit {
     else{
       this.payType = 'Booth_Rent'
       this.rent = this.selectedBarber.rate.split('/')[0].replace('$','')
-      this.per = '/' + this.selectedBarber.rate.split('/')[1] 
+      this.per = '/' + this.selectedBarber.rate.split('/')[1]
       console.log('Paytype chosen-->>',this.payType,this.rent,this.per);
     }
-    
+
   }
 
 }

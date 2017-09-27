@@ -23,6 +23,11 @@
         <i class='ion-calendar icon-size' ></i>
       </button>
   </div>
+  <div>
+    <button md-icon-button (click)='openReportDialog()'>
+        <i class='ion-clipboard icon-size' ></i>
+      </button>
+  </div>
 
 </md-toolbar>
 
@@ -36,10 +41,10 @@
       <md-list-item routerLink='/home' class='sidenav-items'> Home </md-list-item>
       <md-list-item routerLink='/cal' class='sidenav-items'> Calendar </md-list-item>
       <md-list-item routerLink='/contacts' class='sidenav-items'> Contacts </md-list-item>
-      <md-list-item routerLink='/allbarbers' class='sidenav-items'> Barber Profiles </md-list-item>
+      <!-- <md-list-item routerLink='/allbarbers' class='sidenav-items'> Barber Profiles </md-list-item> -->
       <md-list-item routerLink='/reports' class='sidenav-items'> Reports </md-list-item>
-      <md-list-item routerLink='/notifications' class='sidenav-items'> Notifications </md-list-item>
-      <md-list-item routerLink='/settings' class='sidenav-items'> Settings </md-list-item>
+      <!-- <md-list-item routerLink='/notifications' class='sidenav-items'> Notifications </md-list-item> -->
+      <!-- <md-list-item routerLink='/settings' class='sidenav-items'> Settings </md-list-item> -->
       <md-list-item (click)="auth.logout()" class='sidenav-items'> Logout </md-list-item>
     </md-list>
   </md-sidenav>
@@ -65,7 +70,7 @@
 
           <md-list-item *ngFor='let x of report'>
             <div class='view-reports'>
-              <p class='box-reports'> {{x.date }} </p>
+              <p class='box-reports'> {{x.start_time }} </p>
               <p class='box-reports'> {{ x.b_first }} {{ x.b_last }} </p>
               <p class='box-reports'> {{ x.c_first }} {{ x.c_last }} </p>
               <p class='box-reports'> {{ x.service }} </p>
@@ -93,10 +98,10 @@
           </md-list-item>
 
           <md-list-item *ngFor='let y of timecards'>
-            <div class='view-reports'>
+            <div class='view-reports' id ="myId" #myId>
               <p class='box-reports'> {{ y.b_first }} {{ y.b_last }} </p>
-              <p class='box-reports'> {{ y.in }} </p>
-              <p class='box-reports'> {{ y.out }} </p>
+              <p class='box-reports'> {{ y.time_in }} </p>
+              <p class='box-reports'> {{ y.time_out }} </p>
             </div>
           </md-list-item>
         </div>
@@ -142,9 +147,9 @@
           </md-list-item>
         </div>
       </md-list>
-
     </md-tab>
-    <md-tab label="Product">
+    
+    <!-- <md-tab label="Product">
       <div class='product-header'>
         <button class='newbtn' md-button (click)='openNewProduct()'>
               <i class='ion-plus-round' ></i> New Product
@@ -179,32 +184,8 @@
           </md-list-item>
         </div>
       </md-list>
-    </md-tab>
+    </md-tab> -->
   </md-tab-group>
-  <div class="center-div">
-    <div class="panel panel-primary">
-      <div class="panel-heading">
-        <h3 class="panel-title">Sign up</h3>
-      </div>
-      <div class="panel-body">
-        <form>
-          <div class="form-group">
-            <label for="inputEmail" class="control-label">Email id</label>
-            <input type="text" class="form-control" id="inputEmail" placeholder="Email Id" [(ngModel)]="newUser.username" name='username'>
-          </div>
-          <div class="form-group">
-            <label for="inputPassword" class="control-label">Password</label>
-            <input type="password" class="form-control" id="inputPassword" placeholder="password" [(ngModel)]="newUser.password" name='password'>
-
-          </div>
-          <div class="form-group">
-            <button type="button" class="btn btn-raised btn-primary" (click)="addUser()">Sign up</button>
-          </div>
-        </form>
-      </div>
-    </div>
-  </div>
-
 
 
 

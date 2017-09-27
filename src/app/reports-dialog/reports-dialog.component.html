@@ -1,0 +1,21 @@
+<div class="center-div">
+  <div class="panel panel-primary">
+    <div class="panel-heading">
+      <h3 class="panel-title">Send A Report</h3>
+    </div>
+    <div class="panel-body">
+      <form>
+        <div class="form-group">
+          <label for="inputEmail" class="control-label">Send To: </label>
+          <input type="text" class="form-control" id="inputEmail" placeholder="Email" [(ngModel)]="newUser.username" name='username'>
+        </div>
+        <div class="form-group">
+          <button type="button" class="btn btn-raised btn-primary" (click)="addUser()">Send</button>
+        </div>
+        <div class="form-group">
+          <button type="button" class="btn btn-raised btn-primary" (click)="onCloseCancel()">Cancel</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

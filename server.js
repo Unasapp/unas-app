@@ -1,5 +1,4 @@
 const express = require('express'),
-      path = require('path')
       session = require('express-session'),
       bodyParser = require('body-parser'),
       massive = require('massive'),
@@ -7,12 +6,16 @@ const express = require('express'),
       Auth0Strategy = require('passport-auth0'),
       config = require('./config.js'),
       cors = require('cors'),
+      path = require('path'),
       http = require('http'),
+      app = module.exports = express(),
+      server = http.createServer(app),
       nodemailer = require('nodemailer'),
-      email = require('emailjs/email');
+      email = require('emailjs/email'),
+      io = require('socket.io')(server);
 
 
-const app = module.exports = express();
+server.listen( 4200, ()=> {console.log('Connected on 4200')})
 
 app.use(bodyParser.json());
 app.use(session({
@@ -23,15 +26,23 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
+
 app.use(express.static(__dirname + '/dist'));
+app.get('*', function(req, res) {
+  res.sendFile(path.join(__dirname, '/dist', 'index.html'))
+});
+
 app.get('*', function(req, res){
   res.sendFile(path.join(__dirname, '/dist', 'index.html'))
- });
+});
 
-// app.post('/sendmail', sendmail());
 
-// console.log(__dirname);
-// console.log(__dirname + '/dist/index.html');
+io.on('connection', function (socket) {
+  socket.emit('news', { hello: 'world' });
+  socket.on('my other event', function (data) {
+    console.log(data);
+  });
+});
 
 /////////////
 // DATABASE //
@@ -40,10 +51,31 @@ app.get('*', function(req, res){
 massive("postgres://uunjpeyj:yVNsIpBpaTMB_a2TXEss-Gmq1DGSIOte@pellefant.db.elephantsql.com:5432/uunjpeyj").then(massiveInstance => {
   app.set('db', massiveInstance);
   const db = app.get('db');
-  var info
+
+  app.post('/api/add-user', (req, res) => {
+    newUser = [
+      req.body.firstName,
+      req.body.lastName,
+      req.body.email,
+      req.body.password,
+      req.body.shopOwner ? "admin" : "user"
+    ]
+    db.add_user(newUser, (err, user) => {
+      console.log(err)})
+      .then((user) => {res.send(user)},
+            (error) => {res.send({fail:'That email address is already in use!'})
+    })
+  })
+
+  app.post('/api/login', (req, res)=> {
+    credentials = [req.body.email, req.body.password]
+    db.login(credentials, (err, user)=> {
+      console.log(err);
+    }).then((user) => {res.send(user)})
+  })
 
   app.get('/api/test', (req, res) => {
-    console.log('in test api',req)
+    console.log('in test api', req)
     db.test_end((err, users) => {}).then(users => res.send(users))
   })
 
@@ -54,11 +86,11 @@ massive("postgres://uunjpeyj:yVNsIpBpaTMB_a2TXEss-Gmq1DGSIOte@pellefant.db.eleph
   })
 
   app.post('/api/timecards', (req, res) => {
-    console.log('getting timecards',req.body.id)
-    db.timecards(req.body.id, (err, cards) => {}).then(cards =>{ 
+    console.log('getting timecards', req.body.id)
+    db.timecards(req.body.id, (err, cards) => {}).then(cards => {
       res.send(cards)
       info = cards
-      console.log('info ---',info)
+      console.log('info ---', info)
       return info
     })
   })
@@ -75,26 +107,66 @@ massive("postgres://uunjpeyj:yVNsIpBpaTMB_a2TXEss-Gmq1DGSIOte@pellefant.db.eleph
     db.get_barbers(req.body.id, (err, contacts) => {}).then(contacts => res.send(contacts))
   })
 
+  app.post('/api/edit-barber-pay', (req, res)=> {
+    let changes = [
+      req.body.type,
+      req.body.rate,
+      req.body.b_id
+    ]
+    console.log(changes);
+    db.edit_barber_pay(changes, (err, changed)=> {console.log(err);}).then(changed => res.send(changed))
+  })
+
+  app.post('/api/delete/barber', (req, res)=> {
+    console.log(req.body);
+    db.delete_barber(req.body.id, (err, barber)=> {console.log(err);}).then(
+      (pass) => {res.send({msg:"Success!"})},
+      (fail) => {res.send({fail: "An error occurred."})})
+  })
+
   app.post('/api/services', (req, res) => {
     db.get_services(req.body.id, (err, contacts) => {}).then(contacts => res.send(contacts))
   })
 
   app.post('/api/add-contact', (req, res) => {
-    let contact = [req.body.firstname, req.body.lastname, req.body.phonenumber, req.body.email, 1]
+    let contact = [
+      req.body.c_first,
+      req.body.c_last,
+      req.body.c_phone,
+      req.body.c_email,
+      req.body.b_day,
+      req.body.c_shop
+    ]
     db.add_contact(contact, (err, contacts) => {
       console.log(err, contacts);
-    }).then(contacts => res.send(contacts))
+    }).then((contact) => {res.send(contact)},
+            (fail) => {res.send({fail:"An error occurred"})})
+  })
+
+  app.post('/api/edit-contact', (req, res)=> {
+    let contact = [
+      req.body.c_first,
+      req.body.c_last,
+      req.body.c_phone,
+      req.body.c_email,
+      req.body.b_day,
+      req.body.c_id
+    ]
+    db.edit_contact(contact, (err, newContact)=> {console.log(err);})
+    .then((newContact)=> {res.send(newContact)},
+          (fail)=> {res.send({fail:"An error occurred"})})
   })
 
   app.post('/api/delete-contact', (req, res) => {
     console.log('server', req.body);
-    db.delete_contact(req.body, (err, contacts) => {
+    db.delete_contact(req.body.c_id, (err, contacts) => {
       console.log("db", err, contacts);
-    }).then(contacts => res.send(contacts))
+    }).then(contacts => res.send({msg:"Success"}),
+            fail => res.send({msg:"An error occurred"}))
   })
 
   app.post('/api/add-appt', (req, res) => {
-    console.log('--adding appts--',req.body)
+    console.log('--adding appts--', req.body)
     let array = [
       req.body.barber_id,
       req.body.client_id,
@@ -105,22 +177,19 @@ massive("postgres://uunjpeyj:yVNsIpBpaTMB_a2TXEss-Gmq1DGSIOte@pellefant.db.eleph
     ]
     db.add_appt(array, (err, info) => {
       console.log('db', err, info)
-    }).then(info => res.send(info)) 
+    }).then(info => res.send(info))
   })
 
-  app.post('/api/cal/delete',(req, res)=>{
-    let array = [
-      req.body.a_id,
-      req.body.shop_id
-    ]
-    console.log('---deleteing appt from DB---',array)
-    db.delete_appt(array, (err,info)=>{
+  app.post('/api/cal/delete', (req, res) => {
+    let array = [req.body.a_id, req.body.shop_id]
+    console.log('---deleteing appt from DB---', array)
+    db.delete_appt(array, (err, info) => {
       console.log('db', err, info)
     }).then(info => res.send(info))
   })
-  
-  app.post('/api/cal/edit',(req,res)=>{
-    console.log('--editing appts--',req.body)
+
+  app.post('/api/cal/edit', (req, res) => {
+    console.log('--editing appts--', req.body)
     let array = [
       req.body.dataID,
       req.body.barber_id,
@@ -132,17 +201,21 @@ massive("postgres://uunjpeyj:yVNsIpBpaTMB_a2TXEss-Gmq1DGSIOte@pellefant.db.eleph
     ]
     db.edit_appt(array, (err, info) => {
       console.log('db', err, info)
-    }).then(info => res.send(info)) 
+    }).then(info => res.send(info))
   })
 
   app.post('/api/cal', (req, res) => {
     db.get_cal_events(req.body.id, (err, events) => {
       console.log('db', err, events);
     }).then(info => res.send(info))
-  })
+  });
 
+
+  // NODE MAILER-----------------///
+  // ---------------------------------
+
+  var info
   app.post('/sendmail', (req, res)=> {
-    
       var startEmail = `
       <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
       <html xmlns="http://www.w3.org/1999/xhtml">
@@ -174,65 +247,61 @@ massive("postgres://uunjpeyj:yVNsIpBpaTMB_a2TXEss-Gmq1DGSIOte@pellefant.db.eleph
           <th>Time In</th>
           <th>Time Out</th>
         </tr>`;
-      var emailTmp
+    var emailTmp
 
-      var getStuff = function(){
-        emailTmp = info.reduce(function(a,b){
-          return a + '<tr><td>' + b.b_first + ' ' + b.b_last + '</td><td>' + b.in + '</td><td>' + b.out + '</td></tr>';
-        }, '');
-        console.log('here is email Tmp',emailTmp)
+    var getStuff = function() {
+      emailTmp = info.reduce(function(a, b) {
+        return a + '<tr><td>' + b.b_first + ' ' + b.b_last + '</td><td>' + b. in + '</td><td>' + b.out + '</td></tr>';
+      }, '');
+      console.log('here is email Tmp', emailTmp)
 
-        var server = email.server.connect({user: "ac12491@gmail.com", password: "W0rkhard!", host: "smtp.gmail.com", port: 465, ssl: true});
-        console.log('email server connected');
-        console.log(req.body);
-        // send the message and get a callback with an error or details of the message that was sent
-        server.send({
-          text: "",
-          from: "hairBy.com",
-          to: 'ac12491@gmail.com',
-          subject: "Daily Report from hairBy!",
-          attachment:
-         [
-            {data:`${startEmail}${emailTmp}</table></body></html>`, alternative:true}
-         ]
-        }, function(err, message) {
-          if (err)
-            console.log(err);
-          else
-            res.json({success: true, msg: 'sent'});
+      var server = email.server.connect({user: "ac12491@gmail.com", password: "W0rkhard!", host: "smtp.gmail.com", port: 465, ssl: true});
+      console.log('email server connected');
+      console.log(req.body);
+      // send the message and get a callback with an error or details of the message that was sent
+      server.send({
+        text: "",
+        from: "hairBy.com",
+        to: req.body.email,
+        subject: "Daily Report from hairBy!",
+        attachment: [
+          {
+            data: `${startEmail}${emailTmp}</table></body></html>`,
+            alternative: true
           }
-        );
-        console.log('made it');
-        return emailTmp
-      }
-      getStuff()
-    
-    })
+        ]
+      }, function(err, message) {
+        if (err)
+          console.log(err);
+        else
+          res.json({success: true, msg: 'sent'});
+        }
+      );
+      console.log('made it');
+      return emailTmp
+    }
+    getStuff()
+
+  })
 
 });
 
 
-const server = http.createServer(app);
-server.listen(4200, () => {
-  console.log('Connected on 4200')
-})
-
-
-// var results = [ { 
+// var results = [ {
 //   asin: 'B01571L1Z4',
 //   url: 'domain.com',
 //   favourite: false,
 //   createdAt: '2016-11-18T19:08:41.662Z',
 //   updatedAt: '2016-11-18T19:08:41.662Z',
-//   id: '582f51b94581a7f21a884f40' 
+//   id: '582f51b94581a7f21a884f40'
 // },
-// { 
+// {
 //   asin: 'B01IM0K0R2',
 //   url: 'domain2.com',
 //   favourite: false,
 //   createdAt: '2016-11-16T17:56:21.696Z',
 //   updatedAt: '2016-11-16T17:56:21.696Z',
-//   id: 'B01IM0K0R2' 
+//   id: 'B01IM0K0R2'
 //  }];
 
 // var content = results.reduce(function(a, b) {

@@ -7,7 +7,7 @@ import { FormsModule } from '@angular/forms';
 import { AuthService } from './auth/auth.service';
 import { CommonModule } from '@angular/common';
 import { CalendarModule } from "ap-angular2-fullcalendar";
-import { ChartModule } from 'angular2-chartjs';
+import { ChartsModule } from 'ng2-charts';
 import {
     MdSidenavModule,
     MdToolbarModule,
@@ -46,6 +46,8 @@ import { ReportServiceService } from './report-service.service';
 import { BarberModalComponent } from './barber-modal/barber-modal.component';
 import { ProductDialogComponent } from './product-dialog/product-dialog.component';
 import { LoginModelComponent } from './login-model/login-model.component';
+import { ReportsDialogComponent } from './reports-dialog/reports-dialog.component';
+
 
 @NgModule({
   declarations: [
@@ -65,7 +67,8 @@ import { LoginModelComponent } from './login-model/login-model.component';
     BarberDetailsComponent,
     ProductDialogComponent,
     BarberModalComponent,
-    LoginModelComponent
+    LoginModelComponent,
+    ReportsDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -93,7 +96,7 @@ import { LoginModelComponent } from './login-model/login-model.component';
     MdNativeDateModule,
     MdSliderModule,
     MdSlideToggleModule,
-    ChartModule
+    ChartsModule
   ],
   entryComponents: [
     ContactsdialogComponent,
@@ -102,7 +105,8 @@ import { LoginModelComponent } from './login-model/login-model.component';
     BarberModalComponent,
     ProductDialogComponent,
     BarberModalComponent,
-    LoginModelComponent
+    LoginModelComponent,
+    ReportsDialogComponent
   ],
   providers: [AuthService, ReportServiceService],
   bootstrap: [AppComponent]

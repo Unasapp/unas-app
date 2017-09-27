@@ -1,4 +1,4 @@
-import { Component, OnInit, Injectable } from '@angular/core';
+import { Component, OnInit, Injectable, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
 import * as moment from 'moment';
 import { MdDialog, MdDialogRef } from '@angular/material';
 import { CashoutdialogComponent } from '../cashoutdialog/cashoutdialog.component';
@@ -6,6 +6,7 @@ import { ApptdialogComponent } from '../apptdialog/apptdialog.component';
 import { ProductDialogComponent } from '../product-dialog/product-dialog.component';
 import { ReportServiceService } from '../report-service.service';
 import { Http, Headers } from '@angular/http';
+import { ReportsDialogComponent } from '../reports-dialog/reports-dialog.component';
 
 @Injectable()
 @Component({
@@ -16,32 +17,8 @@ import { Http, Headers } from '@angular/http';
 export class ReportsComponent implements OnInit {
 
   cashResult: any;
-  newUser = {
-    email: '',
-    password: ''
-  };
 
   constructor(private http: Http, public dialog: MdDialog, public reportServiceService: ReportServiceService) { }
-
-  addNew(usercreds) {
-    console.log('inside addnew')
-    var headers = new Headers();
-    var creds = 'name=' + usercreds.username + '&password=' + usercreds.password;
-    var eObject = { email: usercreds.username,
-                    headers: headers };
-    headers.append('Content-Type', 'application/X-www-form-urlencoded');
-    console.log('before sendmail')
-    return this.http.post('/sendmail', eObject).subscribe((data) => {
-      if (data.json().success) {
-        console.log('Sent successfully');
-      }
-    })
-  }
-
-  addUser() {
-    console.log('add user function')
-    this.addNew(this.newUser);
-  }
 
   openNewProduct() {
     let dialogRef = this.dialog.open(ProductDialogComponent, {
@@ -94,6 +71,13 @@ export class ReportsComponent implements OnInit {
   openApptDialog() {
     let dialogRef = this.dialog.open(ApptdialogComponent, {
       width: '600px',
+      data: 'this text is passed'
+    })
+  }
+
+  openReportDialog() {
+    let dialogRef = this.dialog.open(ReportsDialogComponent, {
+      width: 'auto',
       data: 'this text is passed'
     })
   }
@@ -274,17 +258,17 @@ export class ReportsComponent implements OnInit {
   trans: any
   ngOnInit() {
     console.log('reports loaded')
-    this.reportServiceService.getShopTrans({ id: 1 }).subscribe(trans => {
+    this.reportServiceService.getShopTrans({ id:JSON.parse(localStorage.getItem('profile'))[0].shop_id }).subscribe(trans => {
       for (let i = 0; i < trans.length; i++) {
-        trans[i].date = moment(trans[i].date).format('M-D-YY')
+        trans[i].start_time = moment(trans[i].start_time).format('l LT')
       }
       console.log(trans)
       this.report = trans
     })
-    this.reportServiceService.getTimecards({ id: 1 }).subscribe(cards => {
+    this.reportServiceService.getTimecards({ id: JSON.parse(localStorage.getItem('profile'))[0].shop_id }).subscribe(cards => {
       for (let i = 0; i < cards.length; i++) {
-        cards[i].in = moment(cards[i].in).format('LLLL')
-        cards[i].out = moment(cards[i].out).format('LLLL')
+        cards[i].time_in = moment(cards[i].time_in).format('LLLL')
+        cards[i].time_out = moment(cards[i].time_out).format('LLLL')
 
       }
       console.log(cards)
