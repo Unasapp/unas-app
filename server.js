@@ -28,10 +28,9 @@ app.use(passport.session());
 
 
 app.use(express.static(__dirname + '/dist'));
-app.get('*', function(req, res){
+app.get('*', function(req, res) {
   res.sendFile(path.join(__dirname, '/dist', 'index.html'))
- });
-
+});
 
 app.get('*', function(req, res){
   res.sendFile(path.join(__dirname, '/dist', 'index.html'))
@@ -76,7 +75,7 @@ massive("postgres://uunjpeyj:yVNsIpBpaTMB_a2TXEss-Gmq1DGSIOte@pellefant.db.eleph
   })
 
   app.get('/api/test', (req, res) => {
-    console.log('in test api',req)
+    console.log('in test api', req)
     db.test_end((err, users) => {}).then(users => res.send(users))
   })
 
@@ -87,11 +86,11 @@ massive("postgres://uunjpeyj:yVNsIpBpaTMB_a2TXEss-Gmq1DGSIOte@pellefant.db.eleph
   })
 
   app.post('/api/timecards', (req, res) => {
-    console.log('getting timecards',req.body.id)
-    db.timecards(req.body.id, (err, cards) => {}).then(cards =>{
+    console.log('getting timecards', req.body.id)
+    db.timecards(req.body.id, (err, cards) => {}).then(cards => {
       res.send(cards)
       info = cards
-      console.log('info ---',info)
+      console.log('info ---', info)
       return info
     })
   })
@@ -167,7 +166,7 @@ massive("postgres://uunjpeyj:yVNsIpBpaTMB_a2TXEss-Gmq1DGSIOte@pellefant.db.eleph
   })
 
   app.post('/api/add-appt', (req, res) => {
-    console.log('--adding appts--',req.body)
+    console.log('--adding appts--', req.body)
     let array = [
       req.body.barber_id,
       req.body.client_id,
@@ -181,19 +180,16 @@ massive("postgres://uunjpeyj:yVNsIpBpaTMB_a2TXEss-Gmq1DGSIOte@pellefant.db.eleph
     }).then(info => res.send(info))
   })
 
-  app.post('/api/cal/delete',(req, res)=>{
-    let array = [
-      req.body.a_id,
-      req.body.shop_id
-    ]
-    console.log('---deleteing appt from DB---',array)
-    db.delete_appt(array, (err,info)=>{
+  app.post('/api/cal/delete', (req, res) => {
+    let array = [req.body.a_id, req.body.shop_id]
+    console.log('---deleteing appt from DB---', array)
+    db.delete_appt(array, (err, info) => {
       console.log('db', err, info)
     }).then(info => res.send(info))
   })
 
-  app.post('/api/cal/edit',(req,res)=>{
-    console.log('--editing appts--',req.body)
+  app.post('/api/cal/edit', (req, res) => {
+    console.log('--editing appts--', req.body)
     let array = [
       req.body.dataID,
       req.body.barber_id,
@@ -212,7 +208,7 @@ massive("postgres://uunjpeyj:yVNsIpBpaTMB_a2TXEss-Gmq1DGSIOte@pellefant.db.eleph
     db.get_cal_events(req.body.id, (err, events) => {
       console.log('db', err, events);
     }).then(info => res.send(info))
-  })
+  });
 
 
   // NODE MAILER-----------------///
@@ -251,43 +247,44 @@ massive("postgres://uunjpeyj:yVNsIpBpaTMB_a2TXEss-Gmq1DGSIOte@pellefant.db.eleph
           <th>Time In</th>
           <th>Time Out</th>
         </tr>`;
-      var emailTmp
+    var emailTmp
 
-      var getStuff = function(){
-        emailTmp = info.reduce(function(a,b){
-          return a + '<tr><td>' + b.b_first + ' ' + b.b_last + '</td><td>' + b.time_in + '</td><td>' + b.time_out + '</td></tr>';
-        }, '');
-        console.log('here is email Tmp',emailTmp)
+    var getStuff = function() {
+      emailTmp = info.reduce(function(a, b) {
+        return a + '<tr><td>' + b.b_first + ' ' + b.b_last + '</td><td>' + b. in + '</td><td>' + b.out + '</td></tr>';
+      }, '');
+      console.log('here is email Tmp', emailTmp)
 
-        var server = email.server.connect({user: "ac12491@gmail.com", password: "W0rkhard!", host: "smtp.gmail.com", port: 465, ssl: true});
-        console.log('email server connected');
-        console.log(req.body);
-        // send the message and get a callback with an error or details of the message that was sent
-        server.send({
-          text: "",
-          from: "hairBy.com",
-          to: 'ac12491@gmail.com',
-          subject: "Daily Report from hairBy!",
-          attachment:
-         [
-            {data:`${startEmail}${emailTmp}</table></body></html>`, alternative:true}
-         ]
-        }, function(err, message) {
-          if (err)
-            console.log(err);
-          else
-            res.json({success: true, msg: 'sent'});
+      var server = email.server.connect({user: "ac12491@gmail.com", password: "W0rkhard!", host: "smtp.gmail.com", port: 465, ssl: true});
+      console.log('email server connected');
+      console.log(req.body);
+      // send the message and get a callback with an error or details of the message that was sent
+      server.send({
+        text: "",
+        from: "hairBy.com",
+        to: req.body.email,
+        subject: "Daily Report from hairBy!",
+        attachment: [
+          {
+            data: `${startEmail}${emailTmp}</table></body></html>`,
+            alternative: true
           }
-        );
-        console.log('made it');
-        return emailTmp
-      }
-      getStuff()
+        ]
+      }, function(err, message) {
+        if (err)
+          console.log(err);
+        else
+          res.json({success: true, msg: 'sent'});
+        }
+      );
+      console.log('made it');
+      return emailTmp
+    }
+    getStuff()
 
-    })
+  })
 
 });
-
 
 
 // var results = [ {

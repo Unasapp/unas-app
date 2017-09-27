@@ -16,26 +16,43 @@ import * as io from 'socket.io-client'
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
-   profile: any;
-   barbers: any;
-   ifopen: true;
-   socket = io('http://localhost:4200');
 
-  type = 'radar';
-  data = {
-    labels: ["January", "February", "March", "April", "May", "June", "July"],
-    datasets: [
-      {
-        label: "My First dataset",
-        backgroundColor: ["red", "blue", "green", "blue", "red", "blue"],
-        data: [65, 59, 80, 81, 56, 55, 40]
-      }
-    ]
-  };
-  options = {
-    responsive: true,
-    maintainAspectRatio: false
-  };
+
+  public doughnutChartLabels:string[] = ['Wages', 'Tips'];
+  public doughnutChartData:number[] = [450, 220];
+  public doughnutChartType:string = 'doughnut';
+
+  // events
+
+  public lineChartData:Array<any> = [
+    [65, 59, 80, 81, 56, 55, 40],
+    [28, 48, 40, 19, 86, 27, 90]
+  ];
+  public lineChartLabels:Array<any> = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
+  public lineChartType:string = 'line';
+  public pieChartType:string = 'pie';
+
+  // Pie
+  public pieChartLabels:string[] = ['Download Sales', 'In-Store Sales', 'Mail Sales'];
+  public pieChartData:number[] = [300, 500, 100];
+
+  public randomizeType():void {
+    this.lineChartType = this.lineChartType === 'line' ? 'bar' : 'line';
+    this.pieChartType = this.pieChartType === 'doughnut' ? 'pie' : 'doughnut';
+  }
+
+  public chartClicked(e:any):void {
+    console.log(e);
+  }
+
+  public chartHovered(e:any):void {
+    console.log(e);
+  }
+
+
+  profile: any;
+  barbers: any;
+  ifopen: true;
 
 
   constructor(private http: HttpClient, public dialog: MdDialog, public auth: AuthService, private service: ReportServiceService) {
@@ -67,20 +84,18 @@ export class HomeComponent implements OnInit {
     })
   }
 
-
-
   ngOnInit() {
     //   this.http.get('https://penguinhousedesigns.auth0.com/userinfo').subscribe((res)=>{
     //   console.log('this is user data',res);
     // })
 
-    this.socket.emit('my other event', { my: 'data' });
-    console.log(this.socket)
-    this.socket.on('news', function (data) {
-      console.log(data);
-      console.log(this.socket);
-
-    });
+    // this.socket.emit('my other event', { my: 'data' });
+    // console.log(this.socket)
+    // this.socket.on('news', function (data) {
+    //   console.log(data);
+    //   console.log(this.socket);
+    //
+    // });
     console.log(JSON.parse(localStorage.getItem('profile'))[0].shop_id)
     this.service.getBarbers({id:JSON.parse(localStorage.getItem('profile'))[0].shop_id}).subscribe((data) => {
       console.log('getting barber data',data);

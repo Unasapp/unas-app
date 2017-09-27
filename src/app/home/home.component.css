@@ -120,7 +120,7 @@ time.icon span
 
 .card-layout{
   width: 25%;
-  height: 250px;
+  height: auto;
   text-align: center;
 
 }
