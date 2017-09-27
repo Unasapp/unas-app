@@ -47,7 +47,7 @@
 .box-reports-earn{
     display: flex;
     align-items: center;
-    justify-content: center; 
+    justify-content: center;
     flex-direction: column;
     flex: 1;
     padding: 10px;
@@ -58,7 +58,7 @@
     justify-content: space-between;
     width: 100%;
     border-top: 1px solid grey;
-    align-items: center; 
+    align-items: center;
     margin-top: 50px;
     /* height: 100px;  */
 }
@@ -73,14 +73,14 @@
 
 .product-header{
     margin-left: 5%;
-    width: 90%; 
+    width: 90%;
     display: flex;
     justify-content: flex-end;
-    padding-top: 10px; 
+    padding-top: 10px;
 }
 
 .newbtn{
     font-size: 14px;
     display: inline-flex;
-    align-items: center; 
+    align-items: center;
 }

@@ -1,39 +1,39 @@
 
 <div>
-  <h2 md-dialog-title >New Contact</h2>
+  <h2 md-dialog-title >{{modalText.title}} Contact</h2>
   <hr>
   <md-dialog-content>
-<form class="example-form">
-  <table class="example-full-width" cellspacing="0"><tr>
-    <td><md-input-container class="example-full-width">
-      <input mdInput placeholder="First name" name=firstname [(ngModel)]='firstname'>
+<form>
+  <table cellspacing="0"><tr>
+    <td><md-input-container>
+      <input mdInput placeholder="First name" name=firstname [(ngModel)]='selectedContact.c_first'>
     </md-input-container></td>
-    <td><md-input-container class="example-full-width">
-      <input mdInput placeholder="Last Name" name=lastname [(ngModel)]='lastname'>
+    <td><md-input-container>
+      <input mdInput placeholder="Last Name" name=lastname [(ngModel)]='selectedContact.c_last'>
     </md-input-container></td>
   </tr></table>
 
   <p>
-    <md-input-container class="example-full-width">
-      <input mdInput placeholder="Phone Number" name=phonenumber [(ngModel)]='phonenumber'>
+    <md-input-container>
+      <input mdInput placeholder="Phone Number" name=phonenumber [(ngModel)]='selectedContact.c_phone'>
     </md-input-container>
-    <md-input-container class="example-full-width">
-      <input mdInput placeholder="Email" name=email [(ngModel)]='email'>
+    <md-input-container>
+      <input mdInput placeholder="Email" name=email [(ngModel)]='selectedContact.c_email'>
     </md-input-container>
   </p>
   <table>
       <tr>
           <td>
               <md-input-container>
-                  <input mdInput placeholder="Birthday" name=bday [(ngModel)]='bday'>
+                  <input mdInput placeholder="Birthdate" name=bday [(ngModel)]='selectedContact.b_day'>
               </md-input-container>
           </td>
-      </tr>    
+      </tr>
       <tr>
           <td>
-            ** Format Example: 2-14-92 
+            ** Format Example: 2-14-92
           </td>
-      </tr>    
+      </tr>
   </table>
 
 </form>
@@ -42,9 +42,12 @@
 
   </md-dialog-content>
 
-  <md-dialog-actions>
-    <button md-raised-button (click)='onCloseConfirm(firstname, lastname, phonenumber, email, bday)' > Add </button>
-    <button md-raised-button (click)='onCloseCancel()' > Cancel </button>
+  <md-dialog-actions style="display:flex; justify-content: space-between;">
+    <div>
+      <button md-raised-button color="lightgreen" (click)='onCloseConfirm(selectedContact)' > {{modalText.button}} </button>
+      <button md-raised-button (click)='onCloseCancel()' > Cancel </button>
+    </div>
+    <button md-raised-button (click)='onDelete(selectedContact)' *ngIf="!data.new" color="warn" > Delete Contact </button>
   </md-dialog-actions>
 
 </div>

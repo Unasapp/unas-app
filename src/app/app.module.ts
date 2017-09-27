@@ -47,6 +47,7 @@ import { BarberModalComponent } from './barber-modal/barber-modal.component';
 import { ProductDialogComponent } from './product-dialog/product-dialog.component';
 import { LoginModelComponent } from './login-model/login-model.component';
 
+
 @NgModule({
   declarations: [
     AppComponent,
