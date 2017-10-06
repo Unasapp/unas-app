@@ -25,6 +25,11 @@ app.use(session({
 }))
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
+});
 
 
 app.use(express.static(__dirname + '/dist'));
@@ -65,6 +70,10 @@ massive("postgres://uunjpeyj:yVNsIpBpaTMB_a2TXEss-Gmq1DGSIOte@pellefant.db.eleph
       .then((user) => {res.send(user)},
             (error) => {res.send({fail:'That email address is already in use!'})
     })
+  })
+
+  app.post('/api/testing1', (req,res)=>{
+    console.log('server side testing');
   })
 
   app.post('/api/login', (req, res)=> {
