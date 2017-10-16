@@ -1,5 +1,7 @@
-delete from
+update
   appointments
+set
+  status = $3
 where
   a_id = $1
 and

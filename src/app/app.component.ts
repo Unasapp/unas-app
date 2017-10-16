@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-// import { ReportServiceService } from '../app/report-service.service'
+import * as io from "socket.io-client";
 
 @Component({
   selector: 'app-root',
@@ -7,5 +7,22 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'app';
+  socket = io();
+
+  ngOnInit() {
+
+    this.socket.on('news', function (data) {
+      alert(data.msg);
+    }.bind(this));
+
+    this.socket.on('delete-request', function (data) {
+      alert(data.msg);
+    }.bind(this));
+
+    this.socket.on('appt-start', function (data) {
+      alert(data.msg);
+    }.bind(this));
+
+  }
+
 }

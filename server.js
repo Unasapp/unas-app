@@ -12,10 +12,10 @@ const express = require('express'),
       server = http.createServer(app),
       nodemailer = require('nodemailer'),
       email = require('emailjs/email'),
-      io = require('socket.io')(server);
-
+      io = require('socket.io').listen(server);
 
 server.listen( 4200, ()=> {console.log('Connected on 4200')})
+
 
 app.use(bodyParser.json());
 app.use(session({
@@ -25,23 +25,33 @@ app.use(session({
 }))
 app.use(passport.initialize());
 app.use(passport.session());
-
+app.use(function (req, res, next) {
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept-Type');
+    res.header('Access-Control-Allow-Credentials', 'true');
+    next();
+})
 
 app.use(express.static(__dirname + '/dist'));
 app.get('*', function(req, res) {
   res.sendFile(path.join(__dirname, '/dist', 'index.html'))
 });
 
-app.get('*', function(req, res){
-  res.sendFile(path.join(__dirname, '/dist', 'index.html'))
-});
-
 
 io.on('connection', function (socket) {
-  socket.emit('news', { hello: 'world' });
+  console.log('user connected');
   socket.on('my other event', function (data) {
     console.log(data);
   });
+
+  socket.on('disconnect', function(){
+    console.log('user disconnected');
+  });
+
+  socket.on('add-message', (message) => {
+    io.emit('message', {type:'new-message', text: message});
+  });
+
 });
 
 /////////////
@@ -74,9 +84,11 @@ massive("postgres://uunjpeyj:yVNsIpBpaTMB_a2TXEss-Gmq1DGSIOte@pellefant.db.eleph
     }).then((user) => {res.send(user)})
   })
 
-  app.get('/api/test', (req, res) => {
-    console.log('in test api', req)
-    db.test_end((err, users) => {}).then(users => res.send(users))
+  app.post('/api/test', (req, res) => {
+    console.log('in test api')
+    io.emit('news', { msg: 'Notified!' })
+    db.test_end((err, users) => {}).then(users => {
+      res.send(users)})
   })
 
   app.get('/api/alltrans', (req, res) => {
@@ -182,10 +194,23 @@ massive("postgres://uunjpeyj:yVNsIpBpaTMB_a2TXEss-Gmq1DGSIOte@pellefant.db.eleph
 
   app.post('/api/cal/delete', (req, res) => {
     let array = [req.body.a_id, req.body.shop_id]
-    console.log('---deleteing appt from DB---', array)
+    console.log('---delete request made---', array)
     db.delete_appt(array, (err, info) => {
       console.log('db', err, info)
-    }).then(info => res.send(info))
+    }).then(info => {
+      res.send(info)
+    })
+  })
+
+  app.post('/api/delete-request', (req, res) => {
+    let array = [req.body.a_id, req.body.shop_id, "delete-request"]
+    console.log('---delete request made---', array)
+    db.delete_appt(array, (err, info) => {
+      console.log('db', err, info)
+    }).then(info => {
+      io.emit('delete-request', { msg: 'A Barber has made a request to cancel an appointment' })
+      res.send(info)
+    })
   })
 
   app.post('/api/cal/edit', (req, res) => {
@@ -209,6 +234,13 @@ massive("postgres://uunjpeyj:yVNsIpBpaTMB_a2TXEss-Gmq1DGSIOte@pellefant.db.eleph
       console.log('db', err, events);
     }).then(info => res.send(info))
   });
+
+  app.post('api/start-appt', (req, res) =>{
+    io.emit('appt-start', { msg: 'A appointment has been started' })
+    db.start_appt(req.body.id, (err, appt) => {
+      console.log('db', err, appt);
+    }).then(info => res.send(info))
+  })
 
 
   // NODE MAILER-----------------///
@@ -251,7 +283,7 @@ massive("postgres://uunjpeyj:yVNsIpBpaTMB_a2TXEss-Gmq1DGSIOte@pellefant.db.eleph
 
     var getStuff = function() {
       emailTmp = info.reduce(function(a, b) {
-        return a + '<tr><td>' + b.b_first + ' ' + b.b_last + '</td><td>' + b. in + '</td><td>' + b.out + '</td></tr>';
+        return a + '<tr><td>' + b.b_first + ' ' + b.b_last + '</td><td>' + b.time_in + '</td><td>' + b.time_out + '</td></tr>';
       }, '');
       console.log('here is email Tmp', emailTmp)
 
@@ -285,6 +317,8 @@ massive("postgres://uunjpeyj:yVNsIpBpaTMB_a2TXEss-Gmq1DGSIOte@pellefant.db.eleph
   })
 
 });
+
+
 
 
 // var results = [ {

@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { MdDialog, MdDialogRef, MD_DIALOG_DATA } from '@angular/material';
-import { AuthService } from '../auth/auth.service';
 import { HomeComponent } from '../home/home.component'
 import { LoginModelComponent } from '../login-model/login-model.component'
 
@@ -14,10 +13,8 @@ import { LoginModelComponent } from '../login-model/login-model.component'
 export class LoginComponent implements OnInit {
   test: any;
 
-  constructor(public auth: AuthService,  public dialog: MdDialog) {
-    if(auth.userProfile){
-      console.log(auth.userProfile);
-    }
+  constructor(public dialog: MdDialog) {
+
    }
 
    openLoginDialog() {
@@ -31,7 +28,7 @@ export class LoginComponent implements OnInit {
 
   ngOnInit() {
     console.log('came back');
-    
+
   }
 
 }

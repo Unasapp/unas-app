@@ -3,7 +3,6 @@ import { HttpClient } from '@angular/common/http';
 import { MdDialog, MdDialogRef, MD_DIALOG_DATA } from '@angular/material';
 import { CashoutdialogComponent } from '../cashoutdialog/cashoutdialog.component';
 import { ApptdialogComponent } from '../apptdialog/apptdialog.component';
-import { AuthService } from '../auth/auth.service';
 import { ChartComponent } from 'angular2-chartjs';
 import { Chart } from 'chart.js';
 import { BarberModalComponent } from '../barber-modal/barber-modal.component'
@@ -55,7 +54,7 @@ export class HomeComponent implements OnInit {
   ifopen: true;
 
 
-  constructor(private http: HttpClient, public dialog: MdDialog, public auth: AuthService, private service: ReportServiceService) {
+  constructor(private http: HttpClient, public dialog: MdDialog, private service: ReportServiceService) {
     this.profile = localStorage.getItem('profile')
     console.log(this.profile);
 
