@@ -41,6 +41,11 @@ export class ReportServiceService {
       .map(res => res.json())
   }
 
+  deleteTrans(id){
+    return this.http.post('/api/delete-trans',id)
+      .map(res => res.json())
+  }
+
   getTimecards(id:any) {
     return this.http.post('/api/timecards', id)
       .map(res => res.json())
