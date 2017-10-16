@@ -25,6 +25,11 @@ app.use(session({
 }))
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
+});
 
 
 app.use(express.static(__dirname + '/dist'));
@@ -74,9 +79,19 @@ massive("postgres://uunjpeyj:yVNsIpBpaTMB_a2TXEss-Gmq1DGSIOte@pellefant.db.eleph
     }).then((user) => {res.send(user)})
   })
 
+  app.post('/api/ionic-login', (req, res)=> {
+    credentials = [req.body.userName, req.body.password]
+    db.login_barber(credentials, (err, user)=> {
+      console.log(err);
+    }).then((user) => {res.send(user)})
+  })
+
   app.get('/api/test', (req, res) => {
+    console.log('-- called test ---');
     console.log('in test api', req)
-    db.test_end((err, users) => {}).then(users => res.send(users))
+    db.test_end((err, users) => {}).then(users => {
+      console.log('-- called test ---',users);
+      res.send(users)})
   })
 
   app.get('/api/alltrans', (req, res) => {
@@ -95,16 +110,69 @@ massive("postgres://uunjpeyj:yVNsIpBpaTMB_a2TXEss-Gmq1DGSIOte@pellefant.db.eleph
     })
   })
 
+  app.post('/api/post-timecards', (req, res)=> {
+    console.log('here is the timecards', req.body);
+
+    let newTimecard = [
+      req.body.barberId,
+      req.body.timeIn,
+      req.body.timeOut,
+      req.body.shopId
+    ]
+
+    db.post_timecards(newTimecard, (err, info)=> {
+      console.log('-- timecard added to server --',err,info);
+    }).then(info => res.send(info))
+  })
+
   app.post('/api/shop-trans', (req, res) => {
     db.shop_trans(req.body.id, (err, trans) => {}).then(trans => res.send(trans))
   })
 
+  app.post('/api/delete-trans', (req, res) =>{
+    console.log('-- deleting appt --',[req.body.id,"deleted"])
+    db.shop_deletedtrans([req.body.id,"deleted"], (err, trans) => {}).then(trans =>{
+      console.log('done deleting')
+       res.send(trans)
+      })
+  })
+
   app.post('/api/contacts', (req, res) => {
-    db.getAllContacts(req.body.id, (err, contacts) => {}).then(contacts => res.send(contacts))
+      console.log('this has worked')
+    db.getAllContacts(req.body.id, (err, contacts) => {}).then((contacts) => {
+      console.log('this has worked')
+      res.send(contacts)
+    })
   })
 
   app.post('/api/barbers', (req, res) => {
     db.get_barbers(req.body.id, (err, contacts) => {}).then(contacts => res.send(contacts))
+  })
+
+  app.post('/api/add-barber', (req, res) => {
+    // first_name, last_name, email, password, color, phonenumber, shop_id
+    newUser = [
+      req.body.firstName,
+      req.body.lastName,
+      req.body.userName,
+      req.body.password,
+      'grey',
+      req.body.phonenumber,
+      1,
+      '$15/hr',
+      'hourly'
+    ]
+    console.log('-- new barber created --', newUser)
+    db.add_barber(newUser, (err, users) => {
+      console.log('back from db -->>',err,users)})
+      .then((users) => {
+        console.log('-- barber from DB --',users)
+        res.send(users)
+      },
+      (error) => {
+        console.log(error)
+        res.send({fail:'That email address is already in use!'})
+    })
   })
 
   app.post('/api/edit-barber-pay', (req, res)=> {
@@ -204,11 +272,23 @@ massive("postgres://uunjpeyj:yVNsIpBpaTMB_a2TXEss-Gmq1DGSIOte@pellefant.db.eleph
     }).then(info => res.send(info))
   })
 
+  // Getting appts for entire Cal
   app.post('/api/cal', (req, res) => {
     db.get_cal_events(req.body.id, (err, events) => {
       console.log('db', err, events);
     }).then(info => res.send(info))
   });
+
+  // Getting appts from Barber
+  app.post('/api/appts', (req, res)=> {
+    console.log('-- bod cuming in --',req.body);
+    db.get_appts(req.body.id, (err, appts)=>{
+      console.log(err, appts);
+    }).then((appts)=> {
+      console.log(' -- appts from DB -- ',appts)
+      res.send(appts)
+    })
+  })
 
 
   // NODE MAILER-----------------///

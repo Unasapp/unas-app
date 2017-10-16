@@ -53,8 +53,16 @@
   <md-tab-group>
 
     <md-tab label="Transcations">
+
+      <div class='edit-reports-header' >
+        <span *ngIf='editing' class='edit-repots-text' >
+          <span class='ion-edit' ></span>
+          Editing </span>
+        <button *ngIf='!editing' (click)='editing = !editing' md-button class='edit-reports-btn' > <span class='ion-wrench' ></span> Edit Reports </button>
+        <button *ngIf='editing' (click)='editing = !editing' md-button class='edit-reports-btn2' > Stop Editing Reports </button>
+      </div>
       <md-list>
-        <div class='reports-box'>
+        <div *ngIf='!editing' class='reports-box'>
           <md-list-item>
             <div class='view-reports-head'>
               <div class='box-reports-head'> Appt Date </div>
@@ -67,8 +75,7 @@
               <div style='border: none;' class='box-reports-head'> Amount Paid </div>
             </div>
           </md-list-item>
-
-          <md-list-item *ngFor='let x of report'>
+          <md-list-item  *ngFor='let x of report'>
             <div class='view-reports'>
               <p class='box-reports'> {{x.start_time }} </p>
               <p class='box-reports'> {{ x.b_first }} {{ x.b_last }} </p>
@@ -78,6 +85,57 @@
               <p class='box-reports'> {{ x.tip }} </p>
               <p class='box-reports'> {{ x.pay_mth}} </p>
               <p class='box-reports'> {{ x.total }} </p>
+            </div>
+          </md-list-item>
+      </div>
+
+      <div *ngIf='editing'  class='reports-box'>
+          <md-list-item>
+            <div class='view-reports-head'>
+              <div class='box-reports-head'> Appt Date </div>
+              <div class='box-reports-head'> Barber </div>
+              <div class='box-reports-head'> Client </div>
+              <div class='box-reports-head'> Service </div>
+              <div class='box-reports-head'> Price </div>
+              <div class='box-reports-head'> Tip </div>
+              <div class='box-reports-head'> Pymt Method </div>
+              <div class='box-reports-head'> Amount Paid </div>
+              <div style='border: none;' class='box-reports-head'> Save/Delete </div>
+            </div>
+          </md-list-item>
+          <md-list-item  *ngFor='let x of report'>
+            <div class='view-reports'>
+              <p style='font-size: 13px;' class='box-reports'> {{ x.start_time }} </p>
+
+              <md-input-container class='box-reports2' >
+                  <input style='text-align:center;padding:0;' mdInput [value]='x.b_first+" "+x.b_last'  />
+              </md-input-container>
+              <md-input-container class='box-reports2' >
+                  <input style='text-align:center;padding:0;' mdInput [value]='x.c_first+" "+x.c_last'  /> 
+              </md-input-container>
+              <md-input-container class='box-reports2' >
+                  <input style='text-align:center;padding:0;' mdInput [value]='x.service'  /> 
+              </md-input-container>
+              <md-input-container class='box-reports2' >
+                  <input style='text-align:center;padding:0;' mdInput [value]='x.price'  /> 
+              </md-input-container>
+              <md-input-container class='box-reports2' >
+                  <input style='text-align:center;padding:0;' mdInput [value]='x.tip'  /> 
+              </md-input-container>
+              <md-input-container class='box-reports2' >
+                  <input style='text-align:center;padding:0;' mdInput [value]='x.pay_mth'  /> 
+              </md-input-container>
+              <md-input-container class='box-reports2' >
+                  <input style='text-align:center;padding:0;' mdInput [value]='x.total'  />
+              </md-input-container>
+              <div class='edit-reports-list-btns' >
+                <button (click)='saveEdit(x)' md-icon-button > 
+                  <span style='color:green;' class='reports-edit-btn-SD ion-checkmark-round' ></span> 
+                </button>
+                <button (click)='deleteEdit(x)' md-icon-button > 
+                  <span style='color:#ff4d4d;' class='reports-edit-btn-SD ion-close-round' ></span> 
+                </button>
+              </div>
             </div>
           </md-list-item>
         </div>

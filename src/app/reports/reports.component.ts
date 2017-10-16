@@ -18,7 +18,17 @@ export class ReportsComponent implements OnInit {
 
   cashResult: any;
 
-  constructor(private http: Http, public dialog: MdDialog, public reportServiceService: ReportServiceService) { }
+  constructor(private http: Http, public dialog: MdDialog, public service: ReportServiceService) { }
+
+  deleteEdit(x){
+    console.log('-- deleting trans --',x);
+    this.service.deleteTrans(x.a_id).subscribe()
+  }
+
+  saveEdit(x){
+    console.log('-- saving trans --',x);
+    
+  }
 
   openNewProduct() {
     let dialogRef = this.dialog.open(ProductDialogComponent, {
@@ -85,79 +95,6 @@ export class ReportsComponent implements OnInit {
   report: any = []
 
   timecards: any = []
-  //     {
-  //         "b_first": "Harry",
-  //         "b_last": "Vu",
-  //         "in": moment("2017-08-13T15:00:00.000Z").format('LLLL'),
-  //         "out": moment("2017-08-13T18:30:00.000Z").format('LLLL')
-  //     },
-  //     {
-  //         "b_first": "Harry",
-  //         "b_last": "Vu",
-  //         "in": moment("2017-08-13T19:30:00.000Z").format('LLLL'),
-  //         "out": moment("2017-08-14T02:00:00.000Z").format('LLLL')
-  //     },
-  //     {
-  //         "b_first": "Andrew",
-  //         "b_last": "Chen",
-  //         "in": moment("2017-08-13T15:00:00.000Z").format('LLLL'),
-  //         "out": moment("2017-08-13T18:00:00.000Z").format('LLLL')
-  //     },
-  //     {
-  //         "b_first": "Andrew",
-  //         "b_last": "Chen",
-  //         "in": moment("2017-08-13T18:30:00.000Z").format('LLLL'),
-  //         "out": moment("2017-08-14T02:00:00.000Z").format('LLLL')
-  //     },
-  //     {
-  //         "b_first": "Dom",
-  //         "b_last": "Decicco",
-  //         "in": moment("2017-08-13T15:00:00.000Z").format('LLLL'),
-  //         "out": moment("2017-08-13T19:00:00.000Z").format('LLLL')
-  //     },
-  //     {
-  //         "b_first": "Dom",
-  //         "b_last": "Decicco",
-  //         "in": moment("2017-08-13T20:00:00.000Z").format('LLLL'),
-  //         "out": moment("2017-08-14T02:00:00.000Z").format('LLLL')
-  //     },
-  //     {
-  //         "b_first": "Harry",
-  //         "b_last": "Vu",
-  //         "in": moment("2017-08-14T15:00:00.000Z").format('LLLL'),
-  //         "out": moment("2017-08-14T19:00:00.000Z").format('LLLL')
-  //     },
-  //     {
-  //         "b_first": "Harry",
-  //         "b_last": "Vu",
-  //         "in": moment("2017-08-14T20:00:00.000Z").format('LLLL'),
-  //         "out": moment("2017-08-15T02:00:00.000Z").format('LLLL')
-  //     },
-  //     {
-  //         "b_first": "Andrew",
-  //         "b_last": "Chen",
-  //         "in": moment("2017-08-14T15:00:00.000Z").format('LLLL'),
-  //         "out": moment("2017-08-14T18:30:00.000Z").format('LLLL')
-  //     },
-  //     {
-  //         "b_first": "Andrew",
-  //         "b_last": "Chen",
-  //         "in": moment("2017-08-14T19:00:00.000Z").format('LLLL'),
-  //         "out": moment("2017-08-15T02:00:00.000Z").format('LLLL')
-  //     },
-  //     {
-  //         "b_first": "Dom",
-  //         "b_last": "Decicco",
-  //         "in": moment("2017-08-14T15:00:00.000Z").format('LLLL'),
-  //         "out": moment("2017-08-14T19:30:00.000Z").format('LLLL')
-  //     },
-  //     {
-  //         "b_first": "Dom",
-  //         "b_last": "Decicco",
-  //         "in": moment("2017-08-14T20:00:00.000Z").format('LLLL'),
-  //         "out": moment("2017-08-15T02:00:00.000Z").format('LLLL')
-  //     }
-  // ]
 
   Earnings = [
     {
@@ -258,14 +195,14 @@ export class ReportsComponent implements OnInit {
   trans: any
   ngOnInit() {
     console.log('reports loaded')
-    this.reportServiceService.getShopTrans({ id:JSON.parse(localStorage.getItem('profile'))[0].shop_id }).subscribe(trans => {
+    this.service.getShopTrans({ id:JSON.parse(localStorage.getItem('profile'))[0].shop_id }).subscribe(trans => {
       for (let i = 0; i < trans.length; i++) {
         trans[i].start_time = moment(trans[i].start_time).format('l LT')
       }
-      console.log(trans)
+      console.log('-- this is trans ---',trans)
       this.report = trans
     })
-    this.reportServiceService.getTimecards({ id: JSON.parse(localStorage.getItem('profile'))[0].shop_id }).subscribe(cards => {
+    this.service.getTimecards({ id: JSON.parse(localStorage.getItem('profile'))[0].shop_id }).subscribe(cards => {
       for (let i = 0; i < cards.length; i++) {
         cards[i].time_in = moment(cards[i].time_in).format('LLLL')
         cards[i].time_out = moment(cards[i].time_out).format('LLLL')

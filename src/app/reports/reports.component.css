@@ -10,12 +10,64 @@
     width: 100%;
     border-top: 1px solid grey;
     align-items: center;
+    height: 53px;
+}
+
+.edit-reports-header{
+    width: 95%;
+    margin-top: 5px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.edit-reports-btn{
+    background: #ff4d4d;
+    color: white;
+}
+
+.edit-reports-btn2{
+    background: #ff4d4d;
+    color: white;
+}
+
+.edit-repots-text{
+    margin-right: 35%;
+    text-align: center;
+    color: #ff4d4d;
+    font-size: 20px;
+}
+
+.edit-reports-list-btns{
+    display: flex;
+    flex: 1;
+    justify-content: center;
+}
+
+.reports-edit-btn-SD{
+    font-size: 28px;
 }
 
 .box-reports{
     display: flex;
     flex: 1;
     justify-content: center;
+}
+
+.box-reports2{
+    display: flex;
+    flex: 1;
+    justify-content: center;
+    text-align: center;
+    color: grey;
+}
+
+.mat-input-wrapper .mat-input-flex .mat-input-infix{
+    padding: 0 !important;
+}
+
+.mat-input-underline{
+    background-color: white !important;
 }
 
 .view-reports-head{
