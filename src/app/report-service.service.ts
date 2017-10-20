@@ -1,10 +1,32 @@
 import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
+import { Subject } from 'rxjs/Subject';
+import { Observable } from 'rxjs/Observable';
 import * as moment from 'moment';
+import * as io from 'socket.io-client';
 
 @Injectable()
 export class ReportServiceService {
+
+  // SOCKET STUFF/////////
+  // -----------------------
+
+  // private url = 'http://localhost:4200';
+  // private socket = io(this.url);
+  //
+  // sendMessage(message){
+  //   this.socket.emit('add-message', message);
+  // }
+  //
+  // getMessages() {
+  //   this.socket.on('message', (data) => {
+  //   });
+  // }
+
+
+  // END SOCKET STUFF///////////////
+  //--------------------------------
 
   barbers = JSON.parse(localStorage.getItem('barbers'))
   clients = JSON.parse(localStorage.getItem('clients'))

@@ -12,10 +12,10 @@ const express = require('express'),
       server = http.createServer(app),
       nodemailer = require('nodemailer'),
       email = require('emailjs/email'),
-      io = require('socket.io')(server);
-
+      io = require('socket.io').listen(server);
 
 server.listen( 4200, ()=> {console.log('Connected on 4200')})
+
 
 app.use(bodyParser.json());
 app.use(session({
@@ -25,28 +25,33 @@ app.use(session({
 }))
 app.use(passport.initialize());
 app.use(passport.session());
-app.use(function(req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-  next();
-});
-
+app.use(function (req, res, next) {
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept-Type');
+    res.header('Access-Control-Allow-Credentials', 'true');
+    next();
+})
 
 app.use(express.static(__dirname + '/dist'));
 app.get('*', function(req, res) {
   res.sendFile(path.join(__dirname, '/dist', 'index.html'))
 });
 
-app.get('*', function(req, res){
-  res.sendFile(path.join(__dirname, '/dist', 'index.html'))
-});
-
 
 io.on('connection', function (socket) {
-  socket.emit('news', { hello: 'world' });
+  console.log('user connected');
   socket.on('my other event', function (data) {
     console.log(data);
   });
+
+  socket.on('disconnect', function(){
+    console.log('user disconnected');
+  });
+
+  socket.on('add-message', (message) => {
+    io.emit('message', {type:'new-message', text: message});
+  });
+
 });
 
 /////////////
@@ -86,11 +91,11 @@ massive("postgres://uunjpeyj:yVNsIpBpaTMB_a2TXEss-Gmq1DGSIOte@pellefant.db.eleph
     }).then((user) => {res.send(user)})
   })
 
-  app.get('/api/test', (req, res) => {
-    console.log('-- called test ---');
-    console.log('in test api', req)
+  app.post('/api/test', (req, res) => {
+    io.emit('news', { msg: 'Notified!' })
+    console.log('in test api')
     db.test_end((err, users) => {}).then(users => {
-      console.log('-- called test ---',users);
+
       res.send(users)})
   })
 
@@ -138,9 +143,9 @@ massive("postgres://uunjpeyj:yVNsIpBpaTMB_a2TXEss-Gmq1DGSIOte@pellefant.db.eleph
   })
 
   app.post('/api/contacts', (req, res) => {
-      console.log('this has worked')
+      // console.log('this has worked')
     db.getAllContacts(req.body.id, (err, contacts) => {}).then((contacts) => {
-      console.log('this has worked')
+      // console.log('this has worked')
       res.send(contacts)
     })
   })
@@ -250,10 +255,12 @@ massive("postgres://uunjpeyj:yVNsIpBpaTMB_a2TXEss-Gmq1DGSIOte@pellefant.db.eleph
 
   app.post('/api/cal/delete', (req, res) => {
     let array = [req.body.a_id, req.body.shop_id]
-    console.log('---deleteing appt from DB---', array)
+    console.log('---delete request made---', array)
     db.delete_appt(array, (err, info) => {
       console.log('db', err, info)
-    }).then(info => res.send(info))
+    }).then(info => {
+      res.send(info)
+    })
   })
 
   app.post('/api/cal/edit', (req, res) => {
@@ -279,13 +286,44 @@ massive("postgres://uunjpeyj:yVNsIpBpaTMB_a2TXEss-Gmq1DGSIOte@pellefant.db.eleph
     }).then(info => res.send(info))
   });
 
+  app.post('/api/delete-request', (req, res) => {
+    let array = [req.body.a_id, req.body.shop_id, "delete-request"]
+    console.log('---delete request made---', array)
+    db.delete_appt(array, (err, info) => {
+      console.log('db', err, info)
+    }).then(info => {
+      io.emit('delete-request', { msg: 'A Barber has made a request to cancel an appointment' })
+      res.send(info)
+    })
+  })
+
+  app.post('/api/start-appt', (req, res) => {
+    console.log('endpoint hit', req.body);
+    db.update_appt([req.body.a_id,'in-progress'], (err, appt) => {
+      console.log('db', err, appt);
+    }).then(info => {
+      io.emit('appt-start', { msg: 'A appointment has been started' })
+      res.send(info)
+    })
+  });
+
+  app.post('/api/end-appt', (req, res) =>{
+    console.log('endpoint hit', req.body);
+    db.update_appt([req.body.a_id,'service-completed'], (err, appt) => {
+      console.log('db', err, appt);
+    }).then(info => {
+      io.emit('appt-end', { msg: 'A appointment has been completed and needs to be cashed out' })
+      res.send(info)
+    })
+  });
+
   // Getting appts from Barber
   app.post('/api/appts', (req, res)=> {
-    console.log('-- bod cuming in --',req.body);
+    // console.log('-- bod cuming in --',req.body);
     db.get_appts(req.body.id, (err, appts)=>{
       console.log(err, appts);
     }).then((appts)=> {
-      console.log(' -- appts from DB -- ',appts)
+      // console.log(' -- appts from DB -- ',appts)
       res.send(appts)
     })
   })
@@ -365,6 +403,8 @@ massive("postgres://uunjpeyj:yVNsIpBpaTMB_a2TXEss-Gmq1DGSIOte@pellefant.db.eleph
   })
 
 });
+
+
 
 
 // var results = [ {
