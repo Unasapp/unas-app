@@ -16,11 +16,15 @@ export class AppComponent {
     }.bind(this));
 
     this.socket.on('delete-request', function (data) {
-      alert(data.msg);
+      console.log(data);
     }.bind(this));
 
     this.socket.on('appt-start', function (data) {
-      alert(data.msg);
+      console.log(data);
+    }.bind(this));
+    
+    this.socket.on('appt-end', function (data) {
+      console.log(data);
     }.bind(this));
 
   }
