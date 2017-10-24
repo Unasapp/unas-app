@@ -13,6 +13,8 @@ const express = require('express'),
       nodemailer = require('nodemailer'),
       email = require('emailjs/email'),
       io = require('socket.io')(server);
+      CronJob = require('cron').CronJob;
+      moment = require('moment');
 
 
 server.listen( 4200, ()=> {console.log('Connected on 4200')})
@@ -100,13 +102,36 @@ massive("postgres://uunjpeyj:yVNsIpBpaTMB_a2TXEss-Gmq1DGSIOte@pellefant.db.eleph
     }).then(trans => res.send(trans))
   })
 
-  app.post('/api/timecards', (req, res) => {
-    console.log('getting timecards', req.body.id)
-    db.timecards(req.body.id, (err, cards) => {}).then(cards => {
+  app.post('/api/timecards', (req, res) => { 
+    let array = [
+      req.body.shop_id,
+      req.body.date1,
+      req.body.date2
+    ]
+    console.log('getting timecards', array)
+    db.timecards(array, (err, cards) => {}).then(cards => {
       res.send(cards)
-      info = cards
-      console.log('info ---', info)
-      return info
+    })
+  })
+
+  app.post('/api/timecards/delete', (req, res) => {
+    console.log('--- deleting  timecards ---', req.body.id)
+    db.timecardsDelete([req.body.id,0], (err, cards) => {}).then(cards => {
+      console.log('--- deleting  timecards complete ---')
+      res.send(cards)
+    })
+  })
+
+  app.post('/api/timecards/save', (req, res) => {
+    let array = [
+      req.body.t_id,
+      req.body.time_in,
+      req.body.time_out
+    ]
+    console.log('--- saving  timecards ---', array)
+    db.timecardsSave(array, (err, cards) => {}).then(cards => {
+      console.log('--- saving  timecards complete ---')
+      res.send(cards)
     })
   })
 
@@ -125,8 +150,29 @@ massive("postgres://uunjpeyj:yVNsIpBpaTMB_a2TXEss-Gmq1DGSIOte@pellefant.db.eleph
     }).then(info => res.send(info))
   })
 
-  app.post('/api/shop-trans', (req, res) => {
-    db.shop_trans(req.body.id, (err, trans) => {}).then(trans => res.send(trans))
+  app.post('/api/shop-trans', (req, res) => { 
+    let array = [
+      req.body.shop_id,
+      req.body.date1,
+      req.body.date2
+    ]
+    db.shop_trans(array, (err, trans) => {}).then(trans =>{ 
+      res.send(trans)
+    })
+  })
+  
+// ??????????????????????????????????????????????????????????
+  app.post('/api/shop-trans/earnings',(req, res) => {
+    let array = [
+      req.body.shop_id,
+      req.body.date1,
+      req.body.date2
+    ]
+    console.log('earnings in',array)
+    db.trans_earnings(array, (err, trans) => {}).then(trans => {
+      console.log('--- earnings back 😡  ----',trans)
+      res.send(trans)
+    })
   })
 
   app.post('/api/delete-trans', (req, res) =>{
@@ -135,6 +181,21 @@ massive("postgres://uunjpeyj:yVNsIpBpaTMB_a2TXEss-Gmq1DGSIOte@pellefant.db.eleph
       console.log('done deleting')
        res.send(trans)
       })
+  })
+
+  app.post('/api/edit-trans',(req,res) =>{
+    array = [
+      req.body.a_id,
+      req.body.tip,
+      req.body.pay_mth,
+      req.body.total
+    ]
+    console.log('--- Edit Trans CALLED ---- >>>',array)
+    db.shop_edittrans(array,(err,trans)=>{}).then(trans =>{
+      console.log('editing tran complete')
+      res.send(trans)
+    })
+
   })
 
   app.post('/api/contacts', (req, res) => {
@@ -290,13 +351,23 @@ massive("postgres://uunjpeyj:yVNsIpBpaTMB_a2TXEss-Gmq1DGSIOte@pellefant.db.eleph
     })
   })
 
+  app.post('/api/getproducts', (req, res)=>{
+    console.log('id to get products',req.body.id)
+    db.getProducts(req.body.id, (err,data)=>{
+      console.log('db for products', err, data);
+    }).then((data)=>{
+      console.log(' -- appts from DB -- ',data)
+      res.send(data)
+    })
+  })
+
 
   // NODE MAILER-----------------///
   // ---------------------------------
 
-  var info
-  app.post('/sendmail', (req, res)=> {
-      var startEmail = `
+  //  +++++++ BEGINS  ++++++++++😡
+  var sendEmail = ()=> {
+      var timecardHEAD = `
       <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
       <html xmlns="http://www.w3.org/1999/xhtml">
           <head>
@@ -327,42 +398,146 @@ massive("postgres://uunjpeyj:yVNsIpBpaTMB_a2TXEss-Gmq1DGSIOte@pellefant.db.eleph
           <th>Time In</th>
           <th>Time Out</th>
         </tr>`;
-    var emailTmp
+
+      var transreportHEAD = `
+      <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+      <html xmlns="http://www.w3.org/1999/xhtml">
+          <head>
+              <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+              <title></title><style>
+      table {
+          font-family: arial, sans-serif;
+          border-collapse: collapse;
+          width: 100%;
+      }
+      td, th {
+          border: 1px solid #dddddd;
+          text-align: left;
+          padding: 8px;
+      }
+      table, th, td{
+        border: 1px solid black;
+      }
+      tr:nth-child(even) {
+          background-color: #dddddd;
+      }
+      </style>
+      </head>
+      <body>
+      <table>
+        <tr>
+          <th>Appt Date</th>
+          <th>Barber</th>
+          <th>Client</th>
+          <th>Service</th>
+          <th>Price</th>
+          <th>Tip</th>
+          <th>Pymt Method</th>
+          <th>Amount Paid</th>
+        </tr>`;
+ 
 
     var getStuff = function() {
-      emailTmp = info.reduce(function(a, b) {
-        return a + '<tr><td>' + b.b_first + ' ' + b.b_last + '</td><td>' + b.time_in + '</td><td>' + b.time_out + '</td></tr>';
-      }, '');
-      console.log('here is email Tmp', emailTmp)
 
       var server = email.server.connect({user: "ac12491@gmail.com", password: "W0rkhard!", host: "smtp.gmail.com", port: 465, ssl: true});
       console.log('email server connected');
-      console.log(req.body);
-      // send the message and get a callback with an error or details of the message that was sent
-      server.send({
-        text: "",
-        from: "hairBy.com",
-        to: req.body.email,
-        subject: "Daily Report from hairBy!",
-        attachment: [
-          {
-            data: `${startEmail}${emailTmp}</table></body></html>`,
-            alternative: true
+
+      var array = [
+        1, 
+        moment(new Date().setDate(new Date().getDate() - 7)).format('YYYY-MM-DD'),
+        moment(new Date()).format('YYYY-MM-DD')
+      ]
+      var timecard
+      (()=>{ 
+            db.timecards(array, (err, info)=> {
+            console.log('-- timecard added to server --',err,info);
+          }).then(info =>{
+             timecard = info
+             console.log('timecard',timecard)
+            }).then(()=>{
+              db.shop_trans(array, (err, trans) => {}).then(trans =>{ 
+                transreport = trans
+                console.log('transreport',transreport)
+                maketemp(timecard,transreport)
+              })
+            })
+      })()
+     
+
+      var timecardBODY
+      var maketemp = function(timecard,transreport){
+        timecardBODY = timecard.reduce(function(a, b) {
+          return a + '<tr><td>' + b.b_first + ' ' + b.b_last + '</td><td>' + moment(b.time_in).format('l LT') + '</td><td>' + moment(b.time_out).format('l LT') + '</td></tr>';
+        }, '');
+
+        transreportBODY = transreport.reduce(function(a, b) {
+          return a + '<tr><td>' + moment(b.start_time).format('l LT') + '</td><td>'
+                   + b.b_first + ' ' + b.b_last + '</td><td>' 
+                   + b.c_first + ' ' + b.c_last + '</td><td>' 
+                   + b.service + '</td><td>' 
+                   + b.price + '</td><td>' 
+                   + b.tip + '</td><td>' 
+                   + b.pay_mth + '</td><td>' 
+                   + b.total + '</td></tr>';
+        }, '');
+        
+        
+        console.log('here is email Tmp', timecardBODY)
+        server.send({
+          text: "",
+          from: "hairBy.com",
+          to: 'ddecicco@buffalo.edu',
+          subject: "Daily Report from hairBy!",
+          attachment: [
+            {
+              data: `${timecardHEAD}${timecardBODY}</table></body></html>`,
+              alternative: true
+            }
+          ]
+        }, function(err, message) {
+          if (err)
+            console.log(err);
+          else
+            console.log({success: true, msg: 'sent'});
           }
-        ]
-      }, function(err, message) {
-        if (err)
-          console.log(err);
-        else
-          res.json({success: true, msg: 'sent'});
-        }
-      );
-      console.log('made it');
-      return emailTmp
+        )
+        server.send({
+          text: "",
+          from: "hairBy.com",
+          to: 'ddecicco@buffalo.edu',
+          subject: "Daily Report from hairBy!",
+          attachment: [
+            {
+              data: `${transreportHEAD}${transreportBODY}</table></body></html>`,
+              alternative: true
+            }
+          ]
+        }, function(err, message) {
+          if (err)
+            console.log(err);
+          else
+            console.log({success: true, msg: 'sent'});
+          }
+        )
+        return 
+      }
+
     }
     getStuff()
+  }
+  // ++++++++++++ ends ++++++++++++++++
 
-  })
+  var job = new CronJob({
+    cronTime: '00 00 12 * * 1-5',
+    onTick: function() {
+      sendEmail()
+      console.log('email begins to send')
+    },
+    start: true,
+    timeZone: 'America/Denver'
+    });
+    job.start();
+
 
 });
 

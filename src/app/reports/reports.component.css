@@ -17,8 +17,10 @@
     width: 95%;
     margin-top: 5px;
     display: flex;
-    justify-content: flex-end;
+    justify-content: space-between;
     align-items: center;
+    width: 90%;
+    margin-left: 5%;
 }
 
 .edit-reports-btn{
@@ -32,7 +34,7 @@
 }
 
 .edit-repots-text{
-    margin-right: 35%;
+    margin-right: 4%;
     text-align: center;
     color: #ff4d4d;
     font-size: 20px;
@@ -59,7 +61,18 @@
     flex: 1;
     justify-content: center;
     text-align: center;
-    color: grey;
+    color: #cccccc;
+}
+
+.box-reports3{
+    display: flex;
+    flex: 1;
+    justify-content: center;
+    text-align: center;
+    color: #cccccc;
+}
+.box-reports3 input{
+    width: 275px;
 }
 
 .mat-input-wrapper .mat-input-flex .mat-input-infix{
@@ -85,6 +98,14 @@
     justify-content: center;
     align-items: center;
     border-right: 1px solid black;
+}
+.box-reports-head1{
+    display: flex;
+    height: 80%;;
+    flex: 1;
+    justify-content: center;
+    align-items: center;
+    border-left: 1px solid black;
 }
 .box-reports-head-earn{
     display: flex;
@@ -114,14 +135,7 @@
     margin-top: 50px;
     /* height: 100px;  */
 }
-.report-head-earn{
-    margin-left: 5%;
-    font-size: 20px;
-    width: 90%;
-    padding-top: 10px;
-    display: flex;
-    justify-content: flex-start;
-}
+
 
 .product-header{
     margin-left: 5%;
@@ -135,4 +149,58 @@
     font-size: 14px;
     display: inline-flex;
     align-items: center;
+}
+
+.barber-card-earn{
+    width: 300px;   
+    margin: 10px;
+}
+
+.report-head-earn{
+    margin-left: 5%;
+    font-size: 20px;
+    width: 90%;
+    padding-top: 10px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.report-head-earn-text{
+    margin-right: 15%;
+    text-align: center;
+    color: #ff4d4d;
+    font-size: 20px;
+}
+
+.barber-cards{
+    display: flex;
+    flex-wrap: wrap;
+    width: 90%;
+    margin-left: 5%;
+}
+
+.barber-cards-left{
+    display: flex;
+    flex: 1;
+    align-items: flex-start;
+    flex-direction: column;
+    font-weight: 300;
+}
+
+.barber-cards-right{
+    display: flex;
+    flex: 1;
+    align-items: flex-end;
+    flex-direction: column;
+}
+
+.barber-cards-content{
+    display: flex;
+    width: 100%;
+}
+
+.pastDays-btn{
+    background: #ff4d4d;
+    color: white;
+
 }

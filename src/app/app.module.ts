@@ -46,7 +46,7 @@ import { ReportServiceService } from './report-service.service';
 import { BarberModalComponent } from './barber-modal/barber-modal.component';
 import { ProductDialogComponent } from './product-dialog/product-dialog.component';
 import { LoginModelComponent } from './login-model/login-model.component';
-import { ReportsDialogComponent } from './reports-dialog/reports-dialog.component';
+import { ProductsComponent } from './products/products.component';
 
 
 @NgModule({
@@ -68,7 +68,7 @@ import { ReportsDialogComponent } from './reports-dialog/reports-dialog.componen
     ProductDialogComponent,
     BarberModalComponent,
     LoginModelComponent,
-    ReportsDialogComponent
+    ProductsComponent
   ],
   imports: [
     BrowserModule,
@@ -105,8 +105,7 @@ import { ReportsDialogComponent } from './reports-dialog/reports-dialog.componen
     BarberModalComponent,
     ProductDialogComponent,
     BarberModalComponent,
-    LoginModelComponent,
-    ReportsDialogComponent
+    LoginModelComponent
   ],
   providers: [AuthService, ReportServiceService],
   bootstrap: [AppComponent]
