@@ -4,7 +4,7 @@ import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { HttpModule } from '@angular/http';
 import { FormsModule } from '@angular/forms';
-import { AuthService } from './auth/auth.service';
+// import { AuthService } from './auth/auth.service';
 import { CommonModule } from '@angular/common';
 import { CalendarModule } from "ap-angular2-fullcalendar";
 import { ChartsModule } from 'ng2-charts';
@@ -46,7 +46,8 @@ import { ReportServiceService } from './report-service.service';
 import { BarberModalComponent } from './barber-modal/barber-modal.component';
 import { ProductDialogComponent } from './product-dialog/product-dialog.component';
 import { LoginModelComponent } from './login-model/login-model.component';
-import { ReportsDialogComponent } from './reports-dialog/reports-dialog.component';
+import { ProductsComponent } from './products/products.component';
+import { SidenavComponent } from './sidenav/sidenav.component';
 
 
 @NgModule({
@@ -68,7 +69,8 @@ import { ReportsDialogComponent } from './reports-dialog/reports-dialog.componen
     ProductDialogComponent,
     BarberModalComponent,
     LoginModelComponent,
-    ReportsDialogComponent
+    ProductsComponent,
+    SidenavComponent
   ],
   imports: [
     BrowserModule,
@@ -105,10 +107,9 @@ import { ReportsDialogComponent } from './reports-dialog/reports-dialog.componen
     BarberModalComponent,
     ProductDialogComponent,
     BarberModalComponent,
-    LoginModelComponent,
-    ReportsDialogComponent
+    LoginModelComponent
   ],
-  providers: [AuthService, ReportServiceService],
+  providers: [ReportServiceService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

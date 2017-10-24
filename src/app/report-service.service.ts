@@ -1,10 +1,32 @@
 import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
+import { Subject } from 'rxjs/Subject';
+import { Observable } from 'rxjs/Observable';
 import * as moment from 'moment';
+import * as io from 'socket.io-client';
 
 @Injectable()
 export class ReportServiceService {
+
+  // SOCKET STUFF/////////
+  // -----------------------
+
+  // private url = 'http://localhost:4200';
+  // private socket = io(this.url);
+  //
+  // sendMessage(message){
+  //   this.socket.emit('add-message', message);
+  // }
+  //
+  // getMessages() {
+  //   this.socket.on('message', (data) => {
+  //   });
+  // }
+
+
+  // END SOCKET STUFF///////////////
+  //--------------------------------
 
   barbers = JSON.parse(localStorage.getItem('barbers'))
   clients = JSON.parse(localStorage.getItem('clients'))
@@ -41,9 +63,44 @@ export class ReportServiceService {
       .map(res => res.json())
   }
 
+  deleteTrans(id){
+    return this.http.post('/api/delete-trans',{id})
+      .map(res => res.json())
+  }
+ 
+  editTrans(obj){
+    return this.http.post('/api/edit-trans',obj)
+    .map(res => res.json())
+  }
+
   getTimecards(id:any) {
     return this.http.post('/api/timecards', id)
       .map(res => res.json())
+  }
+
+  deleteTimecard(x) {
+    return this.http.post('/api/timecards/delete', { 'id' : x } )
+      .map(res => res.json())
+  }
+
+  timesaveEdit(x){
+    var save = {
+      't_id' : x.t_id,
+      'time_in' : moment(x.time_in).format('YYYY-MM-DD HH:mm:ss'),
+      'time_out' : moment(x.time_out).format('YYYY-MM-DD HH:mm:ss')
+    }
+    return this.http.post('/api/timecards/save', save)
+      .map(res => res.json())
+  }
+
+  getBarberEarning(x){
+    console.log('--- 😇 barber earnings called ---');
+    
+    return this.http.post('/api/shop-trans/earnings',x)
+      .map(res => {
+        console.log('--- 😇 barber earnings comming back!!!!! ---', res.json());
+         return res.json()
+        })
   }
 
   getContacts(id:any) {
@@ -134,4 +191,12 @@ export class ReportServiceService {
     .map(res => res.json())
 
   }
+
+  getProducts(id){
+    console.log('-- id to get products --',id);
+    return this.http.post('/api/getproducts',id)
+    .map(res => res.json())
+  }
+
+
 }
