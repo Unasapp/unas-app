@@ -4,7 +4,7 @@ import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { HttpModule } from '@angular/http';
 import { FormsModule } from '@angular/forms';
-import { AuthService } from './auth/auth.service';
+// import { AuthService } from './auth/auth.service';
 import { CommonModule } from '@angular/common';
 import { CalendarModule } from "ap-angular2-fullcalendar";
 import { ChartsModule } from 'ng2-charts';
@@ -47,6 +47,7 @@ import { BarberModalComponent } from './barber-modal/barber-modal.component';
 import { ProductDialogComponent } from './product-dialog/product-dialog.component';
 import { LoginModelComponent } from './login-model/login-model.component';
 import { ProductsComponent } from './products/products.component';
+import { SidenavComponent } from './sidenav/sidenav.component';
 
 
 @NgModule({
@@ -68,7 +69,8 @@ import { ProductsComponent } from './products/products.component';
     ProductDialogComponent,
     BarberModalComponent,
     LoginModelComponent,
-    ProductsComponent
+    ProductsComponent,
+    SidenavComponent
   ],
   imports: [
     BrowserModule,
@@ -107,7 +109,7 @@ import { ProductsComponent } from './products/products.component';
     BarberModalComponent,
     LoginModelComponent
   ],
-  providers: [AuthService, ReportServiceService],
+  providers: [ReportServiceService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
