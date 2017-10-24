@@ -64,13 +64,43 @@ export class ReportServiceService {
   }
 
   deleteTrans(id){
-    return this.http.post('/api/delete-trans',id)
+    return this.http.post('/api/delete-trans',{id})
       .map(res => res.json())
+  }
+ 
+  editTrans(obj){
+    return this.http.post('/api/edit-trans',obj)
+    .map(res => res.json())
   }
 
   getTimecards(id:any) {
     return this.http.post('/api/timecards', id)
       .map(res => res.json())
+  }
+
+  deleteTimecard(x) {
+    return this.http.post('/api/timecards/delete', { 'id' : x } )
+      .map(res => res.json())
+  }
+
+  timesaveEdit(x){
+    var save = {
+      't_id' : x.t_id,
+      'time_in' : moment(x.time_in).format('YYYY-MM-DD HH:mm:ss'),
+      'time_out' : moment(x.time_out).format('YYYY-MM-DD HH:mm:ss')
+    }
+    return this.http.post('/api/timecards/save', save)
+      .map(res => res.json())
+  }
+
+  getBarberEarning(x){
+    console.log('--- 😇 barber earnings called ---');
+    
+    return this.http.post('/api/shop-trans/earnings',x)
+      .map(res => {
+        console.log('--- 😇 barber earnings comming back!!!!! ---', res.json());
+         return res.json()
+        })
   }
 
   getContacts(id:any) {
@@ -161,4 +191,12 @@ export class ReportServiceService {
     .map(res => res.json())
 
   }
+
+  getProducts(id){
+    console.log('-- id to get products --',id);
+    return this.http.post('/api/getproducts',id)
+    .map(res => res.json())
+  }
+
+
 }
