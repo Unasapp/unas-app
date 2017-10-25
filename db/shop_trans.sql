@@ -28,3 +28,5 @@ and
   shops.s_id = $1
 and
   appointments.status = 'completed'
+and 
+	start_time between $2 and $3

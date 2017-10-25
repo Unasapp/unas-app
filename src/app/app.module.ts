@@ -48,7 +48,7 @@ import { ReportServiceService } from './report-service.service';
 import { BarberModalComponent } from './barber-modal/barber-modal.component';
 import { ProductDialogComponent } from './product-dialog/product-dialog.component';
 import { LoginModelComponent } from './login-model/login-model.component';
-import { ReportsDialogComponent } from './reports-dialog/reports-dialog.component';
+import { ProductsComponent } from './products/products.component';
 import { SidenavComponent } from './sidenav/sidenav.component';
 
 
@@ -71,7 +71,7 @@ import { SidenavComponent } from './sidenav/sidenav.component';
     ProductDialogComponent,
     BarberModalComponent,
     LoginModelComponent,
-    ReportsDialogComponent,
+    ProductsComponent,
     SidenavComponent
   ],
   imports: [
@@ -111,8 +111,7 @@ import { SidenavComponent } from './sidenav/sidenav.component';
     BarberModalComponent,
     ProductDialogComponent,
     BarberModalComponent,
-    LoginModelComponent,
-    ReportsDialogComponent
+    LoginModelComponent
   ],
   providers: [ReportServiceService],
   bootstrap: [AppComponent]

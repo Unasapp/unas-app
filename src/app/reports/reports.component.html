@@ -23,11 +23,6 @@
         <i class='ion-calendar icon-size' ></i>
       </button>
   </div>
-  <div>
-    <button md-icon-button (click)='openReportDialog()'>
-        <i class='ion-clipboard icon-size' ></i>
-      </button>
-  </div>
 
 </md-toolbar>
 
@@ -41,10 +36,10 @@
       <md-list-item routerLink='/home' class='sidenav-items'> Home </md-list-item>
       <md-list-item routerLink='/cal' class='sidenav-items'> Calendar </md-list-item>
       <md-list-item routerLink='/contacts' class='sidenav-items'> Contacts </md-list-item>
-      <!-- <md-list-item routerLink='/allbarbers' class='sidenav-items'> Barber Profiles </md-list-item> -->
+      <md-list-item routerLink='/products' class='sidenav-items'> Products </md-list-item>
       <md-list-item routerLink='/reports' class='sidenav-items'> Reports </md-list-item>
-      <!-- <md-list-item routerLink='/notifications' class='sidenav-items'> Notifications </md-list-item> -->
-      <!-- <md-list-item routerLink='/settings' class='sidenav-items'> Settings </md-list-item> -->
+      <md-list-item routerLink='/notifications' class='sidenav-items'> Notifications </md-list-item> 
+      <md-list-item routerLink='/settings' class='sidenav-items'> Settings </md-list-item>
       <md-list-item (click)="auth.logout()" class='sidenav-items'> Logout </md-list-item>
     </md-list>
   </md-sidenav>
@@ -55,6 +50,8 @@
     <md-tab label="Transcations">
 
       <div class='edit-reports-header' >
+        <button *ngIf='!pastD' (click)='getReports("past")' md-button class='pastDays-btn' > Reports From Past 7 Days </button>
+        <button *ngIf='pastD'  (click)='getReports("today")' md-button class='pastDays-btn' > Reports From Today </button>
         <span *ngIf='editing' class='edit-repots-text' >
           <span class='ion-edit' ></span>
           Editing </span>
@@ -103,36 +100,36 @@
               <div style='border: none;' class='box-reports-head'> Save/Delete </div>
             </div>
           </md-list-item>
-          <md-list-item  *ngFor='let x of report'>
+          <md-list-item  *ngFor='let x of report; let i = index; trackBy:trackByIndex'>
             <div class='view-reports'>
-              <p style='font-size: 13px;' class='box-reports'> {{ x.start_time }} </p>
+              <p style='font-size: 13px;' class='box-reports'> {{ report[i].start_time }} </p>
 
+              <p class='box-reports' >
+                  {{report[i].b_first}} {{report[i].b_last}}
+              </p>
+              <p class='box-reports' >
+                  {{report[i].c_first}} {{report[i].c_last}}
+              </p>
+              <p class='box-reports' >
+                  {{ report[i].service }}
+              </p>
+              <p class='box-reports' >
+                  {{ report[i].price }}
+              </p>
               <md-input-container class='box-reports2' >
-                  <input style='text-align:center;padding:0;' mdInput [value]='x.b_first+" "+x.b_last'  />
+                  <input style='text-align:center;padding:0;' mdInput [(ngModel)]='report[i].tip'   /> 
               </md-input-container>
               <md-input-container class='box-reports2' >
-                  <input style='text-align:center;padding:0;' mdInput [value]='x.c_first+" "+x.c_last'  /> 
+                  <input style='text-align:center;padding:0;' mdInput [(ngModel)]='report[i].pay_mth'  /> 
               </md-input-container>
               <md-input-container class='box-reports2' >
-                  <input style='text-align:center;padding:0;' mdInput [value]='x.service'  /> 
-              </md-input-container>
-              <md-input-container class='box-reports2' >
-                  <input style='text-align:center;padding:0;' mdInput [value]='x.price'  /> 
-              </md-input-container>
-              <md-input-container class='box-reports2' >
-                  <input style='text-align:center;padding:0;' mdInput [value]='x.tip'  /> 
-              </md-input-container>
-              <md-input-container class='box-reports2' >
-                  <input style='text-align:center;padding:0;' mdInput [value]='x.pay_mth'  /> 
-              </md-input-container>
-              <md-input-container class='box-reports2' >
-                  <input style='text-align:center;padding:0;' mdInput [value]='x.total'  />
+                  <input style='text-align:center;padding:0;' mdInput [(ngModel)]='report[i].total'   />
               </md-input-container>
               <div class='edit-reports-list-btns' >
-                <button (click)='saveEdit(x)' md-icon-button > 
+                <button (click)='saveEdit(report[i])' md-icon-button > 
                   <span style='color:green;' class='reports-edit-btn-SD ion-checkmark-round' ></span> 
                 </button>
-                <button (click)='deleteEdit(x)' md-icon-button > 
+                <button (click)='deleteEdit(report[i])' md-icon-button > 
                   <span style='color:#ff4d4d;' class='reports-edit-btn-SD ion-close-round' ></span> 
                 </button>
               </div>
@@ -145,8 +142,19 @@
 
 
     <md-tab label="Time Cards">
+
+        <div class='edit-reports-header' >
+            <button *ngIf='!pastT' (click)='getTimeCards("past")' md-button class='pastDays-btn' > Reports From Past 7 Days </button>
+            <button *ngIf='pastT'  (click)='getTimeCards("today")' md-button class='pastDays-btn' > Reports From Today </button>
+            <span *ngIf='editingT' class='edit-repots-text' >
+              <span class='ion-edit' ></span>
+              Editing </span>
+            <button *ngIf='!editingT' (click)='editingT = !editingT' md-button class='edit-reports-btn' > <span class='ion-wrench' ></span> Edit Reports </button>
+            <button *ngIf='editingT' (click)='editingT = !editingT' md-button class='edit-reports-btn2' > Stop Editing Reports </button>
+          </div>
+
       <md-list>
-        <div class='reports-box'>
+        <div  *ngIf='!editingT' class='reports-box'>
           <md-list-item>
             <div class='view-reports-head'>
               <div class='box-reports-head'> Barber </div>
@@ -155,7 +163,7 @@
             </div>
           </md-list-item>
 
-          <md-list-item *ngFor='let y of timecards'>
+          <md-list-item  *ngFor='let y of timecards'>
             <div class='view-reports' id ="myId" #myId>
               <p class='box-reports'> {{ y.b_first }} {{ y.b_last }} </p>
               <p class='box-reports'> {{ y.time_in }} </p>
@@ -163,61 +171,87 @@
             </div>
           </md-list-item>
         </div>
+
+
+        <div *ngIf='editingT' class='reports-box'>
+            <md-list-item>
+              <div class='view-reports-head'>
+                <div class='box-reports-head'> Barber </div>
+                <div class='box-reports-head'> Clock-in </div>
+                <div class='box-reports-head'> Clock-out </div>
+                <div style='border: none;' class='box-reports-head'> Save/Delete </div>
+              </div>
+            </md-list-item>
+
+          <md-list-item *ngFor='let y of timecards; let i = index; trackBy:trackByIndex' >
+            <div class='view-reports' id ="myId" #myId>
+              <p class='box-reports'> {{ timecards[i].b_first }} {{ timecards[i].b_last }} </p>
+              <md-input-container class='box-reports3' >
+                  <input style='text-align:center;padding:0;' mdInput [(ngModel)]='timecards[i].time_in'   /> 
+              </md-input-container>
+              <md-input-container class='box-reports3' >
+                  <input style='text-align:center;padding:0;' mdInput [(ngModel)]='timecards[i].time_out'   /> 
+              </md-input-container>
+              <div class='edit-reports-list-btns' >
+                <button (click)='timesaveEdit(timecards[i])'  md-icon-button > 
+                  <span style='color:green;' class='reports-edit-btn-SD ion-checkmark-round' ></span> 
+                </button>
+                <button (click)='timedeleteEdit(timecards[i])'  md-icon-button > 
+                  <span style='color:#ff4d4d;' class='reports-edit-btn-SD ion-close-round' ></span> 
+                </button>
+              </div>
+            </div>
+          </md-list-item>
+
+        </div>
       </md-list>
     </md-tab>
 
     <md-tab label="Barber Earnings">
-      <div class='report-head-earn'> Angust 2017 </div>
-      <md-list>
-        <div class='reports-box'>
-          <md-list-item>
-            <div class='view-reports-head'>
-              <div class='box-reports-head'> Day </div>
-              <div class='box-reports-head'> Harry Vu </div>
-              <div class='box-reports-head'> Dom DeCicco </div>
-              <div style='border: none;' class='box-reports-head'> Andrew Chen </div>
-            </div>
-          </md-list-item>
+      <div class='report-head-earn'> 
+        <div> {{ todaysdateDisplay }} </div>
+      </div>
 
-          <md-list-item style="height: 100px;" *ngFor='let e of Earnings'>
-            <div class='view-reports-earn'>
-
-              <div class='box-reports-earn'> {{ e.day }} </div>
-              <div class='box-reports-earn'>
-                <div>Total Earnings: {{ e.harry.total | currency:'USD':true }} </div>
-                <div>Shop Comission: {{ e.harry.s_com | currency:'USD':true }} </div>
-                <div>Barber Comission: {{ e.harry.b_com | currency:'USD':true }} </div>
-                <div>Tips: {{ e.harry.tips | currency:'USD':true }} </div>
-              </div>
-              <div class='box-reports-earn'>
-                <div>Total Earnings: {{ e.dom.total | currency:'USD':true }} </div>
-                <div>Shop Comission: {{ e.dom.s_com | currency:'USD':true }} </div>
-                <div>Barber Comission: {{ e.dom.b_com | currency:'USD':true }} </div>
-                <div>Tips: {{ e.dom.tips | currency:'USD':true }} </div>
-              </div>
-              <div class='box-reports-earn'>
-                <div>Total Earnings: {{ e.drew.total | currency:'USD':true }} </div>
-                <div>Shop Comission: {{ e.drew.s_com | currency:'USD':true }}</div>
-                <div>Barber Comission: {{ e.drew.b_com | currency:'USD':true }} </div>
-                <div>Tips: {{ e.drew.tips | currency:'USD':true }} </div>
-              </div>
-            </div>
-          </md-list-item>
-        </div>
-      </md-list>
+      <div class='barber-cards' >
+        <md-card class='barber-card-earn'  *ngFor='let e of barearnings' >
+            <md-card-title>
+              {{ e.name }}
+            </md-card-title> 
+            <md-card-content>
+              <section class='barber-cards-content' >
+                <div class='barber-cards-left' > 
+                    <div>Pay Type: </div>
+                    <div>Shop Comission: </div>
+                    <div>Barber Comission: </div>
+                    <div>Tips: </div>
+                </div>
+                <div class='barber-cards-right' > 
+                    <div> {{ e.payT }} </div>
+                    <div> {{ e.shopE }} </div>
+                    <div> {{ e.barberE }} </div>
+                    <div> {{ e.tips  }} </div>
+                </div>
+            </section>  
+            </md-card-content>
+        </md-card>
+      </div>
+  
     </md-tab>
     
-    <!-- <md-tab label="Product">
-      <div class='product-header'>
-        <button class='newbtn' md-button (click)='openNewProduct()'>
-              <i class='ion-plus-round' ></i> New Product
-          </button>
-      </div>
+    <md-tab label="Product">
+        <div class='edit-reports-header' >
+            <button *ngIf='!pastT' (click)='getTimeCards("past")' md-button class='pastDays-btn' > Reports From Past 7 Days </button>
+            <button *ngIf='pastT'  (click)='getTimeCards("today")' md-button class='pastDays-btn' > Reports From Today </button>
+            <span *ngIf='editingT' class='edit-repots-text' >
+              <span class='ion-edit' ></span>
+              Editing </span>
+            <button *ngIf='!editingT' (click)='editingT = !editingT' md-button class='edit-reports-btn' > <span class='ion-wrench' ></span> Edit Reports </button>
+            <button *ngIf='editingT' (click)='editingT = !editingT' md-button class='edit-reports-btn2' > Stop Editing Reports </button>
+          </div>
       <md-list>
         <div class='reports-box'>
           <md-list-item>
             <div class='view-reports-head'>
-              <div class='box-reports-head'> Code </div>
               <div class='box-reports-head'> Name </div>
               <div class='box-reports-head'> Type </div>
               <div class='box-reports-head'> In Stock </div>
@@ -230,7 +264,6 @@
 
           <md-list-item *ngFor='let x of products'>
             <div class='view-reports'>
-              <p class='box-reports'> {{ x.code }} </p>
               <p class='box-reports'> {{ x.name }} </p>
               <p class='box-reports'> {{ x.type }} </p>
               <p class='box-reports'> 12 </p>
@@ -242,7 +275,7 @@
           </md-list-item>
         </div>
       </md-list>
-    </md-tab> -->
+    </md-tab>
   </md-tab-group>
 
 
