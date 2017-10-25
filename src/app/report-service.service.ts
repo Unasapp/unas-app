@@ -9,30 +9,16 @@ import * as io from 'socket.io-client';
 @Injectable()
 export class ReportServiceService {
 
-  // SOCKET STUFF/////////
-  // -----------------------
-
-  // private url = 'http://localhost:4200';
-  // private socket = io(this.url);
-  //
-  // sendMessage(message){
-  //   this.socket.emit('add-message', message);
-  // }
-  //
-  // getMessages() {
-  //   this.socket.on('message', (data) => {
-  //   });
-  // }
-
-
-  // END SOCKET STUFF///////////////
-  //--------------------------------
 
   barbers = JSON.parse(localStorage.getItem('barbers'))
   clients = JSON.parse(localStorage.getItem('clients'))
   services = JSON.parse(localStorage.getItem('services'))
 
+  cashout = []
+
+
   constructor(public http:Http) { }
+
 
   testPoint() {
     console.log('testPoint called');
@@ -142,6 +128,11 @@ export class ReportServiceService {
     .map(res => res.json())
   }
 
+  getInProgress(id) {
+    return this.http.post('/api/in-progress', id)
+    .map(res => res.json())
+  }
+
   getServices(id) {
     console.log('service')
     return this.http.post('/api/services', id)
@@ -157,6 +148,11 @@ export class ReportServiceService {
   deleteAPPT(ids){
     console.log('-- ids to delete appts --',ids);
     return this.http.post('/api/cal/delete',ids)
+    .map(res => res.json())
+  }
+
+  getDeleteRequests(id) {
+    return this.http.post('/api/get-delete-requests', id)
     .map(res => res.json())
   }
 

@@ -14,9 +14,10 @@ import { ReportServiceService } from '../report-service.service';
 export class NotificationsComponent implements OnInit {
   test: any = [];
   ifopen: true;
-  pusher: any
+  pusher: any;
+  deleteRequests:any;
 
-  constructor(public dialog: MdDialog, public reportServiceService: ReportServiceService) { }
+  constructor(public dialog: MdDialog, public service: ReportServiceService) { }
 
   openCashDialog() {
     let dialogRef = this.dialog.open(CashoutdialogComponent,{
@@ -32,9 +33,8 @@ export class NotificationsComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.reportServiceService.testPoint().subscribe(test => {
-      this.test = test;
-      console.log(this.test)
+    this.service.getDeleteRequests({id:JSON.parse(localStorage.getItem('profile'))[0].shop_id}).subscribe(data => {
+      this.deleteRequests = data;
     })
   }
 

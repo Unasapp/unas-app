@@ -66,6 +66,8 @@ massive("postgres://uunjpeyj:yVNsIpBpaTMB_a2TXEss-Gmq1DGSIOte@pellefant.db.eleph
   app.set('db', massiveInstance);
   const db = app.get('db');
 
+// USER/LOGIN endpoints
+// ------------------------------------------------
   app.post('/api/add-user', (req, res) => {
     newUser = [
       req.body.firstName,
@@ -109,7 +111,7 @@ massive("postgres://uunjpeyj:yVNsIpBpaTMB_a2TXEss-Gmq1DGSIOte@pellefant.db.eleph
     }).then(trans => res.send(trans))
   })
 
-  app.post('/api/timecards', (req, res) => { 
+  app.post('/api/timecards', (req, res) => {
     let array = [
       req.body.shop_id,
       req.body.date1,
@@ -157,17 +159,17 @@ massive("postgres://uunjpeyj:yVNsIpBpaTMB_a2TXEss-Gmq1DGSIOte@pellefant.db.eleph
     }).then(info => res.send(info))
   })
 
-  app.post('/api/shop-trans', (req, res) => { 
+  app.post('/api/shop-trans', (req, res) => {
     let array = [
       req.body.shop_id,
       req.body.date1,
       req.body.date2
     ]
-    db.shop_trans(array, (err, trans) => {}).then(trans =>{ 
+    db.shop_trans(array, (err, trans) => {}).then(trans =>{
       res.send(trans)
     })
   })
-  
+
 // ??????????????????????????????????????????????????????????
   app.post('/api/shop-trans/earnings',(req, res) => {
     let array = [
@@ -301,6 +303,9 @@ massive("postgres://uunjpeyj:yVNsIpBpaTMB_a2TXEss-Gmq1DGSIOte@pellefant.db.eleph
             fail => res.send({msg:"An error occurred"}))
   })
 
+// CALENDER endpoints
+// -----------------------------------------------
+
   app.post('/api/add-appt', (req, res) => {
     console.log('--adding appts--', req.body)
     let array = [
@@ -349,6 +354,15 @@ massive("postgres://uunjpeyj:yVNsIpBpaTMB_a2TXEss-Gmq1DGSIOte@pellefant.db.eleph
     }).then(info => res.send(info))
   });
 
+  // NOTIFICATION/CASHOUT endpoints
+  // -----------------------------------------------------
+
+  app.post('/api/in-progress', (req, res)=> {
+    db.in_progress(req.body.id, (err, events) => {
+      console.log('db', err, events);
+    }).then(info => res.send(info))
+  })
+
   app.post('/api/delete-request', (req, res) => {
     let array = [req.body.a_id, req.body.shop_id, "delete-request"]
     console.log('---delete request made---', array)
@@ -360,12 +374,20 @@ massive("postgres://uunjpeyj:yVNsIpBpaTMB_a2TXEss-Gmq1DGSIOte@pellefant.db.eleph
     })
   })
 
+  app.post('/api/get-delete-requests', (req, res) => {
+    db.get_delete_requests(req.body.id, (err, info) => {
+    }).then(info => {
+      res.send(info)
+    })
+  })
+
   app.post('/api/start-appt', (req, res) => {
     console.log('endpoint hit', req.body);
     db.update_appt([req.body.a_id,'in-progress'], (err, appt) => {
       console.log('db', err, appt);
     }).then(info => {
-      io.emit('appt-start', { msg: 'A appointment has been started' })
+      info[1] = 'A appointment has been started'
+      io.emit('appt-start', info)
       res.send(info)
     })
   });
@@ -375,10 +397,13 @@ massive("postgres://uunjpeyj:yVNsIpBpaTMB_a2TXEss-Gmq1DGSIOte@pellefant.db.eleph
     db.update_appt([req.body.a_id,'service-completed'], (err, appt) => {
       console.log('db', err, appt);
     }).then(info => {
-      io.emit('appt-end', { msg: 'A appointment has been completed and needs to be cashed out' })
+      info[1] = 'A appointment has been completed and needs to be cashed out'
+      io.emit('appt-end', info)
       res.send(info)
     })
   });
+
+
 
   // Getting appts from Barber
   app.post('/api/appts', (req, res)=> {
@@ -475,7 +500,7 @@ massive("postgres://uunjpeyj:yVNsIpBpaTMB_a2TXEss-Gmq1DGSIOte@pellefant.db.eleph
           <th>Pymt Method</th>
           <th>Amount Paid</th>
         </tr>`;
- 
+
 
     var getStuff = function() {
 
@@ -483,26 +508,26 @@ massive("postgres://uunjpeyj:yVNsIpBpaTMB_a2TXEss-Gmq1DGSIOte@pellefant.db.eleph
       console.log('email server connected');
 
       var array = [
-        1, 
+        1,
         moment(new Date().setDate(new Date().getDate() - 7)).format('YYYY-MM-DD'),
         moment(new Date()).format('YYYY-MM-DD')
       ]
       var timecard
-      (()=>{ 
+      (()=>{
             db.timecards(array, (err, info)=> {
             console.log('-- timecard added to server --',err,info);
           }).then(info =>{
              timecard = info
              console.log('timecard',timecard)
             }).then(()=>{
-              db.shop_trans(array, (err, trans) => {}).then(trans =>{ 
+              db.shop_trans(array, (err, trans) => {}).then(trans =>{
                 transreport = trans
                 console.log('transreport',transreport)
                 maketemp(timecard,transreport)
               })
             })
       })()
-     
+
 
       var timecardBODY
       var maketemp = function(timecard,transreport){
@@ -512,16 +537,16 @@ massive("postgres://uunjpeyj:yVNsIpBpaTMB_a2TXEss-Gmq1DGSIOte@pellefant.db.eleph
 
         transreportBODY = transreport.reduce(function(a, b) {
           return a + '<tr><td>' + moment(b.start_time).format('l LT') + '</td><td>'
-                   + b.b_first + ' ' + b.b_last + '</td><td>' 
-                   + b.c_first + ' ' + b.c_last + '</td><td>' 
-                   + b.service + '</td><td>' 
-                   + b.price + '</td><td>' 
-                   + b.tip + '</td><td>' 
-                   + b.pay_mth + '</td><td>' 
+                   + b.b_first + ' ' + b.b_last + '</td><td>'
+                   + b.c_first + ' ' + b.c_last + '</td><td>'
+                   + b.service + '</td><td>'
+                   + b.price + '</td><td>'
+                   + b.tip + '</td><td>'
+                   + b.pay_mth + '</td><td>'
                    + b.total + '</td></tr>';
         }, '');
-        
-        
+
+
         console.log('here is email Tmp', timecardBODY)
         server.send({
           text: "",
@@ -559,7 +584,7 @@ massive("postgres://uunjpeyj:yVNsIpBpaTMB_a2TXEss-Gmq1DGSIOte@pellefant.db.eleph
             console.log({success: true, msg: 'sent'});
           }
         )
-        return 
+        return
       }
 
     }
