@@ -3,169 +3,247 @@
   <hr>
 
   <md-dialog-content>
-    <div *ngIf='!newCustomer'>
-        <table cellspacing="0">
-          <tr>
-            <td>
-                <h5>Existing Customer</h5>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <md-select name=customer [(ngModel)]='customer' placeholder="Client">
-                <md-option *ngFor="let client of clients" [value]="client.value">
-                  {{ client.viewValue }}
-                </md-option>
-              </md-select>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <br>
-                <md-slide-toggle (change)="newCustomer = !newCustomer"  [checked]="newCustomer" value="1">New Customer</md-slide-toggle><br>
-              <br>
-            </td>
-          </tr>
-        </table>
-     </div> 
+    <md-tab-group>
+      <md-tab label="Scheduled Appointments">
 
-     <div *ngIf='newCustomer' >
-          <table cellspacing="0">
-            <tr>
+        <div style="display:flex; justify-content:space-between">
+          <div>
+            <h2 md-dialog-title>Service Information</h2>
+          </div>
+          <div>
+            <md-select placeholder="Appointments" [(ngModel)]="selected">
+              <md-option *ngFor="let appt of needToPay" [value]="appt">
+                {{ appt.c_first }} {{ appt.c_last }} - {{ appt.service }}
+              </md-option>
+            </md-select>
+          </div>
+        </div>
+        <hr>
+
+        <div *ngIf="selected">
+          <div style="display:flex; justify-content:space-between">
+          <div>
+              <h4><u>Client</u></h4>
+              <p> {{ selected.c_first}} {{selected.c_last}} </p>
+            </div>
+            <div>
+              <h4><u>Service</u></h4>
+              <p>{{selected.service}}</p>
+            </div>
+            <div>
+              <h4><u>Barber</u></h4>
+              <p>{{selected.b_first}} {{selected.b_last}}</p>
+            </div>
+          </div>
+
+          <br>
+
+          <h2 md-dialog-title>Payment</h2>
+          <hr>
+          <div style="display:flex; justify-content: space-between"><h4>Price:</h4> <p>{{selected.price}}</p></div>
+        </div>
+        <md-input-container style="float: right">
+          <input mdInput placeholder="Tip" name=tip [(ngModel)]='tip' type="number">
+        </md-input-container>
+        <div style="display:flex  justify-content: space-between">
+          <md-slide-toggle (change)="addProduct = !addProduct"  [checked]="addProduct" value="1">Add Product</md-slide-toggle>
+          <br>
+          <br>
+          <div *ngIf='addProduct' style="display:flex;  justify-content: space-between">
+            <md-select name=product [(ngModel)]='product' placeholder="Product">
+              <md-option value="Gatorade" >
+                Gatorade
+              </md-option>
+              <md-option value="Hair Product" >
+                Hair Product
+              </md-option>
+            </md-select>
+            <div>Price: </div>
+          </div>
+        </div>
+
+        <br>
+
+
+          <div>
+            <h4><u>Payment Method</u></h4>
+            <md-radio-group name=typeP [(ngModel)]='typeP' style="display:flex;  justify-content: space-around">
+              <md-radio-button value="Cash">Cash</md-radio-button><br><br>
+              <md-radio-button value="Credit/Debit">Credit/Debit</md-radio-button>
+            </md-radio-group>
+          </div>
+          <br>
+
+        <div *ngIf="selected" style="display:flex; justify-content: space-between">Total: {{ selected.price + tip }}</div>
+
+
+      </md-tab>
+
+      <md-tab label="Walk In">
+        <div *ngIf='!newCustomer'>
+            <table cellspacing="0">
+              <tr>
                 <td>
-                    <h5>New Customer</h5>
+                    <h5>Existing Customer</h5>
                 </td>
-            </tr>
-            <tr>
-              <td>
-                <md-input-container >
-                    <input mdInput placeholder="First name" name=firstname [(ngModel)]='firstname'>
-                </md-input-container>
-              </td>
-              <td>
-                <md-input-container >
-                <input mdInput placeholder="Last Name" name=lastname [(ngModel)]='lastname'>
-              </md-input-container>
-            </td>
-            </tr>
-        </table>
-        <p>
-          <md-input-container >
-            <input mdInput placeholder="Phone Number" name=phonenumber [(ngModel)]='phonenumber'>
-          </md-input-container>
-          <md-input-container >
-            <input mdInput placeholder="Email" name=email [(ngModel)]='email'>
-          </md-input-container>
-        </p>
-
-        <table>
-            <tr>
+              </tr>
+              <tr>
                 <td>
-                    <md-input-container>
-                        <input mdInput placeholder="Birthday" name=bday [(ngModel)]='bday'>
+                  <md-select name=customer [(ngModel)]='customer' placeholder="Client">
+                    <md-option *ngFor="let client of clients" [value]="client.c_id">
+                      {{ client.c_first }} {{ client.c_last }}
+                    </md-option>
+                  </md-select>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <br>
+                    <md-slide-toggle (change)="newCustomer = !newCustomer"  [checked]="newCustomer" value="1">New Customer</md-slide-toggle><br>
+                  <br>
+                </td>
+              </tr>
+            </table>
+         </div>
+
+         <div *ngIf='newCustomer' >
+              <table cellspacing="0">
+                <tr>
+                    <td>
+                        <h5>New Customer</h5>
+                    </td>
+                </tr>
+                <tr>
+                  <td>
+                    <md-input-container >
+                        <input mdInput placeholder="First name" name=firstname [(ngModel)]='firstname'>
                     </md-input-container>
+                  </td>
+                  <td>
+                    <md-input-container >
+                    <input mdInput placeholder="Last Name" name=lastname [(ngModel)]='lastname'>
+                  </md-input-container>
                 </td>
-            </tr>    
+                </tr>
+            </table>
+            <p>
+              <md-input-container >
+                <input mdInput placeholder="Phone Number" name=phonenumber [(ngModel)]='phonenumber'>
+              </md-input-container>
+              <md-input-container >
+                <input mdInput placeholder="Email" name=email [(ngModel)]='email'>
+              </md-input-container>
+            </p>
+
+            <table>
+                <tr>
+                    <td>
+                        <md-input-container>
+                            <input mdInput placeholder="Birthday" name=bday [(ngModel)]='bday'>
+                        </md-input-container>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                      ** Format Example: 2-14-92
+                    </td>
+                </tr>
+            </table>
             <tr>
-                <td>
-                  ** Format Example: 2-14-92 
-                </td>
-            </tr>    
-        </table>
-        <tr>
-          <td>
-              <br>
-                <md-slide-toggle (change)="newCustomer = !newCustomer"  [checked]="newCustomer" value="1">New Customer</md-slide-toggle><br>
-                <br>
-              </td>
-          </tr>
-    </div>
+              <td>
+                  <br>
+                    <md-slide-toggle (change)="newCustomer = !newCustomer"  [checked]="newCustomer" value="1">New Customer</md-slide-toggle><br>
+                    <br>
+                  </td>
+              </tr>
+        </div>
 
-      <h2 md-dialog-title>Service Information</h2>
-      <hr>
-      <br>
-      <table  cellspacing="0">
-        <tr>
-          <td>
-            <md-select name=service [(ngModel)]='service' placeholder="Service">
-              <md-option *ngFor="let service of services" [value]="service.value">
-                {{ service.viewValue }}
-              </md-option>
-            </md-select>
-          </td>
-          <td>
-            <md-select name=barber [(ngModel)]='barber' placeholder="Barber">
-              <md-option *ngFor="let barber of barbers" [value]="barber.value">
-                {{ barber.viewValue }}
-              </md-option>
-            </md-select>
-          </td>
-        </tr>
-      </table>
-      
-      <br>
-
-      <h2 md-dialog-title>Payment</h2>
-      <hr>
-
-      <table  cellspacing="0">
-        <tr>
-          <td>
-            <md-input-container >
-              <input mdInput placeholder="Price" name=price [(ngModel)]='price'>
-            </md-input-container>
-          </td>
-          <td>
-            <md-input-container >
-              <input mdInput placeholder="Tip" name=tip [(ngModel)]='tip'>
-            </md-input-container>
-          </td>
-          <td>
-            <md-input-container >
-              <input mdInput placeholder="Amount Paid" name=amtpaid [(ngModel)]='amtpaid'>
-            </md-input-container>
-          </td>
-        </tr>
-        <tr>
-          <td>
-              <br>
-                <md-slide-toggle (change)="addProduct = !addProduct"  [checked]="addProduct" value="1">Add Product</md-slide-toggle><br>
-                <br>
-            </td>
-          </tr>
-      </table>
-
-      <div *ngIf='addProduct' >
-        <table  cellspacing="0">
-          <tr>
-            <td>
-               <md-select name=product [(ngModel)]='product' placeholder="Product">
-                  <md-option value="Gatorade" >
-                    Gatorade
+          <h2 md-dialog-title>Service Information</h2>
+          <hr>
+          <br>
+          <table  cellspacing="0">
+            <tr>
+              <td>
+                <md-select name=service [(ngModel)]='service' placeholder="Service">
+                  <md-option *ngFor="let service of services" [value]="service.v_id">
+                    {{ service.service }}
                   </md-option>
-                  <md-option value="Hair Product" >
-                    Hair Product
+                </md-select>
+              </td>
+              <td>
+                <md-select name=barber [(ngModel)]='barber' placeholder="Barber">
+                  <md-option *ngFor="let barber of barbers" [value]="barber.b_id">
+                    {{ barber.b_first }} {{ barber.b_last}}
                   </md-option>
                 </md-select>
               </td>
             </tr>
-        </table>
+          </table>
+
+          <br>
+
+          <h2 md-dialog-title>Payment</h2>
+          <hr>
+
+          <table  cellspacing="0">
+            <tr>
+              <td>
+                <md-input-container >
+                  <input mdInput placeholder="Price" name=price [(ngModel)]='price'>
+                </md-input-container>
+              </td>
+              <td>
+                <md-input-container >
+                  <input mdInput placeholder="Tip" name=tip [(ngModel)]='tip'>
+                </md-input-container>
+              </td>
+              <td>
+                <md-input-container >
+                  <input mdInput placeholder="Amount Paid" name=amtpaid [(ngModel)]='amtpaid'>
+                </md-input-container>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                  <br>
+                    <md-slide-toggle (change)="addProduct = !addProduct"  [checked]="addProduct" value="1">Add Product</md-slide-toggle><br>
+                    <br>
+                </td>
+              </tr>
+          </table>
+
+          <div *ngIf='addProduct' >
+            <table  cellspacing="0">
+              <tr>
+                <td>
+                   <md-select name=product [(ngModel)]='product' placeholder="Product">
+                      <md-option value="Gatorade" >
+                        Gatorade
+                      </md-option>
+                      <md-option value="Hair Product" >
+                        Hair Product
+                      </md-option>
+                    </md-select>
+                  </td>
+                </tr>
+            </table>
+            <br>
+          </div>
+
+          <table  cellspacing="0">
+            <tr>
+              <td>
+                <md-radio-group name=typeP [(ngModel)]='typeP' >
+                  <md-radio-button value="Cash">Cash</md-radio-button><br><br>
+                  <md-radio-button value="Credit/Debit">Credit/Debit</md-radio-button>
+                </md-radio-group>
+              </td>
+            </tr>
+          </table>
+
         <br>
-      </div>
-
-      <table  cellspacing="0">
-        <tr>
-          <td>
-            <md-radio-group name=typeP [(ngModel)]='typeP' >
-              <md-radio-button value="Cash">Cash</md-radio-button><br><br>
-              <md-radio-button value="Credit/Debit">Credit/Debit</md-radio-button>
-            </md-radio-group>
-          </td>
-        </tr>
-      </table>
-
-    <br>
-
+      </md-tab>
+    </md-tab-group>
   </md-dialog-content>
 
   <md-dialog-actions>

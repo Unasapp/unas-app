@@ -84,29 +84,20 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit() {
-    //   this.http.get('https://penguinhousedesigns.auth0.com/userinfo').subscribe((res)=>{
-    //   console.log('this is user data',res);
-    // })
 
-    // this.socket.emit('my other event', { my: 'data' });
-    // console.log(this.socket)
-    // this.socket.on('news', function (data) {
-    //   console.log(data);
-    //   console.log(this.socket);
-    //
-    // });
-    console.log(JSON.parse(localStorage.getItem('profile'))[0].shop_id)
-    this.service.getBarbers({id:JSON.parse(localStorage.getItem('profile'))[0].shop_id}).subscribe((data) => {
-      console.log('getting barber data',data);
-      this.barbers = data;
-      localStorage.setItem('barbers', JSON.stringify(data))
-    })
-    this.service.getContacts({id:JSON.parse(localStorage.getItem('profile'))[0].shop_id}).subscribe((data) => {
-      localStorage.setItem('clients', JSON.stringify(data))
-    })
-    this.service.getServices({id:JSON.parse(localStorage.getItem('profile'))[0].shop_id}).subscribe((data) => {
-      localStorage.setItem('services', JSON.stringify(data))
-    })
+      console.log(JSON.parse(localStorage.getItem('profile'))[0].shop_id)
+      this.service.getBarbers({id:JSON.parse(localStorage.getItem('profile'))[0].shop_id}).subscribe((data) => {
+        console.log('getting barber data',data);
+        this.barbers = data;
+        localStorage.setItem('barbers', JSON.stringify(data))
+      })
+      this.service.getContacts({id:JSON.parse(localStorage.getItem('profile'))[0].shop_id}).subscribe((data) => {
+        localStorage.setItem('clients', JSON.stringify(data))
+      })
+      this.service.getServices({id:JSON.parse(localStorage.getItem('profile'))[0].shop_id}).subscribe((data) => {
+        localStorage.setItem('services', JSON.stringify(data))
+      })
+      
 
     }
 

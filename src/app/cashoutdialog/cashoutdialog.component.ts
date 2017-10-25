@@ -1,6 +1,7 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MdDialog, MdDialogRef } from '@angular/material';
 import { MD_DIALOG_DATA } from '@angular/material';
+import { ReportServiceService } from '../report-service.service';
 
 
 @Component({
@@ -16,15 +17,23 @@ export class CashoutdialogComponent implements OnInit {
 
   clients = JSON.parse(localStorage.getItem('clients'))
 
+  needToPay = this.service.cashout
+
+
 
 constructor(
   public dialogRef: MdDialogRef<CashoutdialogComponent>,
-  @Inject(MD_DIALOG_DATA) public data: any
-) { }
+  @Inject(MD_DIALOG_DATA) public data: any,
+  private service: ReportServiceService
+) {
+}
 
 ngOnInit() {
-  console.log(this.clients);
-  
+  this.service.getInProgress({id:JSON.parse(localStorage.getItem('profile'))[0].shop_id}).subscribe(data => {
+    this.needToPay = data;
+    console.log('@db:', data)
+  });
+  this.needToPay.map(x => x.price = (Number(data[j].tip.split('$')[1]))
 }
 
 onCloseConfirm(customer, firstname, lastname, phonenumber, email, service, barber, price, tip, amtpaid, typeP, product, bday){
@@ -40,7 +49,7 @@ onCloseConfirm(customer, firstname, lastname, phonenumber, email, service, barbe
       'c_shop': 1
     }
     console.log('-- New Client created --',newClient);
-    
+
     let customer = firstname + ' ' + lastname;
     let trans = {
       'date': new Date(),
