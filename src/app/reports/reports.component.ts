@@ -197,6 +197,7 @@ export class ReportsComponent implements OnInit {
   todaysdateDisplay = moment(new Date()).format('dddd, MMMM Do YYYY')  
   todaysdate = new Date()
   com: any
+  products = []
   ngOnInit() {
     // console.log('reports loaded ---->>>>.',this.barbers)
     let earnInfo = {
@@ -205,6 +206,12 @@ export class ReportsComponent implements OnInit {
       'shop_id' : JSON.parse(localStorage.getItem('profile'))[0].shop_id
     }
     // console.log('earnInfo 😡', earnInfo);
+
+    this.service.getProductsReport(earnInfo).subscribe(data =>{
+      console.log('--- products for reports --',data);
+      this.products = data
+     
+     })
     
     this.service.getShopTrans(earnInfo).subscribe(trans => {
 
@@ -278,7 +285,7 @@ export class ReportsComponent implements OnInit {
             'barberE': x.total,
             'shopE': x.rate,
             'tips': x.tip
-          })
+          }) 
 
         }
         // console.log('--- this.barearning after post processing --',this.barearnings);

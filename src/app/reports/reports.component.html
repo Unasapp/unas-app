@@ -257,20 +257,18 @@
               <div class='box-reports-head'> In Stock </div>
               <div class='box-reports-head'> # Sold </div>
               <div class='box-reports-head'> Cost Per </div>
-              <div class='box-reports-head'> Net Sales </div>
-              <div style='border: none;' class='box-reports-head'> Last Sold </div>
+              <div style='border: none;' class='box-reports-head'> Net Sales </div>
             </div>
           </md-list-item>
 
           <md-list-item *ngFor='let x of products'>
             <div class='view-reports'>
-              <p class='box-reports'> {{ x.name }} </p>
-              <p class='box-reports'> {{ x.type }} </p>
-              <p class='box-reports'> 12 </p>
-              <p class='box-reports'> 32 </p>
-              <p class='box-reports'> {{ x.cost | currency:'USD':true }} </p>
-              <p class='box-reports'> $40 </p>
-              <p class='box-reports'> 8-16-2017 </p>
+              <p class='box-reports'> {{ x.product }} </p>
+              <p class='box-reports'> {{ x.type }}    </p>
+              <p class='box-reports'> {{ x.quantity }} </p>
+              <p class='box-reports'> {{ x.sold }} </p>
+              <p class='box-reports'> {{ x.price | currency:'USD':true }} </p>
+              <p class='box-reports'> {{ x.netsales }} </p>
             </div>
           </md-list-item>
         </div>

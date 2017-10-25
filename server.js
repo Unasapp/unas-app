@@ -12,11 +12,9 @@ const express = require('express'),
       server = http.createServer(app),
       nodemailer = require('nodemailer'),
       email = require('emailjs/email'),
-      io = require('socket.io')(server);
+      io = require('socket.io').listen(server);
       CronJob = require('cron').CronJob;
       moment = require('moment');
-
-      io = require('socket.io').listen(server);
 
 server.listen( 4200, ()=> {console.log('Connected on 4200')})
 
@@ -397,6 +395,70 @@ massive("postgres://uunjpeyj:yVNsIpBpaTMB_a2TXEss-Gmq1DGSIOte@pellefant.db.eleph
       console.log('db for products', err, data);
     }).then((data)=>{
       console.log(' -- appts from DB -- ',data)
+      res.send(data)
+    })
+  })
+
+
+  app.post('/api/addproduct', (req, res)=>{
+    let array = [
+      req.body.product,
+      req.body.price,
+      req.body.type,
+      req.body.quantity,
+      req.body.shop_id
+    ]
+    console.log('id to get products',array)
+    db.addProducts(array, (err,data)=>{
+      console.log('db for adding products', err, data);
+    }).then((data)=>{
+      console.log(' -- appts from DB -- ',data)
+      res.send(data)
+    })
+  })
+
+
+  app.post('/api/editproduct', (req, res)=>{
+    let array = [
+      req.body.product,
+      req.body.price,
+      req.body.type,
+      req.body.quantity,
+      req.body.p_id,
+      req.body.shop_id
+    ]
+    console.log('id to get products',array)
+    db.editProducts(array, (err,data)=>{
+      console.log('db for editing products', err, data);
+    }).then((data)=>{
+      console.log(' -- appts from DB -- ',data)
+      res.send(data)
+    })
+  })
+
+
+  app.post('/api/deleteproduct', (req, res)=>{
+    console.log('id to delete products',req.body.p_id)
+    db.deleteProducts(req.body.p_id, (err,data)=>{
+      console.log('db for editing products', err, data);
+    }).then((data)=>{
+      console.log(' -- appts from DB -- ',data)
+      res.send(data)
+    })
+  })
+
+
+  app.post('/api/reports/products', (req, res)=>{
+    let array = [
+      req.body.shop_id,
+      req.body.date1,
+      req.body.date2
+    ]
+    console.log('info to get product reports',array)
+    db.reports_products(array, (err,data)=>{
+      console.log('info to get product reports', err, data);
+    }).then((data)=>{
+      console.log('info to get product reports',data)
       res.send(data)
     })
   })

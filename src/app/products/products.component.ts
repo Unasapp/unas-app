@@ -14,7 +14,11 @@ import { ReportServiceService } from  '../report-service.service'
 export class ProductsComponent implements OnInit {
   products: any
 
-  constructor(private http: HttpClient, public dialog: MdDialog, private service: ReportServiceService) { }
+  constructor(
+    private http: HttpClient, 
+    public dialog: MdDialog, 
+    private service: ReportServiceService
+  ) { }
   
     openCashDialog() {
       let dialogRef = this.dialog.open(CashoutdialogComponent,{
@@ -22,6 +26,7 @@ export class ProductsComponent implements OnInit {
         data: 'this text is passed'
       })
     }
+
     openApptDialog() {
       let dialogRef = this.dialog.open(ApptdialogComponent,{
         width: '600px',
@@ -29,24 +34,31 @@ export class ProductsComponent implements OnInit {
       })
     }
   
-    openDialog(selectedContact) {
+    openDialog(x) {
       let dialogRef = this.dialog.open(ProductDialogComponent,{
         width: '600px',
-        data: selectedContact ? selectedContact : { new: true },
+        data: x
       })
   
-      // dialogRef.afterClosed().subscribe(result =>{
-      //   if(result.status === "added"){
-      //     this.users.push(result);
-      //   } else if (result.status === "edited") {
-      //     this.users[this.users.findIndex((x)=> x.c_id === result.c_id)] = result
-      //   } else if (result.status === "deleted") {
-      //     this.users.splice(this.users.findIndex(x => x.c_id === result.c_id),1)
-      //   } else if (result.status === "canceled") {
-      //   } else {
-      //     alert('An error occurred')
-      //   }
-      // })
+      dialogRef.afterClosed().subscribe(result =>{
+        if(result.p_id){
+          for (var i = 0; i < this.products.length; i++) {
+            if(this.products[i].p_id == result.p_id){
+              this.products[i] = result
+            }
+          }
+        }
+        if(result.delete){
+          for (var i = 0; i < this.products.length; i++) {
+            if(this.products[i].p_id == result.p_id){
+              this.products.splice(i,1)
+            }
+          }
+        }
+        if(!result.p_id){
+          this.products.push(result)
+        }
+      })
   
     }
 
