@@ -24,7 +24,9 @@ import {
     MdSelectModule,
     MdNativeDateModule,
     MdSliderModule,
-    MdSlideToggleModule
+    MdSlideToggleModule,
+    MdSnackBarModule,
+    MdExpansionModule
  } from '@angular/material';
 
 import { routes } from './app.router'
@@ -98,7 +100,9 @@ import { SidenavComponent } from './sidenav/sidenav.component';
     MdNativeDateModule,
     MdSliderModule,
     MdSlideToggleModule,
-    ChartsModule
+    ChartsModule,
+    MdSnackBarModule,
+    MdExpansionModule
   ],
   entryComponents: [
     ContactsdialogComponent,

@@ -6,9 +6,6 @@ select
   services.service,
   appointments.start_time,
   services.price,
-  appointments.tip,
-  appointments.total,
-  appointments.pay_mth,
   appointments.a_id
 from
   appointments,
@@ -27,4 +24,4 @@ and
 and
   shops.s_id = $1
 and
-  appointments.status = 'completed'
+  appointments.status = 'delete-request'

@@ -62,6 +62,8 @@ massive("postgres://uunjpeyj:yVNsIpBpaTMB_a2TXEss-Gmq1DGSIOte@pellefant.db.eleph
   app.set('db', massiveInstance);
   const db = app.get('db');
 
+// USER/LOGIN endpoints
+// ------------------------------------------------
   app.post('/api/add-user', (req, res) => {
     newUser = [
       req.body.firstName,
@@ -105,6 +107,8 @@ massive("postgres://uunjpeyj:yVNsIpBpaTMB_a2TXEss-Gmq1DGSIOte@pellefant.db.eleph
     }).then(trans => res.send(trans))
   })
 
+// REPORTS endpoints
+// -----------------------------------------
   app.post('/api/timecards', (req, res) => {
     console.log('getting timecards', req.body.id)
     db.timecards(req.body.id, (err, cards) => {}).then(cards => {
@@ -141,6 +145,9 @@ massive("postgres://uunjpeyj:yVNsIpBpaTMB_a2TXEss-Gmq1DGSIOte@pellefant.db.eleph
        res.send(trans)
       })
   })
+
+  // CONTACTS AND BARBERS endpoints
+  // ------------------------------------------------
 
   app.post('/api/contacts', (req, res) => {
       // console.log('this has worked')
@@ -238,6 +245,9 @@ massive("postgres://uunjpeyj:yVNsIpBpaTMB_a2TXEss-Gmq1DGSIOte@pellefant.db.eleph
             fail => res.send({msg:"An error occurred"}))
   })
 
+// CALENDER endpoints
+// -----------------------------------------------
+
   app.post('/api/add-appt', (req, res) => {
     console.log('--adding appts--', req.body)
     let array = [
@@ -286,6 +296,15 @@ massive("postgres://uunjpeyj:yVNsIpBpaTMB_a2TXEss-Gmq1DGSIOte@pellefant.db.eleph
     }).then(info => res.send(info))
   });
 
+  // NOTIFICATION/CASHOUT endpoints
+  // -----------------------------------------------------
+
+  app.post('/api/in-progress', (req, res)=> {
+    db.in_progress(req.body.id, (err, events) => {
+      console.log('db', err, events);
+    }).then(info => res.send(info))
+  })
+
   app.post('/api/delete-request', (req, res) => {
     let array = [req.body.a_id, req.body.shop_id, "delete-request"]
     console.log('---delete request made---', array)
@@ -297,12 +316,20 @@ massive("postgres://uunjpeyj:yVNsIpBpaTMB_a2TXEss-Gmq1DGSIOte@pellefant.db.eleph
     })
   })
 
+  app.post('/api/get-delete-requests', (req, res) => {
+    db.get_delete_requests(req.body.id, (err, info) => {
+    }).then(info => {
+      res.send(info)
+    })
+  })
+
   app.post('/api/start-appt', (req, res) => {
     console.log('endpoint hit', req.body);
     db.update_appt([req.body.a_id,'in-progress'], (err, appt) => {
       console.log('db', err, appt);
     }).then(info => {
-      io.emit('appt-start', { msg: 'A appointment has been started' })
+      info[1] = 'A appointment has been started'
+      io.emit('appt-start', info)
       res.send(info)
     })
   });
@@ -312,10 +339,13 @@ massive("postgres://uunjpeyj:yVNsIpBpaTMB_a2TXEss-Gmq1DGSIOte@pellefant.db.eleph
     db.update_appt([req.body.a_id,'service-completed'], (err, appt) => {
       console.log('db', err, appt);
     }).then(info => {
-      io.emit('appt-end', { msg: 'A appointment has been completed and needs to be cashed out' })
+      info[1] = 'A appointment has been completed and needs to be cashed out'
+      io.emit('appt-end', info)
       res.send(info)
     })
   });
+
+
 
   // Getting appts from Barber
   app.post('/api/appts', (req, res)=> {
