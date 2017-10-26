@@ -24,7 +24,9 @@ import {
     MdSelectModule,
     MdNativeDateModule,
     MdSliderModule,
-    MdSlideToggleModule
+    MdSlideToggleModule,
+    MdSnackBarModule,
+    MdExpansionModule
  } from '@angular/material';
 
 import { routes } from './app.router'
@@ -100,7 +102,9 @@ import { ServicesComponent } from './services/services.component';
     MdNativeDateModule,
     MdSliderModule,
     MdSlideToggleModule,
-    ChartsModule
+    ChartsModule,
+    MdSnackBarModule,
+    MdExpansionModule
   ],
   entryComponents: [
     ContactsdialogComponent,
