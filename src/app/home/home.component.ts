@@ -9,6 +9,7 @@ import { BarberModalComponent } from '../barber-modal/barber-modal.component'
 import { ReportServiceService } from '../report-service.service';
 import * as io from 'socket.io-client';
 import { Router } from '@angular/router';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-home',
@@ -35,11 +36,6 @@ export class HomeComponent implements OnInit {
   // Pie
   public pieChartLabels:string[] = ['Download Sales', 'In-Store Sales', 'Mail Sales'];
   public pieChartData:number[] = [300, 500, 100];
-
-  public randomizeType():void {
-    this.lineChartType = this.lineChartType === 'line' ? 'bar' : 'line';
-    this.pieChartType = this.pieChartType === 'doughnut' ? 'pie' : 'doughnut';
-  }
 
   public chartClicked(e:any):void {
     console.log(e);
@@ -97,6 +93,19 @@ export class HomeComponent implements OnInit {
     this.profile = JSON.parse(localStorage.getItem('profile'))
     this.profType = (JSON.parse(localStorage.getItem('profile'))[0].type === 'admin') ? true : false
     this.barbers = JSON.parse(localStorage.getItem('barbers'))
+
+    let earnInfo = {
+      'date1' : moment(new Date()).format('YYYY-MM-DD'),
+      'date2' : moment(new Date().setDate(new Date().getDate() + 1)).format('YYYY-MM-DD'),
+      'shop_id' : JSON.parse(localStorage.getItem('profile'))[0].shop_id
+    }
+
+    // this.service.getShopWages(earninfo).subscribe(data=>{
+
+    // })
+
+
+
   }
 
 

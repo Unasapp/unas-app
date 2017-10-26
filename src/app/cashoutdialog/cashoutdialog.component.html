@@ -3,10 +3,10 @@
   <hr>
 
   <md-dialog-content>
-    <md-tab-group>
-      <md-tab label="Scheduled Appointments">
+    <md-tab-group (selectChange)='changeTab()'>
+      <md-tab  label="Scheduled Appointments">
 
-        <div style="display:flex; justify-content:space-between">
+        <div class='service-info'>
           <div>
             <h2 md-dialog-title>Service Information</h2>
           </div>
@@ -21,62 +21,25 @@
         </div>
         <hr>
 
-        <div *ngIf="selected">
+        
           <div style="display:flex; justify-content:space-between">
-          <div>
+            <div>
               <h4><u>Client</u></h4>
-              <p> {{ selected.c_first}} {{selected.c_last}} </p>
+              <p> {{ selected?.c_first}} {{selected?.c_last}} </p>
             </div>
             <div>
               <h4><u>Service</u></h4>
-              <p>{{selected.service}}</p>
+              <p>{{selected?.service}}</p>
             </div>
             <div>
               <h4><u>Barber</u></h4>
-              <p>{{selected.b_first}} {{selected.b_last}}</p>
+              <p>{{selected?.b_first}} {{selected?.b_last}}</p>
             </div>
           </div>
+        
 
           <br>
-
-          <h2 md-dialog-title>Payment</h2>
-          <hr>
-          <div style="display:flex; justify-content: space-between"><h4>Price:</h4> <p>{{selected.price}}</p></div>
-        </div>
-        <md-input-container style="float: right">
-          <input mdInput placeholder="Tip" name=tip [(ngModel)]='tip' type="number">
-        </md-input-container>
-        <div style="display:flex  justify-content: space-between">
-          <md-slide-toggle (change)="addProduct = !addProduct"  [checked]="addProduct" value="1">Add Product</md-slide-toggle>
-          <br>
-          <br>
-          <div *ngIf='addProduct' style="display:flex;  justify-content: space-between">
-            <md-select name=product [(ngModel)]='product' placeholder="Product">
-              <md-option value="Gatorade" >
-                Gatorade
-              </md-option>
-              <md-option value="Hair Product" >
-                Hair Product
-              </md-option>
-            </md-select>
-            <div>Price: </div>
-          </div>
-        </div>
-
-        <br>
-
-
-          <div>
-            <h4><u>Payment Method</u></h4>
-            <md-radio-group name=typeP [(ngModel)]='typeP' style="display:flex;  justify-content: space-around">
-              <md-radio-button value="Cash">Cash</md-radio-button><br><br>
-              <md-radio-button value="Credit/Debit">Credit/Debit</md-radio-button>
-            </md-radio-group>
-          </div>
-          <br>
-
-        <div *ngIf="selected" style="display:flex; justify-content: space-between">Total: {{ selected.price + tip }}</div>
-
+        
 
       </md-tab>
 
@@ -165,8 +128,8 @@
           <table  cellspacing="0">
             <tr>
               <td>
-                <md-select name=service [(ngModel)]='service' placeholder="Service">
-                  <md-option *ngFor="let service of services" [value]="service.v_id">
+                <md-select name=service [(ngModel)]='serviceVal' placeholder="Service">
+                  <md-option *ngFor="let service of services" [value]="service">
                     {{ service.service }}
                   </md-option>
                 </md-select>
@@ -181,74 +144,59 @@
             </tr>
           </table>
 
-          <br>
-
-          <h2 md-dialog-title>Payment</h2>
-          <hr>
-
-          <table  cellspacing="0">
-            <tr>
-              <td>
-                <md-input-container >
-                  <input mdInput placeholder="Price" name=price [(ngModel)]='price'>
-                </md-input-container>
-              </td>
-              <td>
-                <md-input-container >
-                  <input mdInput placeholder="Tip" name=tip [(ngModel)]='tip'>
-                </md-input-container>
-              </td>
-              <td>
-                <md-input-container >
-                  <input mdInput placeholder="Amount Paid" name=amtpaid [(ngModel)]='amtpaid'>
-                </md-input-container>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                  <br>
-                    <md-slide-toggle (change)="addProduct = !addProduct"  [checked]="addProduct" value="1">Add Product</md-slide-toggle><br>
-                    <br>
-                </td>
-              </tr>
-          </table>
-
-          <div *ngIf='addProduct' >
-            <table  cellspacing="0">
-              <tr>
-                <td>
-                   <md-select name=product [(ngModel)]='product' placeholder="Product">
-                      <md-option value="Gatorade" >
-                        Gatorade
-                      </md-option>
-                      <md-option value="Hair Product" >
-                        Hair Product
-                      </md-option>
-                    </md-select>
-                  </td>
-                </tr>
-            </table>
-            <br>
-          </div>
-
-          <table  cellspacing="0">
-            <tr>
-              <td>
-                <md-radio-group name=typeP [(ngModel)]='typeP' >
-                  <md-radio-button value="Cash">Cash</md-radio-button><br><br>
-                  <md-radio-button value="Credit/Debit">Credit/Debit</md-radio-button>
-                </md-radio-group>
-              </td>
-            </tr>
-          </table>
-
         <br>
       </md-tab>
     </md-tab-group>
+
+    <div>
+        <h2 md-dialog-title>Payment</h2>
+        <hr>
+            <div class='product-select' >
+              <div>
+              <md-select name=product [(ngModel)]='chosenproduct' placeholder="Product">
+                <md-option *ngFor='let product of products' [value]="product" >
+                  {{ product?.product }} -
+                  {{ product?.price }}
+                </md-option>
+              </md-select>
+              </div>
+              <div>
+              <md-input-container style="margin-left:10px;" >
+                  <input mdInput placeholder="Quantity" name=productQ [(ngModel)]='productQ' type="number">
+                </md-input-container>
+              </div>
+            </div>
+        <div class='paystuff' >
+            <div *ngIf='walk' >
+              Price: {{ serviceVal?.price | currency:'USD':true }} 
+            </div>
+            <div *ngIf='!walk' >
+              Price: {{ selected?.price | currency:'USD':true }} 
+            </div>
+            <div>
+              <md-input-container >
+                <input mdInput placeholder="Tip" name=tip [(ngModel)]='tip' type="number">
+              </md-input-container>
+            </div>
+            <div *ngIf='walk'  >
+              Total: {{ (serviceVal?.price ? serviceVal?.price : 0) + tip + (chosenproduct?.price * productQ) | currency:'USD':true }}
+            </div>
+            <div *ngIf='!walk'  >
+              Total: {{ selected?.price + tip + (chosenproduct?.price * productQ) | currency:'USD':true }}
+            </div>
+        </div>
+        <br>
+        <h4><u>Payment Method</u></h4>
+        <md-radio-group name=typeP [(ngModel)]='typeP' >
+          <md-radio-button value="Cash">Cash</md-radio-button><br><br>
+          <md-radio-button value="Credit/Debit">Credit/Debit</md-radio-button>
+        </md-radio-group>
+    </div>
+
   </md-dialog-content>
 
   <md-dialog-actions>
-    <button md-raised-button (click)='onCloseConfirm(customer, firstname, lastname, phonenumber, email, service, barber, price, tip, amtpaid, typeP, product, bday)'> Submit </button>
+    <button md-raised-button (click)='onCloseConfirm(customer, firstname, lastname, phonenumber, email, serviceVal, barber, price, tip, amtpaid, typeP, product, bday)'> Submit </button>
     <button md-raised-button (click)='onCloseCancel()'> Cancel </button>
   </md-dialog-actions>
 
