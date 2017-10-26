@@ -23,8 +23,6 @@ and
 and
   c_id = client_id
 and
-  v_id = services.shop_id
-and
   shops.s_id = $1
 and
   appointments.status = 'completed'

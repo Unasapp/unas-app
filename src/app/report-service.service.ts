@@ -219,5 +219,55 @@ export class ReportServiceService {
     .map(res => res.json())
   }
 
+  addNewProduct(product){
+    console.log('-- Adding products --',product);
+    return this.http.post('/api/addproduct',product)
+    .map(res => res.json())
+  }
+
+  editProduct(product){
+    console.log('-- editing products --',product);
+    return this.http.post('/api/editproduct',product)
+    .map(res => res.json())
+  }
+
+  deleteProduct(product){
+    console.log('-- delete products --',product);
+    return this.http.post('/api/deleteproduct',product)
+    .map(res => res.json())
+
+  }
+
+  getProductsReport(info){
+    console.log('-- get products reports --',info);
+    return this.http.post('/api/reports/products',info)
+    .map(res => res.json())
+
+  }
+
+  completeAppt(x){
+    console.log('completing appt ----',x);
+    return this.http.post('/api/appt/complete',x)
+      .map(res => res.json())
+  }
+
+  newCustomerTrans(c){
+    console.log('completing New Customer appt ----',c);
+    return this.http.post('/api/appt/newcustomercomplete',c)
+      .map(res => res.json())
+  }
+
+  walkinTrans(c){
+    console.log('completing New Customer appt ----',c);
+    return this.http.post('/api/appt/walkinTrans',c)
+      .map(res => res.json())
+  }
+
+  productTrans(c){
+    console.log('completing New Product appt ----',c);
+    return this.http.post('/api/appt/productTrans',c)
+      .map(res => res.json())
+  }
+
 
 }

@@ -3,31 +3,31 @@
   <h2 md-dialog-title >New Product</h2>
   <hr>
   <md-dialog-content>
-<form class="example-form">
-  <table class="example-full-width" cellspacing="0">
+<form >
+  <table  cellspacing="0">
     <tr>
       <td>
-        <md-input-container class="example-full-width">
+        <md-input-container >
           <input mdInput placeholder="Product Name" name=productname [(ngModel)]='productname'>
         </md-input-container>
       </td>
       <td>
-        <md-input-container class="example-full-width">
+        <md-input-container >
           <input mdInput placeholder="Type" name=producttype [(ngModel)]='producttype'>
         </md-input-container>
       </td>
     </tr>
   </table>
-  <table class="example-full-width" cellspacing="0">
+  <table  cellspacing="0">
     <tr>
       <td>
-        <md-input-container class="example-full-width">
+        <md-input-container >
           <input mdInput placeholder="Cost Per Item" name=productcost [(ngModel)]='productcost'>
         </md-input-container>
       </td>
       <td>
-        <md-input-container class="example-full-width">
-          <input mdInput placeholder="Product Code" name=productcode [(ngModel)]='productcode'>
+        <md-input-container >
+          <input type='number' mdInput placeholder="Quantity" name=productcode [(ngModel)]='productquantity'>
         </md-input-container>
       </td>
     </tr>
@@ -40,8 +40,10 @@
   </md-dialog-content>
 
   <md-dialog-actions>
-    <button md-raised-button (click)='onCloseConfirm(productname, producttype, productcost, productcode)' > Add </button>
+    <button *ngIf='data == "no"' md-raised-button (click)='onCloseConfirm("ADD")' > Add </button>
+    <button *ngIf='data == "yes"' md-raised-button (click)='onCloseConfirm("SAVE")' > Save </button>
     <button md-raised-button (click)='onCloseCancel()' > Cancel </button>
+    <button class='deleteBTN' *ngIf='data == "yes"' md-raised-button (click)='onCloseConfirm("DELETE")' > Delete </button>
   </md-dialog-actions>
 
 </div>

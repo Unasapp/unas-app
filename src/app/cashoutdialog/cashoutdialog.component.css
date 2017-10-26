@@ -1,0 +1,21 @@
+.paystuff{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 18px;
+}
+
+.product-select{
+    display: flex;
+    align-items: baseline;
+    margin-top: 25px;
+    margin-bottom: 15px;
+}
+
+.service-info{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-top: 15px;
+    margin-bottom: 15px;
+}

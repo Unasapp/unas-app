@@ -2,6 +2,7 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { MdDialog, MdDialogRef } from '@angular/material';
 import { MD_DIALOG_DATA } from '@angular/material';
 import { ReportServiceService } from '../report-service.service';
+import * as moment from 'moment';
 
 
 @Component({
@@ -18,6 +19,13 @@ export class CashoutdialogComponent implements OnInit {
   clients = JSON.parse(localStorage.getItem('clients'))
 
   needToPay = this.service.cashout
+  tip = 0;
+  products: any;
+  selected: any;
+  productQ = 0;
+  chosenproduct: any;
+  walk = false;
+  serviceVal = 0;
 
 
 
@@ -28,51 +36,106 @@ constructor(
 ) {
 }
 
+
+changeTab(){
+    this.walk = !this.walk
+}
+
 ngOnInit() {
   this.service.getInProgress({id:JSON.parse(localStorage.getItem('profile'))[0].shop_id}).subscribe(data => {
     this.needToPay = data;
     console.log('@db:', data)
+    this.needToPay.map(x => x.price = (Number(x.price.split('$')[1])))
+    console.log('this.needToPay ----',this.needToPay);
   });
-  this.needToPay.map(x => x.price = Number (x.price.split('$')[1]))
+
+  this.service.getProducts({id:JSON.parse(localStorage.getItem('profile'))[0].shop_id}).subscribe(data =>{
+    console.log('data -----',data);
+    
+    this.products = data
+    this.products.map(x => x.price = (Number(x.price.split('$')[1])))
+    this.products.unshift({
+      'product': 'none',
+      'price': 0
+    })
+
+    console.log('data ----->>>>',this.products);
+  })
+
+  this.services.map(x => x.price = (Number(x.price.split('$')[1])))
 }
 
-onCloseConfirm(customer, firstname, lastname, phonenumber, email, service, barber, price, tip, amtpaid, typeP, product, bday){
+onCloseConfirm(customer, firstname, lastname, phonenumber, email, serviceVal, barber, price, tip, amtpaid, typeP, product, bday){
 
-  if(!customer){
-    let newClient ={
+  if(this.selected){
+    let trans = {
+      'a_id': this.selected.a_id,
+      'tip': this.tip,
+      'total': this.selected.price + this.tip + (this.chosenproduct.price * this.productQ),
+      'p_id': this.chosenproduct.p_id,
+      'quantity': this.productQ,
+      'paymth': typeP,
+      'status': 'completed'
+    }
+    this.service.completeAppt(trans).subscribe()
+    this.dialogRef.close()
+  }
+
+  if(!customer && !this.selected && firstname){
+    let newC = {
       'c_first': firstname,
       'c_last': lastname,
       'c_phone': phonenumber,
       'c_email': email,
       'b_day': bday,
-      'c_id':'',
-      'c_shop': 1
+      'c_shop': JSON.parse(localStorage.getItem('profile'))[0].shop_id,
+      'shop_id': JSON.parse(localStorage.getItem('profile'))[0].shop_id,
+      'start_time': moment(new Date()).format('YYYY-MM-DD HH:mm:ss'),
+      'v_id': serviceVal.v_id,
+      'b_id': barber,
+      'p_id': this.chosenproduct.p_id,
+      'quantity': this.productQ,
+      'total': serviceVal.price + this.tip + (this.chosenproduct.price * this.productQ),
+      'tip': this.tip,
+      'pay_mth': typeP
     }
-    console.log('-- New Client created --',newClient);
-
-    let customer = firstname + ' ' + lastname;
-    let trans = {
-      'date': new Date(),
-    customer, service, barber, price, tip, amtpaid, typeP, product
-    }
-    // console.log(trans);
-    this.dialogRef.close(trans)
+    this.service.newCustomerTrans(newC).subscribe()
+    this.dialogRef.close()
   }
-  else{
+  if(customer){
     let trans = {
-      'date': new Date(),
-      customer, service, barber, price, tip, amtpaid, typeP, product
+      'shop_id': JSON.parse(localStorage.getItem('profile'))[0].shop_id,
+      'start_time': moment(new Date()).format('YYYY-MM-DD HH:mm:ss'),
+      'v_id': serviceVal.v_id,
+      'b_id': barber,
+      'p_id': this.chosenproduct.p_id,
+      'quantity': this.productQ,
+      'total': serviceVal.price + this.tip + (this.chosenproduct.price * this.productQ),
+      'tip': this.tip,
+      'pay_mth': typeP,
+      'c_id': customer
     };
     console.log('--- Here is Transaction ---',trans);
-    // API CALLL FOR NEW TRANSATION
-    // API CALLL FOR NEW TRANSATION
-    // API CALLL FOR NEW TRANSATION
-    // API CALLL FOR NEW TRANSATION
-    // API CALLL FOR NEW TRANSATION
-    // API CALLL FOR NEW TRANSATION
-
-    this.dialogRef.close(trans)
+    this.service.walkinTrans(trans).subscribe()
+    this.dialogRef.close()
   }
+
+  if(!customer && !firstname && !this.selected){
+    let trans = {
+      'shop_id': JSON.parse(localStorage.getItem('profile'))[0].shop_id,
+      'start_time': moment(new Date()).format('YYYY-MM-DD HH:mm:ss'),
+      'p_id': this.chosenproduct.p_id,
+      'quantity': this.productQ,
+      'total': this.tip + (this.chosenproduct.price * this.productQ),
+      'tip': this.tip,
+      'pay_mth': typeP
+    };
+    console.log('--- Here is Transaction ---',trans);
+    this.service.productTrans(trans).subscribe()
+    this.dialogRef.close()
+
+  }
+
 }
 
 onCloseCancel(){
