@@ -48,6 +48,7 @@ import { ProductDialogComponent } from './product-dialog/product-dialog.componen
 import { LoginModelComponent } from './login-model/login-model.component';
 import { ProductsComponent } from './products/products.component';
 import { SidenavComponent } from './sidenav/sidenav.component';
+import { ServicesComponent } from './services/services.component';
 
 
 @NgModule({
@@ -70,7 +71,8 @@ import { SidenavComponent } from './sidenav/sidenav.component';
     BarberModalComponent,
     LoginModelComponent,
     ProductsComponent,
-    SidenavComponent
+    SidenavComponent,
+    ServicesComponent
   ],
   imports: [
     BrowserModule,

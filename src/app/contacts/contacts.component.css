@@ -34,3 +34,23 @@
     justify-content: space-between;
     align-items: flex-end;
 }
+
+@media screen and (max-width: 1000px) {
+
+  .contacts-box{
+      border: 1px solid grey;
+      width: 90%;
+      margin-left: 5%;
+  }
+
+}
+
+@media screen and (max-width: 700px) {
+
+  /*.contacts-box{
+      border: 1px solid grey;
+      width: 90%;
+      margin-left: 5%;
+  }*/
+
+}
