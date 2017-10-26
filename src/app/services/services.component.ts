@@ -42,7 +42,7 @@ export class ServicesComponent implements OnInit {
       if(result.status === "added"){
         this.services.push(result);
       } else if (result.status === "edited") {
-        this.services[this.services.findIndex((x)=> x.c_id === result.c_id)] = result
+        this.services[this.services.findIndex((x)=> x.v_id === result.v_id)] = result
       } else if (result.status === "deleted") {
         this.services.splice(this.services.findIndex(x => x.v_id === result.v_id),1)
       } else if (result.status === "canceled") {

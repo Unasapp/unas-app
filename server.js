@@ -277,15 +277,28 @@ massive("postgres://uunjpeyj:yVNsIpBpaTMB_a2TXEss-Gmq1DGSIOte@pellefant.db.eleph
       req.body.est_time,
       req.body.shop_id
     ]
-    db.add_service(newService)
+    db.add_service(newService, (err, service) => {
+      console.log(err, service);
+    }).then((newService) => {res.send(newService)})
   })
 
   app.post('/api/delete-service', (req, res) => {
     console.log('inside delete', req.body)
     db.delete_service(req.body.v_id, (err, service) => {
       console.log("db", err, service);
-    }).then(service => res.send({msg:"Success"}),
-          fail => res.send({msg:"An error occurred"}))
+    }).then((service) => {res.send(service)})
+  })
+
+  app.post('/api/edit-service', (req, res) => {
+    console.log('inside edit', req.body);
+
+    let editService = [
+      req.body.service,
+      req.body.price,
+      req.body.est_time,
+      req.body.v_id
+    ]
+    db.edit_service(editService)
   })
 
   app.post('/api/add-contact', (req, res) => {

@@ -20,7 +20,7 @@ export class ServicesDialogComponent implements OnInit {
   private service: ReportServiceService) { }
 
   onCloseConfirm(service){
-    if (service.name) {
+    if (service.v_id) {
       this.service.editServices(service).subscribe(data => {
         console.log("back from db edit", data)
         data[0].status = "edited"
@@ -28,11 +28,8 @@ export class ServicesDialogComponent implements OnInit {
       })
     } else {
       service.shop_id = JSON.parse(localStorage.getItem('profile'))[0].shop_id
-      this.service.addServices(service).subscribe(data => {
-        console.log("back from db add", data)
-        data[0].status = "added"
-        this.dialogRef.close(data[0])
-      })
+      this.service.addServices(service).subscribe()
+      this.dialogRef.close(service)
     }
   }
 
