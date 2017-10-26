@@ -1,0 +1,34 @@
+<div>
+  <h2 md-dialog-title >{{modalText.title}} Service</h2>
+  <hr>
+  <md-dialog-content>
+
+<form>
+  <table cellspacing="0"><tr>
+    <td><md-input-container>
+      <input mdInput placeholder="Service Type" name=name [(ngModel)]='selectedService.service'>
+    </md-input-container></td>
+  </tr></table>
+
+  <p>
+    <md-input-container>
+      <input mdInput placeholder="Price" name=price [(ngModel)]='selectedService.price'>
+    </md-input-container>
+    <md-input-container>
+      <input mdInput placeholder="Est. Time" name=time [(ngModel)]='selectedService.est_time'>
+    </md-input-container>
+  </p>
+
+</form>
+
+  </md-dialog-content>
+
+  <md-dialog-actions style="display:flex; justify-content: space-between;">
+    <div>
+      <button md-raised-button color="lightgreen" (click)='onCloseConfirm(selectedService)' > {{modalText.button}} </button>
+      <button md-raised-button (click)='onCloseCancel()' > Cancel </button>
+    </div>
+    <button md-raised-button (click)='onDelete(selectedService)' *ngIf="!data.new" color="warn" > Delete Service </button>
+  </md-dialog-actions>
+
+</div>

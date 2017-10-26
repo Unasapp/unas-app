@@ -1,5 +1,5 @@
 <md-toolbar class='main-toolbar'>
-    
+
           <div class='ionic-button'>
           <a md-icon-button (click)="sidenav.toggle()">
             <i class='ion-navicon icon-size'></i>
@@ -8,11 +8,11 @@
             <i style='font-size:32px;' class='ion-close-round icon-size'></i>
           </a> -->
         </div>
-    
+
         <div class='rest'>
           <h2>Products</h2>
         </div>
-    
+
         <div>
           <button md-icon-button (click)='openCashDialog()' >
             <i class='ion-pricetag icon-size' ></i>
@@ -23,11 +23,11 @@
             <i class='ion-calendar icon-size' ></i>
           </button>
         </div>
-    
+
       </md-toolbar>
-    
+
     <md-sidenav-container class="big-container">
-    
+
       <md-sidenav #sidenav mode='push' class="sidenav-inner">
            <md-list >
           <!-- <md-list-item (click)="sidenav.close()" style='margin-left:70%;font-size:20px;' >
@@ -38,6 +38,7 @@
           <md-list-item routerLink='/contacts' class='sidenav-items' > Contacts </md-list-item>
           <md-list-item routerLink='/products' class='sidenav-items'> Products </md-list-item>
           <md-list-item routerLink='/reports' class='sidenav-items' > Reports </md-list-item>
+          <md-list-item routerLink='/services' class='sidenav-items' > Services </md-list-item>
           <md-list-item routerLink='/notifications' class='sidenav-items' > Notifications </md-list-item>
           <md-list-item routerLink='/settings' class='sidenav-items' > Settings </md-list-item>
           <md-list-item (click)="auth.logout()" class='sidenav-items' > Logout </md-list-item>
@@ -73,8 +74,7 @@
             </div>
           </md-list>
         </div>
-    
-    
-    
+
+
+
       </md-sidenav-container>
-    

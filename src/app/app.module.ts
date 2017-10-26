@@ -51,6 +51,7 @@ import { LoginModelComponent } from './login-model/login-model.component';
 import { ProductsComponent } from './products/products.component';
 import { SidenavComponent } from './sidenav/sidenav.component';
 import { ServicesComponent } from './services/services.component';
+import { ServicesDialogComponent } from './services-dialog/services-dialog.component';
 
 
 @NgModule({
@@ -74,7 +75,8 @@ import { ServicesComponent } from './services/services.component';
     LoginModelComponent,
     ProductsComponent,
     SidenavComponent,
-    ServicesComponent
+    ServicesComponent,
+    ServicesDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -113,7 +115,8 @@ import { ServicesComponent } from './services/services.component';
     BarberModalComponent,
     ProductDialogComponent,
     BarberModalComponent,
-    LoginModelComponent
+    LoginModelComponent,
+    ServicesDialogComponent
   ],
   providers: [ReportServiceService],
   bootstrap: [AppComponent]

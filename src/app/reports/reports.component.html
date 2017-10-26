@@ -38,7 +38,8 @@
       <md-list-item routerLink='/contacts' class='sidenav-items'> Contacts </md-list-item>
       <md-list-item routerLink='/products' class='sidenav-items'> Products </md-list-item>
       <md-list-item routerLink='/reports' class='sidenav-items'> Reports </md-list-item>
-      <md-list-item routerLink='/notifications' class='sidenav-items'> Notifications </md-list-item> 
+      <md-list-item routerLink='/services' class='sidenav-items' > Services </md-list-item>
+      <md-list-item routerLink='/notifications' class='sidenav-items'> Notifications </md-list-item>
       <md-list-item routerLink='/settings' class='sidenav-items'> Settings </md-list-item>
       <md-list-item (click)="auth.logout()" class='sidenav-items'> Logout </md-list-item>
     </md-list>
@@ -117,20 +118,20 @@
                   {{ report[i].price }}
               </p>
               <md-input-container class='box-reports2' >
-                  <input style='text-align:center;padding:0;' mdInput [(ngModel)]='report[i].tip'   /> 
+                  <input style='text-align:center;padding:0;' mdInput [(ngModel)]='report[i].tip'   />
               </md-input-container>
               <md-input-container class='box-reports2' >
-                  <input style='text-align:center;padding:0;' mdInput [(ngModel)]='report[i].pay_mth'  /> 
+                  <input style='text-align:center;padding:0;' mdInput [(ngModel)]='report[i].pay_mth'  />
               </md-input-container>
               <md-input-container class='box-reports2' >
                   <input style='text-align:center;padding:0;' mdInput [(ngModel)]='report[i].total'   />
               </md-input-container>
               <div class='edit-reports-list-btns' >
-                <button (click)='saveEdit(report[i])' md-icon-button > 
-                  <span style='color:green;' class='reports-edit-btn-SD ion-checkmark-round' ></span> 
+                <button (click)='saveEdit(report[i])' md-icon-button >
+                  <span style='color:green;' class='reports-edit-btn-SD ion-checkmark-round' ></span>
                 </button>
-                <button (click)='deleteEdit(report[i])' md-icon-button > 
-                  <span style='color:#ff4d4d;' class='reports-edit-btn-SD ion-close-round' ></span> 
+                <button (click)='deleteEdit(report[i])' md-icon-button >
+                  <span style='color:#ff4d4d;' class='reports-edit-btn-SD ion-close-round' ></span>
                 </button>
               </div>
             </div>
@@ -187,17 +188,17 @@
             <div class='view-reports' id ="myId" #myId>
               <p class='box-reports'> {{ timecards[i].b_first }} {{ timecards[i].b_last }} </p>
               <md-input-container class='box-reports3' >
-                  <input style='text-align:center;padding:0;' mdInput [(ngModel)]='timecards[i].time_in'   /> 
+                  <input style='text-align:center;padding:0;' mdInput [(ngModel)]='timecards[i].time_in'   />
               </md-input-container>
               <md-input-container class='box-reports3' >
-                  <input style='text-align:center;padding:0;' mdInput [(ngModel)]='timecards[i].time_out'   /> 
+                  <input style='text-align:center;padding:0;' mdInput [(ngModel)]='timecards[i].time_out'   />
               </md-input-container>
               <div class='edit-reports-list-btns' >
-                <button (click)='timesaveEdit(timecards[i])'  md-icon-button > 
-                  <span style='color:green;' class='reports-edit-btn-SD ion-checkmark-round' ></span> 
+                <button (click)='timesaveEdit(timecards[i])'  md-icon-button >
+                  <span style='color:green;' class='reports-edit-btn-SD ion-checkmark-round' ></span>
                 </button>
-                <button (click)='timedeleteEdit(timecards[i])'  md-icon-button > 
-                  <span style='color:#ff4d4d;' class='reports-edit-btn-SD ion-close-round' ></span> 
+                <button (click)='timedeleteEdit(timecards[i])'  md-icon-button >
+                  <span style='color:#ff4d4d;' class='reports-edit-btn-SD ion-close-round' ></span>
                 </button>
               </div>
             </div>
@@ -208,7 +209,7 @@
     </md-tab>
 
     <md-tab label="Barber Earnings">
-      <div class='report-head-earn'> 
+      <div class='report-head-earn'>
         <div> {{ todaysdateDisplay }} </div>
       </div>
 
@@ -216,28 +217,28 @@
         <md-card class='barber-card-earn'  *ngFor='let e of barearnings' >
             <md-card-title>
               {{ e.name }}
-            </md-card-title> 
+            </md-card-title>
             <md-card-content>
               <section class='barber-cards-content' >
-                <div class='barber-cards-left' > 
+                <div class='barber-cards-left' >
                     <div>Pay Type: </div>
                     <div>Shop Comission: </div>
                     <div>Barber Comission: </div>
                     <div>Tips: </div>
                 </div>
-                <div class='barber-cards-right' > 
+                <div class='barber-cards-right' >
                     <div> {{ e.payT }} </div>
                     <div> {{ e.shopE }} </div>
                     <div> {{ e.barberE }} </div>
                     <div> {{ e.tips  }} </div>
                 </div>
-            </section>  
+            </section>
             </md-card-content>
         </md-card>
       </div>
-  
+
     </md-tab>
-    
+
     <md-tab label="Product">
         <div class='edit-reports-header' >
             <button *ngIf='!pastT' (click)='getTimeCards("past")' md-button class='pastDays-btn' > Reports From Past 7 Days </button>

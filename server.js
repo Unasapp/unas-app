@@ -263,8 +263,29 @@ massive("postgres://uunjpeyj:yVNsIpBpaTMB_a2TXEss-Gmq1DGSIOte@pellefant.db.eleph
       (fail) => {res.send({fail: "An error occurred."})})
   })
 
+  /////////Services Endpoints//////////
+
   app.post('/api/services', (req, res) => {
     db.get_services(req.body.id, (err, contacts) => {}).then(contacts => res.send(contacts))
+  })
+
+  app.post('/api/add-service', (req, res) => {
+    console.log(req.body);
+    let newService = [
+      req.body.service,
+      req.body.price,
+      req.body.est_time,
+      req.body.shop_id
+    ]
+    db.add_service(newService)
+  })
+
+  app.post('/api/delete-service', (req, res) => {
+    console.log('inside delete', req.body)
+    db.delete_service(req.body.v_id, (err, service) => {
+      console.log("db", err, service);
+    }).then(service => res.send({msg:"Success"}),
+          fail => res.send({msg:"An error occurred"}))
   })
 
   app.post('/api/add-contact', (req, res) => {
@@ -426,6 +447,7 @@ massive("postgres://uunjpeyj:yVNsIpBpaTMB_a2TXEss-Gmq1DGSIOte@pellefant.db.eleph
       res.send(data)
     })
   })
+
 
 
   // NODE MAILER-----------------///

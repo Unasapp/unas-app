@@ -12,6 +12,7 @@ import { NotificationsComponent } from './notifications/notifications.component'
 import { ReportsComponent } from './reports/reports.component';
 import { BarberDetailsComponent } from './barber-details/barber-details.component';
 import { ProductsComponent } from './products/products.component';
+import { ServicesComponent } from './services/services.component'
 
 
 
@@ -27,7 +28,8 @@ export const router: Routes = [
     { path: 'reports', component: ReportsComponent },
     { path: 'notifications', component: NotificationsComponent },
     { path: 'barber-details', component: BarberDetailsComponent},
-    { path: 'products', component: ProductsComponent}
+    { path: 'products', component: ProductsComponent},
+    { path: 'services', component: ServicesComponent }
 ]
 
 export const routes: ModuleWithProviders = RouterModule.forRoot(router)

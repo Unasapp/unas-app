@@ -53,7 +53,7 @@ export class ReportServiceService {
     return this.http.post('/api/delete-trans',{id})
       .map(res => res.json())
   }
- 
+
   editTrans(obj){
     return this.http.post('/api/edit-trans',obj)
     .map(res => res.json())
@@ -81,7 +81,7 @@ export class ReportServiceService {
 
   getBarberEarning(x){
     console.log('--- 😇 barber earnings called ---');
-    
+
     return this.http.post('/api/shop-trans/earnings',x)
       .map(res => {
         console.log('--- 😇 barber earnings comming back!!!!! ---', res.json());
@@ -137,6 +137,21 @@ export class ReportServiceService {
     console.log('service')
     return this.http.post('/api/services', id)
     .map(res => res.json())
+  }
+
+  addServices(service){
+    console.log('add services');
+    return this.http.post('/api/add-service', service).map(res => res.json())
+  }
+
+  editServices(service){
+    console.log('edit services');
+    return this.http.post('/api/edit-service', service).map(res => res.json())
+  }
+
+  deleteServices(service){
+    console.log('delete services');
+    return this.http.post('/api/delete-service', service).map(res => res.json())
   }
 
   getAppts(id) {
