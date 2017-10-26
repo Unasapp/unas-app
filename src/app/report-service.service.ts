@@ -220,5 +220,29 @@ export class ReportServiceService {
 
   }
 
+  completeAppt(x){
+    console.log('completing appt ----',x);
+    return this.http.post('/api/appt/complete',x)
+      .map(res => res.json())
+  }
+
+  newCustomerTrans(c){
+    console.log('completing New Customer appt ----',c);
+    return this.http.post('/api/appt/newcustomercomplete',c)
+      .map(res => res.json())
+  }
+
+  walkinTrans(c){
+    console.log('completing New Customer appt ----',c);
+    return this.http.post('/api/appt/walkinTrans',c)
+      .map(res => res.json())
+  }
+
+  productTrans(c){
+    console.log('completing New Product appt ----',c);
+    return this.http.post('/api/appt/productTrans',c)
+      .map(res => res.json())
+  }
+
 
 }

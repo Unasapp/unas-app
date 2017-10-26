@@ -208,8 +208,10 @@
     </md-tab>
 
     <md-tab label="Barber Earnings">
-      <div class='report-head-earn'> 
-        <div> {{ todaysdateDisplay }} </div>
+      <div class='report-head-earn'>
+          <button *ngIf='!pastE' (click)='getEarnReports("past")' md-button class='pastDays-btn' > Reports From Past 7 Days </button>
+          <button *ngIf='pastE'  (click)='getEarnReports("today")' md-button class='pastDays-btn' > Reports From Today </button> 
+        <div> Todays Date: {{ todaysdateDisplay }} </div>
       </div>
 
       <div class='barber-cards' >
@@ -228,8 +230,9 @@
                 <div class='barber-cards-right' > 
                     <div> {{ e.payT }} </div>
                     <div> {{ e.shopE }} </div>
-                    <div> {{ e.barberE }} </div>
-                    <div> {{ e.tips  }} </div>
+                    <div> {{ e.barberE | currency:'USD':true:'1.2-2' }} </div>
+                    <div> {{ e.tips | currency:'USD':true:'1.2-2'  }} </div>
+                    <!-- | currency:'USD':true -->
                 </div>
             </section>  
             </md-card-content>
@@ -240,13 +243,8 @@
     
     <md-tab label="Product">
         <div class='edit-reports-header' >
-            <button *ngIf='!pastT' (click)='getTimeCards("past")' md-button class='pastDays-btn' > Reports From Past 7 Days </button>
-            <button *ngIf='pastT'  (click)='getTimeCards("today")' md-button class='pastDays-btn' > Reports From Today </button>
-            <span *ngIf='editingT' class='edit-repots-text' >
-              <span class='ion-edit' ></span>
-              Editing </span>
-            <button *ngIf='!editingT' (click)='editingT = !editingT' md-button class='edit-reports-btn' > <span class='ion-wrench' ></span> Edit Reports </button>
-            <button *ngIf='editingT' (click)='editingT = !editingT' md-button class='edit-reports-btn2' > Stop Editing Reports </button>
+            <button *ngIf='!pastP' (click)='getProductReports("past")' md-button class='pastDays-btn' > Reports From Past 7 Days </button>
+            <button *ngIf='pastP'  (click)='getProductReports("today")' md-button class='pastDays-btn' > Reports From Today </button>
           </div>
       <md-list>
         <div class='reports-box'>
@@ -267,8 +265,8 @@
               <p class='box-reports'> {{ x.type }}    </p>
               <p class='box-reports'> {{ x.quantity }} </p>
               <p class='box-reports'> {{ x.sold }} </p>
-              <p class='box-reports'> {{ x.price | currency:'USD':true }} </p>
-              <p class='box-reports'> {{ x.netsales }} </p>
+              <p class='box-reports'> {{ x.price }} </p>
+              <p class='box-reports'> {{ x.netsales | currency:'USD':true }} </p>
             </div>
           </md-list-item>
         </div>
