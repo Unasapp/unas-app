@@ -3,6 +3,7 @@ import { MdDialog, MdDialogRef } from '@angular/material';
 import { CashoutdialogComponent } from '../cashoutdialog/cashoutdialog.component';
 import { ApptdialogComponent } from '../apptdialog/apptdialog.component';
 import { ReportServiceService } from '../report-service.service';
+import { Router } from '@angular/router';
 
 
 
@@ -17,7 +18,16 @@ export class NotificationsComponent implements OnInit {
   pusher: any;
   deleteRequests:any;
 
-  constructor(public dialog: MdDialog, public service: ReportServiceService) { }
+  constructor(public dialog: MdDialog, public service: ReportServiceService, public router: Router) { }
+
+  profType:boolean;
+  logout() {
+    localStorage.removeItem('profile');
+    localStorage.removeItem('barbers');
+    localStorage.removeItem('clients');
+    localStorage.removeItem('services');
+    this.router.navigate(['/login'])
+  }
 
   openCashDialog() {
     let dialogRef = this.dialog.open(CashoutdialogComponent,{
@@ -33,6 +43,7 @@ export class NotificationsComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.profType = (JSON.parse(localStorage.getItem('profile'))[0].type === 'admin') ? true : false
     this.service.getDeleteRequests({id:JSON.parse(localStorage.getItem('profile'))[0].shop_id}).subscribe(data => {
       this.deleteRequests = data;
     })
