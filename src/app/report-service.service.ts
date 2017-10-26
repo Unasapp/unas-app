@@ -149,6 +149,21 @@ export class ReportServiceService {
     .map(res => res.json())
   }
 
+  addServices(service){
+    console.log('add services');
+    return this.http.post('/api/add-service', service).map(res => res.json())
+  }
+
+  editServices(service){
+    console.log('edit services');
+    return this.http.post('/api/edit-service', service).map(res => res.json())
+  }
+
+  deleteServices(service){
+    console.log('delete services');
+    return this.http.post('/api/delete-service', service).map(res => res.json())
+  }
+
   getAppts(id) {
     console.log('--- getting appt from service ---')
     return this.http.post('/api/cal', id)

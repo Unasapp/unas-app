@@ -33,7 +33,6 @@ app.use(function (req, res, next) {
     res.header('Access-Control-Allow-Credentials', 'true');
     next();
 })
-
 app.use(express.static(__dirname + '/dist'));
 app.get('*', function(req, res) {
   res.sendFile(path.join(__dirname, '/dist', 'index.html'))
@@ -79,6 +78,10 @@ massive("postgres://uunjpeyj:yVNsIpBpaTMB_a2TXEss-Gmq1DGSIOte@pellefant.db.eleph
       .then((user) => {res.send(user)},
             (error) => {res.send({fail:'That email address is already in use!'})
     })
+  })
+
+  app.post('/api/testing1', (req,res)=>{
+    console.log('server side testing');
   })
 
   app.post('/api/login', (req, res)=> {
@@ -260,8 +263,42 @@ massive("postgres://uunjpeyj:yVNsIpBpaTMB_a2TXEss-Gmq1DGSIOte@pellefant.db.eleph
       (fail) => {res.send({fail: "An error occurred."})})
   })
 
+  /////////Services Endpoints//////////
+
   app.post('/api/services', (req, res) => {
     db.get_services(req.body.id, (err, contacts) => {}).then(contacts => res.send(contacts))
+  })
+
+  app.post('/api/add-service', (req, res) => {
+    console.log(req.body);
+    let newService = [
+      req.body.service,
+      req.body.price,
+      req.body.est_time,
+      req.body.shop_id
+    ]
+    db.add_service(newService, (err, service) => {
+      console.log(err, service);
+    }).then((newService) => {res.send(newService)})
+  })
+
+  app.post('/api/delete-service', (req, res) => {
+    console.log('inside delete', req.body)
+    db.delete_service(req.body.v_id, (err, service) => {
+      console.log("db", err, service);
+    }).then((service) => {res.send(service)})
+  })
+
+  app.post('/api/edit-service', (req, res) => {
+    console.log('inside edit', req.body);
+
+    let editService = [
+      req.body.service,
+      req.body.price,
+      req.body.est_time,
+      req.body.v_id
+    ]
+    db.edit_service(editService)
   })
 
   app.post('/api/add-contact', (req, res) => {

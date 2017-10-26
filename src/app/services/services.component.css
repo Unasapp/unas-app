@@ -20,7 +20,7 @@
     font-weight: bold;
 }
 
-.contacts-box{
+.services-box{
     border: 1px solid grey;
     width: 70%;
     margin-left: 15%;
@@ -37,7 +37,7 @@
 
 @media screen and (max-width: 1000px) {
 
-  .contacts-box{
+  .services-box{
       border: 1px solid grey;
       width: 90%;
       margin-left: 5%;
