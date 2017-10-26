@@ -440,6 +440,14 @@ massive("postgres://uunjpeyj:yVNsIpBpaTMB_a2TXEss-Gmq1DGSIOte@pellefant.db.eleph
       console.log(' -- appts from DB -- ',data)
       res.send(data)
     })
+
+  app.post('/api/get-shops', (req, res) => {
+    console.log('shops @server');
+    db.get_shops((err, data) => {
+    }).then((data) => {
+      console.log("shops from db", data);
+      res.send(data)
+    })
   })
 
 
@@ -581,6 +589,12 @@ massive("postgres://uunjpeyj:yVNsIpBpaTMB_a2TXEss-Gmq1DGSIOte@pellefant.db.eleph
     })
   })
 
+
+
+  app.post('/api/add-new-shop', (req, res) => {
+    db.add_new_shop([req.body.s_name, req.body.address], (err, data) => {
+    }).then(data => res.send(data))
+  })
 
 
   // NODE MAILER-----------------///
@@ -862,29 +876,6 @@ massive("postgres://uunjpeyj:yVNsIpBpaTMB_a2TXEss-Gmq1DGSIOte@pellefant.db.eleph
     });
     job.start();
 
+  })
+})
 
-});
-
-
-
-
-// var results = [ {
-//   asin: 'B01571L1Z4',
-//   url: 'domain.com',
-//   favourite: false,
-//   createdAt: '2016-11-18T19:08:41.662Z',
-//   updatedAt: '2016-11-18T19:08:41.662Z',
-//   id: '582f51b94581a7f21a884f40'
-// },
-// {
-//   asin: 'B01IM0K0R2',
-//   url: 'domain2.com',
-//   favourite: false,
-//   createdAt: '2016-11-16T17:56:21.696Z',
-//   updatedAt: '2016-11-16T17:56:21.696Z',
-//   id: 'B01IM0K0R2'
-//  }];
-
-// var content = results.reduce(function(a, b) {
-//   return a + '<tr><td>' + b.asin + '</a></td><td>' + b.url + '</td><td>' + b.favourite + '</td><td>' + b.reatedAt + '</td></tr>';
-// }, '');

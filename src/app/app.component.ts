@@ -32,6 +32,7 @@ constructor(private service: ReportServiceService, public snackBar: MdSnackBar){
       this.snackBar.open(data[1], "Dismiss", {duration: 5000});
       console.log("Alert!:", data[1]);
     }.bind(this));
+
   }
 
 }
