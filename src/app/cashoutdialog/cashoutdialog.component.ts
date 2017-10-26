@@ -33,7 +33,7 @@ ngOnInit() {
     this.needToPay = data;
     console.log('@db:', data)
   });
-  this.needToPay.map(x => x.price = (Number(data[j].tip.split('$')[1]))
+  this.needToPay.map(x => x.price = Number (x.price.split('$')[1]))
 }
 
 onCloseConfirm(customer, firstname, lastname, phonenumber, email, service, barber, price, tip, amtpaid, typeP, product, bday){

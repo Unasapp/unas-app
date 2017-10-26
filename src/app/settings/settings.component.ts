@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MdDialog, MdDialogRef } from '@angular/material';
 import { CashoutdialogComponent } from '../cashoutdialog/cashoutdialog.component';
 import { ApptdialogComponent } from '../apptdialog/apptdialog.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-settings',
@@ -12,7 +13,15 @@ export class SettingsComponent implements OnInit {
 
   ifopen: true;
 
-  constructor(public dialog: MdDialog) { }
+  constructor(public dialog: MdDialog, public router: Router) { }
+  profType:boolean;
+  logout() {
+    localStorage.removeItem('profile');
+    localStorage.removeItem('barbers');
+    localStorage.removeItem('clients');
+    localStorage.removeItem('services');
+    this.router.navigate(['/login'])
+  }
 
   openCashDialog() {
     let dialogRef = this.dialog.open(CashoutdialogComponent,{
@@ -28,6 +37,7 @@ export class SettingsComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.profType = (JSON.parse(localStorage.getItem('profile'))[0].type === 'admin') ? true : false
   }
 
 }

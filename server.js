@@ -12,10 +12,8 @@ const express = require('express'),
       server = http.createServer(app),
       nodemailer = require('nodemailer'),
       email = require('emailjs/email'),
-      io = require('socket.io')(server);
       CronJob = require('cron').CronJob;
       moment = require('moment');
-
       io = require('socket.io').listen(server);
 
 server.listen( 4200, ()=> {console.log('Connected on 4200')})
@@ -424,6 +422,21 @@ massive("postgres://uunjpeyj:yVNsIpBpaTMB_a2TXEss-Gmq1DGSIOte@pellefant.db.eleph
       console.log(' -- appts from DB -- ',data)
       res.send(data)
     })
+  })
+
+
+  app.post('/api/get-shops', (req, res) => {
+    console.log('shops @server');
+    db.get_shops((err, data) => {
+    }).then((data) => {
+      console.log("shops from db", data);
+      res.send(data)
+    })
+  })
+
+  app.post('/api/add-new-shop', (req, res) => {
+    db.add_new_shop([req.body.s_name, req.body.address], (err, data) => {
+    }).then(data => res.send(data))
   })
 
 

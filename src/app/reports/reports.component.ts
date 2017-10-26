@@ -6,6 +6,7 @@ import { ApptdialogComponent } from '../apptdialog/apptdialog.component';
 import { ProductDialogComponent } from '../product-dialog/product-dialog.component';
 import { ReportServiceService } from '../report-service.service';
 import { Http, Headers } from '@angular/http';
+import { Router } from '@angular/router';
 
 @Injectable()
 @Component({
@@ -16,10 +17,10 @@ import { Http, Headers } from '@angular/http';
 export class ReportsComponent implements OnInit {
 
   cashResult: any;
-  
+
   barbers = JSON.parse(localStorage.getItem('barbers'))
 
-  constructor(private http: Http, public dialog: MdDialog, public service: ReportServiceService) { }
+  constructor(private http: Http, public dialog: MdDialog, public service: ReportServiceService, public router: Router) { }
 
   deleteEdit(x){
     console.log('-- deleting trans --',x);
@@ -35,7 +36,7 @@ export class ReportsComponent implements OnInit {
   saveEdit(x){
     console.log('-- saving trans --',x);
     this.service.editTrans(x).subscribe()
-    
+
   }
 
   timedeleteEdit(x){
@@ -52,7 +53,7 @@ export class ReportsComponent implements OnInit {
   timesaveEdit(x){
     console.log('-- saving time --',x);
     this.service.timesaveEdit(x).subscribe()
-    
+
   }
 
   // openNewProduct() {
@@ -113,7 +114,7 @@ export class ReportsComponent implements OnInit {
 
   getReports(para){
     this.pastD = !this.pastD
-   
+
     if(para=='past'){
       let earnInfo = {
         'date1' : moment(new Date().setDate(new Date().getDate() - 7)).format('YYYY-MM-DD'),
@@ -121,7 +122,7 @@ export class ReportsComponent implements OnInit {
         'shop_id' : JSON.parse(localStorage.getItem('profile'))[0].shop_id
       }
       console.log('get reports for past 7',earnInfo);
-      this.service.getShopTrans(earnInfo).subscribe(trans => { 
+      this.service.getShopTrans(earnInfo).subscribe(trans => {
               for (let i = 0; i < trans.length; i++) {
                 trans[i].start_time = moment(new Date(trans[i].start_time.split('.')[0])).format("l LT")
               }
@@ -136,7 +137,7 @@ export class ReportsComponent implements OnInit {
         'shop_id' : JSON.parse(localStorage.getItem('profile'))[0].shop_id
       }
       console.log('get reports from today',earnInfo);
-      this.service.getShopTrans(earnInfo).subscribe(trans => { 
+      this.service.getShopTrans(earnInfo).subscribe(trans => {
               for (let i = 0; i < trans.length; i++) {
                 trans[i].start_time = moment(new Date(trans[i].start_time.split('.')[0])).format("l LT")
               }
@@ -149,7 +150,7 @@ export class ReportsComponent implements OnInit {
 
   getTimeCards(para){
     this.pastT = !this.pastT
-    
+
      if(para=='past'){
        let earnInfo = {
          'date1' : moment(new Date().setDate(new Date().getDate() - 7)).format('YYYY-MM-DD'),
@@ -178,7 +179,7 @@ export class ReportsComponent implements OnInit {
         for (let i = 0; i < cards.length; i++) {
           cards[i].time_in = moment(cards[i].time_in).format('LLLL')
           cards[i].time_out = moment(cards[i].time_out).format('LLLL')
-  
+
         }
         // console.log(cards)
         this.timecards = cards
@@ -194,10 +195,27 @@ export class ReportsComponent implements OnInit {
   report: any = []
   timecards: any = []
   trans: any
-  todaysdateDisplay = moment(new Date()).format('dddd, MMMM Do YYYY')  
+  todaysdateDisplay = moment(new Date()).format('dddd, MMMM Do YYYY')
   todaysdate = new Date()
   com: any
+
+
+  // USER RIGHTS AND LOGOUT FUNCTION ----- DO NOT DELETE!!!
+  profType:boolean;
+  logout() {
+    localStorage.removeItem('profile');
+    localStorage.removeItem('barbers');
+    localStorage.removeItem('clients');
+    localStorage.removeItem('services');
+    this.router.navigate(['/login'])
+  }
+
   ngOnInit() {
+
+    // USER TYPE -------------------- DO NOT DELETE!!
+    this.profType = (JSON.parse(localStorage.getItem('profile'))[0].type === 'admin') ? true : false
+
+
     // console.log('reports loaded ---->>>>.',this.barbers)
     let earnInfo = {
       'date1' : moment(this.todaysdate).format('YYYY-MM-DD'),
@@ -205,7 +223,7 @@ export class ReportsComponent implements OnInit {
       'shop_id' : JSON.parse(localStorage.getItem('profile'))[0].shop_id
     }
     // console.log('earnInfo 😡', earnInfo);
-    
+
     this.service.getShopTrans(earnInfo).subscribe(trans => {
 
       for (let i = 0; i < trans.length; i++) {
@@ -242,7 +260,7 @@ export class ReportsComponent implements OnInit {
       }
 
       data.map(x=>{
-        
+
         if(x.type == 'hourly'){
           var rate = x.rate.split('/')[0].replace('$','')
           var time = 6;
@@ -282,7 +300,7 @@ export class ReportsComponent implements OnInit {
 
         }
         // console.log('--- this.barearning after post processing --',this.barearnings);
-        
+
       })
 
     })
@@ -290,4 +308,3 @@ export class ReportsComponent implements OnInit {
   }
 
 }
-

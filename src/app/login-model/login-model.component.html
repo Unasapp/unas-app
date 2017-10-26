@@ -36,11 +36,39 @@
           </td>
         </tr>
       </table>
+
+<br>
+
+      <div *ngIf='!userData.shopOwner'>
+        <md-select placeholder="Join a shop" [(ngModel)]="userData.shopId" style="width: 100%">
+          <md-option *ngFor="let shop of shops" [value]="shop.s_id">
+            {{ shop.s_name }}  - {{ shop.address }}
+          </md-option>
+        </md-select>
+      </div>
+
+<br>
+
       <md-slide-toggle
-       [checked]="userData.shopOwner"
-       name=shopOwer
-       [(ngModel)]="userData.shopOwner"
-       >Shop Owner</md-slide-toggle>
+       [checked]="userData.shopOwner" name=shopOwer [(ngModel)]="userData.shopOwner">
+       Shop Owner
+     </md-slide-toggle>
+     <div *ngIf='userData.shopOwner'>
+       <table  cellspacing="0">
+         <tr>
+           <td>
+             <md-input-container >
+               <input mdInput placeholder="Shop Name" name=FirstName [(ngModel)]='shopData.s_name'>
+             </md-input-container>
+           </td>
+           <td>
+             <md-input-container >
+               <input mdInput placeholder="Address" name=Address [(ngModel)]='shopData.address'>
+             </md-input-container>
+           </td>
+         </tr>
+       </table>
+     </div>
     </div>
   <button md-button *ngIf='!newUser' (click)='newUser = !newUser'>Create an Account?</button>
   <button md-button *ngIf='newUser' (click)='newUser = !newUser'>Have an Account?</button>

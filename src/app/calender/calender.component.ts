@@ -7,7 +7,8 @@ import { ReportServiceService } from '../report-service.service';
 import { ApptdialogComponent } from '../apptdialog/apptdialog.component';
 import { Options } from 'fullcalendar';
 import * as $ from 'jquery';
-import { FilterPipe } from '../filter.pipe'
+import { FilterPipe } from '../filter.pipe';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-calender',
@@ -18,8 +19,8 @@ export class CalenderComponent implements OnInit {
 
   constructor(
     public myService: ReportServiceService,
-    public dialog: MdDialog, 
-    public service: ReportServiceService
+    public dialog: MdDialog,
+    public service: ReportServiceService, public router: Router
   ) {
 
    }
@@ -39,6 +40,14 @@ export class CalenderComponent implements OnInit {
   public users = JSON.parse(localStorage.getItem('clients'))
   services = JSON.parse(localStorage.getItem('services'))
 
+  profType:boolean;
+  logout() {
+    localStorage.removeItem('profile');
+    localStorage.removeItem('barbers');
+    localStorage.removeItem('clients');
+    localStorage.removeItem('services');
+    this.router.navigate(['/login'])
+  }
 
     makeTime() {
         for (var i = 1; i < 13; i++) {
@@ -146,8 +155,8 @@ export class CalenderComponent implements OnInit {
     }
 
     console.log('-- new Appt data --',editedEvent);
-    
-    
+
+
     this.service.editAppt(editedEvent).subscribe()
 
     this.calendarOptions.events.push(editedEvent)
@@ -199,12 +208,13 @@ export class CalenderComponent implements OnInit {
 
 appts: any
   ngOnInit() {
+    this.profType = (JSON.parse(localStorage.getItem('profile'))[0].type === 'admin') ? true : false
     console.log('-- users from storage ---',this.users);
     console.log('-- barbers from storage ---',this.barbers);
     console.log('-- services from storage ---',this.services);
-    
+
     this.makeTime();
-    this.service.getAppts({id:1}).subscribe((data)=> {
+    this.service.getAppts({id:JSON.parse(localStorage.getItem('profile'))[0].shop_id}).subscribe((data)=> {
       data.map(x =>{
         let newappt = {
           'dataID' : x.a_id,
