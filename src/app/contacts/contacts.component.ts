@@ -5,7 +5,8 @@ import { ContactsdialogComponent } from '../contactsdialog/contactsdialog.compon
 import { FilterPipe } from '../filter.pipe'
 import { CashoutdialogComponent } from '../cashoutdialog/cashoutdialog.component';
 import { ApptdialogComponent } from '../apptdialog/apptdialog.component';
-import { ReportServiceService } from  '../report-service.service'
+import { ReportServiceService } from  '../report-service.service';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -20,7 +21,16 @@ export class ContactsComponent implements OnInit {
   public users = []
   dialogResult: any;
   deleted: any;
-  constructor(private http: HttpClient, public dialog: MdDialog, private service: ReportServiceService) { }
+  constructor(private http: HttpClient, public dialog: MdDialog, private service: ReportServiceService, public router: Router) { }
+
+  profType:boolean;
+  logout() {
+    localStorage.removeItem('profile');
+    localStorage.removeItem('barbers');
+    localStorage.removeItem('clients');
+    localStorage.removeItem('services');
+    this.router.navigate(['/login'])
+  }
 
   openCashDialog() {
     let dialogRef = this.dialog.open(CashoutdialogComponent,{
@@ -58,7 +68,8 @@ export class ContactsComponent implements OnInit {
 
 
   ngOnInit() {
-     this.service.getContacts({id:1}).subscribe((data) => {
+    this.profType = (JSON.parse(localStorage.getItem('profile'))[0].type === 'admin') ? true : false
+     this.service.getContacts({id:JSON.parse(localStorage.getItem('profile'))[0].shop_id}).subscribe((data) => {
         this.users = data;
     });
   }

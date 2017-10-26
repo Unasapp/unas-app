@@ -449,6 +449,20 @@ massive("postgres://uunjpeyj:yVNsIpBpaTMB_a2TXEss-Gmq1DGSIOte@pellefant.db.eleph
   })
 
 
+  app.post('/api/get-shops', (req, res) => {
+    console.log('shops @server');
+    db.get_shops((err, data) => {
+    }).then((data) => {
+      console.log("shops from db", data);
+      res.send(data)
+    })
+  })
+
+  app.post('/api/add-new-shop', (req, res) => {
+    db.add_new_shop([req.body.s_name, req.body.address], (err, data) => {
+    }).then(data => res.send(data))
+  })
+
 
   // NODE MAILER-----------------///
   // ---------------------------------

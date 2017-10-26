@@ -26,6 +26,16 @@ export class ReportServiceService {
       .map(res => res.json());
   }
 
+  getShops() {
+    return this.http.post('/api/get-shops', {x:""})
+    .map(res => res.json());
+  }
+
+  addNewShop(data) {
+    return this.http.post('/api/add-new-shop', data)
+    .map(res => res.json());
+  }
+
   addUser(data) {
     console.log('adding user', data)
     return this.http.post('/api/add-user', data)

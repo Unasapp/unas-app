@@ -33,15 +33,15 @@
           <!-- <md-list-item (click)="sidenav.close()" style='margin-left:70%;font-size:20px;' >
             <i class='ion-close-round'></i>
           </md-list-item> -->
-          <md-list-item routerLink='/home' class='sidenav-items' > Home </md-list-item>
+          <md-list-item *ngIf='profType' routerLink='/home' class='sidenav-items'> Home </md-list-item>
           <md-list-item routerLink='/cal' class='sidenav-items'> Calendar </md-list-item>
-          <md-list-item routerLink='/contacts' class='sidenav-items' > Contacts </md-list-item>
-          <md-list-item routerLink='/products' class='sidenav-items'> Products </md-list-item>
-          <md-list-item routerLink='/reports' class='sidenav-items' > Reports </md-list-item>
-          <md-list-item routerLink='/services' class='sidenav-items' > Services </md-list-item>
-          <md-list-item routerLink='/notifications' class='sidenav-items' > Notifications </md-list-item>
-          <md-list-item routerLink='/settings' class='sidenav-items' > Settings </md-list-item>
-          <md-list-item (click)="auth.logout()" class='sidenav-items' > Logout </md-list-item>
+          <md-list-item routerLink='/contacts' class='sidenav-items'> Contacts </md-list-item>
+          <md-list-item *ngIf='profType' routerLink='/products' class='sidenav-items'> Products </md-list-item>
+          <md-list-item *ngIf='profType' routerLink='/reports' class='sidenav-items'> Reports </md-list-item>
+          <md-list-item *ngIf='profType' routerLink='/services' class='sidenav-items' > Services </md-list-item>
+          <md-list-item *ngIf='profType' routerLink='/notifications' class='sidenav-items'> Notifications </md-list-item>
+          <md-list-item *ngIf='profType' routerLink='/settings' class='sidenav-items'> Settings </md-list-item>
+          <md-list-item (click)="logout()" class='sidenav-items'> Logout </md-list-item>
         </md-list>
       </md-sidenav>
 

@@ -35,7 +35,6 @@ import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
 import { CalenderComponent } from './calender/calender.component';
 import { ContactsComponent } from './contacts/contacts.component';
-import { AllbarbersComponent } from './allbarbers/allbarbers.component';
 import { SettingsComponent } from './settings/settings.component';
 import { NotificationsComponent } from './notifications/notifications.component';
 import { FilterPipe } from './filter.pipe';
@@ -43,13 +42,11 @@ import { ContactsdialogComponent } from './contactsdialog/contactsdialog.compone
 import { ReportsComponent } from './reports/reports.component';
 import { CashoutdialogComponent } from './cashoutdialog/cashoutdialog.component';
 import { ApptdialogComponent } from './apptdialog/apptdialog.component';
-import { BarberDetailsComponent } from './barber-details/barber-details.component';
 import { ReportServiceService } from './report-service.service';
 import { BarberModalComponent } from './barber-modal/barber-modal.component';
 import { ProductDialogComponent } from './product-dialog/product-dialog.component';
 import { LoginModelComponent } from './login-model/login-model.component';
 import { ProductsComponent } from './products/products.component';
-import { SidenavComponent } from './sidenav/sidenav.component';
 import { ServicesComponent } from './services/services.component';
 import { ServicesDialogComponent } from './services-dialog/services-dialog.component';
 
@@ -61,7 +58,6 @@ import { ServicesDialogComponent } from './services-dialog/services-dialog.compo
     LoginComponent,
     CalenderComponent,
     ContactsComponent,
-    AllbarbersComponent,
     SettingsComponent,
     NotificationsComponent,
     FilterPipe,
@@ -69,12 +65,10 @@ import { ServicesDialogComponent } from './services-dialog/services-dialog.compo
     ReportsComponent,
     CashoutdialogComponent,
     ApptdialogComponent,
-    BarberDetailsComponent,
     ProductDialogComponent,
     BarberModalComponent,
     LoginModelComponent,
     ProductsComponent,
-    SidenavComponent,
     ServicesComponent,
     ServicesDialogComponent
   ],

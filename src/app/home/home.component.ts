@@ -7,7 +7,8 @@ import { ChartComponent } from 'angular2-chartjs';
 import { Chart } from 'chart.js';
 import { BarberModalComponent } from '../barber-modal/barber-modal.component'
 import { ReportServiceService } from '../report-service.service';
-import * as io from 'socket.io-client'
+import * as io from 'socket.io-client';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -50,15 +51,24 @@ export class HomeComponent implements OnInit {
 
 
   profile: any;
-  barbers: any;
+  barbers = JSON.parse(localStorage.getItem('barbers'))
   ifopen: true;
 
+  profType:boolean;
+  logout() {
+    localStorage.removeItem('profile');
+    localStorage.removeItem('barbers');
+    localStorage.removeItem('clients');
+    localStorage.removeItem('services');
+    this.router.navigate(['/login'])
+  }
 
-  constructor(private http: HttpClient, public dialog: MdDialog, private service: ReportServiceService) {
-    this.profile = localStorage.getItem('profile')
-    console.log(this.profile);
+  constructor(private http: HttpClient, public dialog: MdDialog, private service: ReportServiceService, public router: Router) {
+
 
    }
+
+
 
   openCashDialog() {
     let dialogRef = this.dialog.open(CashoutdialogComponent, {
@@ -84,21 +94,10 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.profile = JSON.parse(localStorage.getItem('profile'))
+    this.profType = (JSON.parse(localStorage.getItem('profile'))[0].type === 'admin') ? true : false
+    this.barbers = JSON.parse(localStorage.getItem('barbers'))
+  }
 
-      console.log(JSON.parse(localStorage.getItem('profile'))[0].shop_id)
-      this.service.getBarbers({id:JSON.parse(localStorage.getItem('profile'))[0].shop_id}).subscribe((data) => {
-        console.log('getting barber data',data);
-        this.barbers = data;
-        localStorage.setItem('barbers', JSON.stringify(data))
-      })
-      this.service.getContacts({id:JSON.parse(localStorage.getItem('profile'))[0].shop_id}).subscribe((data) => {
-        localStorage.setItem('clients', JSON.stringify(data))
-      })
-      this.service.getServices({id:JSON.parse(localStorage.getItem('profile'))[0].shop_id}).subscribe((data) => {
-        localStorage.setItem('services', JSON.stringify(data))
-      })
-      
-
-    }
 
   }
