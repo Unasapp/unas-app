@@ -18,7 +18,7 @@ body {
 }
 
 .sidenav-inner {
-    width: 15%;
+    width: 20%;
     background: white;
 }
 
@@ -39,7 +39,12 @@ body {
     flex:1;
 }
 .rest{
-    flex:1.1;
+  width: 300px;
+  position: absolute;
+  left: 50vw;
+  margin-left: -150px;
+  text-align: center;
+    /*flex:1.1;*/
 }
 .sidenav-items{
     display: flex;
@@ -72,4 +77,16 @@ body {
 .profile-actions{
     display: flex;
     justify-content: space-between;
+}
+
+@media screen and (max-width: 1000px) {
+  .sidenav-inner {
+      width: 30%;
+  }
+}
+
+@media screen and (max-width: 700px) {
+  .sidenav-inner {
+      width: 45%;
+  }
 }
