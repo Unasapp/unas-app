@@ -47,6 +47,7 @@
 
           <div class="stats-cards">
             <md-card class="card-layout">
+              <h4>This Weeks Wages</h4>
               <md-card-content>
                 <canvas baseChart
                 [data]="lineChartData"
@@ -59,16 +60,21 @@
             </md-card>
 
             <md-card class="card-layout">
-              <md-card-content>
-                <canvas baseChart
-                [data]="pieChartData"
-                [labels]="pieChartLabels"
-                [chartType]="pieChartType"
-                (chartHover)="chartHovered($event)"
-                (chartClick)="chartClicked($event)"></canvas>
-              </md-card-content>
-            </md-card>
+                <h4>Average Time Spent Cutting</h4>
+                <md-card-content>
+                    <canvas baseChart
+                    [datasets]="barChartData"
+                    [labels]="barChartLabels"
+                    [options]="barChartOptions"
+                    [legend]="barChartLegend"
+                    [chartType]="barChartType"
+                    (chartHover)="chartHovered($event)"
+                    (chartClick)="chartClicked($event)"></canvas>
+                </md-card-content>
+              </md-card>
+
             <md-card class="card-layout">
+              <h4>This Weeks Wages vs. Tips</h4>
               <md-card-content>
               <canvas baseChart
               [data]="doughnutChartData"

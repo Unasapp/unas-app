@@ -182,6 +182,19 @@ massive("postgres://uunjpeyj:yVNsIpBpaTMB_a2TXEss-Gmq1DGSIOte@pellefant.db.eleph
     })
   })
 
+  app.post('/api/shop/wages',(req, res) => {
+    let array = [
+      req.body.shop_id,
+      req.body.date1,
+      req.body.date2
+    ]
+    console.log('earnings in',array)
+    db.get_shop_wages(array, (err, trans) => {}).then(trans => {
+      console.log('--- shop wages 😡  ----',trans)
+      res.send(trans)
+    })
+  })
+
   app.post('/api/delete-trans', (req, res) =>{
     console.log('-- deleting appt --',[req.body.id,"deleted"])
     db.shop_deletedtrans([req.body.id,"deleted"], (err, trans) => {}).then(trans =>{

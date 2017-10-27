@@ -254,5 +254,11 @@ export class ReportServiceService {
       .map(res => res.json())
   }
 
+  getShopWages(c){
+    console.log('getting shop wages ----',c);
+    return this.http.post('/api/shop/wages',c)
+      .map(res => res.json())
+  }
+
 
 }
