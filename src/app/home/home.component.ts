@@ -25,17 +25,20 @@ export class HomeComponent implements OnInit {
 
   // events
 
-  public lineChartData:Array<any> = [
-    [65, 59, 80, 81, 56, 55, 40],
-    [28, 48, 40, 19, 86, 27, 90]
-  ];
-  public lineChartLabels:Array<any> = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
+  public lineChartData:Array<any> = [ ];
+  public lineChartLabels:Array<any> = ['Sun','Mon','Tues','Wed','Fri','Sat'];
   public lineChartType:string = 'line';
-  public pieChartType:string = 'pie';
 
-  // Pie
-  public pieChartLabels:string[] = ['Download Sales', 'In-Store Sales', 'Mail Sales'];
-  public pieChartData:number[] = [300, 500, 100];
+
+  
+  public barChartLabels:string[] = [ ];
+  public barChartType:string = 'bar';
+  public barChartLegend:boolean = true;
+ 
+  public barChartData:any[] = [
+    {data: [30, 34, 40, 33.5, 25], label: 'Barbers'}
+  ];
+  
 
   public chartClicked(e:any):void {
     console.log(e);
@@ -89,20 +92,57 @@ export class HomeComponent implements OnInit {
     })
   }
 
+
+  shopwages: any;
+  wagesarray = {data: [0,0,0,0,0,0,0], label: 'Wages' }
   ngOnInit() {
     this.profile = JSON.parse(localStorage.getItem('profile'))
     this.profType = (JSON.parse(localStorage.getItem('profile'))[0].type === 'admin') ? true : false
     this.barbers = JSON.parse(localStorage.getItem('barbers'))
 
+    this.barbers.map((x)=>{
+      this.barChartLabels.push(x.b_first)
+    })
+    
+
     let earnInfo = {
-      'date1' : moment(new Date()).format('YYYY-MM-DD'),
-      'date2' : moment(new Date().setDate(new Date().getDate() + 1)).format('YYYY-MM-DD'),
+      'date1' : moment(new Date().setDate(new Date().getDate() - 7)).format('YYYY-MM-DD'),
+      'date2' : moment(new Date()).format('YYYY-MM-DD'),
       'shop_id' : JSON.parse(localStorage.getItem('profile'))[0].shop_id
     }
 
-    // this.service.getShopWages(earninfo).subscribe(data=>{
+    this.service.getShopWages(earnInfo).subscribe(data=>{
+      this.shopwages = data
+      console.log('this.shopwages',this.shopwages);
 
-    // })
+      this.shopwages.map(x=>{
+        this.doughnutChartData[0] = this.doughnutChartData[0] + Number(x.total.split('$')[1])
+        this.doughnutChartData[1] = this.doughnutChartData[1] + Number(x.tip.split('$')[1])
+          if(this.lineChartLabels[0] == moment(x.start_time).format("ddd")){
+            this.wagesarray.data[0] = this.wagesarray.data[0] + Number(x.total.split('$')[1])
+          }
+          if(this.lineChartLabels[1] == moment(x.start_time).format("ddd")){
+            this.wagesarray.data[1] = this.wagesarray.data[1] + Number(x.total.split('$')[1])
+          }
+          if(this.lineChartLabels[2] == moment(x.start_time).format("ddd")){
+            this.wagesarray.data[2] = this.wagesarray.data[2] + Number(x.total.split('$')[1])
+          }
+          if(this.lineChartLabels[3] == moment(x.start_time).format("ddd")){
+            this.wagesarray.data[3] = this.wagesarray.data[3] + Number(x.total.split('$')[1])
+          }
+          if(this.lineChartLabels[4] == moment(x.start_time).format("ddd")){
+            this.wagesarray.data[4] = this.wagesarray.data[4] + Number(x.total.split('$')[1])
+          }
+          if(this.lineChartLabels[5] == moment(x.start_time).format("ddd")){
+            this.wagesarray.data[5] = this.wagesarray.data[5] + Number(x.total.split('$')[1])
+          }
+          if(this.lineChartLabels[6] == moment(x.start_time).format("ddd")){
+            this.wagesarray.data[6] = this.wagesarray.data[6] + Number(x.total.split('$')[1])
+          }
+          this.lineChartData = this.wagesarray.data
+      })
+      
+    })
 
 
 
