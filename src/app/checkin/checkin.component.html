@@ -1,0 +1,76 @@
+<md-toolbar class='main-toolbar'>
+  
+    <div class='ionic-button'>
+      <a md-icon-button (click)="sidenav.toggle()">
+          <i class='ion-navicon icon-size'></i>
+        </a>
+      <!-- <a (click)='ifopen=!ifopen' *ngIf='!ifopen' md-icon-button (click)="sidenav.toggle()">
+          <i style='font-size:32px;' class='ion-close-round icon-size'></i>
+        </a> -->
+    </div>
+  
+    <div class='rest'>
+      <h2>Check-in</h2>
+    </div>
+    <div>
+      <button md-icon-button (click)='openWalkDialog()'>
+          <i class='ion-android-walk icon-size' ></i>
+        </button>
+    </div>
+    <div>
+      <button md-icon-button (click)='openCashDialog()'>
+          <i class='ion-pricetag icon-size' ></i>
+        </button>
+    </div>
+    <div>
+      <button md-icon-button (click)='openApptDialog()'>
+          <i class='ion-calendar icon-size' ></i>
+        </button>
+    </div>
+  
+  </md-toolbar>
+  
+  <md-sidenav-container class="big-container">
+  
+    <md-sidenav #sidenav mode="push" class="sidenav-inner">
+      <md-list>
+  
+          <md-list-item *ngIf='profType' routerLink='/home' class='sidenav-items'> Home </md-list-item>
+          <md-list-item routerLink='/cal' class='sidenav-items'> Calendar </md-list-item>
+          <md-list-item routerLink='/contacts' class='sidenav-items'> Contacts </md-list-item>
+          <md-list-item *ngIf='profType' routerLink='/checkin' class='sidenav-items'> Check-in </md-list-item>
+          <md-list-item *ngIf='profType' routerLink='/products' class='sidenav-items'> Products </md-list-item>
+          <md-list-item *ngIf='profType' routerLink='/reports' class='sidenav-items'> Reports </md-list-item>
+          <md-list-item *ngIf='profType' routerLink='/services' class='sidenav-items' > Services </md-list-item>
+          <md-list-item *ngIf='profType' routerLink='/notifications' class='sidenav-items'> Notifications </md-list-item>
+          <md-list-item *ngIf='profType' routerLink='/settings' class='sidenav-items'> Settings </md-list-item>
+          <md-list-item (click)="logout()" class='sidenav-items'> Logout </md-list-item>
+      </md-list>
+    </md-sidenav>
+
+  <div class='big-progress' >
+
+    <section class='left-progress' >
+      <h1 class='progress-header' >Wait List</h1>
+        <md-list>
+            <md-list-item (click)='openWaitDialog(walk)' class='progress-list' *ngFor="let walk of waitList" >
+                {{ walk.c_first }} {{ walk.c_last }} - {{ walk.service }} - {{ walk.b_first }} {{ walk.b_last }}
+            </md-list-item>
+        </md-list>
+    </section>
+
+    <section class='right-progress' >
+      <h1 class='progress-header' >In-progress</h1>
+        <md-list>
+            <md-list-item (click)='openCashOut(appt)' class='progress-list'  *ngFor="let appt of needToPay" >
+                {{ appt.c_first }} {{ appt.c_last }} - {{ appt.service }} - {{ appt.b_first }} {{ appt.b_last }}
+              </md-list-item>
+        </md-list>
+    </section>
+
+  </div>
+
+
+
+
+  </md-sidenav-container>

@@ -1,0 +1,14 @@
+.wait-list-table{
+    display: flex;
+}
+.wait-list-table-column{
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    align-items: flex-start;
+}
+
+.wait-list-table-column p{
+    margin: 0;
+    margin-bottom: 4px;
+}

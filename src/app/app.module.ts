@@ -49,6 +49,9 @@ import { LoginModelComponent } from './login-model/login-model.component';
 import { ProductsComponent } from './products/products.component';
 import { ServicesComponent } from './services/services.component';
 import { ServicesDialogComponent } from './services-dialog/services-dialog.component';
+import { CheckinComponent } from './checkin/checkin.component';
+import { WalkdialogComponent } from './walkdialog/walkdialog.component';
+import { WaitDialogComponent } from './wait-dialog/wait-dialog.component';
 
 
 @NgModule({
@@ -70,7 +73,10 @@ import { ServicesDialogComponent } from './services-dialog/services-dialog.compo
     LoginModelComponent,
     ProductsComponent,
     ServicesComponent,
-    ServicesDialogComponent
+    ServicesDialogComponent,
+    CheckinComponent,
+    WalkdialogComponent,
+    WaitDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -110,7 +116,9 @@ import { ServicesDialogComponent } from './services-dialog/services-dialog.compo
     ProductDialogComponent,
     BarberModalComponent,
     LoginModelComponent,
-    ServicesDialogComponent
+    ServicesDialogComponent,
+    WalkdialogComponent,
+    WaitDialogComponent
   ],
   providers: [ReportServiceService],
   bootstrap: [AppComponent]

@@ -1,0 +1,42 @@
+<div>
+    <h2 md-dialog-title>Wait list</h2>
+    <hr>
+  
+    <md-dialog-content>
+
+      <div class='wait-list-table' >
+          <div class='wait-list-table-column' >
+            <h3 style='font-weight:bold' > <u> Client </u></h3>
+          </div>
+          <div class='wait-list-table-column' >
+            <h3 style='font-weight:bold' > <u> Service </u></h3>
+          </div>
+          <div class='wait-list-table-column' >
+            <h3 style='font-weight:bold' > <u> Barber </u></h3>
+          </div>
+      </div>
+     <div class='wait-list-table' >
+        <div class='wait-list-table-column' >
+          <p> - {{ data?.c_first }} {{ data?.c_last }} </p>
+        </div>
+        <div class='wait-list-table-column' >
+          <p> - {{ data?.service }}</p>
+          <p *ngIf='data.service2' > - {{ data?.service2 }}</p>
+          <p *ngIf='data.service3' > - {{ data?.service3 }} </p>
+        </div>
+        <div class='wait-list-table-column' >
+          <p> - {{ data?.b_first }} {{ data?.b_last }} </p>
+        </div>
+     </div>
+
+  </md-dialog-content>
+
+  <md-dialog-actions style="display:flex; justify-content: space-between;">
+      <div>
+        <button md-raised-button (click)='onCloseConfirm()'> Start Appointment </button>
+        <button md-raised-button (click)='onCloseCancel()'> Cancel </button>
+      </div>
+      <button  md-raised-button color="warn" (click)='onCloseDelete()'> Delete </button>
+  </md-dialog-actions>
+
+</div>

@@ -18,13 +18,12 @@ export class CashoutdialogComponent implements OnInit {
 
   clients = JSON.parse(localStorage.getItem('clients'))
 
-  needToPay = this.service.cashout
+  needToPay = []
   tip = 0;
   products: any;
   selected: any;
   productQ = 0;
   chosenproduct: any;
-  walk = false;
   serviceVal = 0;
 
 
@@ -34,20 +33,27 @@ constructor(
   @Inject(MD_DIALOG_DATA) public data: any,
   private service: ReportServiceService
 ) {
-}
 
-
-changeTab(){
-    this.walk = !this.walk
 }
+ 
 
 ngOnInit() {
-  this.service.getInProgress({id:JSON.parse(localStorage.getItem('profile'))[0].shop_id}).subscribe(data => {
-    this.needToPay = data;
-    console.log('@db:', data)
-    this.needToPay.map(x => x.price = (Number(x.price.split('$')[1])))
-    console.log('this.needToPay ----',this.needToPay);
-  });
+  console.log('-- this.data ---',this.data);
+
+  if(this.data.a_id){
+    this.needToPay.push('nope')
+    this.selected = this.data 
+    console.log('@db:', this.needToPay)
+  }
+
+  else{
+    this.service.getInProgress({id:JSON.parse(localStorage.getItem('profile'))[0].shop_id}).subscribe(data => {
+      this.needToPay = data;
+      console.log('@db:', data)
+      this.needToPay.map(x => x.price = (Number(x.price.split('$')[1])))
+      console.log('this.needToPay ----',this.needToPay);
+    });
+  }
 
   this.service.getProducts({id:JSON.parse(localStorage.getItem('profile'))[0].shop_id}).subscribe(data =>{
     console.log('data -----',data);
@@ -77,7 +83,7 @@ onCloseConfirm(customer, firstname, lastname, phonenumber, email, serviceVal, ba
       'paymth': typeP,
       'status': 'completed'
     }
-    this.service.completeAppt(trans).subscribe()
+    // this.service.completeAppt(trans).subscribe()
     this.dialogRef.close()
   }
 
@@ -99,7 +105,7 @@ onCloseConfirm(customer, firstname, lastname, phonenumber, email, serviceVal, ba
       'tip': this.tip,
       'pay_mth': typeP
     }
-    this.service.newCustomerTrans(newC).subscribe()
+    // this.service.newCustomerTrans(newC).subscribe()
     this.dialogRef.close()
   }
   if(customer){
@@ -116,7 +122,7 @@ onCloseConfirm(customer, firstname, lastname, phonenumber, email, serviceVal, ba
       'c_id': customer
     };
     console.log('--- Here is Transaction ---',trans);
-    this.service.walkinTrans(trans).subscribe()
+    // this.service.walkinTrans(trans).subscribe()
     this.dialogRef.close()
   }
 
@@ -131,7 +137,7 @@ onCloseConfirm(customer, firstname, lastname, phonenumber, email, serviceVal, ba
       'pay_mth': typeP
     };
     console.log('--- Here is Transaction ---',trans);
-    this.service.productTrans(trans).subscribe()
+    // this.service.productTrans(trans).subscribe()
     this.dialogRef.close()
 
   }

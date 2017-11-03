@@ -58,6 +58,8 @@ export class LoginModelComponent implements OnInit {
                 localStorage.setItem('clients', JSON.stringify(data))
               })
               this.service.getServices({id:this.userData.shopId}).subscribe((data) => {
+                console.log( 'data for services' ,data);
+                 
                 localStorage.setItem('services', JSON.stringify(data))
               })
               this.dialogRef.close('Owner')
@@ -81,6 +83,7 @@ export class LoginModelComponent implements OnInit {
               localStorage.setItem('clients', JSON.stringify(data))
             })
             this.service.getServices({id:this.userData.shopId}).subscribe((data) => {
+              console.log( 'data for services' ,data);
               localStorage.setItem('services', JSON.stringify(data))
             })
             this.dialogRef.close('User')
@@ -101,6 +104,7 @@ export class LoginModelComponent implements OnInit {
           localStorage.setItem('clients', JSON.stringify(data))
         })
         this.service.getServices({id:data[0].shop_id}).subscribe((data) => {
+          console.log( 'data for services' ,data);
           localStorage.setItem('services', JSON.stringify(data))
         })
         if (data[0].type === 'admin') {

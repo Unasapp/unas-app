@@ -490,8 +490,9 @@ massive("postgres://uunjpeyj:yVNsIpBpaTMB_a2TXEss-Gmq1DGSIOte@pellefant.db.eleph
       console.log(' -- appts from DB -- ',data)
       res.send(data)
     })
+  })
 
-  app.post('/api/get-shops', (req, res) => {
+  app.post('/api/getshops', (req, res) => {
     console.log('shops @server');
     db.get_shops((err, data) => {
     }).then((data) => {
@@ -572,12 +573,9 @@ massive("postgres://uunjpeyj:yVNsIpBpaTMB_a2TXEss-Gmq1DGSIOte@pellefant.db.eleph
       req.body.start_time,
       req.body.v_id,
       req.body.b_id,
-      req.body.quantity,
-      req.body.total,
-      req.body.tip,
-      req.body.pay_mth,
-      'completed',
-      req.body.p_id,
+      req.body.v_id1,
+      req.body.v_id1,
+      'walk-in',
       req.body.c_id
     ]
     console.log('walk in appt',array2)
@@ -590,7 +588,7 @@ massive("postgres://uunjpeyj:yVNsIpBpaTMB_a2TXEss-Gmq1DGSIOte@pellefant.db.eleph
   })
 
 
-  app.post('/api/appt/newcustomercomplete', (req, res)=>{
+  app.post('/api/appt/newcustomerwalkin', (req, res)=>{
     let array1 = [
       req.body.c_first,
       req.body.c_last,
@@ -604,12 +602,9 @@ massive("postgres://uunjpeyj:yVNsIpBpaTMB_a2TXEss-Gmq1DGSIOte@pellefant.db.eleph
       req.body.start_time,
       req.body.v_id,
       req.body.b_id,
-      req.body.quantity,
-      req.body.total,
-      req.body.tip,
-      req.body.pay_mth,
-      'completed',
-      req.body.p_id
+      req.body.v_id1,
+      req.body.v_id2,
+      'walk-in'
     ]
     var c_id 
     console.log('completeing appt',array1)
@@ -639,10 +634,31 @@ massive("postgres://uunjpeyj:yVNsIpBpaTMB_a2TXEss-Gmq1DGSIOte@pellefant.db.eleph
     })
   })
 
-
-
   app.post('/api/add-new-shop', (req, res) => {
     db.add_new_shop([req.body.s_name, req.body.address], (err, data) => {
+    }).then(data => res.send(data))
+  })
+
+  app.post('/api/appt/getInWaitList', (req, res) => {
+    array = [
+      req.body.id,
+      'walk-in'
+    ]
+    db.get_walk_ins(array, (err, data) => {
+    }).then(data => res.send(data))
+  })
+
+  app.post('/api/appt/waittoprogress', (req, res) => {
+    array = [
+      req.body.a_id,
+      'service-completed'
+    ]
+    db.wait_to_progress(array, (err, data) => {
+    }).then(data => res.send(data))
+  })
+
+  app.post('/api/appt/deletewalkin', (req, res) => {
+    db.delete_walk_in(req.body.a_id, (err, data) => {
     }).then(data => res.send(data))
   })
 
@@ -927,5 +943,4 @@ massive("postgres://uunjpeyj:yVNsIpBpaTMB_a2TXEss-Gmq1DGSIOte@pellefant.db.eleph
     job.start();
 
   })
-})
 
