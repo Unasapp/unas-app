@@ -1,0 +1,33 @@
+.big-progress{
+    display: flex;
+    width: 90%;
+    margin-left: 5%;
+    margin-top: 20px;
+}
+.left-progress{
+    padding-left: 15px;
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+}
+.right-progress{
+    padding-left: 15px;
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+}
+
+.progress-header{
+    text-align: center;
+    font-weight: bolder;
+}
+
+.progress-list{
+    border-bottom: 1px solid grey;
+    width: 100%;
+    text-align: left;
+}
+
+.progress-list:hover{
+    background: #f2f2f2;
+}

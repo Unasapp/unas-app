@@ -10,7 +10,8 @@ import { SettingsComponent } from './settings/settings.component';
 import { NotificationsComponent } from './notifications/notifications.component';
 import { ReportsComponent } from './reports/reports.component';
 import { ProductsComponent } from './products/products.component';
-import { ServicesComponent } from './services/services.component'
+import { ServicesComponent } from './services/services.component';
+import { CheckinComponent } from './checkin/checkin.component'
 
 
 
@@ -25,7 +26,8 @@ export const router: Routes = [
     { path: 'reports', component: ReportsComponent },
     { path: 'notifications', component: NotificationsComponent },
     { path: 'products', component: ProductsComponent},
-    { path: 'services', component: ServicesComponent }
+    { path: 'services', component: ServicesComponent },
+    { path: 'checkin', component: CheckinComponent }
 ]
 
 export const routes: ModuleWithProviders = RouterModule.forRoot(router)

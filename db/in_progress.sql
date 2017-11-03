@@ -1,20 +1,12 @@
 select
-	a_id,
-	b_first,
-	b_last,
-	c_first,
-	c_last,
-	service,
-	price,
-	start_time,
-	status
+	*
 from
 	appointments,
 	barbers,
 	clients,
 	services
 where
- 	  b_id = barber_id
+ 	b_id = barber_id
 and
   	v_id = service_id
 and

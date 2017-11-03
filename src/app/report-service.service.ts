@@ -27,7 +27,9 @@ export class ReportServiceService {
   }
 
   getShops() {
-    return this.http.post('/api/get-shops', {x:""})
+    console.log('get shops called');
+    
+    return this.http.post('/api/getshops',{x:''})
     .map(res => res.json());
   }
 
@@ -251,15 +253,27 @@ export class ReportServiceService {
       .map(res => res.json())
   }
 
-  newCustomerTrans(c){
-    console.log('completing New Customer appt ----',c);
-    return this.http.post('/api/appt/newcustomercomplete',c)
+  newCustomerWalkin(c){
+    console.log('New Customer walk-in ----',c);
+    return this.http.post('/api/appt/newcustomerwalkin',c)
       .map(res => res.json())
   }
 
   walkinTrans(c){
-    console.log('completing New Customer appt ----',c);
+    console.log('exicting Customer walk-in ----',c);
     return this.http.post('/api/appt/walkinTrans',c)
+      .map(res => res.json())
+  }
+
+  getInWaitList(id){
+    console.log('getting wait list ----',id);
+    return this.http.post('/api/appt/getInWaitList',id)
+      .map(res => res.json())
+  }
+
+  waitToInProgress(appt){
+    console.log('from wait to in-progress ----',appt);
+    return this.http.post('/api/appt/waittoprogress',appt)
       .map(res => res.json())
   }
 
@@ -272,6 +286,12 @@ export class ReportServiceService {
   getShopWages(c){
     console.log('getting shop wages ----',c);
     return this.http.post('/api/shop/wages',c)
+      .map(res => res.json())
+  }
+
+  deleteWalkIn(c){
+    console.log('getting shop wages ----',c);
+    return this.http.post('/api/appt/deletewalkin',c)
       .map(res => res.json())
   }
 

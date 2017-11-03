@@ -1,0 +1,139 @@
+<div>
+    <h2 md-dialog-title>Walk-in</h2>
+    <hr>
+  
+    <md-dialog-content>
+
+<div *ngIf='!newCustomer'>
+    <table cellspacing="0">
+      <tr>
+        <td>
+            <h5>Existing Customer</h5>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <md-select name=customer [(ngModel)]='customer' placeholder="Client">
+            <md-option *ngFor="let client of clients" [value]="client.c_id">
+              {{ client.c_first }} {{ client.c_last }}
+            </md-option>
+          </md-select>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <br>
+            <md-slide-toggle (change)="newCustomer = !newCustomer"  [checked]="newCustomer" value="1">New Customer</md-slide-toggle><br>
+          <br>
+        </td>
+      </tr>
+    </table>
+ </div>
+
+ <div *ngIf='newCustomer' >
+      <table cellspacing="0">
+        <tr>
+            <td>
+                <h5>New Customer</h5>
+            </td>
+        </tr>
+        <tr>
+          <td>
+            <md-input-container >
+                <input mdInput placeholder="First name" name=firstname [(ngModel)]='firstname'>
+            </md-input-container>
+          </td>
+          <td>
+            <md-input-container >
+            <input mdInput placeholder="Last Name" name=lastname [(ngModel)]='lastname'>
+          </md-input-container>
+        </td>
+        </tr>
+    </table>
+    <p>
+      <md-input-container >
+        <input mdInput placeholder="Phone Number" name=phonenumber [(ngModel)]='phonenumber'>
+      </md-input-container>
+      <md-input-container >
+        <input mdInput placeholder="Email" name=email [(ngModel)]='email'>
+      </md-input-container>
+    </p>
+
+    <table>
+        <tr>
+            <td>
+                <md-input-container>
+                    <input mdInput placeholder="Birthday" name=bday [(ngModel)]='bday'>
+                </md-input-container>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              ** Format Example: 2-14-92
+            </td>
+        </tr>
+    </table>
+    <tr>
+      <td>
+          <br>
+            <md-slide-toggle (change)="newCustomer = !newCustomer"  [checked]="newCustomer" value="1">New Customer</md-slide-toggle><br>
+            <br>
+          </td>
+      </tr>
+</div>
+
+  <h2 md-dialog-title>Service Information</h2>
+  <hr>
+  <br>
+  <table  cellspacing="0">
+    <tr>
+      <td>
+        <md-select name=service [(ngModel)]='serviceVal' placeholder="Service">
+          <md-option *ngFor="let service of services" [value]="service">
+            {{ service.service }}
+          </md-option>
+        </md-select>
+      </td>
+      <td>
+        <md-select name=barber [(ngModel)]='barber' placeholder="Barber">
+          <md-option *ngFor="let barber of barbers" [value]="barber.b_id">
+            {{ barber.b_first }} {{ barber.b_last}}
+          </md-option>
+        </md-select>
+      </td>
+    </tr>
+  </table>
+
+  <br>
+
+  <h5> Additional Services </h5>
+
+  <table  cellspacing="0">
+      <tr>
+        <td>
+          <md-select name=service1 [(ngModel)]='serviceVal1' placeholder="Service">
+            <md-option *ngFor="let service of services" [value]="service">
+              {{ service.service }}
+            </md-option>
+          </md-select>
+        </td>
+        <td>
+          <md-select name=service2 [(ngModel)]='serviceVal2' placeholder="Service">
+            <md-option *ngFor="let service of services" [value]="service">
+              {{ service.service }}
+            </md-option>
+          </md-select>
+        </td>
+      </tr>
+    </table>
+
+<br>
+
+</md-dialog-content>
+
+  <md-dialog-actions>
+    <button md-raised-button (click)='onCloseConfirm(customer, firstname, lastname, phonenumber, email, serviceVal, barber, bday, serviceVal1, serviceVal2)'> Submit </button>
+    <button md-raised-button (click)='onCloseCancel()'> Cancel </button>
+  </md-dialog-actions>
+
+</div>

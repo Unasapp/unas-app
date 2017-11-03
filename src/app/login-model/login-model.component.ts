@@ -58,10 +58,12 @@ export class LoginModelComponent implements OnInit {
                 localStorage.setItem('clients', JSON.stringify(data))
               })
               this.service.getServices({id:this.userData.shopId}).subscribe((data) => {
+                console.log( 'data for services' ,data);
+                 
                 localStorage.setItem('services', JSON.stringify(data))
               })
-              this.dialogRef.close()
-              this.router.navigate(['/home'])
+              this.dialogRef.close('Owner')
+              // this.router.navigate(['/home'])
             } else {
               alert(data.fail)
             }
@@ -81,10 +83,11 @@ export class LoginModelComponent implements OnInit {
               localStorage.setItem('clients', JSON.stringify(data))
             })
             this.service.getServices({id:this.userData.shopId}).subscribe((data) => {
+              console.log( 'data for services' ,data);
               localStorage.setItem('services', JSON.stringify(data))
             })
-            this.dialogRef.close()
-            this.router.navigate(['/calender'])
+            this.dialogRef.close('User')
+            // this.router.navigate(['/calender'])
           } else {
             alert(data.fail)
           }
@@ -101,16 +104,17 @@ export class LoginModelComponent implements OnInit {
           localStorage.setItem('clients', JSON.stringify(data))
         })
         this.service.getServices({id:data[0].shop_id}).subscribe((data) => {
+          console.log( 'data for services' ,data);
           localStorage.setItem('services', JSON.stringify(data))
         })
         if (data[0].type === 'admin') {
           localStorage.setItem('profile', JSON.stringify(data))
-          this.dialogRef.close()
-          this.router.navigate(['/home'])
+          this.dialogRef.close('Owner')
+          // this.router.navigate(['/home'])
         } else if (data[0].type === 'user') {
           localStorage.setItem('profile', JSON.stringify(data))
-          this.dialogRef.close()
-          this.router.navigate(['/calender'])
+          this.dialogRef.close('User')
+          // this.router.navigate(['/calender'])
         } else {
           alert("Username or password is invalid!")
         }
