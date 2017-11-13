@@ -28,7 +28,7 @@ export class ReportServiceService {
 
   getShops() {
     console.log('get shops called');
-    
+
     return this.http.post('/api/getshops',{x:''})
     .map(res => res.json());
   }
@@ -293,6 +293,11 @@ export class ReportServiceService {
     console.log('getting shop wages ----',c);
     return this.http.post('/api/appt/deletewalkin',c)
       .map(res => res.json())
+  }
+
+  getHistory(cust) {
+    return this.http.post('/api/appt/cust-history', cust)
+    .map(res => res.json())
   }
 
 

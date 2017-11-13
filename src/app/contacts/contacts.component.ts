@@ -7,6 +7,7 @@ import { CashoutdialogComponent } from '../cashoutdialog/cashoutdialog.component
 import { ApptdialogComponent } from '../apptdialog/apptdialog.component';
 import { ReportServiceService } from  '../report-service.service';
 import { Router } from '@angular/router';
+import { CustshistorydialogComponent } from '../custshistorydialog/custshistorydialog.component';
 
 
 @Component({
@@ -64,6 +65,13 @@ export class ContactsComponent implements OnInit {
       }
     })
 
+  }
+
+  openHistory(contact) {
+    let dialogRef = this.dialog.open(CustshistorydialogComponent,{
+      width: '90%',
+      data: contact
+    })
   }
 
 

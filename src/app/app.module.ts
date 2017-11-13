@@ -52,6 +52,7 @@ import { ServicesDialogComponent } from './services-dialog/services-dialog.compo
 import { CheckinComponent } from './checkin/checkin.component';
 import { WalkdialogComponent } from './walkdialog/walkdialog.component';
 import { WaitDialogComponent } from './wait-dialog/wait-dialog.component';
+import { CustshistorydialogComponent } from './custshistorydialog/custshistorydialog.component';
 
 
 @NgModule({
@@ -76,7 +77,8 @@ import { WaitDialogComponent } from './wait-dialog/wait-dialog.component';
     ServicesDialogComponent,
     CheckinComponent,
     WalkdialogComponent,
-    WaitDialogComponent
+    WaitDialogComponent,
+    CustshistorydialogComponent
   ],
   imports: [
     BrowserModule,
@@ -118,7 +120,8 @@ import { WaitDialogComponent } from './wait-dialog/wait-dialog.component';
     LoginModelComponent,
     ServicesDialogComponent,
     WalkdialogComponent,
-    WaitDialogComponent
+    WaitDialogComponent,
+    CustshistorydialogComponent
   ],
   providers: [ReportServiceService],
   bootstrap: [AppComponent]

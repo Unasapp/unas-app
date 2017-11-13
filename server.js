@@ -163,7 +163,7 @@ massive("postgres://uunjpeyj:yVNsIpBpaTMB_a2TXEss-Gmq1DGSIOte@pellefant.db.eleph
   app.post('/api/shop-trans', (req, res) => {
     let array = [
       req.body.shop_id,
-      req.body.date1, 
+      req.body.date1,
       req.body.date2
     ]
     db.shop_trans(array, (err, trans) => {}).then(trans =>{
@@ -568,7 +568,7 @@ massive("postgres://uunjpeyj:yVNsIpBpaTMB_a2TXEss-Gmq1DGSIOte@pellefant.db.eleph
   })
 
   app.post('/api/appt/walkinTrans', (req, res)=>{
-    let array2 = [ 
+    let array2 = [
       req.body.shop_id,
       req.body.start_time,
       req.body.v_id,
@@ -597,7 +597,7 @@ massive("postgres://uunjpeyj:yVNsIpBpaTMB_a2TXEss-Gmq1DGSIOte@pellefant.db.eleph
       req.body.b_day,
       req.body.c_shop
     ]
-    let array2 = [ 
+    let array2 = [
       req.body.shop_id,
       req.body.start_time,
       req.body.v_id,
@@ -606,7 +606,7 @@ massive("postgres://uunjpeyj:yVNsIpBpaTMB_a2TXEss-Gmq1DGSIOte@pellefant.db.eleph
       req.body.v_id2,
       'walk-in'
     ]
-    var c_id 
+    var c_id
     console.log('completeing appt',array1)
     db.add_contact(array1, (err,data)=>{
       console.log('info to get product reports', err, data);
@@ -622,10 +622,10 @@ massive("postgres://uunjpeyj:yVNsIpBpaTMB_a2TXEss-Gmq1DGSIOte@pellefant.db.eleph
   app.post('/api/appt/productTrans', (req, res) => {
     let array = [
       req.body.shop_id,
-      req.body.start_time, 
+      req.body.start_time,
       req.body.p_id,
       req.body.quantity,
-      req.body.total, 
+      req.body.total,
       req.body.tip,
       req.body.pay_mth
     ]
@@ -659,6 +659,12 @@ massive("postgres://uunjpeyj:yVNsIpBpaTMB_a2TXEss-Gmq1DGSIOte@pellefant.db.eleph
 
   app.post('/api/appt/deletewalkin', (req, res) => {
     db.delete_walk_in(req.body.a_id, (err, data) => {
+    }).then(data => res.send(data))
+  })
+
+
+  app.post('/api/appt/cust-history', (req, res) => {
+    db.cust_history([req.body.cust_id, req.body.shop_id], (err, data) => {
     }).then(data => res.send(data))
   })
 
@@ -772,7 +778,7 @@ massive("postgres://uunjpeyj:yVNsIpBpaTMB_a2TXEss-Gmq1DGSIOte@pellefant.db.eleph
           <th>Cost Per</th>
           <th>Net Sales</th>
         </tr>`;
-        
+
 
     var getStuff = function() {
 
@@ -943,4 +949,3 @@ massive("postgres://uunjpeyj:yVNsIpBpaTMB_a2TXEss-Gmq1DGSIOte@pellefant.db.eleph
     job.start();
 
   })
-

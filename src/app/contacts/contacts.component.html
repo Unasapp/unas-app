@@ -70,19 +70,23 @@
           <p class='box-contacts' > Name </p>
           <p class='box-contacts' > Email </p>
           <p class='box-contacts' > Phone Number </p>
+          <p class='box-contacts' style ="justify-content: center;"> Edit </p>
         </div>
       </md-list-item>
 
       <md-list-item  *ngFor="let user of users | filter:term">
 
-        <div class='view-contacts' (click)="openDialog(user)">
-          <p class='box-contacts' > {{user.c_first}} {{ user.c_last }} </p>
-          <p class='box-contacts' > {{user.c_email}} </p>
-          <p class='box-contacts' > {{user.c_phone}} </p>
+        <div class='view-contacts' (click)="openHistory(user)" >
+          <p class='box-contacts'> {{user.c_first}} {{ user.c_last }} </p>
+          <p class='box-contacts'> {{user.c_email}} </p>
+          <p class='box-contacts'> {{user.c_phone}} </p>
+          <button md-icon-button (click)='openDialog(user)' style ="width: 25%;">
+            <i class='ion-edit icon-size' ></i>
+          </button>
         </div>
       </md-list-item>
 
-    </div>
+      </div>
     </md-list>
 
 
