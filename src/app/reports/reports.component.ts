@@ -114,7 +114,7 @@ export class ReportsComponent implements OnInit {
 
   getProductReports(para){
     this.pastP = !this.pastP
-    
+
     if(para=='past'){
       this.products = []
       let earnInfo = {
@@ -134,12 +134,12 @@ export class ReportsComponent implements OnInit {
            'netsales': 0
          })
        })
-      
+
      })
       console.log('get reports for past 7',earnInfo);
       this.service.getProductsReport(earnInfo).subscribe(data =>{
         console.log('--- products for reports --',data);
-  
+
         for (var i = 0; i < this.products.length; i++) {
           for (var j = 0; j < data.length; j++) {
             if(this.products[i].p_id == data[j].p_id ) {
@@ -148,7 +148,7 @@ export class ReportsComponent implements OnInit {
             }
           }
         }
-       
+
        })
         console.log('get reports for past 7',this.report);
       }
@@ -171,11 +171,11 @@ export class ReportsComponent implements OnInit {
            'netsales': 0
          })
        })
-      
+
      })
       this.service.getProductsReport(earnInfo).subscribe(data =>{
         console.log('--- products for reports --',data);
-  
+
         for (var i = 0; i < this.products.length; i++) {
           for (var j = 0; j < data.length; j++) {
             if(this.products[i].p_id == data[j].p_id) {
@@ -184,7 +184,7 @@ export class ReportsComponent implements OnInit {
             }
           }
         }
-       
+
        })
       console.log('get reports from today',this.report);
     }
@@ -242,7 +242,7 @@ export class ReportsComponent implements OnInit {
           cards[i].time_in = moment(cards[i].time_in).format('LLLL')
           cards[i].time_out = moment(cards[i].time_out).format('LLLL')
           }
-        // console.log(cards)
+        console.log(cards)
         this.timecards = cards
         })
          console.log('get reports for past 7',this.report);
@@ -260,7 +260,7 @@ export class ReportsComponent implements OnInit {
           cards[i].time_out = moment(cards[i].time_out).format('LLLL')
 
         }
-        // console.log(cards)
+        console.log(cards)
         this.timecards = cards
       })
        console.log('get reports from today',this.report);
@@ -270,7 +270,7 @@ export class ReportsComponent implements OnInit {
 
   getEarnReports(para){
     this.pastE = !this.pastE
-    
+
      if(para=='past'){
       this.barearnings = []
       let earnInfo = {
@@ -279,7 +279,7 @@ export class ReportsComponent implements OnInit {
         'shop_id' : JSON.parse(localStorage.getItem('profile'))[0].shop_id
       }
     }
-    
+
   }
 
 
@@ -301,7 +301,7 @@ export class ReportsComponent implements OnInit {
   report: any = []
   timecards: any = []
   trans: any
-  todaysdateDisplay = moment(new Date()).format('dddd, MMMM Do YYYY')  
+  todaysdateDisplay = moment(new Date()).format('dddd, MMMM Do YYYY')
   todaysdate = new Date()
   com: any
   products = []
@@ -329,7 +329,7 @@ export class ReportsComponent implements OnInit {
           'netsales': 0
         })
       })
-     
+
     })
 
     this.service.getProductsReport(earnInfo).subscribe(data =>{
@@ -343,9 +343,9 @@ export class ReportsComponent implements OnInit {
           }
         }
       }
-     
+
      })
-    
+
     this.service.getShopTrans(earnInfo).subscribe(trans => {
 
       for (let i = 0; i < trans.length; i++) {
@@ -367,7 +367,7 @@ export class ReportsComponent implements OnInit {
       this.timecards = cards
     })
 
-   
+
 
     this.service.getBarberEarning(earnInfo).subscribe(data => {
       console.log('--- earning 😈  back from db ---', data);
@@ -386,15 +386,15 @@ export class ReportsComponent implements OnInit {
         console.log('old barber earning shit',this.barearnings)
         this.go = true;
       }
-        
-     
+
+
       if(this.go == true){
 
         for (var i = 0; i < this.barearnings.length; i++) {
           for (var j = 0; j < data.length; j++) {
             if(data[j].type == 'hourly' && this.barearnings[i].barber_id == data[j].b_id){
               // console.log('in it hourly');
-              
+
               var rate = data[j].rate.split('/')[0].replace('$','')
               var time = 6;
               this.barearnings[i].payT = data[j].type +" - "+ data[j].rate
@@ -402,7 +402,7 @@ export class ReportsComponent implements OnInit {
               this.barearnings[i].shopE = this.barearnings[i].shopE + Number(data[j].total.split('$')[1])
               this.barearnings[i].tips = this.barearnings[i].tips + Number(data[j].tip.split('$')[1])
             }
-            
+
             if(data[j].type == 'commission' && this.barearnings[i].barber_id == data[j].b_id){
               // console.log('in it commission');
               this.com = Number('.' + data[j].rate.split('%')[0])
@@ -410,20 +410,20 @@ export class ReportsComponent implements OnInit {
               data[j].total = data[j].total.split('$')[1]
               this.barearnings[i].payT = data[j].type +" - "+ data[j].rate
               // console.log(this.barearnings[i].barberE , Number(data[j].total.replace('$','')) , Number(this.com) );
-              
+
               this.barearnings[i].barberE = this.barearnings[i].barberE + (Number(data[j].total.replace('$','')) * Number(this.com))
               this.barearnings[i].shopE = this.barearnings[i].shopE + Number(data[j].total.replace('$','')) * (1-Number(this.com))
               this.barearnings[i].tips = this.barearnings[i].tips + Number(data[j].tip.split('$')[1])
             }
-  
+
             if(data[j].type == 'booth rent' && this.barearnings[i].barber_id == data[j].b_id){
               // console.log('in it booth rent');
-              this.barearnings[i].payT = data[j].type 
+              this.barearnings[i].payT = data[j].type
               this.barearnings[i].barberE = this.barearnings[i].barberE + Number(data[j].total.split('$')[1])
               this.barearnings[i].shopE = data[j].rate
               this.barearnings[i].tips = this.barearnings[i].tips + Number(data[j].tip.split('$')[1])
             }
-            
+
           }
         }
 

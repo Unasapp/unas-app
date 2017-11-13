@@ -53,39 +53,59 @@ export class ApptdialogComponent implements OnInit {
 
     console.log('data coming from closing Appt dialog',barber, service, customer, date, timep, timeam, firstname, lastname, phonenumber, email);
 
-    let newappt =  {
-        'barber_id'  : barber.b_id,
-        'client_id'  : customer.c_id,
-        'service_id'  : service.v_id,
-        'shop_id'  : service.shop_id,
-        'start_time' : moment(date).hour(timeH).minute(timeM).format('YYYY-MM-DD HH:mm:ss'),
-        'end_time' : moment(date).hour(timeH).minute(timeM).format('YYYY-MM-DD HH:mm:ss')
-    }
 
-    console.log('Appt going to DB',newappt);
+
+    // console.log('Appt going to DB',newappt);
     // API call to add appt to DB
     // API call to add appt to DB
     // API call to add appt to DB
-    this.myService.addAppts(newappt).subscribe()
+
 
     if(!customer){
       /// New Customer Call
-      let customer = firstname + ' ' + lastname;
+      let customer = {
+        c_first: firstname,
+        c_last: lastname,
+        c_phone: phonenumber,
+        c_email: email,
+        c_shop: service.shop_id
+      }
+      console.log('creating new cust', customer)
       let newappt = {
         'barber': barber.b_first + ' ' + barber.b_last,
         'service': service.service,
         'customer': customer,
         'date': moment(date).hour(timeH).minute(timeM).format('LLLL')
       };
-      console.log('appt to DOM',newappt);
+      this.myService.addContact(customer).subscribe(data => {
+        console.log('appt for new cust', data)
+        let newapptDb =  {
+            'barber_id'  : barber.b_id,
+            'client_id'  : data[0].c_id,
+            'service_id'  : service.v_id,
+            'shop_id'  : service.shop_id,
+            'start_time' : moment(date).hour(timeH).minute(timeM).format('YYYY-MM-DD HH:mm:ss'),
+            'end_time' : moment(date).hour(timeH).minute(timeM).format('YYYY-MM-DD HH:mm:ss')
+        }
+        this.myService.addAppts(newapptDb).subscribe()
+      })
       this.dialogRef.close(newappt)
     } else{
+      let newapptDb =  {
+          'barber_id'  : barber.b_id,
+          'client_id'  : customer.c_id,
+          'service_id'  : service.v_id,
+          'shop_id'  : service.shop_id,
+          'start_time' : moment(date).hour(timeH).minute(timeM).format('YYYY-MM-DD HH:mm:ss'),
+          'end_time' : moment(date).hour(timeH).minute(timeM).format('YYYY-MM-DD HH:mm:ss')
+      }
       let newappt = {
         'barber': barber.b_first + ' ' + barber.b_last,
         'service': service.service,
         'customer': customer.c_first + ' ' + customer.c_last ,
         'date': moment(date).hour(timeH).minute(timeM).format('LLLL')
       };
+      this.myService.addAppts(newapptDb).subscribe()
       console.log('appt to DOM',newappt);
       this.dialogRef.close(newappt)
     }

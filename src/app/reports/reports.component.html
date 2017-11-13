@@ -167,7 +167,7 @@
 
           <md-list-item  *ngFor='let y of timecards'>
             <div class='view-reports' id ="myId" #myId>
-              <p class='box-reports'> {{ y.b_first }} {{ y.b_last }} </p>
+              <p class='box-reports'> {{ y.first_name }} {{ y.last_name }} </p>
               <p class='box-reports'> {{ y.time_in }} </p>
               <p class='box-reports'> {{ y.time_out }} </p>
             </div>
@@ -178,7 +178,7 @@
         <div *ngIf='editingT' class='reports-box'>
             <md-list-item>
               <div class='view-reports-head'>
-                <div class='box-reports-head'> Barber </div>
+                <div class='box-reports-head'> Name </div>
                 <div class='box-reports-head'> Clock-in </div>
                 <div class='box-reports-head'> Clock-out </div>
                 <div style='border: none;' class='box-reports-head'> Save/Delete </div>
@@ -187,7 +187,7 @@
 
           <md-list-item *ngFor='let y of timecards; let i = index; trackBy:trackByIndex' >
             <div class='view-reports' id ="myId" #myId>
-              <p class='box-reports'> {{ timecards[i].b_first }} {{ timecards[i].b_last }} </p>
+              <p class='box-reports'> {{ timecards[i].first_name }} {{ timecards[i].last_name }} </p>
               <md-input-container class='box-reports3' >
                   <input style='text-align:center;padding:0;' mdInput [(ngModel)]='timecards[i].time_in'   />
               </md-input-container>
@@ -212,7 +212,7 @@
     <md-tab label="Barber Earnings">
       <div class='report-head-earn'>
           <button *ngIf='!pastE' (click)='getEarnReports("past")' md-button class='pastDays-btn' > Reports From Past 7 Days </button>
-          <button *ngIf='pastE'  (click)='getEarnReports("today")' md-button class='pastDays-btn' > Reports From Today </button> 
+          <button *ngIf='pastE'  (click)='getEarnReports("today")' md-button class='pastDays-btn' > Reports From Today </button>
         <div> Todays Date: {{ todaysdateDisplay }} </div>
       </div>
 
