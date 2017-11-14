@@ -100,6 +100,8 @@ export class CheckinComponent implements OnInit {
   }
 
   openCashOut(appt){
+    console.log(appt,'-- opening cash out --');
+    
     let dialogRef = this.dialog.open(CashoutdialogComponent, {
       width: '600px',
       data: appt
