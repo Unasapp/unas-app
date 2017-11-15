@@ -120,6 +120,7 @@ massive("postgres://uunjpeyj:yVNsIpBpaTMB_a2TXEss-Gmq1DGSIOte@pellefant.db.eleph
     ]
     console.log('getting timecards', array)
     db.timecards(array, (err, cards) => {}).then(cards => {
+      console.log("timecards", cards);
       res.send(cards)
     })
   })
@@ -149,7 +150,7 @@ massive("postgres://uunjpeyj:yVNsIpBpaTMB_a2TXEss-Gmq1DGSIOte@pellefant.db.eleph
     console.log('here is the timecards', req.body);
 
     let newTimecard = [
-      req.body.barberId,
+      req.body.userId,
       req.body.timeIn,
       req.body.timeOut,
       req.body.shopId

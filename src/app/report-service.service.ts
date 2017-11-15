@@ -300,5 +300,10 @@ export class ReportServiceService {
     .map(res => res.json())
   }
 
+  clockOut(cust) {
+    return this.http.post('/api/post-timecards', cust)
+    .map(res => res.json())
+  }
+
 
 }
