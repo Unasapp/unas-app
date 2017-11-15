@@ -21,13 +21,13 @@ export class ReportServiceService {
 
 
   testPoint() {
-    console.log('testPoint called');
+    // console.log('testPoint called');
     return this.http.get('/api/test')
       .map(res => res.json());
   }
 
   getShops() {
-    console.log('get shops called');
+    // console.log('get shops called');
 
     return this.http.post('/api/getshops',{x:''})
     .map(res => res.json());
@@ -39,19 +39,19 @@ export class ReportServiceService {
   }
 
   addUser(data) {
-    console.log('adding user', data)
+    // console.log('adding user', data)
     return this.http.post('/api/add-user', data)
       .map(res => res.json())
   }
 
   login(data) {
-    console.log('logging in', data)
+    // console.log('logging in', data)
     return this.http.post('/api/login', data)
       .map(res => res.json())
   }
 
   addAppts(appt){
-    console.log('-- addAppts called in service --',appt);
+    // console.log('-- addAppts called in service --',appt);
     return this.http.post('/api/add-appt', appt)
       .map(res => res.json());
   }
@@ -92,11 +92,11 @@ export class ReportServiceService {
   }
 
   getBarberEarning(x){
-    console.log('--- 😇 barber earnings called ---');
+    // console.log('--- 😇 barber earnings called ---');
 
     return this.http.post('/api/shop-trans/earnings',x)
       .map(res => {
-        console.log('--- 😇 barber earnings comming back!!!!! ---', res.json());
+        // console.log('--- 😇 barber earnings comming back!!!!! ---', res.json());
          return res.json()
         })
   }
@@ -107,25 +107,25 @@ export class ReportServiceService {
   }
 
   addContact(contact) {
-    console.log('-- add Contact called in service ---',contact);
+    // console.log('-- add Contact called in service ---',contact);
     return this.http.post('/api/add-contact', contact)
       .map(res => res.json())
   }
 
   editContact(contact) {
-    console.log('editing contact', contact)
+    // console.log('editing contact', contact)
     return this.http.post('/api/edit-contact', contact)
     .map(res => res.json())
   }
 
   deleteContact(contact) {
-    console.log('service')
+    // console.log('service')
     return this.http.post('/api/delete-contact', contact)
       .map(res => res.json())
   }
 
   getBarbers(id) {
-    console.log('service')
+    // console.log('service')
     return this.http.post('/api/barbers', id)
     .map(res => res.json())
   }
@@ -146,34 +146,34 @@ export class ReportServiceService {
   }
 
   getServices(id) {
-    console.log('service')
+    // console.log('service')
     return this.http.post('/api/services', id)
     .map(res => res.json())
   }
 
   addServices(service){
-    console.log('add services');
+    // console.log('add services');
     return this.http.post('/api/add-service', service).map(res => res.json())
   }
 
   editServices(service){
-    console.log('edit services');
+    // console.log('edit services');
     return this.http.post('/api/edit-service', service).map(res => res.json())
   }
 
   deleteServices(service){
-    console.log('delete services');
+    // console.log('delete services');
     return this.http.post('/api/delete-service', service).map(res => res.json())
   }
 
   getAppts(id) {
-    console.log('--- getting appt from service ---')
+    // console.log('--- getting appt from service ---')
     return this.http.post('/api/cal', id)
     .map(res => res.json())
   }
 
   deleteAPPT(ids){
-    console.log('-- ids to delete appts --',ids);
+    // console.log('-- ids to delete appts --',ids);
     return this.http.post('/api/cal/delete',ids)
     .map(res => res.json())
   }
@@ -209,88 +209,88 @@ export class ReportServiceService {
       }
     })
 
-    console.log('editAppt called in service',edit);
+    // console.log('editAppt called in service',edit);
     return this.http.post('/api/cal/edit', edit)
     .map(res => res.json())
 
   }
 
   getProducts(id){
-    console.log('-- id to get products --',id);
+    // console.log('-- id to get products --',id);
     return this.http.post('/api/getproducts',id)
     .map(res => res.json())
   }
 
   addNewProduct(product){
-    console.log('-- Adding products --',product);
+    // console.log('-- Adding products --',product);
     return this.http.post('/api/addproduct',product)
     .map(res => res.json())
   }
 
   editProduct(product){
-    console.log('-- editing products --',product);
+    // console.log('-- editing products --',product);
     return this.http.post('/api/editproduct',product)
     .map(res => res.json())
   }
 
   deleteProduct(product){
-    console.log('-- delete products --',product);
+    // console.log('-- delete products --',product);
     return this.http.post('/api/deleteproduct',product)
     .map(res => res.json())
 
   }
 
   getProductsReport(info){
-    console.log('-- get products reports --',info);
+    // console.log('-- get products reports --',info);
     return this.http.post('/api/reports/products',info)
     .map(res => res.json())
 
   }
 
   completeAppt(x){
-    console.log('completing appt ----',x);
+    // console.log('completing appt ----',x);
     return this.http.post('/api/appt/complete',x)
       .map(res => res.json())
   }
 
   newCustomerWalkin(c){
-    console.log('New Customer walk-in ----',c);
+    // console.log('New Customer walk-in ----',c);
     return this.http.post('/api/appt/newcustomerwalkin',c)
       .map(res => res.json())
   }
 
   walkinTrans(c){
-    console.log('exicting Customer walk-in ----',c);
+    // console.log('exicting Customer walk-in ----',c);
     return this.http.post('/api/appt/walkinTrans',c)
       .map(res => res.json())
   }
 
   getInWaitList(id){
-    console.log('getting wait list ----',id);
+    // console.log('getting wait list ----',id);
     return this.http.post('/api/appt/getInWaitList',id)
       .map(res => res.json())
   }
 
   waitToInProgress(appt){
-    console.log('from wait to in-progress ----',appt);
+    // console.log('from wait to in-progress ----',appt);
     return this.http.post('/api/appt/waittoprogress',appt)
       .map(res => res.json())
   }
 
   productTrans(c){
-    console.log('completing New Product appt ----',c);
+    // console.log('completing New Product appt ----',c);
     return this.http.post('/api/appt/productTrans',c)
       .map(res => res.json())
   }
 
   getShopWages(c){
-    console.log('getting shop wages ----',c);
+    // console.log('getting shop wages ----',c);
     return this.http.post('/api/shop/wages',c)
       .map(res => res.json())
   }
 
   deleteWalkIn(c){
-    console.log('getting shop wages ----',c);
+    // console.log('getting shop wages ----',c);
     return this.http.post('/api/appt/deletewalkin',c)
       .map(res => res.json())
   }

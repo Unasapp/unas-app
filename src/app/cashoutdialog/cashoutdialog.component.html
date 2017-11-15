@@ -41,7 +41,28 @@
         <h2 md-dialog-title>Add Products and Services</h2>
         <hr>
 
+        <h4><u>Services</u></h4>
         <div class='product-select' >
+              <div>
+                <md-select name=service1 [(ngModel)]='serviceVal1' placeholder="Service">
+                  <md-option *ngFor="let service of services" [value]="service">
+                    {{ service.service }}
+                  </md-option>
+                </md-select>
+              </div>
+         </div>
+         <div class='product-select' >
+            <div>
+                <md-select name=service2 [(ngModel)]='serviceVal2' placeholder="Service">
+                  <md-option *ngFor="let service of services" [value]="service">
+                    {{ service.service }}
+                  </md-option>
+                </md-select>
+              </div>
+           </div>
+
+          <h4><u>Products</u></h4>
+          <div class='product-select' >
             <div>
               <md-select name=product [(ngModel)]='chosenproduct' placeholder="Product">
                 <md-option *ngFor='let product of products' [value]="product" >
@@ -56,7 +77,6 @@
                 </md-input-container>
             </div>
           </div>
-          <h4><u>Additional Products</u></h4>
           <div class='product-select' >
             <div>
               <md-select name=product [(ngModel)]='chosenproduct2' placeholder="Product">
@@ -95,7 +115,7 @@
           </div>
           <div class='paystuff-right' >
               <div >
-                  {{ selected?.price + (selected?.serviceP2 ? selected?.serviceP2 : 0) + (selected?.serviceP3 ? selected?.serviceP3 : 0) | currency:'USD':true }} 
+                  {{ selected?.price + (serviceVal2?.price ? serviceVal2?.price : 0) + (serviceVal1?.price ? serviceVal1?.price : 0) + (selected?.serviceP2 ? selected?.serviceP2 : 0) + (selected?.serviceP3 ? selected?.serviceP3 : 0) | currency:'USD':true }} 
               </div>
               <div >
                   {{ (chosenproduct?.price * productQ) + (chosenproduct2?.price * productQ2) | currency:'USD':true }} 
@@ -104,7 +124,7 @@
                   {{ tip | currency:'USD':true }}
               </div>
               <div >
-                  {{ selected?.price + (selected?.serviceP2 ? selected?.serviceP2 : 0) + (selected?.serviceP3 ? selected?.serviceP3 : 0) + tip + (chosenproduct?.price * productQ) + (chosenproduct2?.price * productQ2) | currency:'USD':true }}
+                  {{ selected?.price + (selected?.serviceP2 ? selected?.serviceP2 : 0) + (selected?.serviceP3 ? selected?.serviceP3 : 0) + tip + (chosenproduct?.price * productQ) + (chosenproduct2?.price * productQ2) + (serviceVal2?.price ? serviceVal2?.price : 0) + (serviceVal1?.price ? serviceVal1?.price : 0) | currency:'USD':true }}
               </div>
           </div>
         </div>
@@ -120,7 +140,7 @@
   </md-dialog-content>
 
   <md-dialog-actions>
-    <button md-raised-button (click)='onCloseConfirm(customer, firstname, lastname, phonenumber, email, serviceVal, barber, price, tip, amtpaid, typeP, product, bday)'> Submit </button>
+    <button md-raised-button (click)='onCloseConfirm(tip, typeP)'> Submit </button>
     <button md-raised-button (click)='onCloseCancel()'> Cancel </button>
   </md-dialog-actions>
 

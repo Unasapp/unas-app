@@ -32,7 +32,7 @@ export class WaitDialogComponent implements OnInit {
   }
 
   onCloseCancel(){
-    this.dialogRef.close()
+    this.dialogRef.close([0,'nothing'])
   }
 
   onCloseDelete(){

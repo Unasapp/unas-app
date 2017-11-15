@@ -89,6 +89,28 @@
         </tr>
       </table>
       <br>
+      
+        <h5> Additional Services </h5>
+      
+        <table  cellspacing="0">
+            <tr>
+              <td>
+                <md-select name=service1 [(ngModel)]='serviceVal1' placeholder="Service">
+                  <md-option *ngFor="let service of services" [value]="service">
+                    {{ service.service }}
+                  </md-option>
+                </md-select>
+              </td>
+              <td>
+                <md-select name=service2 [(ngModel)]='serviceVal2' placeholder="Service">
+                  <md-option *ngFor="let service of services" [value]="service">
+                    {{ service.service }}
+                  </md-option>
+                </md-select>
+              </td>
+            </tr>
+          </table>
+      <br>
 
       <h2 md-dialog-title>Date and Time</h2>
       <hr>
@@ -127,7 +149,7 @@
   </md-dialog-content>
 
   <md-dialog-actions>
-    <button md-raised-button (click)='onCloseConfirm(barber, service, customer, date, timep, timeam, firstname, lastname, phonenumber, email)' > Add </button>
+    <button md-raised-button (click)='onCloseConfirm(barber, service, customer, date, timep, timeam, firstname, lastname, phonenumber, email, serviceVal1, serviceVal2)' > Add </button>
     <button md-raised-button (click)='onCloseCancel()' > Cancel </button>
   </md-dialog-actions>
 

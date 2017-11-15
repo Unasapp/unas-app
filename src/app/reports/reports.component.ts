@@ -19,6 +19,7 @@ export class ReportsComponent implements OnInit {
   cashResult: any;
 
   barbers = JSON.parse(localStorage.getItem('barbers'))
+  services = JSON.parse(localStorage.getItem('services'))
 
   constructor(private http: Http, public dialog: MdDialog, public service: ReportServiceService, public router: Router) { }
 
@@ -56,25 +57,6 @@ export class ReportsComponent implements OnInit {
 
   }
 
-  // openNewProduct() {
-  //   let dialogRef = this.dialog.open(ProductDialogComponent, {
-  //     width: '600px',
-  //     data: 'this text is passed'
-  //   })
-  //   dialogRef.afterClosed().subscribe(result => {
-  //     if (result !== undefined) {
-  //       let newproduct = {
-  //         name: result.name,
-  //         type: result.type,
-  //         cost: result.cost,
-  //         code: result.code
-  //       }
-
-  //       this.products.push(newproduct)
-  //     }
-
-  //   })
-  // }
 
   openCashDialog() {
     let dialogRef = this.dialog.open(CashoutdialogComponent, {
@@ -202,9 +184,35 @@ export class ReportsComponent implements OnInit {
       }
       console.log('get reports for past 7',earnInfo);
       this.service.getShopTrans(earnInfo).subscribe(trans => {
-              for (let i = 0; i < trans.length; i++) {
-                trans[i].start_time = moment(new Date(trans[i].start_time.split('.')[0])).format("l LT")
-              }
+        for (let i = 0; i < trans.length; i++) {
+          trans[i].start_time = moment(new Date(trans[i].start_time.split('.')[0])).format("l LT")
+          trans[i].price = Number(trans[i].price.split('$')[1])
+          trans[i].tip = Number(trans[i].tip.split('$')[1])
+          trans[i].total = Number(trans[i].price) + Number(trans[i].tip)
+          for (var k = 0; k < this.services.length; k++) {
+            if(trans[i].service_id2 == this.services[k].v_id){
+              trans[i].service2 = this.services[k].service
+              trans[i].price2 = Number(this.services[k].price.split('$')[1])
+              trans[i].total = trans[i].total + Number(this.services[k].price.split('$')[1])
+            }
+            if(trans[i].service_id3 == this.services[k].v_id){
+              trans[i].service3 = this.services[k].service
+              trans[i].price3 = Number(this.services[k].price.split('$')[1])
+              trans[i].total = trans[i].total + Number(this.services[k].price.split('$')[1])
+            }
+            if(trans[i].service_id4 == this.services[k].v_id){
+              trans[i].service4 = this.services[k].service
+              trans[i].price4 = Number(this.services[k].price.split('$')[1])
+              trans[i].total = trans[i].total + Number(this.services[k].price.split('$')[1])
+            }
+            if(trans[i].service_id5 == this.services[k].v_id){
+              trans[i].service5 = this.services[k].service
+              trans[i].price5 = Number(this.services[k].price.split('$')[1])
+              trans[i].total = trans[i].total + Number(this.services[k].price.split('$')[1])
+            }
+          }
+          trans[i].total = Number(trans[i].total.toFixed(2))
+        }
               this.report = trans
            })
         console.log('get reports for past 7',this.report);
@@ -217,9 +225,35 @@ export class ReportsComponent implements OnInit {
       }
       console.log('get reports from today',earnInfo);
       this.service.getShopTrans(earnInfo).subscribe(trans => {
-              for (let i = 0; i < trans.length; i++) {
-                trans[i].start_time = moment(new Date(trans[i].start_time.split('.')[0])).format("l LT")
-              }
+        for (let i = 0; i < trans.length; i++) {
+          trans[i].start_time = moment(new Date(trans[i].start_time.split('.')[0])).format("l LT")
+          trans[i].price = Number(trans[i].price.split('$')[1])
+          trans[i].tip = Number(trans[i].tip.split('$')[1])
+          trans[i].total = Number(trans[i].price) + Number(trans[i].tip)
+          for (var k = 0; k < this.services.length; k++) {
+            if(trans[i].service_id2 == this.services[k].v_id){
+              trans[i].service2 = this.services[k].service
+              trans[i].price2 = Number(this.services[k].price.split('$')[1])
+              trans[i].total = trans[i].total + Number(this.services[k].price.split('$')[1])
+            }
+            if(trans[i].service_id3 == this.services[k].v_id){
+              trans[i].service3 = this.services[k].service
+              trans[i].price3 = Number(this.services[k].price.split('$')[1])
+              trans[i].total = trans[i].total + Number(this.services[k].price.split('$')[1])
+            }
+            if(trans[i].service_id4 == this.services[k].v_id){
+              trans[i].service4 = this.services[k].service
+              trans[i].price4 = Number(this.services[k].price.split('$')[1])
+              trans[i].total = trans[i].total + Number(this.services[k].price.split('$')[1])
+            }
+            if(trans[i].service_id5 == this.services[k].v_id){
+              trans[i].service5 = this.services[k].service
+              trans[i].price5 = Number(this.services[k].price.split('$')[1])
+              trans[i].total = trans[i].total + Number(this.services[k].price.split('$')[1])
+            }
+          }
+          trans[i].total = Number(trans[i].total.toFixed(2))
+        }
               this.report = trans
            })
       console.log('get reports from today',this.report);
@@ -311,10 +345,15 @@ export class ReportsComponent implements OnInit {
     this.profType = (JSON.parse(localStorage.getItem('profile'))[0].type === 'admin') ? true : false
     // console.log('reports loaded ---->>>>.',this.barbers)
     let earnInfo = {
-      'date1' : moment(new Date()).format('YYYY-MM-DD'),
+      'date1' : moment(new Date().setDate(new Date().getDate() - 30)).format('YYYY-MM-DD'),
       'date2' : moment(new Date().setDate(new Date().getDate() + 1)).format('YYYY-MM-DD'),
       'shop_id' : JSON.parse(localStorage.getItem('profile'))[0].shop_id
     }
+    // let earnInfo = {
+    //   'date1' : moment(new Date()).format('YYYY-MM-DD'),
+    //   'date2' : moment(new Date().setDate(new Date().getDate() + 1)).format('YYYY-MM-DD'),
+    //   'shop_id' : JSON.parse(localStorage.getItem('profile'))[0].shop_id
+    // }
     console.log('earnInfo 😡', earnInfo);
 
     this.service.getProducts({id:JSON.parse(localStorage.getItem('profile'))[0].shop_id}).subscribe(data=>{
@@ -333,7 +372,7 @@ export class ReportsComponent implements OnInit {
     })
 
     this.service.getProductsReport(earnInfo).subscribe(data =>{
-      console.log('--- products for reports --',data);
+      // console.log('--- products for reports --',data);
 
       for (var i = 0; i < this.products.length; i++) {
         for (var j = 0; j < data.length; j++) {
@@ -347,20 +386,44 @@ export class ReportsComponent implements OnInit {
      })
 
     this.service.getShopTrans(earnInfo).subscribe(trans => {
-
+      console.log('ive been called to get trans');
       for (let i = 0; i < trans.length; i++) {
-        // console.log('-- this is date before ---',trans[i].start_time)
         trans[i].start_time = moment(new Date(trans[i].start_time.split('.')[0])).format("l LT")
-        // console.log('-- this is date after ---',trans[i].start_time)
+        trans[i].price = Number(trans[i].price.split('$')[1])
+        trans[i].tip = Number(trans[i].tip.split('$')[1])
+        trans[i].total = Number(trans[i].price) + Number(trans[i].tip)
+        for (var k = 0; k < this.services.length; k++) {
+          if(trans[i].service_id2 == this.services[k].v_id){
+            trans[i].service2 = this.services[k].service
+            trans[i].price2 = Number(this.services[k].price.split('$')[1])
+            trans[i].total = trans[i].total + Number(this.services[k].price.split('$')[1])
+          }
+          if(trans[i].service_id3 == this.services[k].v_id){
+            trans[i].service3 = this.services[k].service
+            trans[i].price3 = Number(this.services[k].price.split('$')[1])
+            trans[i].total = trans[i].total + Number(this.services[k].price.split('$')[1])
+          }
+          if(trans[i].service_id4 == this.services[k].v_id){
+            trans[i].service4 = this.services[k].service
+            trans[i].price4 = Number(this.services[k].price.split('$')[1])
+            trans[i].total = trans[i].total + Number(this.services[k].price.split('$')[1])
+          }
+          if(trans[i].service_id5 == this.services[k].v_id){
+            trans[i].service5 = this.services[k].service
+            trans[i].price5 = Number(this.services[k].price.split('$')[1])
+            trans[i].total = trans[i].total + Number(this.services[k].price.split('$')[1])
+          }
+        }
+        trans[i].total = Number(trans[i].total.toFixed(2))
       }
-      console.log('-- this is date after ---',this.report)
       this.report = trans
+      console.log('-- this is shop trans for week ---',this.report)
     })
 
     this.service.getTimecards(earnInfo).subscribe(cards => {
       for (let i = 0; i < cards.length; i++) {
-        cards[i].time_in = moment(cards[i].time_in).format('LLLL')
-        cards[i].time_out = moment(cards[i].time_out).format('LLLL')
+        cards[i].time_in = moment(cards[i].time_in).format("l LT")
+        cards[i].time_out = moment(cards[i].time_out).format("l LT")
 
       }
       // console.log(cards)
@@ -370,7 +433,7 @@ export class ReportsComponent implements OnInit {
 
 
     this.service.getBarberEarning(earnInfo).subscribe(data => {
-      console.log('--- earning 😈  back from db ---', data);
+      // console.log('--- earning 😈  back from db ---', data);
 
       if(data){
         this.barbers.map((x)=>{
@@ -383,7 +446,7 @@ export class ReportsComponent implements OnInit {
             'tips': 0
           })
         })
-        console.log('old barber earning shit',this.barearnings)
+        // console.log('old barber earning shit',this.barearnings)
         this.go = true;
       }
 

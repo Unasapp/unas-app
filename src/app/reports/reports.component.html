@@ -60,73 +60,70 @@
         <button *ngIf='!editing' (click)='editing = !editing' md-button class='edit-reports-btn' > <span class='ion-wrench' ></span> Edit Reports </button>
         <button *ngIf='editing' (click)='editing = !editing' md-button class='edit-reports-btn2' > Stop Editing Reports </button>
       </div>
-      <md-list>
-        <div *ngIf='!editing' class='reports-box'>
-          <md-list-item>
-            <div class='view-reports-head'>
-              <div class='box-reports-head'> Appt Date </div>
-              <div class='box-reports-head'> Barber </div>
-              <div class='box-reports-head'> Client </div>
-              <div class='box-reports-head'> Service </div>
-              <div class='box-reports-head'> Price </div>
-              <div class='box-reports-head'> Tip </div>
-              <div class='box-reports-head'> Pymt Method </div>
-              <div style='border: none;' class='box-reports-head'> Amount Paid </div>
-            </div>
-          </md-list-item>
-          <md-list-item  *ngFor='let x of report'>
-            <div class='view-reports'>
-              <p class='box-reports'> {{x.start_time }} </p>
-              <p class='box-reports'> {{ x.b_first }} {{ x.b_last }} </p>
-              <p class='box-reports'> {{ x.c_first }} {{ x.c_last }} </p>
-              <p class='box-reports'> {{ x.service }} </p>
-              <p class='box-reports'> {{ x.price }} </p>
-              <p class='box-reports'> {{ x.tip }} </p>
-              <p class='box-reports'> {{ x.pay_mth}} </p>
-              <p class='box-reports'> {{ x.total }} </p>
-            </div>
-          </md-list-item>
-      </div>
-
-      <div *ngIf='editing'  class='reports-box'>
-          <md-list-item>
-            <div class='view-reports-head'>
-              <div class='box-reports-head'> Appt Date </div>
-              <div class='box-reports-head'> Barber </div>
-              <div class='box-reports-head'> Client </div>
-              <div class='box-reports-head'> Service </div>
-              <div class='box-reports-head'> Price </div>
-              <div class='box-reports-head'> Tip </div>
-              <div class='box-reports-head'> Pymt Method </div>
-              <div class='box-reports-head'> Amount Paid </div>
-              <div style='border: none;' class='box-reports-head'> Save/Delete </div>
-            </div>
-          </md-list-item>
-          <md-list-item  *ngFor='let x of report; let i = index; trackBy:trackByIndex'>
-            <div class='view-reports'>
-              <p style='font-size: 13px;' class='box-reports'> {{ report[i].start_time }} </p>
-
-              <p class='box-reports' >
+      <table *ngIf='!editing' class='reports-box' >
+          <tr>
+                <th > Appt Date </th>
+                <th > Barber </th>
+                <th > Client </th>
+                <th > Service </th>
+                <th > Price </th>
+                <th > Tip </th>
+                <th > Pymt Method </th>
+                <th > Amount Paid </th>
+            </tr>
+            <tr *ngFor='let x of report'>
+                  <td> {{x.start_time }} </td>
+                  <td> {{ x.b_first }} {{ x.b_last }} </td>
+                  <td> {{ x.c_first }} {{ x.c_last }} </td>
+                  <td> <div >{{ x.service }} </div> <div class='mult-service' >{{ x.service2 }} </div> <div class='mult-service' >{{ x.service3 }} </div> <div class='mult-service' >{{ x.service4 }} </div> <div class='mult-service' >{{ x.service5 }} </div> </td>
+                  <td> {{ x.price + (x.price2 ? x.price2 : 0) + (x.price3 ? x.price3 : 0) + (x.price4 ? x.price4 : 0) + (x.price5 ? x.price5 : 0) | currency:'USD':true  }} </td>
+                  <td> {{ x.tip | currency:'USD':true }} </td>
+                  <td> {{ x.pay_mth }} </td>
+                  <td> {{ x.total | currency:'USD':true  }} </td>
+             </tr>
+      </table>
+      <table *ngIf='editing'  class='reports-box'>
+            <tr >
+              <th > Appt Date </th>
+              <th > Barber </th>
+              <th > Client </th>
+              <th > Service </th>
+              <th > Price </th>
+              <th > Tip </th>
+              <th > Pymt Method </th>
+              <th > Amount Paid </th>
+              <th > Save/Delete </th>
+            </tr>
+          <tr  *ngFor='let x of report; let i = index; trackBy:trackByIndex'>
+              <td> {{ report[i].start_time }} </td>
+              <td >
                   {{report[i].b_first}} {{report[i].b_last}}
-              </p>
-              <p class='box-reports' >
+              </td>
+              <td >
                   {{report[i].c_first}} {{report[i].c_last}}
-              </p>
-              <p class='box-reports' >
-                  {{ report[i].service }}
-              </p>
-              <p class='box-reports' >
-                  {{ report[i].price }}
-              </p>
-              <md-input-container class='box-reports2' >
+              </td>
+              <td >
+                  <div >{{ report[i].service }} </div> <div class='mult-service' >{{ report[i].service2 }} </div> <div class='mult-service' >{{ report[i].service3 }} </div> <div class='mult-service' >{{ report[i].service4 }} </div> <div class='mult-service' >{{ report[i].service5 }} </div>
+              </td>
+              <td >
+                  {{ report[i].price + (report[i].price2 ? report[i].price2 : 0) + (report[i].price3 ? report[i].price3 : 0) + (report[i].price4 ? report[i].price4 : 0) + (report[i].price5 ? report[i].price5 : 0) | currency:'USD':true }}
+              </td>
+              <td>
+              <md-input-container >
                   <input style='text-align:center;padding:0;' mdInput [(ngModel)]='report[i].tip'   />
               </md-input-container>
-              <md-input-container class='box-reports2' >
+            </td>
+            <td>
+              <md-input-container >
                   <input style='text-align:center;padding:0;' mdInput [(ngModel)]='report[i].pay_mth'  />
               </md-input-container>
-              <md-input-container class='box-reports2' >
+            </td>
+            <td>
+              <md-input-container >
                   <input style='text-align:center;padding:0;' mdInput [(ngModel)]='report[i].total'   />
               </md-input-container>
+            </td>
+            <td>
               <div class='edit-reports-list-btns' >
                 <button (click)='saveEdit(report[i])' md-icon-button >
                   <span style='color:green;' class='reports-edit-btn-SD ion-checkmark-round' ></span>
@@ -135,10 +132,9 @@
                   <span style='color:#ff4d4d;' class='reports-edit-btn-SD ion-close-round' ></span>
                 </button>
               </div>
-            </div>
-          </md-list-item>
-        </div>
-      </md-list>
+            </td>
+          </tr>
+        </table>
 
     </md-tab>
 
@@ -155,45 +151,42 @@
             <button *ngIf='editingT' (click)='editingT = !editingT' md-button class='edit-reports-btn2' > Stop Editing Reports </button>
           </div>
 
-      <md-list>
-        <div  *ngIf='!editingT' class='reports-box'>
-          <md-list-item>
-            <div class='view-reports-head'>
-              <div class='box-reports-head'> Barber </div>
-              <div class='box-reports-head'> Clock-in </div>
-              <div style='border: none;' class='box-reports-head'> Clock-out </div>
-            </div>
-          </md-list-item>
+        <table  *ngIf='!editingT' class='reports-box'>
+          <tr>
+              <th > Name </th>
+              <th > Clock-in </th>
+              <th > Clock-out </th>
+          </tr>
 
-          <md-list-item  *ngFor='let y of timecards'>
-            <div class='view-reports' id ="myId" #myId>
-              <p class='box-reports'> {{ y.first_name }} {{ y.last_name }} </p>
-              <p class='box-reports'> {{ y.time_in }} </p>
-              <p class='box-reports'> {{ y.time_out }} </p>
-            </div>
-          </md-list-item>
-        </div>
+          <tr  *ngFor='let y of timecards'>
+              <td > {{ y.first_name }} {{ y.last_name }} </td>
+              <td > {{ y.time_in }} </td>
+              <td > {{ y.time_out }} </td>
+          </tr>
+        </table>
 
 
-        <div *ngIf='editingT' class='reports-box'>
-            <md-list-item>
-              <div class='view-reports-head'>
-                <div class='box-reports-head'> Name </div>
-                <div class='box-reports-head'> Clock-in </div>
-                <div class='box-reports-head'> Clock-out </div>
-                <div style='border: none;' class='box-reports-head'> Save/Delete </div>
-              </div>
-            </md-list-item>
+        <table *ngIf='editingT' class='reports-box'>
+            <tr>
+                <th > Name </th>
+                <th > Clock-in </th>
+                <th > Clock-out </th>
+                <th > Save/Delete </th>
+            </tr>
 
-          <md-list-item *ngFor='let y of timecards; let i = index; trackBy:trackByIndex' >
-            <div class='view-reports' id ="myId" #myId>
-              <p class='box-reports'> {{ timecards[i].first_name }} {{ timecards[i].last_name }} </p>
-              <md-input-container class='box-reports3' >
+          <tr *ngFor='let y of timecards; let i = index; trackBy:trackByIndex' >
+              <td > {{ timecards[i].first_name }} {{ timecards[i].last_name }} </td>
+            <td>
+              <md-input-container >
                   <input style='text-align:center;padding:0;' mdInput [(ngModel)]='timecards[i].time_in'   />
               </md-input-container>
-              <md-input-container class='box-reports3' >
+            </td>
+            <td>
+              <md-input-container >
                   <input style='text-align:center;padding:0;' mdInput [(ngModel)]='timecards[i].time_out'   />
               </md-input-container>
+            </td>
+            <td>
               <div class='edit-reports-list-btns' >
                 <button (click)='timesaveEdit(timecards[i])'  md-icon-button >
                   <span style='color:green;' class='reports-edit-btn-SD ion-checkmark-round' ></span>
@@ -202,11 +195,10 @@
                   <span style='color:#ff4d4d;' class='reports-edit-btn-SD ion-close-round' ></span>
                 </button>
               </div>
-            </div>
-          </md-list-item>
-
-        </div>
-      </md-list>
+            </td>
+          </tr>
+        </table>
+  
     </md-tab>
 
     <md-tab label="Barber Earnings">
@@ -248,31 +240,24 @@
             <button *ngIf='!pastP' (click)='getProductReports("past")' md-button class='pastDays-btn' > Reports From Past 7 Days </button>
             <button *ngIf='pastP'  (click)='getProductReports("today")' md-button class='pastDays-btn' > Reports From Today </button>
           </div>
-      <md-list>
-        <div class='reports-box'>
-          <md-list-item>
-            <div class='view-reports-head'>
-              <div class='box-reports-head'> Name </div>
-              <div class='box-reports-head'> Type </div>
-              <div class='box-reports-head'> In Stock </div>
-              <div class='box-reports-head'> # Sold </div>
-              <div class='box-reports-head'> Cost Per </div>
-              <div style='border: none;' class='box-reports-head'> Net Sales </div>
-            </div>
-          </md-list-item>
-
-          <md-list-item *ngFor='let x of products'>
-            <div class='view-reports'>
-              <p class='box-reports'> {{ x.product }} </p>
-              <p class='box-reports'> {{ x.type }}    </p>
-              <p class='box-reports'> {{ x.quantity }} </p>
-              <p class='box-reports'> {{ x.sold }} </p>
-              <p class='box-reports'> {{ x.price }} </p>
-              <p class='box-reports'> {{ x.netsales | currency:'USD':true }} </p>
-            </div>
-          </md-list-item>
-        </div>
-      </md-list>
+        <table class='reports-box'>
+          <tr>
+              <th > Name </th>
+              <th > Type </th>
+              <th > In Stock </th>
+              <th > # Sold </th>
+              <th > Cost Per </th>
+              <th > Net Sales </th>
+          </tr>
+          <tr *ngFor='let x of products'>
+              <td> {{ x.product }} </td>
+              <td> {{ x.type }}    </td>
+              <td> {{ x.quantity }} </td>
+              <td> {{ x.sold }} </td>
+              <td> {{ x.price }} </td>
+              <td> {{ x.netsales | currency:'USD':true }} </td>
+          </tr>
+        </table>
     </md-tab>
   </md-tab-group>
 

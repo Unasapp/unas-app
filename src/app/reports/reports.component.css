@@ -21,6 +21,7 @@
     align-items: center;
     width: 90%;
     margin-left: 5%;
+    margin-bottom: 5px;
 }
 
 .edit-reports-btn{
@@ -54,6 +55,8 @@
     display: flex;
     flex: 1;
     justify-content: center;
+    align-items: center;
+    flex-direction: column;
 }
 
 .box-reports2{
@@ -203,4 +206,23 @@
     background: #ff4d4d;
     color: white;
 
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+td, th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+}
+
+tr:nth-child(even) {
+    background-color: #dddddd;
+}
+
+.mult-service{
+    padding-top: 3px;
 }
