@@ -46,12 +46,12 @@ export class ApptdialogComponent implements OnInit {
     this.makeTime()
   }
 
-  onCloseConfirm(barber, service, customer, date, timep, timeam, firstname, lastname, phonenumber, email){
+  onCloseConfirm(barber, service, customer, date, timep, timeam, firstname, lastname, phonenumber, email, serviceVal1, serviceVal2){
     var timeH = timep.split(':')[0]
     var timeM = timep.split(':')[1]
     timeam === 'pm' ? timeH = Number(timeH) + 12 : timeH = timeH;
 
-    console.log('data coming from closing Appt dialog',barber, service, customer, date, timep, timeam, firstname, lastname, phonenumber, email);
+    console.log('data coming from closing Appt dialog',barber, service, customer, date, timep, timeam, firstname, lastname, phonenumber, email, serviceVal1, serviceVal2);
 
 
 
@@ -83,6 +83,8 @@ export class ApptdialogComponent implements OnInit {
             'barber_id'  : barber.b_id,
             'client_id'  : data[0].c_id,
             'service_id'  : service.v_id,
+            'service_id2'  : serviceVal1 ? serviceVal1.v_id : null,
+            'service_id3'  : serviceVal2 ? serviceVal2.v_id : null,
             'shop_id'  : service.shop_id,
             'start_time' : moment(date).hour(timeH).minute(timeM).format('YYYY-MM-DD HH:mm:ss'),
             'end_time' : moment(date).hour(timeH).minute(timeM).format('YYYY-MM-DD HH:mm:ss')
@@ -95,6 +97,8 @@ export class ApptdialogComponent implements OnInit {
           'barber_id'  : barber.b_id,
           'client_id'  : customer.c_id,
           'service_id'  : service.v_id,
+          'service_id2'  : serviceVal1 ? serviceVal1.v_id : null,
+          'service_id3'  : serviceVal2 ? serviceVal2.v_id : null,
           'shop_id'  : service.shop_id,
           'start_time' : moment(date).hour(timeH).minute(timeM).format('YYYY-MM-DD HH:mm:ss'),
           'end_time' : moment(date).hour(timeH).minute(timeM).format('YYYY-MM-DD HH:mm:ss')

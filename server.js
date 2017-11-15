@@ -362,7 +362,9 @@ massive("postgres://uunjpeyj:yVNsIpBpaTMB_a2TXEss-Gmq1DGSIOte@pellefant.db.eleph
       req.body.service_id,
       req.body.shop_id,
       req.body.start_time,
-      req.body.end_time
+      req.body.end_time,
+      req.body.service_id2,
+      req.body.service_id3
     ]
     db.add_appt(array, (err, info) => {
       console.log('db', err, info)
@@ -547,16 +549,21 @@ massive("postgres://uunjpeyj:yVNsIpBpaTMB_a2TXEss-Gmq1DGSIOte@pellefant.db.eleph
     })
   })
 
-
   app.post('/api/appt/complete', (req, res)=>{
     let array = [
       req.body.a_id,
       req.body.tip,
       req.body.total,
+      req.body.v_id2,
+      req.body.v_id3,
       req.body.p_id,
       req.body.quantity,
+      req.body.p_id2,
+      req.body.quantity2,
       req.body.paymth,
-      req.body.status
+      req.body.status,
+      req.body.v_id4,
+      req.body.v_id5
     ]
     console.log('completeing appt',array)
     db.complete_appt(array, (err,data)=>{

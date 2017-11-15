@@ -106,6 +106,13 @@ export class CheckinComponent implements OnInit {
       width: '600px',
       data: appt
     })
+    dialogRef.afterClosed().subscribe(res =>{
+      for (var i = 0; i < this.needToPay.length; i++) {
+        if(this.needToPay[i].a_id == res){
+          this.needToPay.splice(i,1)
+        }
+      }
+    })
   }
 
   openWaitDialog(walk){
@@ -118,6 +125,7 @@ export class CheckinComponent implements OnInit {
         for (var i = 0; i < this.waitList.length; i++) {
           if(this.waitList[i].a_id == result[0].a_id ){
             this.waitList.splice(i,1)
+            result[0].price = Number(result[0].price.split('$')[1])
           }
         }
         this.needToPay.push(result[0])
@@ -128,6 +136,9 @@ export class CheckinComponent implements OnInit {
             this.waitList.splice(i,1)
           }
         }
+      }
+      if(result[1]=='nothing'){
+        console.log('does nothing');
       }
     })
   }

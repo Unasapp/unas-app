@@ -25,7 +25,9 @@ export class CashoutdialogComponent implements OnInit {
   productQ = 0;
   productQ2 = 0;
   chosenproduct: any;
-  serviceVal = 0;
+  chosenproduct2: any;
+  serviceVal1: any;
+  serviceVal2: any;
 
 
 
@@ -111,75 +113,30 @@ ngOnInit() {
   
 }
 
-onCloseConfirm(customer, firstname, lastname, phonenumber, email, serviceVal, barber, price, tip, amtpaid, typeP, product, bday){
+onCloseConfirm(tip, typeP){
+  
+  console.log('cashed out',this.selected);
 
   if(this.selected){
     let trans = {
       'a_id': this.selected.a_id,
       'tip': this.tip,
-      'total': this.selected.price + this.tip + (this.chosenproduct.price * this.productQ),
-      'p_id': this.chosenproduct.p_id,
+      'total': this.selected.price + (this.selected.serviceP2 ? this.selected.serviceP2 : 0) + (this.selected.serviceP3 ? this.selected.serviceP3 : 0) + (this.serviceVal1 ? this.serviceVal1.price : 0) + (this.serviceVal2 ? this.serviceVal2.price : 0) + this.tip + ((this.chosenproduct ? this.chosenproduct.price : 0)  * this.productQ) + ((this.chosenproduct2 ? this.chosenproduct2.price : 0) * this.productQ2),
+      'v_id2': this.selected.service_id2 ? this.selected.service_id2 : null,
+      'v_id3': this.selected.service_id3 ? this.selected.service_id3 : null,
+      'v_id4': this.serviceVal1 ? this.serviceVal1.v_id : null,
+      'v_id5': this.serviceVal2 ? this.serviceVal2.v_id : null,
+      'p_id': this.chosenproduct ? this.chosenproduct.p_id : null,
       'quantity': this.productQ,
-      'paymth': typeP,
+      'p_id2': this.chosenproduct2 ? this.chosenproduct2.p_id : null,
+      'quantity2': this.productQ2,
+      'paymth': typeP ? typeP : null,
       'status': 'completed'
     }
-    // this.service.completeAppt(trans).subscribe()
-    this.dialogRef.close()
-  }
-
-  if(!customer && !this.selected && firstname){
-    let newC = {
-      'c_first': firstname,
-      'c_last': lastname,
-      'c_phone': phonenumber,
-      'c_email': email,
-      'b_day': bday,
-      'c_shop': JSON.parse(localStorage.getItem('profile'))[0].shop_id,
-      'shop_id': JSON.parse(localStorage.getItem('profile'))[0].shop_id,
-      'start_time': moment(new Date()).format('YYYY-MM-DD HH:mm:ss'),
-      'v_id': serviceVal.v_id,
-      'b_id': barber,
-      'p_id': this.chosenproduct.p_id,
-      'quantity': this.productQ,
-      'total': serviceVal.price + this.tip + (this.chosenproduct.price * this.productQ),
-      'tip': this.tip,
-      'pay_mth': typeP
-    }
-    // this.service.newCustomerTrans(newC).subscribe()
-    this.dialogRef.close()
-  }
-  if(customer){
-    let trans = {
-      'shop_id': JSON.parse(localStorage.getItem('profile'))[0].shop_id,
-      'start_time': moment(new Date()).format('YYYY-MM-DD HH:mm:ss'),
-      'v_id': serviceVal.v_id,
-      'b_id': barber,
-      'p_id': this.chosenproduct.p_id,
-      'quantity': this.productQ,
-      'total': serviceVal.price + this.tip + (this.chosenproduct.price * this.productQ),
-      'tip': this.tip,
-      'pay_mth': typeP,
-      'c_id': customer
-    };
-    console.log('--- Here is Transaction ---',trans);
-    // this.service.walkinTrans(trans).subscribe()
-    this.dialogRef.close()
-  }
-
-  if(!customer && !firstname && !this.selected){
-    let trans = {
-      'shop_id': JSON.parse(localStorage.getItem('profile'))[0].shop_id,
-      'start_time': moment(new Date()).format('YYYY-MM-DD HH:mm:ss'),
-      'p_id': this.chosenproduct.p_id,
-      'quantity': this.productQ,
-      'total': this.tip + (this.chosenproduct.price * this.productQ),
-      'tip': this.tip,
-      'pay_mth': typeP
-    };
-    console.log('--- Here is Transaction ---',trans);
-    // this.service.productTrans(trans).subscribe()
-    this.dialogRef.close()
-
+    console.log('cashed out OBJ',trans);
+  
+    this.service.completeAppt(trans).subscribe()
+    this.dialogRef.close(this.selected.a_id)
   }
 
 }

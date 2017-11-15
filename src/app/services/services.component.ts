@@ -5,6 +5,7 @@ import { CashoutdialogComponent } from '../cashoutdialog/cashoutdialog.component
 import { ApptdialogComponent } from '../apptdialog/apptdialog.component';
 import { ServicesDialogComponent } from '../services-dialog/services-dialog.component'
 import { ReportServiceService } from  '../report-service.service'
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-services',
@@ -12,12 +13,21 @@ import { ReportServiceService } from  '../report-service.service'
   styleUrls: ['./services.component.css']
 })
 export class ServicesComponent implements OnInit {
+  
+  constructor(private http: HttpClient, public dialog: MdDialog, private service: ReportServiceService, public router: Router) { }
 
   public services = [];
+  profType:boolean;
+  logout() {
+    localStorage.removeItem('profile');
+    localStorage.removeItem('barbers');
+    localStorage.removeItem('clients');
+    localStorage.removeItem('services');
+    this.router.navigate(['/login'])
+  }
 
 
 
-  constructor(private http: HttpClient, public dialog: MdDialog, private service: ReportServiceService) { }
 
   openCashDialog() {
     let dialogRef = this.dialog.open(CashoutdialogComponent,{
@@ -60,6 +70,7 @@ export class ServicesComponent implements OnInit {
        this.services = data;
        console.log(this.services);
    });
+   this.profType = (JSON.parse(localStorage.getItem('profile'))[0].type === 'admin') ? true : false
   }
 
 }

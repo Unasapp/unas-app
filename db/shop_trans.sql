@@ -9,7 +9,11 @@ select
   appointments.tip,
   appointments.total,
   appointments.pay_mth,
-  appointments.a_id
+  appointments.a_id,
+  appointments.service_id2,
+  appointments.service_id3,
+  appointments.service_id4,
+  appointments.service_id5
 from
   appointments,
   barbers,
