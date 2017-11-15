@@ -3,6 +3,7 @@ import { MdDialog, MdDialogRef } from '@angular/material';
 import { MD_DIALOG_DATA } from '@angular/material';
 import { Router } from '@angular/router';
 import { ReportServiceService } from '../report-service.service';
+import * as moment from 'moment';
 
 
 @Component({
@@ -59,7 +60,7 @@ export class LoginModelComponent implements OnInit {
               })
               this.service.getServices({id:this.userData.shopId}).subscribe((data) => {
                 console.log( 'data for services' ,data);
-                 
+
                 localStorage.setItem('services', JSON.stringify(data))
               })
               this.dialogRef.close('Owner')
@@ -112,7 +113,10 @@ export class LoginModelComponent implements OnInit {
           this.dialogRef.close('Owner')
           // this.router.navigate(['/home'])
         } else if (data[0].type === 'user') {
+          data[0].timeIn = moment(new Date()).format('YYYY-MM-DD HH:mm:ss z')
           localStorage.setItem('profile', JSON.stringify(data))
+          console.log('setting prof', JSON.stringify(data))
+
           this.dialogRef.close('User')
           // this.router.navigate(['/calender'])
         } else {

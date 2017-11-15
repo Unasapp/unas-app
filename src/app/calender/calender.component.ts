@@ -41,7 +41,20 @@ export class CalenderComponent implements OnInit {
   services = JSON.parse(localStorage.getItem('services'))
 
   profType:boolean;
+
   logout() {
+    let user = JSON.parse(localStorage.getItem('profile'))[0]
+    if (user.type === 'user') {
+        let timecard = {
+          userId: user.id,
+          timeIn: user.timeIn,
+          timeOut: moment(new Date()).format('YYYY-MM-DD HH:mm:ss z'),
+          shopId: user.shop_id
+        }
+        console.log(timecard)
+        this.service.clockOut(timecard).subscribe()
+    }
+
     localStorage.removeItem('profile');
     localStorage.removeItem('barbers');
     localStorage.removeItem('clients');
