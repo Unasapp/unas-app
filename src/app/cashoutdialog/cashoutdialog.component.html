@@ -8,9 +8,9 @@
             <h2 md-dialog-title>Service Information</h2>
           </div>
           
-          <div  >
+          <div>
             <md-select placeholder="Appointments" [(ngModel)]="selected">
-              <md-option *ngFor="let appt of needToPay" [value]="appt">
+              <md-option (click)='apptSelected(appt)' *ngFor="let appt of needToPay" [value]="appt">
                 {{ appt.c_first }} {{ appt.c_last }} - {{ appt.service }}
               </md-option>
             </md-select>
@@ -25,8 +25,8 @@
             <div>
               <h4><u>Service</u></h4>
               <p>{{selected?.service}}</p>
-              <p *ngIf='selected.service2' >{{selected?.service2}}</p>
-              <p *ngIf='selected.service3' >{{selected?.service3}}</p>
+              <p *ngIf='selected?.service2' >{{selected?.service2}}</p>
+              <p *ngIf='selected?.service3' >{{selected?.service3}}</p>
             </div>
             <div>
               <h4><u>Barber</u></h4>
@@ -38,42 +38,77 @@
           <br>
 
     <div>
-        <h2 md-dialog-title>Payment</h2>
+        <h2 md-dialog-title>Add Products and Services</h2>
         <hr>
-            <div class='product-select' >
-              <div>
+
+        <div class='product-select' >
+            <div>
               <md-select name=product [(ngModel)]='chosenproduct' placeholder="Product">
                 <md-option *ngFor='let product of products' [value]="product" >
                   {{ product?.product }} -
                   {{ product?.price }}
                 </md-option>
               </md-select>
-              </div>
-              <div>
+            </div>
+            <div>
               <md-input-container style="margin-left:10px;" >
                   <input mdInput placeholder="Quantity" name=productQ [(ngModel)]='productQ' type="number">
                 </md-input-container>
-              </div>
             </div>
-        <div class='paystuff' >
-            <div *ngIf='walk' >
-              Price: {{ serviceVal?.price | currency:'USD':true }} 
-            </div>
-            <div *ngIf='!walk' >
-              Price: {{ selected?.price | currency:'USD':true }} 
+          </div>
+          <h4><u>Additional Products</u></h4>
+          <div class='product-select' >
+            <div>
+              <md-select name=product [(ngModel)]='chosenproduct2' placeholder="Product">
+                <md-option *ngFor='let product of products' [value]="product" >
+                  {{ product?.product }} -
+                  {{ product?.price }}
+                </md-option>
+              </md-select>
             </div>
             <div>
-              <md-input-container >
-                <input mdInput placeholder="Tip" name=tip [(ngModel)]='tip' type="number">
-              </md-input-container>
+              <md-input-container style="margin-left:10px;" >
+                  <input mdInput placeholder="Quantity" name=productQ [(ngModel)]='productQ2' type="number">
+                </md-input-container>
             </div>
-            <div *ngIf='walk'  >
-              Total: {{ (serviceVal?.price ? serviceVal?.price : 0) + tip + (chosenproduct?.price * productQ) | currency:'USD':true }}
-            </div>
-            <div *ngIf='!walk'  >
-              Total: {{ selected?.price + tip + (chosenproduct?.price * productQ) | currency:'USD':true }}
-            </div>
+          </div>
+
+        <h2 md-dialog-title>Payment</h2>
+        <hr>
+           
+        <div class='paystuff' >
+          <div class='paystuff-left' >
+              <div >
+                  Service Price(s): 
+              </div>
+              <div >
+                  Product Price(s): 
+              </div>
+              <div>
+                <md-input-container >
+                    <input mdInput placeholder="Tip" name=tip [(ngModel)]='tip' type="number">
+                </md-input-container>
+              </div>
+              <div >
+                  Total:
+              </div>
+          </div>
+          <div class='paystuff-right' >
+              <div >
+                  {{ selected?.price + (selected?.serviceP2 ? selected?.serviceP2 : 0) + (selected?.serviceP3 ? selected?.serviceP3 : 0) | currency:'USD':true }} 
+              </div>
+              <div >
+                  {{ (chosenproduct?.price * productQ) + (chosenproduct2?.price * productQ2) | currency:'USD':true }} 
+              </div>
+              <div>
+                  {{ tip | currency:'USD':true }}
+              </div>
+              <div >
+                  {{ selected?.price + (selected?.serviceP2 ? selected?.serviceP2 : 0) + (selected?.serviceP3 ? selected?.serviceP3 : 0) + tip + (chosenproduct?.price * productQ) + (chosenproduct2?.price * productQ2) | currency:'USD':true }}
+              </div>
+          </div>
         </div>
+
         <br>
         <h4><u>Payment Method</u></h4>
         <md-radio-group name=typeP [(ngModel)]='typeP' >

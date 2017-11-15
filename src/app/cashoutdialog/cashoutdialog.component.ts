@@ -23,6 +23,7 @@ export class CashoutdialogComponent implements OnInit {
   products: any;
   selected: any;
   productQ = 0;
+  productQ2 = 0;
   chosenproduct: any;
   serviceVal = 0;
 
@@ -35,40 +36,79 @@ constructor(
 ) {
 
 }
+
+apptSelected(appt){
+
+  if(appt.a_id){
+    this.selected = appt 
+    this.needToPay.push('nope')
+    if(this.selected.service_id2){
+      this.services.map(x=>{
+        if(x.v_id == this.selected.service_id2){
+          this.selected.service2 = x.service
+          this.selected.serviceP2 = x.price
+        }
+      })
+    }
+
+    if(this.selected.service_id3){
+      this.services.map(x=>{
+        if(x.v_id == this.selected.service_id2){
+          this.selected.service3 = x.service
+          this.selected.serviceP3 = x.price
+        }
+      })
+    }
+
+  }
+
+}
  
 
 ngOnInit() {
+  this.services.map(x => x.price = (Number(x.price.split('$')[1])))
   console.log('-- this.data ---',this.data);
 
   if(this.data.a_id){
-    this.needToPay.push('nope')
     this.selected = this.data 
-    console.log('@db:', this.needToPay)
+    this.needToPay.push('nope')
+    if(this.selected.service_id2){
+      this.services.map(x=>{
+        if(x.v_id == this.selected.service_id2){
+          this.selected.service2 = x.service
+          this.selected.serviceP2 = x.price
+        }
+      })
+    }
+    if(this.selected.service_id3){
+      this.services.map(x=>{
+        if(x.v_id == this.selected.service_id2){
+          this.selected.service3 = x.service
+          this.selected.serviceP3 = x.price
+        }
+      })
+    }
+    
   }
 
   else{
     this.service.getInProgress({id:JSON.parse(localStorage.getItem('profile'))[0].shop_id}).subscribe(data => {
       this.needToPay = data;
-      console.log('@db:', data)
       this.needToPay.map(x => x.price = (Number(x.price.split('$')[1])))
       console.log('this.needToPay ----',this.needToPay);
     });
   }
 
   this.service.getProducts({id:JSON.parse(localStorage.getItem('profile'))[0].shop_id}).subscribe(data =>{
-    console.log('data -----',data);
-    
     this.products = data
     this.products.map(x => x.price = (Number(x.price.split('$')[1])))
     this.products.unshift({
       'product': 'none',
       'price': 0
     })
-
-    console.log('data ----->>>>',this.products);
+    console.log('data for products ----->>>>',this.products);
   })
-
-  this.services.map(x => x.price = (Number(x.price.split('$')[1])))
+  
 }
 
 onCloseConfirm(customer, firstname, lastname, phonenumber, email, serviceVal, barber, price, tip, amtpaid, typeP, product, bday){
