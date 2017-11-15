@@ -1,4 +1,4 @@
-select
+select distinct
 	users.first_name,
 	users.last_name,
 	timecards.time_in,
