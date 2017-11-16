@@ -7,6 +7,7 @@ import { ProductDialogComponent } from '../product-dialog/product-dialog.compone
 import { ReportServiceService } from '../report-service.service';
 import { Http, Headers } from '@angular/http';
 import { Router } from '@angular/router';
+import { WalkdialogComponent } from '../walkdialog/walkdialog.component';
 
 @Injectable()
 @Component({
@@ -494,6 +495,14 @@ export class ReportsComponent implements OnInit {
 
     })
     // end on init
+  }
+
+  
+  openWalkDialog() {
+    let dialogRef = this.dialog.open(WalkdialogComponent, {
+      width: '600px',
+      data: 'this text is passed'
+    })
   }
 
 }

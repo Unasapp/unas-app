@@ -14,15 +14,20 @@
     </div>
 
     <div>
-      <button md-icon-button (click)='openCashDialog()' >
-        <i class='ion-pricetag icon-size' ></i>
-      </button>
-    </div>
-    <div>
-      <button md-icon-button (click)='openApptDialog()' >
-        <i class='ion-calendar icon-size' ></i>
-      </button>
-    </div>
+        <button md-icon-button (click)='openWalkDialog()'>
+            <i class='ion-android-walk icon-size' ></i>
+          </button>
+      </div>
+      <div>
+        <button md-icon-button (click)='openCashDialog()'>
+            <i class='ion-pricetag icon-size' ></i>
+          </button>
+      </div>
+      <div>
+        <button md-icon-button (click)='openApptDialog()'>
+            <i class='ion-calendar icon-size' ></i>
+          </button>
+      </div>
 
   </md-toolbar>
 
@@ -57,43 +62,40 @@
         </form>
       </md-input-container>
       </div>
+      
       <div>
         <button md-icon-button (click)='openDialog()' >
           <i class='ion-android-person-add icon-size' ></i>
         </button>
       </div>
     </div>
-    <md-list>
-      <div class='contacts-box' >
-      <md-list-item>
-       <div class='view-contacts-head' >
-          <p class='box-contacts' > Name </p>
-          <p class='box-contacts' > Email </p>
-          <p class='box-contacts' > Phone Number </p>
-          <p class='box-contacts' style ="justify-content: center;"> History </p>
-          <p class='box-contacts' style ="justify-content: center;"> Edit </p>
-        </div>
-      </md-list-item>
 
-      <md-list-item  *ngFor="let user of users | filter:term">
+      <table class='contacts-box' >
+      <tr>
+          <th > Name </th>
+          <th > Email </th>
+          <th > Phone Number </th>
+          <th > History </th>
+          <th > Edit </th>
+      </tr>
 
-        <div class='view-contacts'>
-          <p class='box-contacts'> {{user.c_first}} {{ user.c_last }} </p>
-          <p class='box-contacts'> {{user.c_email}} </p>
-          <p class='box-contacts'> {{user.c_phone}} </p>
-          <button md-icon-button (click)='openHistory(user)' style ="width: 20%;">
-            <i class='ion-ios-timer-outline icon-size' ></i>
+      <tr  *ngFor="let user of users | filter:term">
+          <td> {{user.c_first}} {{ user.c_last }} </td>
+          <td> {{user.c_email}} </td>
+          <td> {{user.c_phone}} </td>
+          <td>
+            <button md-icon-button (click)='openHistory(user)' style ="width: 20%;">
+              <i class='ion-ios-timer-outline icon-size' ></i>
+            </button>
+          </td>
+          <td>
+            <button md-icon-button (click)='openDialog(user)' style ="width: 20%;">
+              <i class='ion-edit icon-size' ></i>
+            </button>
+          </td>
+      </tr>
 
-          </button>
-          <button md-icon-button (click)='openDialog(user)' style ="width: 20%;">
-            <i class='ion-edit icon-size' ></i>
-          </button>
-        </div>
-      </md-list-item>
-
-      </div>
-    </md-list>
-
+    </table>
 
   </div>
 

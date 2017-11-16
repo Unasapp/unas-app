@@ -14,15 +14,20 @@
   </div>
 
   <div>
-    <button md-icon-button (click)='openCashDialog()' >
-      <i class='ion-pricetag icon-size' ></i>
-    </button>
-  </div>
-  <div>
-    <button md-icon-button (click)='openApptDialog()' >
-      <i class='ion-calendar icon-size' ></i>
-    </button>
-  </div>
+      <button md-icon-button (click)='openWalkDialog()'>
+          <i class='ion-android-walk icon-size' ></i>
+        </button>
+    </div>
+    <div>
+      <button md-icon-button (click)='openCashDialog()'>
+          <i class='ion-pricetag icon-size' ></i>
+        </button>
+    </div>
+    <div>
+      <button md-icon-button (click)='openApptDialog()'>
+          <i class='ion-calendar icon-size' ></i>
+        </button>
+    </div>
 
 </md-toolbar>
 
@@ -55,27 +60,19 @@
       </button>
     </div>
   </div>
-  <md-list>
-    <div class='services-box' >
-    <md-list-item>
-     <div class='view-contacts-head' >
-        <p class='box-contacts' > Service </p>
-        <p class='box-contacts' > Price </p>
-        <p class='box-contacts' > Estimated Time </p>
-      </div>
-    </md-list-item>
 
-    <md-list-item  *ngFor="let service of services">
-
-      <div class='view-contacts' (click)="openServicesDialog(service)">
-        <p class='box-contacts' >{{service.service}}</p>
-        <p class='box-contacts' >{{service.price}}</p>
-        <p class='box-contacts' >{{service.est_time}} Minutes</p>
-      </div>
-    </md-list-item>
-
-  </div>
-  </md-list>
+    <table class='services-box' >
+    <tr>
+        <th> Service </th>
+        <th> Price </th>
+        <th> Estimated Time </th>
+    </tr>
+    <tr  *ngFor="let service of services" (click)="openServicesDialog(service)">
+        <td>{{service.service}}</td>
+        <td>{{service.price}}</td>
+        <td>{{service.est_time}} Minutes</td>
+    </tr>
+  </table>
 
 
 </div>

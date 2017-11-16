@@ -4,7 +4,7 @@ import { CashoutdialogComponent } from '../cashoutdialog/cashoutdialog.component
 import { ApptdialogComponent } from '../apptdialog/apptdialog.component';
 import { ReportServiceService } from '../report-service.service';
 import { Router } from '@angular/router';
-
+import { WalkdialogComponent } from '../walkdialog/walkdialog.component';
 
 
 @Component({
@@ -46,6 +46,14 @@ export class NotificationsComponent implements OnInit {
     this.profType = (JSON.parse(localStorage.getItem('profile'))[0].type === 'admin') ? true : false
     this.service.getDeleteRequests({id:JSON.parse(localStorage.getItem('profile'))[0].shop_id}).subscribe(data => {
       this.deleteRequests = data;
+    })
+  }
+
+  
+  openWalkDialog() {
+    let dialogRef = this.dialog.open(WalkdialogComponent, {
+      width: '600px',
+      data: 'this text is passed'
     })
   }
 

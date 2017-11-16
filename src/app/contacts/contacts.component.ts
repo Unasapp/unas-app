@@ -4,6 +4,7 @@ import { MdDialog, MdDialogRef } from '@angular/material';
 import { ContactsdialogComponent } from '../contactsdialog/contactsdialog.component'
 import { FilterPipe } from '../filter.pipe'
 import { CashoutdialogComponent } from '../cashoutdialog/cashoutdialog.component';
+import { WalkdialogComponent } from '../walkdialog/walkdialog.component';
 import { ApptdialogComponent } from '../apptdialog/apptdialog.component';
 import { ReportServiceService } from  '../report-service.service';
 import { Router } from '@angular/router';
@@ -80,6 +81,13 @@ export class ContactsComponent implements OnInit {
      this.service.getContacts({id:JSON.parse(localStorage.getItem('profile'))[0].shop_id}).subscribe((data) => {
         this.users = data;
     });
+  }
+
+  openWalkDialog() {
+    let dialogRef = this.dialog.open(WalkdialogComponent, {
+      width: '600px',
+      data: 'this text is passed'
+    })
   }
 
 }

@@ -14,15 +14,20 @@
         </div>
 
         <div>
-          <button md-icon-button (click)='openCashDialog()' >
-            <i class='ion-pricetag icon-size' ></i>
-          </button>
-        </div>
-        <div>
-          <button md-icon-button (click)='openApptDialog()' >
-            <i class='ion-calendar icon-size' ></i>
-          </button>
-        </div>
+            <button md-icon-button (click)='openWalkDialog()'>
+                <i class='ion-android-walk icon-size' ></i>
+              </button>
+          </div>
+          <div>
+            <button md-icon-button (click)='openCashDialog()'>
+                <i class='ion-pricetag icon-size' ></i>
+              </button>
+          </div>
+          <div>
+            <button md-icon-button (click)='openApptDialog()'>
+                <i class='ion-calendar icon-size' ></i>
+              </button>
+          </div>
 
       </md-toolbar>
 
@@ -53,27 +58,23 @@
                 <i class='ion-android-person-add icon-size' ></i>
               </button>
             </div>
-          </div>
-          <md-list> 
-            <div class='contacts-box' >
-              <md-list-item>
-                <div class='view-contacts-head' >
-                  <p class='box-contacts' > Product </p>
-                  <p class='box-contacts' > Price </p>
-                  <p class='box-contacts' > Quantity </p>
-                  <p class='box-contacts' > Type </p>
-                </div>
-              </md-list-item>
-              <md-list-item  *ngFor="let product of products">
-                <div class='view-contacts' (click)="openDialog(product)">
-                  <p class='box-contacts' > {{product.product}} </p>
-                  <p class='box-contacts' > {{product.price}} </p>
-                  <p class='box-contacts' > {{product.quantity}} </p>
-                  <p class='box-contacts' > {{product.type}} </p>
-                </div>
-              </md-list-item>
-            </div>
-          </md-list>
+          </div> 
+
+            <table class='contacts-box' >
+              <tr>
+                  <th> Product </th>
+                  <th> Price </th>
+                  <th> Quantity </th>
+                  <th> Type </th>
+              </tr>
+              <tr  *ngFor="let product of products"  (click)="openDialog(product)" >
+                  <td > {{product.product}} </td>
+                  <td > {{product.price}} </td>
+                  <td > {{product.quantity}} </td>
+                  <td > {{product.type}} </td>
+              </tr>
+            </table>
+
         </div>
 
 
