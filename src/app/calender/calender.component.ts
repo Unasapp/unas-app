@@ -9,6 +9,7 @@ import { Options } from 'fullcalendar';
 import * as $ from 'jquery';
 import { FilterPipe } from '../filter.pipe';
 import { Router } from '@angular/router';
+import { WalkdialogComponent } from '../walkdialog/walkdialog.component';
 
 @Component({
   selector: 'app-calender',
@@ -245,6 +246,13 @@ appts: any
       console.log('data from get appts',data)
     })
 
+  }
+
+  openWalkDialog() {
+    let dialogRef = this.dialog.open(WalkdialogComponent, {
+      width: '600px',
+      data: 'this text is passed'
+    })
   }
 
 }

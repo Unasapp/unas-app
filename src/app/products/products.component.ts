@@ -6,6 +6,7 @@ import { ProductDialogComponent } from '../product-dialog/product-dialog.compone
 import { ApptdialogComponent } from '../apptdialog/apptdialog.component';
 import { ReportServiceService } from  '../report-service.service';
 import { Router } from '@angular/router';
+import { WalkdialogComponent } from '../walkdialog/walkdialog.component';
 
 @Component({
   selector: 'app-products',
@@ -74,6 +75,14 @@ export class ProductsComponent implements OnInit {
       this.products = data
     })
 
+  }
+
+  
+  openWalkDialog() {
+    let dialogRef = this.dialog.open(WalkdialogComponent, {
+      width: '600px',
+      data: 'this text is passed'
+    })
   }
 
 }

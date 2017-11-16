@@ -5,6 +5,7 @@ import { CashoutdialogComponent } from '../cashoutdialog/cashoutdialog.component
 import { ApptdialogComponent } from '../apptdialog/apptdialog.component';
 import { ChartComponent } from 'angular2-chartjs';
 import { Chart } from 'chart.js';
+import { WalkdialogComponent } from '../walkdialog/walkdialog.component';
 import { BarberModalComponent } from '../barber-modal/barber-modal.component'
 import { ReportServiceService } from '../report-service.service';
 import * as io from 'socket.io-client';
@@ -146,6 +147,14 @@ export class HomeComponent implements OnInit {
 
 
 
+  }
+
+  
+  openWalkDialog() {
+    let dialogRef = this.dialog.open(WalkdialogComponent, {
+      width: '600px',
+      data: 'this text is passed'
+    })
   }
 
 

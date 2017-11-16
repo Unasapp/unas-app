@@ -6,6 +6,7 @@ import { ApptdialogComponent } from '../apptdialog/apptdialog.component';
 import { ServicesDialogComponent } from '../services-dialog/services-dialog.component'
 import { ReportServiceService } from  '../report-service.service'
 import { Router } from '@angular/router';
+import { WalkdialogComponent } from '../walkdialog/walkdialog.component';
 
 @Component({
   selector: 'app-services',
@@ -71,6 +72,14 @@ export class ServicesComponent implements OnInit {
        console.log(this.services);
    });
    this.profType = (JSON.parse(localStorage.getItem('profile'))[0].type === 'admin') ? true : false
+  }
+
+  
+  openWalkDialog() {
+    let dialogRef = this.dialog.open(WalkdialogComponent, {
+      width: '600px',
+      data: 'this text is passed'
+    })
   }
 
 }
