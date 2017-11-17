@@ -790,7 +790,7 @@ massive("postgres://uunjpeyj:yVNsIpBpaTMB_a2TXEss-Gmq1DGSIOte@pellefant.db.eleph
 
     var getStuff = function() {
 
-      var server = email.server.connect({user: "ac12491@gmail.com", password: "W0rkhard!", host: "smtp.gmail.com", port: 465, ssl: true});
+      var server = email.server.connect({user: "", password: "", host: "smtp.gmail.com", port: 465, ssl: true});
       console.log('email server connected');
 
       var array = [
