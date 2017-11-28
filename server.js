@@ -676,6 +676,15 @@ massive("postgres://uunjpeyj:yVNsIpBpaTMB_a2TXEss-Gmq1DGSIOte@pellefant.db.eleph
     }).then(data => res.send(data))
   })
 
+  app.post('/api/appt/appt-length', (req, res) => {
+    console.log(req.body,'body is here')
+    db.post_appt_length([req.body.a_id, req.body.time], (err, data) => {
+    }).then(data => res.send(data))
+    })
+
+  })
+
+
 
   // NODE MAILER-----------------///
   // ---------------------------------
@@ -955,5 +964,3 @@ massive("postgres://uunjpeyj:yVNsIpBpaTMB_a2TXEss-Gmq1DGSIOte@pellefant.db.eleph
     timeZone: 'America/Denver'
     });
     job.start();
-
-  })
