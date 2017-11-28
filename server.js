@@ -676,6 +676,15 @@ massive("postgres://uunjpeyj:yVNsIpBpaTMB_a2TXEss-Gmq1DGSIOte@pellefant.db.eleph
     }).then(data => res.send(data))
   })
 
+  app.post('/api/appt/appt-length', (req, res) => {
+    console.log(req.body,'body is here')
+    db.post_appt_length([req.body.a_id, req.body.time], (err, data) => {
+    }).then(data => res.send(data))
+    })
+
+  })
+
+
 
   // NODE MAILER-----------------///
   // ---------------------------------
@@ -817,7 +826,7 @@ massive("postgres://uunjpeyj:yVNsIpBpaTMB_a2TXEss-Gmq1DGSIOte@pellefant.db.eleph
 
     var getStuff = function() {
 
-      var server = email.server.connect({user: "ac12491@gmail.com", password: "N0t$ure!", host: "smtp.gmail.com", port: 465, ssl: true});
+      var server = email.server.connect({user: "", password: "", host: "smtp.gmail.com", port: 465, ssl: true});
       console.log('email server connected');
 
       var array = [
@@ -1127,5 +1136,3 @@ massive("postgres://uunjpeyj:yVNsIpBpaTMB_a2TXEss-Gmq1DGSIOte@pellefant.db.eleph
     timeZone: 'America/Denver'
     });
     job.start();
-
-  })
