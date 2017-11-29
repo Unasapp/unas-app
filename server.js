@@ -826,7 +826,7 @@ massive("postgres://uunjpeyj:yVNsIpBpaTMB_a2TXEss-Gmq1DGSIOte@pellefant.db.eleph
 
     var getStuff = function() {
 
-      var server = email.server.connect({user: "", password: "", host: "smtp.gmail.com", port: 465, ssl: true});
+      var server = email.server.connect({user: "ac12491@gmail.com", password: "N0t$ure!", host: "smtp.gmail.com", port: 465, ssl: true});
       console.log('email server connected');
 
       var array = [
@@ -942,7 +942,7 @@ massive("postgres://uunjpeyj:yVNsIpBpaTMB_a2TXEss-Gmq1DGSIOte@pellefant.db.eleph
                           barber.report[i].barberE = Number(barber.report[i].barberE) + (Number(barber.report[i].price.split('$')[1]) * Number(com))
                           barber.report[i].shopE = Number(barber.report[i].shopE) + (Number(barber.report[i].price.split('$')[1]) * (1-Number(com)))
                           barber.report[i].tip = Number(barber.report[i].tip) + Number(transreport[x].tip.split('$')[1])
-                          console.log('---- earnreport -----',typeof barber.report[i].barberE)
+                          // console.log('---- earnreport -----',typeof barber.report[i].barberE)
                         }
             
                         if(barber.type == 'booth rent'){
@@ -973,6 +973,15 @@ massive("postgres://uunjpeyj:yVNsIpBpaTMB_a2TXEss-Gmq1DGSIOte@pellefant.db.eleph
             if(x.type === 'booth rent'){
               pay = x.type
             }
+            var total = {}
+            x.report.map(y=>{
+              total.service = 'All services' 
+              total.count = y.report.count 
+              total.shopE = y.report.shopE 
+              total.barberE = y.report.barberE
+              total.tip = y.report.tip 
+              total.time = y.report.time 
+            })
 
             quick = x.report.reduce(function(a, b) {
               return a + '<tr><td>' + b.service + '</td><td>'
@@ -983,6 +992,13 @@ massive("postgres://uunjpeyj:yVNsIpBpaTMB_a2TXEss-Gmq1DGSIOte@pellefant.db.eleph
               + b.time + '</td></tr>';
             }, '');
               
+            quick = '<tr><td>' + total.service + '</td><td>'
+            + total.count + '</td><td>'
+            + total.shopE.toFixed(2) + '</td><td>'
+            + total.barberE.toFixed(2) + '</td><td>'
+            + total.tip.toFixed(2) + '</td><td>'
+            + total.time + '</td></tr>' + quick
+
               quick = `
               <h3> ${x.b_first}  ${x.b_last} - ${pay} </h3>
               <table>
