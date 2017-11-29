@@ -277,6 +277,16 @@ massive("postgres://uunjpeyj:yVNsIpBpaTMB_a2TXEss-Gmq1DGSIOte@pellefant.db.eleph
       (fail) => {res.send({fail: "An error occurred."})})
   })
 
+  app.post('/api/get-barber-stats', (req, res)=> {
+    console.log(req.body);
+    db.get_barber_stats(req.body.id, (err, stats)=>{
+      console.log(err);
+    }).then((stats)=> {
+      console.log(' -- stats from db -- ')
+      res.send(stats)
+    })
+  })
+
   /////////Services Endpoints//////////
 
   app.post('/api/services', (req, res) => {
@@ -453,6 +463,10 @@ massive("postgres://uunjpeyj:yVNsIpBpaTMB_a2TXEss-Gmq1DGSIOte@pellefant.db.eleph
       res.send(info)
     })
   });
+
+  app.post('/api/submit-survey', (req, res) => {
+    console.log('survey endpoint',req.body);
+  })
 
 
 
