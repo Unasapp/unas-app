@@ -23,7 +23,6 @@ export class HomeComponent implements OnInit {
   public doughnutChartLabels:string[] = ['Wages', 'Tips'];
   public doughnutChartData:number[] = [0, 0];
   public doughnutChartType:string = 'doughnut';
-
   // events
 
   public lineChartData:Array<any> = [];

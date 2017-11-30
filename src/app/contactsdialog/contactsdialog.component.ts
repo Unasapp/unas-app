@@ -31,6 +31,7 @@ export class ContactsdialogComponent implements OnInit {
   }
 
   onCloseConfirm(contact){
+    contact.shop_id = JSON.parse(localStorage.getItem('profile'))[0].shop_id
     if (contact.c_id) {
       this.service.editContact(contact).subscribe(data => {
         console.log("back from db edit", data)
