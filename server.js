@@ -466,6 +466,15 @@ massive("postgres://uunjpeyj:yVNsIpBpaTMB_a2TXEss-Gmq1DGSIOte@pellefant.db.eleph
 
   app.post('/api/submit-survey', (req, res) => {
     console.log('survey endpoint',req.body);
+    let array = [
+      req.body.a_id,
+      req.body.onTime,
+      req.body.tip,
+      req.body.rating
+    ]
+    db.submit_survey(array, (err, array) => {
+    }).then(array => res.send(array)
+    )
   })
 
 
