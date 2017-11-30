@@ -21,22 +21,23 @@ export class HomeComponent implements OnInit {
 
 
   public doughnutChartLabels:string[] = ['Wages', 'Tips'];
-  public doughnutChartData:number[] = [450, 220];
+  public doughnutChartData:number[] = [0, 0];
   public doughnutChartType:string = 'doughnut';
   // events
 
-  public lineChartData:Array<any> = [ ];
-  public lineChartLabels:Array<any> = ['Sun','Mon','Tues','Wed','Fri','Sat'];
+  public lineChartData:Array<any> = [];
+  public lineChartLabels:Array<any> = ['Sun','Mon','Tue','Wed','Fri','Sat'];
   public lineChartType:string = 'line';
-  
-  public barChartLabels:string[] = [ ];
+
+
+
+  public barChartLabels:string[] = [];
   public barChartType:string = 'bar';
   public barChartLegend:boolean = true;
- 
   public barChartData:any[] = [
     {data: [], label: 'Barbers'}
   ];
-  
+
 
   public chartClicked(e:any):void {
     console.log(e);
@@ -48,7 +49,7 @@ export class HomeComponent implements OnInit {
 
 
   profile: any;
-  barbers = JSON.parse(localStorage.getItem('barbers'))
+  barbers: any;
   ifopen: true;
 
   profType:boolean;
@@ -59,6 +60,7 @@ export class HomeComponent implements OnInit {
     localStorage.removeItem('services');
     this.router.navigate(['/login'])
   }
+
 
   constructor(private http: HttpClient, public dialog: MdDialog, private service: ReportServiceService, public router: Router) {
 
@@ -90,18 +92,22 @@ export class HomeComponent implements OnInit {
     })
   }
 
-
+  doughnutData = [0,0]
   shopwages: any;
   wagesarray = {data: [0,0,0,0,0,0,0], label: 'Wages' }
+  cutTimes = []
+
   ngOnInit() {
     this.profile = JSON.parse(localStorage.getItem('profile'))
+    console.log(this.profile)
     this.profType = (JSON.parse(localStorage.getItem('profile'))[0].type === 'admin') ? true : false
-    this.barbers = JSON.parse(localStorage.getItem('barbers'))
+    this.barbers = JSON.parse(localStorage.getItem('barbers')).sort()
 
     this.barbers.map((x)=>{
-      this.barChartLabels.push(x.b_first)
+      this.barChartLabels.push(x.b_first);
+      this.cutTimes.push(0)
     })
-    
+
 
     let earnInfo = {
       'date1' : moment(new Date().setDate(new Date().getDate() - 7)).format('YYYY-MM-DD'),
@@ -111,18 +117,24 @@ export class HomeComponent implements OnInit {
 
     this.service.getShopWages(earnInfo).subscribe(data=>{
       this.shopwages = data
-      console.log('this.shopwages',this.shopwages);
+      // console.log('this.shopwages',this.shopwages);
+
+      // let barData = []
+      this.doughnutData = [0,0]
 
       this.shopwages.map(x=>{
+        this.doughnutData[0] = this.doughnutData[0] + Number(x.total.split('$')[1])
+        this.doughnutData[1] = this.doughnutData[1] + Number(x.tip.split('$')[1])
 
-        var hour = Number(x.appt_length[0])/60
-        var min = Number(x.appt_length[1])
-        var sec = Number(x.appt_length[2])
-        var time = Number(hour + min + '.' + sec)
 
-        this.barChartData[0].data.push(time)
-        this.doughnutChartData[0] = this.doughnutChartData[0] + Number(x.total.split('$')[1])
-        this.doughnutChartData[1] = this.doughnutChartData[1] + Number(x.tip.split('$')[1])
+        x.appt_length = x.appt_length.split(':').map(y=> parseInt(y));
+        let cutMinutes = x.appt_length[0]*60 + x.appt_length[1] + x.appt_length[2]/60
+        // console.log("trans length as minutes", cutMinutes)
+        for (let i = 0; i < this.barChartLabels.length; i++) {
+            if (x.b_first === this.barChartLabels[i]) {
+                this.cutTimes[i] += cutMinutes
+            }
+        }
           if(this.lineChartLabels[0] == moment(x.start_time).format("ddd")){
             this.wagesarray.data[0] = this.wagesarray.data[0] + Number(x.total.split('$')[1])
           }
@@ -144,16 +156,21 @@ export class HomeComponent implements OnInit {
           if(this.lineChartLabels[6] == moment(x.start_time).format("ddd")){
             this.wagesarray.data[6] = this.wagesarray.data[6] + Number(x.total.split('$')[1])
           }
-          this.lineChartData = this.wagesarray.data
+
       })
-      
+      this.lineChartData = this.wagesarray.data
+      this.barChartData = this.cutTimes
+      this.doughnutChartData = this.doughnutData
+      // console.log("donut", this.doughnutChartData)
+      // console.log("bar",this.barChartData)
+      // console.log("line",this.lineChartData)
     })
 
 
 
   }
 
-  
+
   openWalkDialog() {
     let dialogRef = this.dialog.open(WalkdialogComponent, {
       width: '600px',

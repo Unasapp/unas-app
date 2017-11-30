@@ -327,7 +327,9 @@ massive("postgres://uunjpeyj:yVNsIpBpaTMB_a2TXEss-Gmq1DGSIOte@pellefant.db.eleph
       req.body.est_time,
       req.body.v_id
     ]
-    db.edit_service(editService)
+    db.edit_service(editService, (err, service) => {
+      console.log(err, service);
+    }).then((newService) => {res.send(newService)})
   })
 
   app.post('/api/add-contact', (req, res) => {

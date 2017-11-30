@@ -30,8 +30,8 @@ and
 and
   c_id = client_id
 and
-  shops.s_id = $1
+  appointments.shop_id = $1
 and
   appointments.status = 'completed'
-and 
+and
 	start_time between $2 and $3

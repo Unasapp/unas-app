@@ -10,7 +10,7 @@
   </div>
 
   <div class='rest'>
-    <h2>Shop Name</h2>
+    <h2> {{profile.s_name}} </h2>
   </div>
   <div>
       <button md-icon-button (click)='openWalkDialog()'>
@@ -53,63 +53,70 @@
     <div class='top-stats'>
 
           <div class="stats-cards">
-            <md-card class="card-layout">
-              <h4>This Weeks Wages</h4>
-              <md-card-content>
-                <canvas baseChart 
-                [data]="lineChartData"
-                [labels]="lineChartLabels"
-                [options]="lineChartOptions"
-                [chartType]="lineChartType"
-                (chartHover)="chartHovered($event)"
-                (chartClick)="chartClicked($event)"></canvas>
-              </md-card-content>
-            </md-card>
 
-            <md-card class="card-layout">
-                <h4>Average Time Spent Cutting</h4>
+
+              <md-card class="card-layout2">
+                <h4>This Weeks Wages</h4>
                 <md-card-content>
-                    <canvas baseChart
-                    [datasets]="barChartData"
-                    [labels]="barChartLabels"
-                    [options]="barChartOptions"
-                    [legend]="barChartLegend"
-                    [chartType]="barChartType"
-                    (chartHover)="chartHovered($event)"
-                    (chartClick)="chartClicked($event)"></canvas>
+                  <canvas baseChart
+                  [data]="lineChartData"
+                  [labels]="lineChartLabels"
+                  [options]="lineChartOptions"
+                  [chartType]="lineChartType"
+                  (chartHover)="chartHovered($event)"
+                  (chartClick)="chartClicked($event)"></canvas>
                 </md-card-content>
               </md-card>
 
-            <md-card class="card-layout">
-              <h4>This Weeks Wages vs. Tips</h4>
-              <md-card-content>
-              <canvas baseChart
-              [data]="doughnutChartData"
-              [labels]="doughnutChartLabels"
-              [chartType]="doughnutChartType"
-              (chartHover)="chartHovered($event)"
-              (chartClick)="chartClicked($event)"></canvas>
-              </md-card-content>
-            </md-card>
+              <md-card class="card-layout2">
+                <h4>Average Time Spent Cutting</h4>
+                <md-card-content>
+                  <canvas baseChart
+                  [datasets]="barChartData"
+                  [labels]="barChartLabels"
+                  [options]="barChartOptions"
+                  [legend]="barChartLegend"
+                  [chartType]="barChartType"
+                  (chartHover)="chartHovered($event)"
+                  (chartClick)="chartClicked($event)"></canvas>
+                </md-card-content>
+              </md-card>
+
+              <!-- <md-card class="card-layout2">
+                <h4>This Weeks Wages vs. Tips</h4>
+                <md-card-content>
+                  <canvas baseChart
+                  [data]="doughnutChartData"
+                  [labels]="doughnutChartLabels"
+                  [chartType]="doughnutChartType"
+                  (chartHover)="chartHovered($event)"
+                  (chartClick)="chartClicked($event)"></canvas>
+                </md-card-content>
+              </md-card> -->
+
+
           </div>
-          
+
 
     </div>
 
     <div class='barber-profiles'>
+      <h2 style="width: 100%; text-align:center">Barbers</h2>
 
       <md-card *ngFor="let barber of barbers" class="example-card">
         <h3 style="text-align:center;">{{ barber.b_first }} {{ barber.b_last }}</h3>
-        <img class='profile-pic' src="https://maxcdn.icons8.com/Share/icon/Users//user_male_circle_filled1600.png">
-        <md-card-content>
+        <div style="width: 100%; display: flex; justify-content: center">
+          <img class='profile-pic' src="https://maxcdn.icons8.com/Share/icon/Users//user_male_circle_filled1600.png">
+        </div>
+        <!-- <md-card-content>
           <div class='profile-stat'>
             <p>Wages:</p>
-            <!-- This is dummy data -->
+
             <p>$468.90</p>
           </div>
           <div class='profile-stat'>
             <p>Tips:</p>
-            <!-- This is dummy data -->
+
             <p>$46.50</p>
           </div>
           <div class='profile-stat'>
@@ -120,10 +127,10 @@
             <p>Completed Appointments:</p>
             <p>5</p>
           </div>
-        </md-card-content>
+        </md-card-content> -->
         <md-card-actions class='profile-actions'>
           <button md-button (click)='openBarberModal(barber)'>View Profile</button>
-          <button md-button (click)='openApptDialog()'>Make Appointment</button>
+          <!-- <button md-button (click)='openApptDialog()'>Make Appointment</button> -->
         </md-card-actions>
       </md-card>
 
@@ -133,5 +140,5 @@
 
   </section>
 
-<!-- 
-</md-sidenav-container> -->
+
+</md-sidenav-container>

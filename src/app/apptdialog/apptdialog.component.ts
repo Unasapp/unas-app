@@ -43,6 +43,10 @@ export class ApptdialogComponent implements OnInit {
     this.barbers = JSON.parse(localStorage.getItem('barbers'))
     this.clients = JSON.parse(localStorage.getItem('clients'))
     this.services = JSON.parse(localStorage.getItem('services'))
+    this.services.unshift({
+      'service': "None",
+      "v_id": null
+    })
     this.makeTime()
   }
 
@@ -92,7 +96,7 @@ export class ApptdialogComponent implements OnInit {
         this.myService.addAppts(newapptDb).subscribe()
       })
       this.dialogRef.close(newappt)
-    } else{
+    } else {
       let newapptDb =  {
           'barber_id'  : barber.b_id,
           'client_id'  : customer.c_id,
