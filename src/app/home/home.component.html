@@ -10,7 +10,7 @@
   </div>
 
   <div class='rest'>
-    <h2>Shop Name</h2>
+    <h2> {{profile.s_name}} </h2>
   </div>
   <div>
       <button md-icon-button (click)='openWalkDialog()'>
@@ -53,19 +53,20 @@
     <div class='top-stats'>
 
           <div class="stats-cards">
-            <md-card class="card-layout">
-              <h4>This Weeks Wages</h4>
-              <md-card-content>
-                <canvas baseChart
-                [data]="lineChartData"
-                [labels]="lineChartLabels"
-                [options]="lineChartOptions"
-                [chartType]="lineChartType"
-                (chartHover)="chartHovered($event)"
-                (chartClick)="chartClicked($event)"></canvas>
-              </md-card-content>
-            </md-card>
-            <div style="display: flex; width: 84%; justify-content: space-between">
+
+
+              <md-card class="card-layout2">
+                <h4>This Weeks Wages</h4>
+                <md-card-content>
+                  <canvas baseChart
+                  [data]="lineChartData"
+                  [labels]="lineChartLabels"
+                  [options]="lineChartOptions"
+                  [chartType]="lineChartType"
+                  (chartHover)="chartHovered($event)"
+                  (chartClick)="chartClicked($event)"></canvas>
+                </md-card-content>
+              </md-card>
 
               <md-card class="card-layout2">
                 <h4>Average Time Spent Cutting</h4>
@@ -81,7 +82,7 @@
                 </md-card-content>
               </md-card>
 
-              <md-card class="card-layout2">
+              <!-- <md-card class="card-layout2">
                 <h4>This Weeks Wages vs. Tips</h4>
                 <md-card-content>
                   <canvas baseChart
@@ -91,8 +92,9 @@
                   (chartHover)="chartHovered($event)"
                   (chartClick)="chartClicked($event)"></canvas>
                 </md-card-content>
-              </md-card>
-            </div>
+              </md-card> -->
+
+
           </div>
 
 

@@ -194,7 +194,7 @@ massive("postgres://uunjpeyj:yVNsIpBpaTMB_a2TXEss-Gmq1DGSIOte@pellefant.db.eleph
     ]
     console.log('earnings in',array)
     db.get_shop_wages(array, (err, trans) => {}).then(trans => {
-      console.log('--- shop wages 😡  ----',trans)
+      // console.log('--- shop wages 😡  ----',trans)
       res.send(trans)
     })
   })

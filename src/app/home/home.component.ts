@@ -100,6 +100,7 @@ export class HomeComponent implements OnInit {
 
   ngOnInit() {
     this.profile = JSON.parse(localStorage.getItem('profile'))
+    console.log(this.profile)
     this.profType = (JSON.parse(localStorage.getItem('profile'))[0].type === 'admin') ? true : false
     this.barbers = JSON.parse(localStorage.getItem('barbers')).sort()
 
@@ -117,7 +118,7 @@ export class HomeComponent implements OnInit {
 
     this.service.getShopWages(earnInfo).subscribe(data=>{
       this.shopwages = data
-      console.log('this.shopwages',this.shopwages);
+      // console.log('this.shopwages',this.shopwages);
 
       // let barData = []
       this.doughnutData = [0,0]
@@ -161,9 +162,9 @@ export class HomeComponent implements OnInit {
       this.lineChartData = this.wagesarray.data
       this.barChartData = this.cutTimes
       this.doughnutChartData = this.doughnutData
-      console.log("donut", this.doughnutChartData)
-      console.log("bar",this.barChartData)
-      console.log("line",this.lineChartData)
+      // console.log("donut", this.doughnutChartData)
+      // console.log("bar",this.barChartData)
+      // console.log("line",this.lineChartData)
     })
 
 
