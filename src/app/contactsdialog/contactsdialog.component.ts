@@ -35,6 +35,9 @@ export class ContactsdialogComponent implements OnInit {
       this.service.editContact(contact).subscribe(data => {
         console.log("back from db edit", data)
         data[0].status = "edited"
+        this.service.getContacts({id:JSON.parse(localStorage.getItem('profile'))[0].shop_id}).subscribe((data) => {
+          localStorage.setItem('clients', JSON.stringify(data))
+        })
         this.dialogRef.close(data[0])
       })
     } else {
@@ -42,6 +45,9 @@ export class ContactsdialogComponent implements OnInit {
       this.service.addContact(contact).subscribe(data => {
         console.log("back from db add", data)
         data[0].status = "added"
+        this.service.getContacts({id:JSON.parse(localStorage.getItem('profile'))[0].shop_id}).subscribe((data) => {
+          localStorage.setItem('clients', JSON.stringify(data))
+        })
         this.dialogRef.close(data[0])
       })
     }
@@ -53,6 +59,9 @@ export class ContactsdialogComponent implements OnInit {
       console.log(data.msg)
       if (data.msg = "Success") {
         contact.status = "deleted"
+        this.service.getContacts({id:JSON.parse(localStorage.getItem('profile'))[0].shop_id}).subscribe((data) => {
+          localStorage.setItem('clients', JSON.stringify(data))
+        })
         this.dialogRef.close(contact)
       } else {
         alert(data.msg)

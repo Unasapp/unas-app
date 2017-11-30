@@ -14,7 +14,7 @@ import { WalkdialogComponent } from '../walkdialog/walkdialog.component';
   styleUrls: ['./services.component.css']
 })
 export class ServicesComponent implements OnInit {
-  
+
   constructor(private http: HttpClient, public dialog: MdDialog, private service: ReportServiceService, public router: Router) { }
 
   public services = [];
@@ -50,7 +50,8 @@ export class ServicesComponent implements OnInit {
     })
 
     dialogRef.afterClosed().subscribe(result =>{
-      if(result.status === "added"){
+      console.log("service result", result)
+      if(result.status && result.status === "added"){
         this.services.push(result);
       } else if (result.status === "edited") {
         this.services[this.services.findIndex((x)=> x.v_id === result.v_id)] = result
@@ -74,7 +75,7 @@ export class ServicesComponent implements OnInit {
    this.profType = (JSON.parse(localStorage.getItem('profile'))[0].type === 'admin') ? true : false
   }
 
-  
+
   openWalkDialog() {
     let dialogRef = this.dialog.open(WalkdialogComponent, {
       width: '600px',

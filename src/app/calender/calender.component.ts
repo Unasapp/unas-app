@@ -24,7 +24,7 @@ export class CalenderComponent implements OnInit {
     public service: ReportServiceService, public router: Router
   ) {
 
-   }
+  }
 
 
   @ViewChild('myCalendar') myCalendar: CalendarComponent;
@@ -191,6 +191,7 @@ export class CalenderComponent implements OnInit {
       data: 'this text is passed'
     })
   }
+
   openApptDialog() {
     let dialogRef = this.dialog.open(ApptdialogComponent,{
       width: '600px',
