@@ -23,21 +23,18 @@ export class HomeComponent implements OnInit {
   public doughnutChartLabels:string[] = ['Wages', 'Tips'];
   public doughnutChartData:number[] = [450, 220];
   public doughnutChartType:string = 'doughnut';
-
   // events
 
   public lineChartData:Array<any> = [ ];
   public lineChartLabels:Array<any> = ['Sun','Mon','Tues','Wed','Fri','Sat'];
   public lineChartType:string = 'line';
-
-
   
   public barChartLabels:string[] = [ ];
   public barChartType:string = 'bar';
   public barChartLegend:boolean = true;
  
   public barChartData:any[] = [
-    {data: [30, 34, 40, 33.5, 25], label: 'Barbers'}
+    {data: [], label: 'Barbers'}
   ];
   
 
@@ -117,6 +114,13 @@ export class HomeComponent implements OnInit {
       console.log('this.shopwages',this.shopwages);
 
       this.shopwages.map(x=>{
+
+        var hour = Number(x.appt_length[0])/60
+        var min = Number(x.appt_length[1])
+        var sec = Number(x.appt_length[2])
+        var time = Number(hour + min + '.' + sec)
+
+        this.barChartData[0].data.push(time)
         this.doughnutChartData[0] = this.doughnutChartData[0] + Number(x.total.split('$')[1])
         this.doughnutChartData[1] = this.doughnutChartData[1] + Number(x.tip.split('$')[1])
           if(this.lineChartLabels[0] == moment(x.start_time).format("ddd")){

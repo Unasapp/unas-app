@@ -113,7 +113,7 @@ export class ReportServiceService {
   }
 
   editContact(contact) {
-    // console.log('editing contact', contact)
+    // console.log('editing contact', contact) 
     return this.http.post('/api/edit-contact', contact)
     .map(res => res.json())
   }

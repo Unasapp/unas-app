@@ -337,7 +337,8 @@ massive("postgres://uunjpeyj:yVNsIpBpaTMB_a2TXEss-Gmq1DGSIOte@pellefant.db.eleph
       req.body.c_phone,
       req.body.c_email,
       req.body.b_day,
-      req.body.c_id
+      req.body.c_id,
+      req.body.shop_id
     ]
     db.edit_contact(contact, (err, newContact)=> {console.log(err);})
     .then((newContact)=> {res.send(newContact)},
@@ -682,15 +683,13 @@ massive("postgres://uunjpeyj:yVNsIpBpaTMB_a2TXEss-Gmq1DGSIOte@pellefant.db.eleph
     }).then(data => res.send(data))
     })
 
-  })
-
 
 
   // NODE MAILER-----------------///
   // ---------------------------------
 
   //  +++++++ BEGINS  ++++++++++😡
-  app.post('/api/sendmail', (req, res) =>{
+  sendEmail = ()=>{
       var timecardHEAD = `
       <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
       <html xmlns="http://www.w3.org/1999/xhtml">
@@ -831,7 +830,7 @@ massive("postgres://uunjpeyj:yVNsIpBpaTMB_a2TXEss-Gmq1DGSIOte@pellefant.db.eleph
 
       var array = [
         1,
-        moment(new Date().setDate(new Date().getDate() - 12)).format('YYYY-MM-DD'),
+        moment(new Date().setDate(new Date().getDate())).format('YYYY-MM-DD'),
         moment(new Date().setDate(new Date().getDate() + 1)).format('YYYY-MM-DD')
       ]
       var timecard
@@ -885,15 +884,37 @@ massive("postgres://uunjpeyj:yVNsIpBpaTMB_a2TXEss-Gmq1DGSIOte@pellefant.db.eleph
           return a + '<tr><td>' + b.first_name + ' ' + b.last_name + '</td><td>' + moment(b.time_in).format('l LT') + '</td><td>' + moment(b.time_out).format('l LT') + '</td></tr>';
         }, '');
 
+        for(var j=0; j<transreport.length; j++){
+          services.map(i=>{
+            transreport[j].actualprice = Number(transreport[j].price.split('$')[1])
+            if(transreport[j].service_id2 == i.v_id){
+              transreport[j].service2 = i.service
+              transreport[j].actualprice = transreport[j].actualprice + Number(i.price.split('$')[1])
+            }
+            if(transreport[j].service_id3 == i.v_id){
+              transreport[j].service3 = i.service
+              transreport[j].actualprice = transreport[j].actualprice + Number(i.price.split('$')[1])
+            }
+            if(transreport[j].service_id4 == i.v_id){
+              transreport[j].service4 = i.service
+              transreport[j].actualprice = transreport[j].actualprice + Number(i.price.split('$')[1])
+            }
+            if(transreport[j].service_id5 == i.v_id){
+              transreport[j].service5 = i.service
+              transreport[j].actualprice = transreport[j].actualprice + Number(i.price.split('$')[1])
+            }
+          })
+        }
+
         transreportBODY = transreport.reduce(function(a, b) {
           return a + '<tr><td>' + moment(b.start_time).format('l LT') + '</td><td>'
                    + b.b_first + ' ' + b.b_last + '</td><td>'
                    + b.c_first + ' ' + b.c_last + '</td><td>'
-                   + b.service + '</td><td>'
-                   + b.price + '</td><td>'
+                   + '<div>' + b.service + '</div>' + (b.service2 ? '<div style="padding-top: 3px;">' + b.service2 + '</div>' : '') + (b.service3 ? '<div style="padding-top: 3px;" >' + b.service3 + '</div>' : '') + (b.service4 ? '<div style="padding-top: 3px;" >' + b.service4 + '</div>' : '') + (b.service5 ? '<div style="padding-top: 3px;" >' + b.service5 + '</div>' : '') + '</td><td>'
+                   + '$' + b.actualprice.toFixed(2) + '</td><td>'
                    + b.tip + '</td><td>'
                    + b.pay_mth + '</td><td>'
-                   + b.total + '</td></tr>';
+                   + '$' + (b.actualprice + Number(b.tip.split('$')[1])).toFixed(2) + '</td></tr>';
         }, '');
  
         // console.log('im here',transreport)
@@ -909,7 +930,7 @@ massive("postgres://uunjpeyj:yVNsIpBpaTMB_a2TXEss-Gmq1DGSIOte@pellefant.db.eleph
                 'shopE': 0,
                 'barberE': 0,
                 'tip': 0,
-                'time': 0
+                'time': '00:00:00'
               })
           })
 
@@ -924,35 +945,50 @@ massive("postgres://uunjpeyj:yVNsIpBpaTMB_a2TXEss-Gmq1DGSIOte@pellefant.db.eleph
                   barber.report[i].v_id == transreport[x].service_id4 || 
                   barber.report[i].v_id == transreport[x].service_id5
                 ){
-                    // console.log('in service',barber.report[i].v_id, '===', transreport[x].service_id)
                         if(barber.type == 'hourly'){
-                          // console.log('in it hourly');
                           var rate = barber.rate.split('/')[0].replace('$','')
                           var time = 6;
                           barber.report[i].count = barber.report[i].count + 1
                           barber.report[i].barberE = Number(barber.report[i].barberE) + (time * Number(rate))
                           barber.report[i].shopE = Number(barber.report[i].shopE) + Number(barber.report[i].price.split('$')[1])
                           barber.report[i].tip = Number(barber.report[i].tip) + Number(transreport[x].tip.split('$')[1])
+                          var hourIN = Number(transreport[x].appt_length == null ? '00' : transreport[x].appt_length.split(':')[0])
+                          var minIN = Number(transreport[x].appt_length == null ? '00' : transreport[x].appt_length.split(':')[1])
+                          var secIN = Number(transreport[x].appt_length == null ? '00' : transreport[x].appt_length.split(':')[2])
+                          var hourC = Number(barber.report[i].time.split(':')[0])
+                          var minC = Number(barber.report[i].time.split(':')[1])
+                          var secC = Number(barber.report[i].time.split(':')[2])
+                          barber.report[i].time = ((hourIN + hourC) < 10 ? '0' + (hourIN + hourC) : (hourIN + hourC)) + ':' + ((minIN + minC) < 10 ? '0' + (minIN + minC) : (minIN + minC))  + ':' + ((secIN + secC) < 10 ? '0' + (secIN + secC) : (secIN + secC)) 
                         }
-            
                         if(barber.type == 'commission'){
                           var com = Number('.' + barber.rate.split('%')[0])
-                          // console.log('in it commission',com);
                           barber.report[i].count = barber.report[i].count + 1
                           barber.report[i].barberE = Number(barber.report[i].barberE) + (Number(barber.report[i].price.split('$')[1]) * Number(com))
                           barber.report[i].shopE = Number(barber.report[i].shopE) + (Number(barber.report[i].price.split('$')[1]) * (1-Number(com)))
                           barber.report[i].tip = Number(barber.report[i].tip) + Number(transreport[x].tip.split('$')[1])
-                          // console.log('---- earnreport -----',typeof barber.report[i].barberE)
+                          console.log('transreport[x].appt_length',barber.report[i].time.split(':')[0])
+                          var hourIN = Number(transreport[x].appt_length == null ? '00' : transreport[x].appt_length.split(':')[0])
+                          var minIN = Number(transreport[x].appt_length == null ? '00' : transreport[x].appt_length.split(':')[1])
+                          var secIN = Number(transreport[x].appt_length == null ? '00' : transreport[x].appt_length.split(':')[2])
+                          var hourC = Number(barber.report[i].time.split(':')[0])
+                          var minC = Number(barber.report[i].time.split(':')[1])
+                          var secC = Number(barber.report[i].time.split(':')[2])
+                          barber.report[i].time = ((hourIN + hourC) < 10 ? '0' + (hourIN + hourC) : (hourIN + hourC)) + ':' + ((minIN + minC) < 10 ? '0' + (minIN + minC) : (minIN + minC))  + ':' + ((secIN + secC) < 10 ? '0' + (secIN + secC) : (secIN + secC)) 
                         }
-            
                         if(barber.type == 'booth rent'){
                           // console.log('in it booth rent');
                           barber.report[i].count = barber.report[i].count + 1
                           barber.report[i].barberE = Number(barber.report[i].barberE) + Number(barber.report[i].price.split('$')[1])
                           barber.report[i].shopE = Number(barber.rate.split('$')[1].split('/')[0])
                           barber.report[i].tip = Number(barber.report[i].tip) + Number(transreport[x].tip.split('$')[1])
+                          var hourIN = Number(transreport[x].appt_length == null ? '00' : transreport[x].appt_length.split(':')[0])
+                          var minIN = Number(transreport[x].appt_length == null ? '00' : transreport[x].appt_length.split(':')[1])
+                          var secIN = Number(transreport[x].appt_length == null ? '00' : transreport[x].appt_length.split(':')[2])
+                          var hourC = Number(barber.report[i].time.split(':')[0])
+                          var minC = Number(barber.report[i].time.split(':')[1])
+                          var secC = Number(barber.report[i].time.split(':')[2])
+                          barber.report[i].time = ((hourIN + hourC) < 10 ? '0' + (hourIN + hourC) : (hourIN + hourC)) + ':' + ((minIN + minC) < 10 ? '0' + (minIN + minC) : (minIN + minC))  + ':' + ((secIN + secC) < 10 ? '0' + (secIN + secC) : (secIN + secC)) 
                         } 
-
                     } 
                 }
               }
@@ -973,14 +1009,28 @@ massive("postgres://uunjpeyj:yVNsIpBpaTMB_a2TXEss-Gmq1DGSIOte@pellefant.db.eleph
             if(x.type === 'booth rent'){
               pay = x.type
             }
-            var total = {}
+            var total = {
+              'service' : 'All services',
+              'count' : 0,
+              'shopE' : 0,
+              'barberE' : 0,
+              'tip' : 0,
+              'time' : '00:00:00'
+            }
             x.report.map(y=>{
+              // console.log('y.report.count' ,y.count)
               total.service = 'All services' 
-              total.count = y.report.count 
-              total.shopE = y.report.shopE 
-              total.barberE = y.report.barberE
-              total.tip = y.report.tip 
-              total.time = y.report.time 
+              total.count = total.count + y.count 
+              total.shopE = total.shopE + y.shopE 
+              total.barberE = total.barberE + y.barberE
+              total.tip = total.tip + y.tip 
+              var hourIN = Number(y.time == null ? '00' : y.time.split(':')[0])
+              var minIN = Number(y.time == null ? '00' : y.time.split(':')[1])
+              var secIN = Number(y.time == null ? '00' : y.time.split(':')[2])
+              var hourC = Number(total.time.split(':')[0])
+              var minC = Number(total.time.split(':')[1])
+              var secC = Number(total.time.split(':')[2])
+              total.time = ((hourIN + hourC) < 10 ? '0' + (hourIN + hourC) : (hourIN + hourC)) + ':' + ((minIN + minC) < 10 ? '0' + (minIN + minC) : (minIN + minC))  + ':' + ((secIN + secC) < 10 ? '0' + (secIN + secC) : (secIN + secC)) 
             })
 
             quick = x.report.reduce(function(a, b) {
@@ -992,12 +1042,12 @@ massive("postgres://uunjpeyj:yVNsIpBpaTMB_a2TXEss-Gmq1DGSIOte@pellefant.db.eleph
               + b.time + '</td></tr>';
             }, '');
               
-            quick = '<tr><td>' + total.service + '</td><td>'
+            quick = quick + '<tr><td>' + total.service + '</td><td>'
             + total.count + '</td><td>'
             + total.shopE.toFixed(2) + '</td><td>'
             + total.barberE.toFixed(2) + '</td><td>'
             + total.tip.toFixed(2) + '</td><td>'
-            + total.time + '</td></tr>' + quick
+            + total.time + '</td></tr>'
 
               quick = `
               <h3> ${x.b_first}  ${x.b_last} - ${pay} </h3>
@@ -1139,11 +1189,11 @@ massive("postgres://uunjpeyj:yVNsIpBpaTMB_a2TXEss-Gmq1DGSIOte@pellefant.db.eleph
     }
     getStuff()
   
-  })
+  }
   // ++++++++++++ ends ++++++++++++++++
 
   var job = new CronJob({
-    cronTime: '00 11 00 * * 1-5',
+    cronTime: '00 00 23 * * 0-6',
     onTick: function() {
       console.log('email begins to send')
       sendEmail()
@@ -1152,3 +1202,5 @@ massive("postgres://uunjpeyj:yVNsIpBpaTMB_a2TXEss-Gmq1DGSIOte@pellefant.db.eleph
     timeZone: 'America/Denver'
     });
     job.start();
+
+  })
