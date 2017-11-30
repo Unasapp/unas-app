@@ -13,8 +13,8 @@ set
   qty2 = $9,
   pay_mth = $10,
   status = $11
-where 
-    a_id = $1;
+where
+  a_id = $1;
 update
 	products
 set
@@ -27,5 +27,3 @@ set
 	quantity = (quantity - $9)
 where
 	p_id = $8;
-
-

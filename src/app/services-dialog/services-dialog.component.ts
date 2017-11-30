@@ -19,17 +19,29 @@ export class ServicesDialogComponent implements OnInit {
   @Inject(MD_DIALOG_DATA) public data: any,
   private service: ReportServiceService) { }
 
-  onCloseConfirm(service){
-    if (service.v_id) {
-      this.service.editServices(service).subscribe(data => {
+  onCloseConfirm(srvc){
+    var newService:any
+    if (srvc.v_id) {
+      this.service.editServices(srvc).subscribe(data => {
         console.log("back from db edit", data)
-        data[0].status = "edited"
-        this.dialogRef.close(data[0])
+        newService = data[0]
+        newService.status = "edited"
+        this.service.getServices({id:JSON.parse(localStorage.getItem('profile'))[0].shop_id}).subscribe((data2) => {
+          localStorage.setItem('services', JSON.stringify(data2))
+        })
+        this.dialogRef.close(newService)
       })
     } else {
-      service.shop_id = JSON.parse(localStorage.getItem('profile'))[0].shop_id
-      this.service.addServices(service).subscribe()
-      this.dialogRef.close(service)
+      srvc.shop_id = JSON.parse(localStorage.getItem('profile'))[0].shop_id
+      this.service.addServices(srvc).subscribe(data3 => {
+        console.log("data from add srvc", data3)
+        newService = data3[0]
+        newService.status = "added"
+        this.service.getServices({id:JSON.parse(localStorage.getItem('profile'))[0].shop_id}).subscribe((data4) => {
+          localStorage.setItem('services', JSON.stringify(data4))
+        })
+        this.dialogRef.close(newService)
+      })
     }
   }
 
@@ -43,6 +55,9 @@ export class ServicesDialogComponent implements OnInit {
       console.log(data.msg)
       if (data.msg = "Success") {
         service.status = "deleted"
+        this.service.getServices({id:JSON.parse(localStorage.getItem('profile'))[0].shop_id}).subscribe((data) => {
+          localStorage.setItem('services', JSON.stringify(data))
+        })
         this.dialogRef.close(service)
       } else {
         alert(data.msg)

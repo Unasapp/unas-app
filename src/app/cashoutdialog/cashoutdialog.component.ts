@@ -42,7 +42,7 @@ constructor(
 apptSelected(appt){
 
   if(appt.a_id){
-    this.selected = appt 
+    this.selected = appt
     this.needToPay.push('nope')
     if(this.selected.service_id2){
       this.services.map(x=>{
@@ -65,17 +65,17 @@ apptSelected(appt){
   }
 
 }
- 
+
 
 ngOnInit() {
   this.services.map(x => x.price = (Number(x.price.split('$')[1])))
-  console.log('-- this.data ---',this.data);
+  console.log('-- this.data ---', this.data);
 
-  if(this.data.a_id){
-    this.selected = this.data 
+  if(this.data.a_id) {
+    this.selected = this.data
     this.needToPay.push('nope')
     if(this.selected.service_id2){
-      this.services.map(x=>{
+      this.services.map(x => {
         if(x.v_id == this.selected.service_id2){
           this.selected.service2 = x.service
           this.selected.serviceP2 = x.price
@@ -90,13 +90,17 @@ ngOnInit() {
         }
       })
     }
-    
+
   }
 
-  else{
+  else {
     this.service.getInProgress({id:JSON.parse(localStorage.getItem('profile'))[0].shop_id}).subscribe(data => {
       this.needToPay = data;
       this.needToPay.map(x => x.price = (Number(x.price.split('$')[1])))
+      this.services.unshift({
+        'service': "None",
+        "price": 0
+      })
       console.log('this.needToPay ----',this.needToPay);
     });
   }
@@ -106,15 +110,15 @@ ngOnInit() {
     this.products.map(x => x.price = (Number(x.price.split('$')[1])))
     this.products.unshift({
       'product': 'none',
-      'price': 0
+      'price': null
     })
     console.log('data for products ----->>>>',this.products);
   })
-  
+
 }
 
 onCloseConfirm(tip, typeP){
-  
+
   console.log('cashed out',this.selected);
 
   if(this.selected){
@@ -134,7 +138,7 @@ onCloseConfirm(tip, typeP){
       'status': 'completed'
     }
     console.log('cashed out OBJ',trans);
-  
+
     this.service.completeAppt(trans).subscribe()
     this.dialogRef.close(this.selected.a_id)
   }
