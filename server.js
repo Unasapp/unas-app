@@ -168,6 +168,7 @@ massive("postgres://uunjpeyj:yVNsIpBpaTMB_a2TXEss-Gmq1DGSIOte@pellefant.db.eleph
       req.body.date2
     ]
     db.shop_trans(array, (err, trans) => {}).then(trans =>{
+      console.log('trans',trans);
       res.send(trans)
     })
   })
@@ -607,7 +608,7 @@ massive("postgres://uunjpeyj:yVNsIpBpaTMB_a2TXEss-Gmq1DGSIOte@pellefant.db.eleph
       req.body.v_id,
       req.body.b_id,
       req.body.v_id1,
-      req.body.v_id1,
+      req.body.v_id2,
       'walk-in',
       req.body.c_id
     ]

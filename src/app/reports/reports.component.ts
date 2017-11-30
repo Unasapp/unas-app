@@ -25,7 +25,7 @@ export class ReportsComponent implements OnInit {
   constructor(private http: Http, public dialog: MdDialog, public service: ReportServiceService, public router: Router) { }
 
   deleteEdit(x){
-    console.log('-- deleting trans --',x);
+    // console.log('-- deleting trans --',x);
     for (var i = 0; i < this.report.length; i++) {
       if(this.report[i].a_id == x.a_id){
         this.report.splice(i,1)
@@ -36,13 +36,13 @@ export class ReportsComponent implements OnInit {
   }
 
   saveEdit(x){
-    console.log('-- saving trans --',x);
+    // console.log('-- saving trans --',x);
     this.service.editTrans(x).subscribe()
 
   }
 
   timedeleteEdit(x){
-    console.log('-- deleting time --',x);
+    // console.log('-- deleting time --',x);
     for (var i = 0; i < this.timecards.length; i++) {
       if(this.timecards[i].t_id == x.t_id){
         this.timecards.splice(i,1)
@@ -53,7 +53,7 @@ export class ReportsComponent implements OnInit {
   }
 
   timesaveEdit(x){
-    console.log('-- saving time --',x);
+    // console.log('-- saving time --',x);
     this.service.timesaveEdit(x).subscribe()
 
   }
@@ -119,9 +119,9 @@ export class ReportsComponent implements OnInit {
        })
 
      })
-      console.log('get reports for past 7',earnInfo);
+      // console.log('get reports for past 7',earnInfo);
       this.service.getProductsReport(earnInfo).subscribe(data =>{
-        console.log('--- products for reports --',data);
+        // console.log('--- products for reports --',data);
 
         for (var i = 0; i < this.products.length; i++) {
           for (var j = 0; j < data.length; j++) {
@@ -133,7 +133,7 @@ export class ReportsComponent implements OnInit {
         }
 
        })
-        console.log('get reports for past 7',this.report);
+        // console.log('get reports for past 7',this.report);
       }
     else{
       this.products = []
@@ -157,7 +157,7 @@ export class ReportsComponent implements OnInit {
 
      })
       this.service.getProductsReport(earnInfo).subscribe(data =>{
-        console.log('--- products for reports --',data);
+        // console.log('--- products for reports --',data);
 
         for (var i = 0; i < this.products.length; i++) {
           for (var j = 0; j < data.length; j++) {
@@ -169,7 +169,7 @@ export class ReportsComponent implements OnInit {
         }
 
        })
-      console.log('get reports from today',this.report);
+      // console.log('get reports from today',this.report);
     }
 
   }
@@ -183,7 +183,7 @@ export class ReportsComponent implements OnInit {
         'date2' : moment(new Date()).format('YYYY-MM-DD'),
         'shop_id' : JSON.parse(localStorage.getItem('profile'))[0].shop_id
       }
-      console.log('get reports for past 7',earnInfo);
+      // console.log('get reports for past 7',earnInfo);
       this.service.getShopTrans(earnInfo).subscribe(trans => {
         for (let i = 0; i < trans.length; i++) {
           trans[i].start_time = moment(new Date(trans[i].start_time.split('.')[0])).format("l LT")
@@ -216,7 +216,7 @@ export class ReportsComponent implements OnInit {
         }
               this.report = trans
            })
-        console.log('get reports for past 7',this.report);
+        // console.log('get reports for past 7',this.report);
       }
     else{
       let earnInfo = {
@@ -224,7 +224,7 @@ export class ReportsComponent implements OnInit {
         'date2' : moment(new Date().setDate(new Date().getDate() + 1)).format('YYYY-MM-DD'),
         'shop_id' : JSON.parse(localStorage.getItem('profile'))[0].shop_id
       }
-      console.log('get reports from today',earnInfo);
+      // console.log('get reports from today',earnInfo);
       this.service.getShopTrans(earnInfo).subscribe(trans => {
         for (let i = 0; i < trans.length; i++) {
           trans[i].start_time = moment(new Date(trans[i].start_time.split('.')[0])).format("l LT")
@@ -257,7 +257,7 @@ export class ReportsComponent implements OnInit {
         }
               this.report = trans
            })
-      console.log('get reports from today',this.report);
+      // console.log('get reports from today',this.report);
     }
 
   }
@@ -271,16 +271,16 @@ export class ReportsComponent implements OnInit {
          'date2' : moment(new Date()).format('YYYY-MM-DD'),
          'shop_id' : JSON.parse(localStorage.getItem('profile'))[0].shop_id
        }
-       console.log('get reports for past 7',earnInfo);
+       // console.log('get reports for past 7',earnInfo);
        this.service.getTimecards(earnInfo).subscribe(cards => {
         for (let i = 0; i < cards.length; i++) {
           cards[i].time_in = moment(cards[i].time_in).format('LLLL')
           cards[i].time_out = moment(cards[i].time_out).format('LLLL')
           }
-        console.log(cards)
+        // console.log(cards)
         this.timecards = cards
         })
-         console.log('get reports for past 7',this.report);
+         // console.log('get reports for past 7',this.report);
        }
      else{
        let earnInfo = {
@@ -288,17 +288,17 @@ export class ReportsComponent implements OnInit {
          'date2' : moment(new Date().setDate(new Date().getDate() + 1)).format('YYYY-MM-DD'),
          'shop_id' : JSON.parse(localStorage.getItem('profile'))[0].shop_id
        }
-       console.log('get reports from today',earnInfo);
+       // console.log('get reports from today',earnInfo);
        this.service.getTimecards(earnInfo).subscribe(cards => {
         for (let i = 0; i < cards.length; i++) {
           cards[i].time_in = moment(cards[i].time_in).format('LLLL')
           cards[i].time_out = moment(cards[i].time_out).format('LLLL')
 
         }
-        console.log(cards)
+        // console.log(cards)
         this.timecards = cards
       })
-       console.log('get reports from today',this.report);
+       // console.log('get reports from today',this.report);
      }
 
   }
@@ -313,6 +313,142 @@ export class ReportsComponent implements OnInit {
         'date2' : moment(new Date()).format('YYYY-MM-DD'),
         'shop_id' : JSON.parse(localStorage.getItem('profile'))[0].shop_id
       }
+      this.service.getBarberEarning(earnInfo).subscribe(data => {
+        console.log('--- earning 😈  back from db ---', data);
+
+        if(data){
+          this.barbers.map((x)=>{
+            this.barearnings.push({
+              'barber_id': x.b_id,
+              'name': x.b_first + " " + x.b_last,
+              'payT': '',
+              'barberE': 0,
+              'shopE': 0,
+              'tips': 0
+            })
+          })
+          console.log('old barber earning shit',this.barearnings)
+          this.go = true;
+        }
+
+
+        if(this.go == true){
+
+          for (var i = 0; i < this.barearnings.length; i++) {
+            for (var j = 0; j < data.length; j++) {
+              if(data[j].type == 'hourly' && this.barearnings[i].barber_id == data[j].b_id){
+                // console.log('in it hourly');
+
+                var rate = data[j].rate.split('/')[0].replace('$','')
+                var time = 6;
+                this.barearnings[i].payT = data[j].type +" - "+ data[j].rate
+                this.barearnings[i].barberE = this.barearnings[i].barberE + (time * Number(rate))
+                this.barearnings[i].shopE = Number(this.barearnings[i].shopE) + Number(data[j].total.split('$')[1])
+                this.barearnings[i].tips = this.barearnings[i].tips + Number(data[j].tip.split('$')[1])
+                this.barearnings[i].shopE = this.barearnings[i].shopE.toFixed(2)
+              }
+
+              if(data[j].type == 'commission' && this.barearnings[i].barber_id == data[j].b_id){
+                // console.log('in it commission');
+                this.com = Number('.' + data[j].rate.split('%')[0])
+                // console.log('this.com',typeof this.com, this.com)
+                data[j].total = data[j].total.split('$')[1]
+                this.barearnings[i].payT = data[j].type +" - "+ data[j].rate
+                // console.log(this.barearnings[i].barberE , Number(data[j].total.replace('$','')) , Number(this.com) );
+
+                this.barearnings[i].barberE = this.barearnings[i].barberE + (Number(data[j].total.replace('$','')) * Number(this.com))
+                this.barearnings[i].shopE = Number(this.barearnings[i].shopE) + Number(data[j].total.replace('$','')) * (1-Number(this.com))
+                this.barearnings[i].tips = this.barearnings[i].tips + Number(data[j].tip.split('$')[1])
+                this.barearnings[i].shopE = this.barearnings[i].shopE.toFixed(2)
+              }
+
+              if(data[j].type == 'booth rent' && this.barearnings[i].barber_id == data[j].b_id){
+                // console.log('in it booth rent');
+                this.barearnings[i].payT = data[j].type
+                this.barearnings[i].barberE = this.barearnings[i].barberE + Number(data[j].total.split('$')[1])
+                this.barearnings[i].shopE = data[j].rate
+                this.barearnings[i].tips = this.barearnings[i].tips + Number(data[j].tip.split('$')[1])
+              }
+
+            }
+          }
+          // console.log('this.barearnings',this.barearnings)
+        }
+
+      })
+
+    }
+    else{
+      this.barearnings = []
+      let earnInfo = {
+        'date1' : moment(new Date()).format('YYYY-MM-DD'),
+        'date2' : moment(new Date().setDate(new Date().getDate() + 7)).format('YYYY-MM-DD'),
+        'shop_id' : JSON.parse(localStorage.getItem('profile'))[0].shop_id
+      }
+      this.service.getBarberEarning(earnInfo).subscribe(data => {
+        // console.log('--- earning 😈  back from db ---', data);
+
+        if(data){
+          this.barbers.map((x)=>{
+            this.barearnings.push({
+              'barber_id': x.b_id,
+              'name': x.b_first + " " + x.b_last,
+              'payT': '',
+              'barberE': 0,
+              'shopE': 0,
+              'tips': 0
+            })
+          })
+          // console.log('old barber earning shit',this.barearnings)
+          this.go = true;
+        }
+
+
+        if(this.go == true){
+
+          for (var i = 0; i < this.barearnings.length; i++) {
+            for (var j = 0; j < data.length; j++) {
+              if(data[j].type == 'hourly' && this.barearnings[i].barber_id == data[j].b_id){
+                // console.log('in it hourly');
+
+                var rate = data[j].rate.split('/')[0].replace('$','')
+                var time = 6;
+                this.barearnings[i].payT = data[j].type +" - "+ data[j].rate
+                this.barearnings[i].barberE = this.barearnings[i].barberE + (time * Number(rate))
+                this.barearnings[i].shopE = Number(this.barearnings[i].shopE) + Number(data[j].total.split('$')[1])
+                this.barearnings[i].tips = this.barearnings[i].tips + Number(data[j].tip.split('$')[1])
+                this.barearnings[i].shopE = this.barearnings[i].shopE.toFixed(2)
+              }
+
+              if(data[j].type == 'commission' && this.barearnings[i].barber_id == data[j].b_id){
+                // console.log('in it commission');
+                this.com = Number('.' + data[j].rate.split('%')[0])
+                // console.log('this.com',typeof this.com, this.com)
+                data[j].total = data[j].total.split('$')[1]
+                this.barearnings[i].payT = data[j].type +" - "+ data[j].rate
+                // console.log(this.barearnings[i].barberE , Number(data[j].total.replace('$','')) , Number(this.com) );
+
+                this.barearnings[i].barberE = this.barearnings[i].barberE + (Number(data[j].total.replace('$','')) * Number(this.com))
+                this.barearnings[i].shopE = Number(this.barearnings[i].shopE) + Number(data[j].total.replace('$','')) * (1-Number(this.com))
+                this.barearnings[i].tips = this.barearnings[i].tips + Number(data[j].tip.split('$')[1])
+                this.barearnings[i].shopE = this.barearnings[i].shopE.toFixed(2)
+              }
+
+              if(data[j].type == 'booth rent' && this.barearnings[i].barber_id == data[j].b_id){
+                // console.log('in it booth rent');
+                this.barearnings[i].payT = data[j].type
+                this.barearnings[i].barberE = this.barearnings[i].barberE + Number(data[j].total.split('$')[1])
+                this.barearnings[i].shopE = data[j].rate
+                this.barearnings[i].tips = this.barearnings[i].tips + Number(data[j].tip.split('$')[1])
+              }
+
+            }
+          }
+          // console.log('this.barearnings',this.barearnings)
+        }
+
+      })
+
     }
 
   }
@@ -355,7 +491,7 @@ export class ReportsComponent implements OnInit {
     //   'date2' : moment(new Date().setDate(new Date().getDate() + 1)).format('YYYY-MM-DD'),
     //   'shop_id' : JSON.parse(localStorage.getItem('profile'))[0].shop_id
     // }
-    console.log('earnInfo 😡', earnInfo);
+    // console.log('earnInfo 😡', earnInfo);
 
     this.service.getProducts({id:JSON.parse(localStorage.getItem('profile'))[0].shop_id}).subscribe(data=>{
       data.map(x=>{
@@ -387,7 +523,7 @@ export class ReportsComponent implements OnInit {
      })
 
     this.service.getShopTrans(earnInfo).subscribe(trans => {
-      console.log('ive been called to get trans');
+      // console.log('ive been called to get trans',trans);
       for (let i = 0; i < trans.length; i++) {
         trans[i].start_time = moment(new Date(trans[i].start_time.split('.')[0])).format("l LT")
         trans[i].price = Number(trans[i].price.split('$')[1])
@@ -415,26 +551,28 @@ export class ReportsComponent implements OnInit {
             trans[i].total = trans[i].total + Number(this.services[k].price.split('$')[1])
           }
         }
-        trans[i].total = Number(trans[i].total.toFixed(2))
+        trans[i].total = trans[i].total.toFixed(2)
+        trans[i].tip = trans[i].tip.toFixed(2)
       }
       this.report = trans
-      console.log('-- this is shop trans for week ---',this.report)
+      // console.log('-- this is shop trans for week ---',this.report)
     })
 
     this.service.getTimecards(earnInfo).subscribe(cards => {
+      console.log('cards ---------',cards)
+
       for (let i = 0; i < cards.length; i++) {
         cards[i].time_in = moment(cards[i].time_in).format("l LT")
         cards[i].time_out = moment(cards[i].time_out).format("l LT")
 
       }
-      // console.log(cards)
       this.timecards = cards
     })
 
 
 
     this.service.getBarberEarning(earnInfo).subscribe(data => {
-      // console.log('--- earning 😈  back from db ---', data);
+      console.log('--- earning 😈  back from db ---', data);
 
       if(data){
         this.barbers.map((x)=>{
@@ -463,8 +601,9 @@ export class ReportsComponent implements OnInit {
               var time = 6;
               this.barearnings[i].payT = data[j].type +" - "+ data[j].rate
               this.barearnings[i].barberE = this.barearnings[i].barberE + (time * Number(rate))
-              this.barearnings[i].shopE = this.barearnings[i].shopE + Number(data[j].total.split('$')[1])
+              this.barearnings[i].shopE = Number(this.barearnings[i].shopE) + Number(data[j].total.split('$')[1])
               this.barearnings[i].tips = this.barearnings[i].tips + Number(data[j].tip.split('$')[1])
+              this.barearnings[i].shopE = this.barearnings[i].shopE.toFixed(2)
             }
 
             if(data[j].type == 'commission' && this.barearnings[i].barber_id == data[j].b_id){
@@ -476,8 +615,9 @@ export class ReportsComponent implements OnInit {
               // console.log(this.barearnings[i].barberE , Number(data[j].total.replace('$','')) , Number(this.com) );
 
               this.barearnings[i].barberE = this.barearnings[i].barberE + (Number(data[j].total.replace('$','')) * Number(this.com))
-              this.barearnings[i].shopE = this.barearnings[i].shopE + Number(data[j].total.replace('$','')) * (1-Number(this.com))
+              this.barearnings[i].shopE = Number(this.barearnings[i].shopE) + Number(data[j].total.replace('$','')) * (1-Number(this.com))
               this.barearnings[i].tips = this.barearnings[i].tips + Number(data[j].tip.split('$')[1])
+              this.barearnings[i].shopE = this.barearnings[i].shopE.toFixed(2)
             }
 
             if(data[j].type == 'booth rent' && this.barearnings[i].barber_id == data[j].b_id){
@@ -487,17 +627,19 @@ export class ReportsComponent implements OnInit {
               this.barearnings[i].shopE = data[j].rate
               this.barearnings[i].tips = this.barearnings[i].tips + Number(data[j].tip.split('$')[1])
             }
-
+            // this.barearnings[i].barberE = this.barearnings[i].barberE.toFixed(2)
+            // this.barearnings[i].shopE
+            // this.barearnings[i].tips
           }
         }
-
+        // console.log('this.barearnings',this.barearnings)
       }
 
     })
     // end on init
   }
 
-  
+
   openWalkDialog() {
     let dialogRef = this.dialog.open(WalkdialogComponent, {
       width: '600px',
