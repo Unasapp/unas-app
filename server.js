@@ -150,7 +150,7 @@ massive("postgres://uunjpeyj:yVNsIpBpaTMB_a2TXEss-Gmq1DGSIOte@pellefant.db.eleph
     // console.log('here is the timecards', req.body);
 
     let newTimecard = [
-      req.body.userId,
+      req.body.barberId,
       req.body.timeIn,
       req.body.timeOut,
       req.body.shopId
@@ -279,7 +279,12 @@ massive("postgres://uunjpeyj:yVNsIpBpaTMB_a2TXEss-Gmq1DGSIOte@pellefant.db.eleph
 
   app.post('/api/get-barber-stats', (req, res)=> {
     console.log(req.body);
-    db.get_barber_stats(req.body.id, (err, stats)=>{
+    let array = [
+      req.body.id,
+      req.body.date1,
+      req.body.date2
+    ]
+    db.get_barber_stats(array, (err, stats)=>{
       console.log(err);
     }).then((stats)=> {
       console.log(' -- stats from db -- ')
