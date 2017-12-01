@@ -26,7 +26,7 @@ export class HomeComponent implements OnInit {
   // events
 
   public lineChartData:Array<any> = [];
-  public lineChartLabels:Array<any> = ['Sun','Mon','Tue','Wed','Fri','Sat'];
+  public lineChartLabels:Array<any> = ['Sun','Mon','Tue','Wed', "Thu",'Fri','Sat'];
   public lineChartType:string = 'line';
 
 
@@ -126,14 +126,15 @@ export class HomeComponent implements OnInit {
         this.doughnutData[0] = this.doughnutData[0] + Number(x.total.split('$')[1])
         this.doughnutData[1] = this.doughnutData[1] + Number(x.tip.split('$')[1])
 
-
-        x.appt_length = x.appt_length.split(':').map(y=> parseInt(y));
-        let cutMinutes = x.appt_length[0]*60 + x.appt_length[1] + x.appt_length[2]/60
-        // console.log("trans length as minutes", cutMinutes)
-        for (let i = 0; i < this.barChartLabels.length; i++) {
-            if (x.b_first === this.barChartLabels[i]) {
-                this.cutTimes[i] += cutMinutes
-            }
+        if (x.appt_length) {
+          x.appt_length = x.appt_length.split(':').map(y=> parseInt(y));
+          let cutMinutes = x.appt_length[0]*60 + x.appt_length[1] + x.appt_length[2]/60
+          // console.log("trans length as minutes", cutMinutes)
+          for (let i = 0; i < this.barChartLabels.length; i++) {
+              if (x.b_first === this.barChartLabels[i]) {
+                  this.cutTimes[i] += cutMinutes
+              }
+          }
         }
           if(this.lineChartLabels[0] == moment(x.start_time).format("ddd")){
             this.wagesarray.data[0] = this.wagesarray.data[0] + Number(x.total.split('$')[1])
@@ -158,7 +159,7 @@ export class HomeComponent implements OnInit {
           }
 
       })
-      this.lineChartData = this.wagesarray.data
+      this.lineChartData = [{data:this.wagesarray.data, label:"Past 7 days"}]
       this.barChartData = this.cutTimes
       this.doughnutChartData = this.doughnutData
       // console.log("donut", this.doughnutChartData)

@@ -1,4 +1,4 @@
-select
+select distinct
   barbers.b_first,
   barbers.b_last,
   clients.c_first,
