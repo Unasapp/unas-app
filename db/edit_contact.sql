@@ -5,6 +5,7 @@ update clients
     c_phone = $3,
     c_email = $4,
     b_day = $5
-  where
+  where 
     c_id = $6
-  returning *
+  returning * ;
+  

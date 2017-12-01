@@ -45,13 +45,13 @@
         <div class='product-select' >
               <div>
                 <md-select name=service1 [(ngModel)]='serviceVal1' placeholder="Service">
-                  <md-option *ngFor="let service of services" [value]="service">
+                  <md-option (click)='s2 = !s2' *ngFor="let service of services" [value]="service">
                     {{ service.service }}
                   </md-option>
                 </md-select>
               </div>
          </div>
-         <div class='product-select' >
+         <div *ngIf='s2' class='product-select' >
             <div>
                 <md-select name=service2 [(ngModel)]='serviceVal2' placeholder="Service">
                   <md-option *ngFor="let service of services" [value]="service">
@@ -65,7 +65,7 @@
           <div class='product-select' >
             <div>
               <md-select name=product [(ngModel)]='chosenproduct' placeholder="Product">
-                <md-option *ngFor='let product of products' [value]="product" >
+                <md-option (click)='p2 = !p2' *ngFor='let product of products' [value]="product" >
                   {{ product?.product }} -
                   {{ product?.price }}
                 </md-option>
@@ -77,7 +77,7 @@
                 </md-input-container>
             </div>
           </div>
-          <div class='product-select' >
+          <div *ngIf='p2' class='product-select' >
             <div>
               <md-select name=product [(ngModel)]='chosenproduct2' placeholder="Product">
                 <md-option *ngFor='let product of products' [value]="product" >

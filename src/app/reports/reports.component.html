@@ -46,7 +46,7 @@
       <md-list-item *ngIf='profType' routerLink='/reports' class='sidenav-items'> Reports </md-list-item>
       <md-list-item *ngIf='profType' routerLink='/services' class='sidenav-items' > Services </md-list-item>
       <md-list-item *ngIf='profType' routerLink='/notifications' class='sidenav-items'> Notifications </md-list-item>
-      <md-list-item *ngIf='profType' routerLink='/settings' class='sidenav-items'> Settings </md-list-item>
+      <!-- <md-list-item *ngIf='profType' routerLink='/settings' class='sidenav-items'> Settings </md-list-item> -->
       <md-list-item (click)="logout()" class='sidenav-items'> Logout </md-list-item>
     </md-list>
   </md-sidenav>
@@ -108,7 +108,7 @@
                   {{report[i].c_first}} {{report[i].c_last}}
               </td>
               <td >
-                  <div >{{ report[i].service }} </div> <div class='mult-service' >{{ report[i].service2 }} </div> <div class='mult-service' >{{ report[i].service3 }} </div> <div class='mult-service' >{{ report[i].service4 }} </div> <div class='mult-service' >{{ report[i].service5 }} </div>
+                  <div >{{ report[i].service }} </div>  <div *ngIf='report[i].service2 != null' class='mult-service' >{{ report[i].service2 }} </div> <div *ngIf='report[i].service3 != null' class='mult-service' >{{ report[i].service3 }} </div> <div *ngIf='report[i].service4 != null' class='mult-service' >{{ report[i].service4 }} </div> <div *ngIf='report[i].service5 != null' class='mult-service' >{{ report[i].service5 }} </div>
               </td>
               <td >
                   {{ report[i].price + (report[i].price2 ? report[i].price2 : 0) + (report[i].price3 ? report[i].price3 : 0) + (report[i].price4 ? report[i].price4 : 0) + (report[i].price5 ? report[i].price5 : 0) | currency:'USD':true }}

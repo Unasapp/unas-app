@@ -97,6 +97,7 @@ export class ReportsComponent implements OnInit {
 
   getProductReports(para){
     this.pastP = !this.pastP
+    // var yet = false
 
     if(para=='past'){
       this.products = []
@@ -117,20 +118,23 @@ export class ReportsComponent implements OnInit {
            'netsales': 0
          })
        })
-
      })
-      // console.log('get reports for past 7',earnInfo);
-      this.service.getProductsReport(earnInfo).subscribe(data =>{
-        // console.log('--- products for reports --',data);
+      // console.log('get reports for past 7',earnInfo) 
+          this.service.getProductsReport(earnInfo).subscribe(data =>{
+            console.log('--- products for reports --',data);
 
-        for (var i = 0; i < this.products.length; i++) {
-          for (var j = 0; j < data.length; j++) {
-            if(this.products[i].p_id == data[j].p_id ) {
-              this.products[i].sold = this.products[i].sold + data[j].qty
-              this.products[i].netsales = this.products[i].netsales + (data[j].qty * Number(data[j].price.split('$')[1]))
+            for (var i = 0; i < this.products.length; i++) {
+              for (var j = 0; j < data.length; j++) {
+                if(this.products[i].p_id == data[j].product_id) {
+                  this.products[i].sold = this.products[i].sold + data[j].qty
+                  this.products[i].netsales = this.products[i].netsales + (data[j].qty * Number(data[j].price.split('$')[1]))
+                }
+                if(this.products[i].p_id == data[j].product_id2) {
+                  this.products[i].sold = this.products[i].sold + data[j].qty2
+                  this.products[i].netsales = this.products[i].netsales + (data[j].qty2 * Number(data[j].price.split('$')[1]))
+                }
+              }
             }
-          }
-        }
 
        })
         // console.log('get reports for past 7',this.report);
@@ -154,22 +158,24 @@ export class ReportsComponent implements OnInit {
            'netsales': 0
          })
        })
-
      })
       this.service.getProductsReport(earnInfo).subscribe(data =>{
         // console.log('--- products for reports --',data);
 
         for (var i = 0; i < this.products.length; i++) {
           for (var j = 0; j < data.length; j++) {
-            if(this.products[i].p_id == data[j].p_id) {
+            if(this.products[i].p_id == data[j].product_id) {
               this.products[i].sold = this.products[i].sold + data[j].qty
               this.products[i].netsales = this.products[i].netsales + (data[j].qty * Number(data[j].price.split('$')[1]))
             }
+            if(this.products[i].p_id == data[j].product_id2) {
+              this.products[i].sold = this.products[i].sold + data[j].qty2
+              this.products[i].netsales = this.products[i].netsales + (data[j].qty2 * Number(data[j].price.split('$')[1]))
+            }
           }
         }
-
+        console.log('get reports from today',this.products);
        })
-      // console.log('get reports from today',this.report);
     }
 
   }
@@ -314,7 +320,7 @@ export class ReportsComponent implements OnInit {
         'shop_id' : JSON.parse(localStorage.getItem('profile'))[0].shop_id
       }
       this.service.getBarberEarning(earnInfo).subscribe(data => {
-        console.log('--- earning 😈  back from db ---', data);
+        // console.log('--- earning 😈  back from db ---', data);
 
         if(data){
           this.barbers.map((x)=>{
@@ -327,7 +333,7 @@ export class ReportsComponent implements OnInit {
               'tips': 0
             })
           })
-          console.log('old barber earning shit',this.barearnings)
+          // console.log('old barber earning shit',this.barearnings)
           this.go = true;
         }
 
@@ -382,7 +388,7 @@ export class ReportsComponent implements OnInit {
       this.barearnings = []
       let earnInfo = {
         'date1' : moment(new Date()).format('YYYY-MM-DD'),
-        'date2' : moment(new Date().setDate(new Date().getDate() + 7)).format('YYYY-MM-DD'),
+        'date2' : moment(new Date().setDate(new Date().getDate() + 1)).format('YYYY-MM-DD'),
         'shop_id' : JSON.parse(localStorage.getItem('profile'))[0].shop_id
       }
       this.service.getBarberEarning(earnInfo).subscribe(data => {
@@ -513,9 +519,13 @@ export class ReportsComponent implements OnInit {
 
       for (var i = 0; i < this.products.length; i++) {
         for (var j = 0; j < data.length; j++) {
-          if(this.products[i].p_id == data[j].p_id) {
+          if(this.products[i].p_id == data[j].product_id) {
             this.products[i].sold = this.products[i].sold + data[j].qty
             this.products[i].netsales = this.products[i].netsales + (data[j].qty * Number(data[j].price.split('$')[1]))
+          }
+          if(this.products[i].p_id == data[j].product_id2) {
+            this.products[i].sold = this.products[i].sold + data[j].qty2
+            this.products[i].netsales = this.products[i].netsales + (data[j].qty2 * Number(data[j].price.split('$')[1]))
           }
         }
       }
@@ -624,15 +634,17 @@ export class ReportsComponent implements OnInit {
               // console.log('in it booth rent');
               this.barearnings[i].payT = data[j].type
               this.barearnings[i].barberE = this.barearnings[i].barberE + Number(data[j].total.split('$')[1])
-              this.barearnings[i].shopE = data[j].rate
+              this.barearnings[i].shopE = Number(data[j].rate.split('$')[1].split('/')[0])
               this.barearnings[i].tips = this.barearnings[i].tips + Number(data[j].tip.split('$')[1])
             }
             // this.barearnings[i].barberE = this.barearnings[i].barberE.toFixed(2)
             // this.barearnings[i].shopE
             // this.barearnings[i].tips
           }
+          this.barearnings[i].shopE = Number(this.barearnings[i].shopE.toFixed(2))
         }
-        // console.log('this.barearnings',this.barearnings)
+
+
       }
 
     })
