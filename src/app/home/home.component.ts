@@ -29,7 +29,7 @@ export class HomeComponent implements OnInit {
   public lineChartLabels:Array<any> = ['Sun','Mon','Tue','Wed', "Thu",'Fri','Sat'];
   public lineChartType:string = 'line';
 
-
+ ///////////
 
   public barChartLabels:string[] = [];
   public barChartType:string = 'bar';
