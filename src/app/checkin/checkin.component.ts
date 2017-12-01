@@ -101,7 +101,7 @@ export class CheckinComponent implements OnInit {
 
   openCashOut(appt){
     console.log(appt,'-- opening cash out --');
-    
+
     let dialogRef = this.dialog.open(CashoutdialogComponent, {
       width: '600px',
       data: appt
@@ -144,14 +144,14 @@ export class CheckinComponent implements OnInit {
   }
 
   barbers = JSON.parse(localStorage.getItem('barbers'))
-  
+
   services = JSON.parse(localStorage.getItem('services'))
-  
-  clients = JSON.parse(localStorage.getItem('clients')) 
+
+  clients = JSON.parse(localStorage.getItem('clients'))
 
   ngOnInit() {
     this.profType = (JSON.parse(localStorage.getItem('profile'))[0].type === 'admin') ? true : false
-    
+
     this.service.getInProgress({id:JSON.parse(localStorage.getItem('profile'))[0].shop_id}).subscribe(data => {
       this.needToPay = data;
       console.log('@db:', data)
@@ -162,9 +162,10 @@ export class CheckinComponent implements OnInit {
     this.service.getInWaitList({id:JSON.parse(localStorage.getItem('profile'))[0].shop_id}).subscribe(data => {
       console.log('wait list data',data);
       console.log('-- this.services --',this.services);
-      
+
       this.waitList = data;
       this.waitList.map((x)=>{
+        console.log('x data', x)
         if(x.service_id2 != null){
           for (var i = 0; i < this.services.length; i++) {
             if(this.services[i].v_id == x.service_id2){
