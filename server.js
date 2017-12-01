@@ -856,7 +856,7 @@ massive("postgres://uunjpeyj:yVNsIpBpaTMB_a2TXEss-Gmq1DGSIOte@pellefant.db.eleph
 
     var getStuff = function() {
 
-      var server = email.server.connect({user: "ac12491@gmail.com", password: "N0t$ure!", host: "smtp.gmail.com", port: 465, ssl: true});
+      var server = email.server.connect({user: "", password: "", host: "smtp.gmail.com", port: 465, ssl: true});
       console.log('email server connected');
 
       var array = [
@@ -901,7 +901,7 @@ massive("postgres://uunjpeyj:yVNsIpBpaTMB_a2TXEss-Gmq1DGSIOte@pellefant.db.eleph
             })
           })
       }
-     
+
 
 
       var timecardBODY
@@ -947,7 +947,7 @@ massive("postgres://uunjpeyj:yVNsIpBpaTMB_a2TXEss-Gmq1DGSIOte@pellefant.db.eleph
                    + b.pay_mth + '</td><td>'
                    + '$' + (b.actualprice + Number(b.tip.split('$')[1])).toFixed(2) + '</td></tr>';
         }, '');
- 
+
         // console.log('im here',transreport)
         barbers.map(barber =>{
           barber.report = []
@@ -970,10 +970,10 @@ massive("postgres://uunjpeyj:yVNsIpBpaTMB_a2TXEss-Gmq1DGSIOte@pellefant.db.eleph
               console.log('transreport[x].barber_id == barber.b_id',transreport[x].barber_id,'==',barber.b_id)
               for (var i = 0; i < barber.report.length; i++){
                 if(
-                  barber.report[i].v_id == transreport[x].service_id || 
-                  barber.report[i].v_id == transreport[x].service_id2 || 
-                  barber.report[i].v_id == transreport[x].service_id3 || 
-                  barber.report[i].v_id == transreport[x].service_id4 || 
+                  barber.report[i].v_id == transreport[x].service_id ||
+                  barber.report[i].v_id == transreport[x].service_id2 ||
+                  barber.report[i].v_id == transreport[x].service_id3 ||
+                  barber.report[i].v_id == transreport[x].service_id4 ||
                   barber.report[i].v_id == transreport[x].service_id5
                 ){
                         if(barber.type == 'hourly'){
@@ -989,7 +989,7 @@ massive("postgres://uunjpeyj:yVNsIpBpaTMB_a2TXEss-Gmq1DGSIOte@pellefant.db.eleph
                           var hourC = Number(barber.report[i].time.split(':')[0])
                           var minC = Number(barber.report[i].time.split(':')[1])
                           var secC = Number(barber.report[i].time.split(':')[2])
-                          barber.report[i].time = ((hourIN + hourC) < 10 ? '0' + (hourIN + hourC) : (hourIN + hourC)) + ':' + ((minIN + minC) < 10 ? '0' + (minIN + minC) : (minIN + minC))  + ':' + ((secIN + secC) < 10 ? '0' + (secIN + secC) : (secIN + secC)) 
+                          barber.report[i].time = ((hourIN + hourC) < 10 ? '0' + (hourIN + hourC) : (hourIN + hourC)) + ':' + ((minIN + minC) < 10 ? '0' + (minIN + minC) : (minIN + minC))  + ':' + ((secIN + secC) < 10 ? '0' + (secIN + secC) : (secIN + secC))
                         }
                         if(barber.type == 'commission'){
                           var com = Number('.' + barber.rate.split('%')[0])
@@ -1004,7 +1004,7 @@ massive("postgres://uunjpeyj:yVNsIpBpaTMB_a2TXEss-Gmq1DGSIOte@pellefant.db.eleph
                           var hourC = Number(barber.report[i].time.split(':')[0])
                           var minC = Number(barber.report[i].time.split(':')[1])
                           var secC = Number(barber.report[i].time.split(':')[2])
-                          barber.report[i].time = ((hourIN + hourC) < 10 ? '0' + (hourIN + hourC) : (hourIN + hourC)) + ':' + ((minIN + minC) < 10 ? '0' + (minIN + minC) : (minIN + minC))  + ':' + ((secIN + secC) < 10 ? '0' + (secIN + secC) : (secIN + secC)) 
+                          barber.report[i].time = ((hourIN + hourC) < 10 ? '0' + (hourIN + hourC) : (hourIN + hourC)) + ':' + ((minIN + minC) < 10 ? '0' + (minIN + minC) : (minIN + minC))  + ':' + ((secIN + secC) < 10 ? '0' + (secIN + secC) : (secIN + secC))
                         }
                         if(barber.type == 'booth rent'){
                           // console.log('in it booth rent');
@@ -1018,9 +1018,9 @@ massive("postgres://uunjpeyj:yVNsIpBpaTMB_a2TXEss-Gmq1DGSIOte@pellefant.db.eleph
                           var hourC = Number(barber.report[i].time.split(':')[0])
                           var minC = Number(barber.report[i].time.split(':')[1])
                           var secC = Number(barber.report[i].time.split(':')[2])
-                          barber.report[i].time = ((hourIN + hourC) < 10 ? '0' + (hourIN + hourC) : (hourIN + hourC)) + ':' + ((minIN + minC) < 10 ? '0' + (minIN + minC) : (minIN + minC))  + ':' + ((secIN + secC) < 10 ? '0' + (secIN + secC) : (secIN + secC)) 
-                        } 
-                    } 
+                          barber.report[i].time = ((hourIN + hourC) < 10 ? '0' + (hourIN + hourC) : (hourIN + hourC)) + ':' + ((minIN + minC) < 10 ? '0' + (minIN + minC) : (minIN + minC))  + ':' + ((secIN + secC) < 10 ? '0' + (secIN + secC) : (secIN + secC))
+                        }
+                    }
                 }
               }
             }
@@ -1050,18 +1050,18 @@ massive("postgres://uunjpeyj:yVNsIpBpaTMB_a2TXEss-Gmq1DGSIOte@pellefant.db.eleph
             }
             x.report.map(y=>{
               // console.log('y.report.count' ,y.count)
-              total.service = 'All services' 
-              total.count = total.count + y.count 
-              total.shopE = total.shopE + y.shopE 
+              total.service = 'All services'
+              total.count = total.count + y.count
+              total.shopE = total.shopE + y.shopE
               total.barberE = total.barberE + y.barberE
-              total.tip = total.tip + y.tip 
+              total.tip = total.tip + y.tip
               var hourIN = Number(y.time == null ? '00' : y.time.split(':')[0])
               var minIN = Number(y.time == null ? '00' : y.time.split(':')[1])
               var secIN = Number(y.time == null ? '00' : y.time.split(':')[2])
               var hourC = Number(total.time.split(':')[0])
               var minC = Number(total.time.split(':')[1])
               var secC = Number(total.time.split(':')[2])
-              total.time = ((hourIN + hourC) < 10 ? '0' + (hourIN + hourC) : (hourIN + hourC)) + ':' + ((minIN + minC) < 10 ? '0' + (minIN + minC) : (minIN + minC))  + ':' + ((secIN + secC) < 10 ? '0' + (secIN + secC) : (secIN + secC)) 
+              total.time = ((hourIN + hourC) < 10 ? '0' + (hourIN + hourC) : (hourIN + hourC)) + ':' + ((minIN + minC) < 10 ? '0' + (minIN + minC) : (minIN + minC))  + ':' + ((secIN + secC) < 10 ? '0' + (secIN + secC) : (secIN + secC))
             })
 
             quick = x.report.reduce(function(a, b) {
@@ -1072,7 +1072,7 @@ massive("postgres://uunjpeyj:yVNsIpBpaTMB_a2TXEss-Gmq1DGSIOte@pellefant.db.eleph
               + b.tip.toFixed(2) + '</td><td>'
               + b.time + '</td></tr>';
             }, '');
-              
+
             quick = quick + '<tr><td>' + total.service + '</td><td>'
             + total.count + '</td><td>'
             + total.shopE.toFixed(2) + '</td><td>'
@@ -1094,7 +1094,7 @@ massive("postgres://uunjpeyj:yVNsIpBpaTMB_a2TXEss-Gmq1DGSIOte@pellefant.db.eleph
             barberEarnsreportBODY.push(quick)
             // console.log('---- barberEarnsreportBODY -----',x.report)
           })
-        
+
         products.map(x=>{
           newproducts.push({
             'p_id': x.p_id,
@@ -1120,7 +1120,7 @@ massive("postgres://uunjpeyj:yVNsIpBpaTMB_a2TXEss-Gmq1DGSIOte@pellefant.db.eleph
           }
           if(newproducts.length-1 == i){
             newproducts.map(x=>{
-              x.netsales = '$' + x.netsales.toFixed(2) 
+              x.netsales = '$' + x.netsales.toFixed(2)
             })
             name()
           }
@@ -1128,7 +1128,7 @@ massive("postgres://uunjpeyj:yVNsIpBpaTMB_a2TXEss-Gmq1DGSIOte@pellefant.db.eleph
 
         function name() {
           // console.log('-----     reduce products      ----')
-          
+
           productsreportBODY = newproducts.reduce(function(a, b) {
             return a + '<tr><td>' + b.product + '</td><td>'
                      + b.type + '</td><td>'
@@ -1219,7 +1219,7 @@ massive("postgres://uunjpeyj:yVNsIpBpaTMB_a2TXEss-Gmq1DGSIOte@pellefant.db.eleph
       // maketemp(timecard,transreport,productsreport,products)
     }
     getStuff()
-  
+
   }
   // ++++++++++++ ends ++++++++++++++++
 
